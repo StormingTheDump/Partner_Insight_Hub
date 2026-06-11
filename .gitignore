@@ -16,6 +16,10 @@ backend/pih.db
 __pycache__/
 *.pyc
 
+# Environment variables
+.env.development
+.env.production
+
 dist
 dist-ssr
 *.local

@@ -8,7 +8,7 @@ export interface User {
   status: UserStatus;
 }
 
-const API_BASE = 'http://8.139.162.140:8000';
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000';
 
 export async function authenticate(
   email: string,
