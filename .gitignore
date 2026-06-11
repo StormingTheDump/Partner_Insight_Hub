@@ -8,6 +8,14 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# Database (generated locally via init_db.py)
+backend/pih.db
+
+# Python
+__pycache__/
+*.pyc
+
 dist
 dist-ssr
 *.local

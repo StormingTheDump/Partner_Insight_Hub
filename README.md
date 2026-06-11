@@ -4,19 +4,38 @@
 
 ## 技术栈
 
-- **前端**：React 18 + TypeScript + Vite
-- **UI 组件**：Ant Design 5
-- **路由**：React Router v6
-- **部署**：GitHub Pages
+- **前端**：React 18 + TypeScript + Vite + Ant Design 5
+- **后端**：Python + FastAPI
+- **数据库**：SQLite（本地文件，无需安装数据库服务）
+- **鉴权**：JWT（bcrypt 密码加密）
+- **部署**：GitHub Pages（前端）
 
-## 本地运行
+## 本地运行（前后端分开启动）
+
+### 第一次使用：初始化数据库
 
 ```bash
-# 安装依赖
-npm install
+cd backend
+pip install -r requirements.txt
+python3 init_db.py   # 建表 + 导入测试用户数据
+```
 
-# 启动开发服务器
+### 启动后端
+
+```bash
+cd backend
+uvicorn main:app --reload --port 8000
+# 后端运行于 http://localhost:8000
+# API 文档：http://localhost:8000/docs
+```
+
+### 启动前端
+
+```bash
+npm install
 npm run dev
+# 访问 http://localhost:5173/Partner_Insight_Hub/
+```
 
 # 访问
 http://localhost:5173/Partner_Insight_Hub/

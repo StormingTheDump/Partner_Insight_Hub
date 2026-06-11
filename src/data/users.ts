@@ -3,63 +3,38 @@ export type UserStatus = 'active' | 'disabled';
 export interface User {
   id: number;
   email: string;
-  password: string;
   channelName: string;
   contactName: string;
   status: UserStatus;
 }
 
-export const users: User[] = [
-  {
-    id: 1,
-    email: 'partner_a@example.com',
-    password: 'Pass1234!',
-    channelName: 'Booking Agency A',
-    contactName: 'Alice Chen',
-    status: 'active',
-  },
-  {
-    id: 2,
-    email: 'partner_b@example.com',
-    password: 'Pass5678!',
-    channelName: 'Travel Hub B',
-    contactName: 'Bob Wang',
-    status: 'active',
-  },
-  {
-    id: 3,
-    email: 'partner_c@example.com',
-    password: 'Pass9999!',
-    channelName: 'Global Tours C',
-    contactName: 'Carol Liu',
-    status: 'active',
-  },
-  {
-    id: 4,
-    email: 'test_user@example.com',
-    password: 'Test0000!',
-    channelName: 'Test Channel',
-    contactName: 'Test User',
-    status: 'active',
-  },
-  {
-    id: 5,
-    email: 'disabled@example.com',
-    password: 'Dis1111!',
-    channelName: 'Disabled Channel',
-    contactName: 'Dave Zhang',
-    status: 'disabled',
-  },
-];
+const API_BASE = 'http://localhost:8000';
 
-export function authenticate(email: string, password: string): {
-  success: boolean;
-  user?: User;
-  error?: 'not_found' | 'wrong_password' | 'disabled';
-} {
-  const user = users.find((u) => u.email === email);
-  if (!user) return { success: false, error: 'not_found' };
-  if (user.status === 'disabled') return { success: false, error: 'disabled' };
-  if (user.password !== password) return { success: false, error: 'wrong_password' };
-  return { success: true, user };
+export async function authenticate(
+  email: string,
+  password: string
+): Promise<{ success: boolean; user?: User; token?: string; error?: string }> {
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return { success: true, user: data.user, token: data.token };
+    }
+
+    const err = await res.json();
+    const msg: string = err.detail ?? '登录失败，请稍后重试';
+
+    if (msg.includes('不存在')) return { success: false, error: 'not_found' };
+    if (msg.includes('密码错误')) return { success: false, error: 'wrong_password' };
+    if (msg.includes('禁用')) return { success: false, error: 'disabled' };
+    return { success: false, error: 'unknown' };
+  } catch {
+    return { success: false, error: 'network' };
+  }
 }
+

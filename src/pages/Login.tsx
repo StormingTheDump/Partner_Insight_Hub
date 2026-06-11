@@ -7,12 +7,6 @@ import type { User } from '../data/users';
 
 const { Title, Text } = Typography;
 
-const ERROR_MESSAGES: Record<string, string> = {
-  not_found: '账号不存在，请检查邮箱地址',
-  wrong_password: '密码错误，请重新输入',
-  disabled: '该账号已被禁用，请联系客户经理',
-};
-
 interface LoginForm {
   email: string;
   password: string;
@@ -28,24 +22,29 @@ export default function Login({ onLogin }: Props) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (values: LoginForm) => {
+  const handleSubmit = async (values: LoginForm) => {
     setLoading(true);
     setError(null);
-    setTimeout(() => {
-      const result = authenticate(values.email, values.password);
-      if (result.success && result.user) {
-        if (values.remember) {
-          localStorage.setItem('pih_user', JSON.stringify(result.user));
-        } else {
-          sessionStorage.setItem('pih_user', JSON.stringify(result.user));
-        }
-        onLogin(result.user);
-        navigate('/dashboard');
+    const result = await authenticate(values.email, values.password);
+    if (result.success && result.user) {
+      const payload = { ...result.user, token: result.token };
+      if (values.remember) {
+        localStorage.setItem('pih_user', JSON.stringify(payload));
       } else {
-        setError(ERROR_MESSAGES[result.error!] ?? '登录失败，请稍后重试');
+        sessionStorage.setItem('pih_user', JSON.stringify(payload));
       }
-      setLoading(false);
-    }, 600);
+      onLogin(result.user);
+      navigate('/dashboard');
+    } else {
+      const errMap: Record<string, string> = {
+        not_found: '账号不存在，请检查邮箱地址',
+        wrong_password: '密码错误，请重新输入',
+        disabled: '该账号已被禁用，请联系客户经理',
+        network: '无法连接到服务器，请确认后端已启动',
+      };
+      setError(errMap[result.error!] ?? '登录失败，请稍后重试');
+    }
+    setLoading(false);
   };
 
   return (
