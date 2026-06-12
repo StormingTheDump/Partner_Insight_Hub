@@ -29,6 +29,13 @@ def decode_token(token: str) -> dict:
     return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
 
+def verify_token(token: str) -> dict:
+    try:
+        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError as e:
+        raise ValueError(f"Invalid token: {e}")
+
+
 def login(email: str, password: str):
     conn = get_connection()
     row = conn.execute(
@@ -53,5 +60,6 @@ def login(email: str, password: str):
             "channelName": row["channel_name"],
             "contactName": row["contact_name"],
             "status": row["status"],
+            "role": row["role"] if "role" in row.keys() else "user",
         },
     }

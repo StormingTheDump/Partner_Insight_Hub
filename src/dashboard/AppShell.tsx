@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Filter,
   LogOut,
+  Settings,
   User,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -19,6 +20,7 @@ import { useAppState, AppStateProvider } from "@/dashboard/app-state";
 import { navSections } from "@/dashboard/navigation";
 import { routes } from "@/dashboard/routes";
 import type { User as AuthUser } from "@/data/users";
+import { AccountManagementModal } from "@/features/account-management/AccountManagementModal";
 
 const API = "";
 
@@ -152,6 +154,7 @@ function NotifBell({ onGoFinance }: { onGoFinance: () => void }) {
 
 function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) {
   const [open, setOpen] = useState(false);
+  const [accountMgmt, setAccountMgmt] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -170,58 +173,82 @@ function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) 
   }
 
   return (
-    <div ref={ref} style={{ position: "relative" }}>
-      <button
-        type="button"
-        className="filter-control"
-        onClick={() => setOpen((o) => !o)}
-        style={{ gap: 8, cursor: "pointer" }}
-      >
-        <User className="icon" />
-        <span style={{ maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {user.contactName}
-        </span>
-      </button>
+    <>
+      <div ref={ref} style={{ position: "relative" }}>
+        <button
+          type="button"
+          className="filter-control"
+          onClick={() => setOpen((o) => !o)}
+          style={{ gap: 8, cursor: "pointer" }}
+        >
+          <User className="icon" />
+          <span style={{ maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {user.contactName}
+          </span>
+        </button>
 
-      {open && (
-        <div className="topbar-dropdown">
-          <div style={{ padding: "16px", borderBottom: "1px solid var(--line)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div style={{
-                width: 40, height: 40, borderRadius: "50%",
-                background: "#eef1ff", color: "#604696",
-                display: "grid", placeItems: "center",
-                fontWeight: 800, fontSize: 16, flexShrink: 0,
-              }}>
-                {user.contactName.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 14 }}>{user.contactName}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{user.email}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{user.channelName}</div>
+        {open && (
+          <div className="topbar-dropdown">
+            <div style={{ padding: "16px", borderBottom: "1px solid var(--line)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: "50%",
+                  background: "#eef1ff", color: "#604696",
+                  display: "grid", placeItems: "center",
+                  fontWeight: 800, fontSize: 16, flexShrink: 0,
+                }}>
+                  {user.contactName.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 14 }}>{user.contactName}</div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{user.email}</div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{user.channelName}</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div style={{ padding: "8px" }}>
-            <button
-              type="button"
-              onClick={handleLogout}
-              style={{
-                width: "100%", padding: "9px 12px", borderRadius: 6,
-                border: "none", cursor: "pointer",
-                display: "flex", alignItems: "center", gap: 8,
-                fontSize: 13, fontWeight: 600,
-                color: "#ea0345", background: "#fce8e6",
-              }}
-            >
-              <LogOut style={{ width: 15, height: 15 }} />
-              退出登录
-            </button>
+            <div style={{ padding: "8px" }}>
+              {user.role === "admin" && (
+                <button
+                  type="button"
+                  onClick={() => { setOpen(false); setAccountMgmt(true); }}
+                  style={{
+                    width: "100%", padding: "9px 12px", borderRadius: 6,
+                    border: "none", cursor: "pointer", marginBottom: 4,
+                    display: "flex", alignItems: "center", gap: 8,
+                    fontSize: 13, fontWeight: 600,
+                    color: "#4f5fb8", background: "#eef1ff",
+                  }}
+                >
+                  <Settings style={{ width: 15, height: 15 }} />
+                  账号管理
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleLogout}
+                style={{
+                  width: "100%", padding: "9px 12px", borderRadius: 6,
+                  border: "none", cursor: "pointer",
+                  display: "flex", alignItems: "center", gap: 8,
+                  fontSize: 13, fontWeight: 600,
+                  color: "#ea0345", background: "#fce8e6",
+                }}
+              >
+                <LogOut style={{ width: 15, height: 15 }} />
+                退出登录
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+
+      <AccountManagementModal
+        open={accountMgmt}
+        adminUser={user}
+        onClose={() => setAccountMgmt(false)}
+      />
+    </>
   );
 }
 

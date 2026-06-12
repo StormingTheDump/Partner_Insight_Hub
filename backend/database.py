@@ -137,6 +137,19 @@ def init_tables():
     """)
 
     conn.commit()
+
+    # Migrate: add columns to users table if not present
+    for col_def in [
+        ("role",       "TEXT NOT NULL DEFAULT 'user'"),
+        ("created_by", "TEXT"),
+    ]:
+        try:
+            conn.execute(f"ALTER TABLE users ADD COLUMN {col_def[0]} {col_def[1]}")
+            conn.commit()
+        except Exception:
+            pass
+
+    _seed_users(conn)
     _seed_dida_contacts(conn)
     _seed_my_contacts(conn)
     _seed_channel_mappings(conn)
@@ -144,6 +157,28 @@ def init_tables():
     _seed_channel_configurations(conn)
     _seed_order_logs(conn)
     conn.close()
+
+
+def _seed_users(conn):
+    count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+    if count > 0:
+        return
+
+    import bcrypt
+    def _hash(pw: str) -> str:
+        return bcrypt.hashpw(pw.encode(), bcrypt.gensalt()).decode()
+
+    users = [
+        ("123@agoda.com", _hash("Agoda123"), "Agoda", "Admin",      "admin", "active",   None),
+        ("111@agoda.com", _hash("Agoda123"), "Agoda", "John Smith", "user",  "active",   "123@agoda.com"),
+        ("222@agoda.com", _hash("Agoda123"), "Agoda", "Jane Doe",   "user",  "disabled", "123@agoda.com"),
+    ]
+    conn.executemany(
+        "INSERT OR IGNORE INTO users (email, password_hash, channel_name, contact_name, role, status, created_by)"
+        " VALUES (?,?,?,?,?,?,?)",
+        users,
+    )
+    conn.commit()
 
 
 def _seed_dida_contacts(conn):

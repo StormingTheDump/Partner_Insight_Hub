@@ -1,9 +1,9 @@
-from fastapi import FastAPI, File, HTTPException, Query, UploadFile
+from fastapi import FastAPI, File, Header, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from database import init_tables, get_connection
-from auth import login
+from auth import login, verify_token, hash_password
 import os
 from typing import Optional
 
@@ -33,6 +33,13 @@ def startup():
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+
+class CreateUserRequest(BaseModel):
+    email: str
+    password: str
+    channel_name: str
+    contact_name: str
 
 
 class ChatMessage(BaseModel):
@@ -961,3 +968,90 @@ def get_order_log_detail(order_no: str):
     return [{"log_type": r["log_type"],
              "log_detail": _json.loads(r["log_detail"]),
              "updated_at": r["updated_at"]} for r in rows]
+
+
+# ── Admin: Account Management ────────────────────────────────────────────────
+
+def _get_admin(authorization: Optional[str]) -> dict:
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Missing token")
+    token = authorization.split(" ", 1)[1]
+    try:
+        payload = verify_token(token)
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    conn = get_connection()
+    row = conn.execute("SELECT * FROM users WHERE email = ?", (payload["email"],)).fetchone()
+    conn.close()
+    if not row or row["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return {"email": payload["email"], "id": int(payload["sub"])}
+
+
+@app.get("/api/admin/users")
+def admin_list_users(authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    rows = conn.execute(
+        "SELECT id, email, channel_name, contact_name, status, created_at"
+        " FROM users WHERE created_by = ? ORDER BY id",
+        (admin["email"],),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+@app.post("/api/admin/users")
+def admin_create_user(body: CreateUserRequest, authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    try:
+        conn.execute(
+            "INSERT INTO users (email, password_hash, channel_name, contact_name, role, status, created_by)"
+            " VALUES (?,?,?,?,?,?,?)",
+            (body.email, hash_password(body.password), body.channel_name, body.contact_name,
+             "user", "active", admin["email"]),
+        )
+        conn.commit()
+    except Exception:
+        conn.close()
+        raise HTTPException(status_code=400, detail="邮箱已存在")
+    row = conn.execute(
+        "SELECT id, email, channel_name, contact_name, status FROM users WHERE email = ?",
+        (body.email,),
+    ).fetchone()
+    conn.close()
+    return {"success": True, "user": dict(row)}
+
+
+@app.patch("/api/admin/users/{user_id}/status")
+def admin_toggle_status(user_id: int, authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    row = conn.execute(
+        "SELECT * FROM users WHERE id = ? AND created_by = ?", (user_id, admin["email"])
+    ).fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="用户不存在")
+    new_status = "disabled" if row["status"] == "active" else "active"
+    conn.execute("UPDATE users SET status = ? WHERE id = ?", (new_status, user_id))
+    conn.commit()
+    conn.close()
+    return {"success": True, "status": new_status}
+
+
+@app.delete("/api/admin/users/{user_id}")
+def admin_delete_user(user_id: int, authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    row = conn.execute(
+        "SELECT * FROM users WHERE id = ? AND created_by = ?", (user_id, admin["email"])
+    ).fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="用户不存在")
+    conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+    return {"success": True}

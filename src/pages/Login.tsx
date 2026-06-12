@@ -36,7 +36,7 @@ export default function Login({ onLogin }: Props) {
       } else {
         sessionStorage.setItem('pih_user', JSON.stringify(payload));
       }
-      onLogin(result.user);
+      onLogin(payload);
       navigate('/dashboard');
     } else {
       const errMap: Record<string, string> = {
