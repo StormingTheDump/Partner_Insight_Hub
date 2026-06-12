@@ -17,6 +17,7 @@ __pycache__/
 *.pyc
 
 # Environment variables
+.env
 .env.development
 .env.production
 
@@ -34,3 +35,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+

@@ -23,5 +23,17 @@ def init_tables():
             created_at    TEXT    NOT NULL DEFAULT (datetime('now'))
         )
     """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS api_daily_metrics (
+            id                   INTEGER PRIMARY KEY AUTOINCREMENT,
+            date                 TEXT    NOT NULL,
+            channel              TEXT    NOT NULL,
+            total_orders         INTEGER NOT NULL DEFAULT 0,
+            failed_orders        INTEGER NOT NULL DEFAULT 0,
+            total_price_checks   INTEGER NOT NULL DEFAULT 0,
+            inaccurate_checks    INTEGER NOT NULL DEFAULT 0,
+            UNIQUE(date, channel)
+        )
+    """)
     conn.commit()
     conn.close()
