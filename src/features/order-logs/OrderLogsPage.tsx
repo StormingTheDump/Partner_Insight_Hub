@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Search, FileText, ChevronDown, ChevronRight } from "lucide-react";
+import { Download, FileText, Search, ChevronDown, ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -74,6 +74,32 @@ export function OrderLogsPage(_: PageProps) {
     setDrawerLoading(false);
   };
 
+  const downloadCsv = async (order: OrderSummary) => {
+    const data: LogEntry[] = await fetch(`${API}/api/order-logs/${order.order_no}/detail`).then(r => r.json());
+    const escapeCell = (v: unknown) => `"${JSON.stringify(v).replace(/"/g, '""')}"`;
+    const rows = [
+      ["订单号", "订单状态", "客户ID", "日志类型", "API名称", "更新时间", "REQUEST", "RESPONSE"],
+      ...data.map(e => [
+        order.order_no,
+        order.order_status,
+        order.client_id,
+        e.log_type,
+        LOG_META[e.log_type]?.apiName ?? e.log_type,
+        e.updated_at,
+        escapeCell(e.log_detail.request),
+        escapeCell(e.log_detail.response),
+      ]),
+    ];
+    const csv = "﻿" + rows.map(r => r.join(",")).join("\r\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href     = url;
+    a.download = `${order.order_no}_logs.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const totalPages = Math.max(1, Math.ceil(orders.length / PAGE_SIZE));
   const safePage   = Math.min(page, totalPages);
   const pageRows   = orders.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
@@ -130,7 +156,7 @@ export function OrderLogsPage(_: PageProps) {
               <th style={th}>日志类型</th>
               <th style={th}>客户 ID</th>
               <th style={{ ...th, width: 110 }}>更新时间</th>
-              <th style={{ ...th, width: 112 }}>操作</th>
+              <th style={{ ...th, width: 160 }}>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -176,9 +202,14 @@ export function OrderLogsPage(_: PageProps) {
                     {order.updated_at.split(" ")[0]}
                   </td>
                   <td style={td}>
-                    <button type="button" onClick={() => openDrawer(order)} style={logBtn}>
-                      <FileText size={12} /> 详细日志
-                    </button>
+                    <span style={{ display: "inline-flex", gap: 6 }}>
+                      <button type="button" onClick={() => openDrawer(order)} style={logBtn}>
+                        <FileText size={12} /> 详细日志
+                      </button>
+                      <button type="button" onClick={() => downloadCsv(order)} style={dlBtn}>
+                        <Download size={12} /> 下载
+                      </button>
+                    </span>
                   </td>
                 </tr>
               );
@@ -360,6 +391,13 @@ const logBtn: CSSProperties = {
   height: 28, padding: "0 10px", borderRadius: 6,
   border: "1px solid var(--line)", background: "var(--surface-soft)",
   cursor: "pointer", fontSize: 12, color: "var(--text)", fontWeight: 600,
+  whiteSpace: "nowrap",
+};
+const dlBtn: CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: 5,
+  height: 28, padding: "0 10px", borderRadius: 6,
+  border: "1px solid #bfdbfe", background: "#eff6ff",
+  cursor: "pointer", fontSize: 12, color: "#1d4ed8", fontWeight: 600,
   whiteSpace: "nowrap",
 };
 const pagerBar: CSSProperties = {

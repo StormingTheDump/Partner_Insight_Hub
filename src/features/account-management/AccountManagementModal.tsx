@@ -88,9 +88,8 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
 
   return (
     <>
-      <div style={backdrop} onClick={onClose} />
-
-      <div style={modalWrap}>
+      <div style={backdrop} onClick={onClose}>
+        <div style={modalWrap} onClick={e => e.stopPropagation()}>
         {/* Header */}
         <div style={modalHeader}>
           <div>
@@ -214,6 +213,7 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
           </div>
         )}
       </div>
+      </div>
     </>
   );
 }
@@ -222,11 +222,12 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
 
 const backdrop: CSSProperties = {
   position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 1000,
+  display: "flex", alignItems: "center", justifyContent: "center",
+  padding: "20px",
 };
 const modalWrap: CSSProperties = {
-  position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
   background: "#fff", borderRadius: 12,
-  width: 700, maxWidth: "calc(100vw - 32px)", maxHeight: "80vh",
+  width: 700, maxWidth: "100%", maxHeight: "80vh",
   display: "flex", flexDirection: "column",
   boxShadow: "0 20px 60px rgba(0,0,0,0.18)", zIndex: 1001, overflow: "hidden",
 };
