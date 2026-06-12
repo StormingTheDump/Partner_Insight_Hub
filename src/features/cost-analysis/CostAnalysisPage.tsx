@@ -1,10 +1,9 @@
-import type { PageProps } from "@/dashboard/routes";
 import { comboOption, hotelChainOption, simpleBarOption } from "@/data/chart-options";
 import { BaseChart } from "@/shared/charts/BaseChart";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-export function CostAnalysisPage(_: PageProps) {
+export function CostAnalysisPage() {
   return (
     <>
       <PageHeader title="成本分析" description="按预订维度分析渠道市场成本、折扣及交易额。" />

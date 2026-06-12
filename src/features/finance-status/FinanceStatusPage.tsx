@@ -1,4 +1,3 @@
-import type { PageProps } from "@/dashboard/routes";
 import { bills, financeSummary, settlementCalendar } from "@/data/finance";
 import { Card } from "@/shared/components/Card";
 import { DataTable } from "@/shared/components/DataTable";
@@ -24,7 +23,7 @@ const billColumns: TableColumn<(typeof bills)[number]>[] = [
   { key: "actions", header: "操作", render: () => <button className="button" type="button">查看</button> }
 ];
 
-export function FinanceStatusPage(_: PageProps) {
+export function FinanceStatusPage() {
   return (
     <>
       <PageHeader title="财务信息" description="监控信用敞口、即将到来的结算事件及未结账单。" />

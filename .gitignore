@@ -9,8 +9,10 @@ lerna-debug.log*
 
 node_modules
 
-# Database (generated locally via init_db.py)
+# Database (generated locally)
 backend/pih.db
+backend/orders.db
+backend/node_modules/
 
 # Python
 __pycache__/

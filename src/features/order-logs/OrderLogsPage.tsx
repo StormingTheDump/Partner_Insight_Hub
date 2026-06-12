@@ -1,6 +1,5 @@
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { PageProps } from "@/dashboard/routes";
 import { orderLogs, type OrderLog } from "@/data/order-logs";
 import { includesText } from "@/data/formatters";
 import { Button } from "@/shared/components/Button";
@@ -19,7 +18,7 @@ function statusTone(value: string): Tone {
   return "neutral";
 }
 
-export function OrderLogsPage(_: PageProps) {
+export function OrderLogsPage() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<OrderLog | null>(null);
   const rows = useMemo(() => orderLogs.filter((row) => includesText([row.orderNo, row.hotel, row.feed, row.priceCheck, row.booking, row.traceIds], query)), [query]);

@@ -2,13 +2,12 @@ import type { ComponentType } from "react";
 import type { PageId } from "@/dashboard/app-state";
 import { ApiPerformancePage } from "@/features/api-performance/ApiPerformancePage";
 import { BookingsPage } from "@/features/bookings/BookingsPage";
+import { ChannelMappingPage } from "@/features/channel-mapping/ChannelMappingPage";
 import { ContactPage } from "@/features/contact/ContactPage";
-import { CostAnalysisPage } from "@/features/cost-analysis/CostAnalysisPage";
 import { DidaApiPage } from "@/features/dida-api/DidaApiPage";
 import { ErrorsPage } from "@/features/errors/ErrorsPage";
 import { FinanceStatusPage } from "@/features/finance-status/FinanceStatusPage";
 import { InventoryPage } from "@/features/inventory/InventoryPage";
-import { MarketplaceAnalyticsPage } from "@/features/marketplace-analytics/MarketplaceAnalyticsPage";
 import { MarketplaceConfigurationPage } from "@/features/marketplace-configuration/MarketplaceConfigurationPage";
 import { OrderLogsPage } from "@/features/order-logs/OrderLogsPage";
 import { OverviewPage } from "@/features/overview/OverviewPage";
@@ -28,8 +27,7 @@ export const routes: Record<PageId, ComponentType<PageProps>> = {
   errors: ErrorsPage,
   inventory: InventoryPage,
   configuration: MarketplaceConfigurationPage,
-  analytics: MarketplaceAnalyticsPage,
-  cost: CostAnalysisPage,
+  "channel-mapping": ChannelMappingPage,
   finance: FinanceStatusPage,
   "order-logs": OrderLogsPage,
   bookings: BookingsPage,
