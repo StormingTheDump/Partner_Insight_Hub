@@ -220,7 +220,7 @@ def _seed_channel_hot_sales(conn):
         channel_id = channel_ids[i % len(channel_ids)]
         loc        = locations[i % len(locations)]
         country, city, addr_tpl = loc
-        hotel_id   = f"HS{country[:1]}{str(i + 1).zfill(5)}"
+        hotel_id   = f"HID{str(i + 1).zfill(5)}"
         num1       = rng.randint(1, 999)
         num2       = rng.randint(1, 99)
         try:
