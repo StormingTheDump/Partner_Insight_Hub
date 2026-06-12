@@ -76,10 +76,25 @@ def init_tables():
         )
     """)
 
+    # ── 渠道热销表 ────────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS channel_hot_sales (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            channel_id TEXT    NOT NULL,
+            hotel_id   TEXT    NOT NULL,
+            country    TEXT    NOT NULL,
+            city       TEXT    NOT NULL,
+            address    TEXT    NOT NULL,
+            updated_at TEXT    NOT NULL DEFAULT (datetime('now')),
+            UNIQUE(channel_id, hotel_id)
+        )
+    """)
+
     conn.commit()
     _seed_dida_contacts(conn)
     _seed_my_contacts(conn)
     _seed_channel_mappings(conn)
+    _seed_channel_hot_sales(conn)
     conn.close()
 
 
@@ -159,4 +174,65 @@ def _seed_my_contacts(conn):
             "INSERT INTO my_contacts (type, name, role, email, phone, wechat, sort_order) VALUES (?,?,?,?,?,?,?)",
             row,
         )
+    conn.commit()
+
+
+def _seed_channel_hot_sales(conn):
+    count = conn.execute("SELECT COUNT(*) FROM channel_hot_sales").fetchone()[0]
+    if count > 0:
+        return
+
+    import random, datetime
+    rng = random.Random(99)
+
+    channel_ids = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"]
+
+    # (country, city, address_template)
+    locations = [
+        ("中国", "北京",   "朝阳区建国路 {} 号"),
+        ("中国", "上海",   "浦东新区陆家嘴环路 {} 号"),
+        ("中国", "广州",   "天河区天河路 {} 号"),
+        ("中国", "成都",   "锦江区春熙路 {} 号"),
+        ("中国", "杭州",   "西湖区延安路 {} 号"),
+        ("中国", "深圳",   "南山区深南大道 {} 号"),
+        ("日本", "东京",   "新宿区歌舞伎町 {}-{}"),
+        ("日本", "大阪",   "中央区道顿堀 {} 番地"),
+        ("日本", "京都",   "下京区四条通 {} 町"),
+        ("泰国", "曼谷",   "Sukhumvit Rd Soi {} Bangkok"),
+        ("泰国", "普吉",   "Patong Beach Rd {} Kathu Phuket"),
+        ("新加坡", "新加坡", "Orchard Road # {}-{}"),
+        ("韩国", "首尔",   "中区明洞 {} 街"),
+        ("韩国", "釜山",   "海云台区海水욕场路 {} 号"),
+        ("马来西亚", "吉隆坡", "Jalan Bukit Bintang {} KL"),
+        ("印度尼西亚", "巴厘岛", "Legian Street No.{} Kuta Bali"),
+        ("越南", "胡志明市", "Dong Khoi Street {} District 1"),
+        ("越南", "河内",   "Hoan Kiem {} Hanoi"),
+        ("澳大利亚", "悉尼",  "{} George Street Sydney NSW"),
+        ("阿联酋", "迪拜",  "Sheikh Zayed Road {} Dubai"),
+    ]
+
+    start = datetime.date(2026, 4, 1)
+    end   = datetime.date(2026, 6, 30)
+    span  = (end - start).days
+
+    rows = []
+    for i in range(1000):
+        channel_id = channel_ids[i % len(channel_ids)]
+        loc        = locations[i % len(locations)]
+        country, city, addr_tpl = loc
+        hotel_id   = f"HS{country[:1]}{str(i + 1).zfill(5)}"
+        num1       = rng.randint(1, 999)
+        num2       = rng.randint(1, 99)
+        try:
+            address = addr_tpl.format(num1, num2)
+        except IndexError:
+            address = addr_tpl.format(num1)
+        days       = int(rng.random() * span)
+        updated_at = (start + datetime.timedelta(days=days)).strftime("%Y-%m-%d")
+        rows.append((channel_id, hotel_id, country, city, address, updated_at))
+
+    conn.executemany(
+        "INSERT OR IGNORE INTO channel_hot_sales (channel_id, hotel_id, country, city, address, updated_at) VALUES (?,?,?,?,?,?)",
+        rows,
+    )
     conn.commit()

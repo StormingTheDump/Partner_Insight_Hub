@@ -3,6 +3,7 @@ import type { PageId } from "@/dashboard/app-state";
 import { ApiPerformancePage } from "@/features/api-performance/ApiPerformancePage";
 import { BookingsPage } from "@/features/bookings/BookingsPage";
 import { ChannelMappingPage } from "@/features/channel-mapping/ChannelMappingPage";
+import { HotSalesPage } from "@/features/hot-sales/HotSalesPage";
 import { ContactPage } from "@/features/contact/ContactPage";
 import { DidaApiPage } from "@/features/dida-api/DidaApiPage";
 import { ErrorsPage } from "@/features/errors/ErrorsPage";
@@ -28,6 +29,7 @@ export const routes: Record<PageId, ComponentType<PageProps>> = {
   inventory: InventoryPage,
   configuration: MarketplaceConfigurationPage,
   "channel-mapping": ChannelMappingPage,
+  "hot-sales": HotSalesPage,
   finance: FinanceStatusPage,
   "order-logs": OrderLogsPage,
   bookings: BookingsPage,

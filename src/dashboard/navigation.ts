@@ -4,6 +4,7 @@ import {
   CalendarDays,
   Code2,
   FileText,
+  Flame,
   GitMerge,
   Home,
   ListTree,
@@ -51,6 +52,7 @@ export const navSections: NavSection[] = [
     items: [
       { id: "configuration",    label: "渠道配置",  icon: Store,       badge: "已激活", badgeTone: "active" },
       { id: "channel-mapping",  label: "渠道匹配",  icon: GitMerge },
+      { id: "hot-sales",        label: "渠道热销",  icon: Flame },
       { id: "finance",          label: "财务信息",  icon: WalletCards },
       { id: "order-logs",    label: "订单日志", icon: ListTree },
       { id: "bookings",      label: "订单管理", icon: CalendarDays },

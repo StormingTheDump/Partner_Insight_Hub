@@ -9,6 +9,7 @@ export type PageId =
   | "inventory"
   | "configuration"
   | "channel-mapping"
+  | "hot-sales"
   | "finance"
   | "order-logs"
   | "bookings"

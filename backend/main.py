@@ -432,3 +432,112 @@ async def upload_channel_mapping(file: UploadFile = File(...)):
     conn.commit()
     conn.close()
     return {"added": added, "conflicts": conflict_errors}
+
+
+# ── 渠道热销 ─────────────────────────────────────────────────────
+
+@app.get("/api/hot-sales")
+def get_hot_sales(
+    channel_id: str = "",
+    hotel_id:   str = "",
+    country:    str = "",
+    city:       str = "",
+):
+    conn = get_connection()
+    query = "SELECT * FROM channel_hot_sales WHERE 1=1"
+    params: list = []
+    if channel_id.strip():
+        query += " AND channel_id = ?"
+        params.append(channel_id.strip())
+    if hotel_id.strip():
+        query += " AND hotel_id LIKE ?"
+        params.append(f"%{hotel_id.strip()}%")
+    if country.strip():
+        query += " AND country = ?"
+        params.append(country.strip())
+    if city.strip():
+        query += " AND city LIKE ?"
+        params.append(f"%{city.strip()}%")
+    query += " ORDER BY id"
+    rows = conn.execute(query, params).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+@app.get("/api/hot-sales/stats")
+def get_hot_sales_stats():
+    conn = get_connection()
+    total     = conn.execute("SELECT COUNT(*) FROM channel_hot_sales").fetchone()[0]
+    countries = conn.execute("SELECT COUNT(DISTINCT country) FROM channel_hot_sales").fetchone()[0]
+    conn.close()
+    matched   = round(total * 0.54)
+    return {"total": total, "matched": matched, "countries": countries}
+
+
+@app.post("/api/hot-sales/upload")
+async def upload_hot_sales(file: UploadFile = File(...)):
+    import openpyxl, io
+
+    if not file.filename.endswith((".xlsx", ".xls")):
+        raise HTTPException(status_code=400, detail="请上传 Excel 文件（.xlsx 或 .xls）")
+
+    content = await file.read()
+    try:
+        wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Excel 文件解析失败，请检查文件格式")
+
+    ws = wb.active
+    upload_rows: list[tuple] = []
+    parse_errors: list[str] = []
+
+    for i, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        if not any(c for c in row[:5] if c is not None):
+            continue
+        try:
+            channel_id = str(row[0]).strip()
+            hotel_id   = str(row[1]).strip()
+            country    = str(row[2]).strip()
+            city       = str(row[3]).strip()
+            address    = str(row[4]).strip()
+            if not channel_id or not hotel_id or not country or not city:
+                raise ValueError
+            upload_rows.append((channel_id, hotel_id, country, city, address))
+        except (TypeError, ValueError, IndexError):
+            parse_errors.append(f"第 {i} 行数据格式错误（需要：渠道ID / 酒店ID / 酒店国家 / 酒店城市 / 酒店地址）")
+
+    if parse_errors:
+        raise HTTPException(status_code=400, detail="；".join(parse_errors[:5]))
+
+    # 校验文件内部无重复 (channel_id, hotel_id)
+    seen: dict[tuple, str] = {}
+    dup_errors: list[str] = []
+    for channel_id, hotel_id, *_ in upload_rows:
+        key = (channel_id, hotel_id)
+        if key in seen:
+            dup_errors.append(f"渠道 {channel_id} 的酒店 {hotel_id} 在文件中重复")
+        seen[key] = hotel_id
+    if dup_errors:
+        raise HTTPException(status_code=400, detail="文件中存在重复数据：" + "；".join(dup_errors[:5]))
+
+    conn = get_connection()
+    added = 0
+    skipped = 0
+
+    for channel_id, hotel_id, country, city, address in upload_rows:
+        existing = conn.execute(
+            "SELECT id FROM channel_hot_sales WHERE channel_id=? AND hotel_id=?",
+            (channel_id, hotel_id),
+        ).fetchone()
+        if existing:
+            skipped += 1
+            continue
+        conn.execute(
+            "INSERT INTO channel_hot_sales (channel_id, hotel_id, country, city, address, updated_at) VALUES (?,?,?,?,?,date('now'))",
+            (channel_id, hotel_id, country, city, address),
+        )
+        added += 1
+
+    conn.commit()
+    conn.close()
+    return {"added": added, "skipped": skipped}
