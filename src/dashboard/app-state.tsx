@@ -14,7 +14,9 @@ export type PageId =
   | "order-logs"
   | "bookings"
   | "contact"
-  | "dida-api";
+  | "dida-api"
+  | "hot-hotels"
+  | "direct-hotels";
 
 type AppState = {
   activePage: PageId;

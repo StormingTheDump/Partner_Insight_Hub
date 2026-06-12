@@ -1,5 +1,6 @@
 import {
   Activity,
+  Award,
   BarChart3,
   CalendarDays,
   Code2,
@@ -10,6 +11,7 @@ import {
   ListTree,
   MessageCircle,
   ScrollText,
+  Star,
   Store,
   TrendingUp,
   WalletCards,
@@ -59,7 +61,14 @@ export const navSections: NavSection[] = [
     ],
   },
   {
-    title: "支持与资源",
+    title: "Dida 营销",
+    items: [
+      { id: "hot-hotels",    label: "热销酒店推荐", icon: Star  },
+      { id: "direct-hotels", label: "直采推荐",     icon: Award },
+    ],
+  },
+  {
+    title: "支持与帮助",
     items: [
       { id: "contact", label: "联系方式", icon: MessageCircle },
       { id: "dida-api", label: "Dida API", icon: Code2 },

@@ -62,8 +62,8 @@ export default function Login({ onLogin }: Props) {
 
           {/* Headline */}
           <div style={headline}>
-            高价值的旅游资源
-            <br />分发服务商
+            AI 驱动的旅游资源
+            <br />智能分发服务商
           </div>
 
           {/* Pills */}
@@ -211,7 +211,7 @@ const page: React.CSSProperties = {
 /* ── Brand panel ── */
 const brand: React.CSSProperties = {
   flex: '0 0 52%',
-  background: 'linear-gradient(145deg, #000947 0%, #0b1770 60%, #1a0a2e 100%)',
+  background: 'linear-gradient(150deg, #ffffff 0%, #fff7f9 35%, #ffecf0 65%, #ffd9e4 100%)',
   position: 'relative',
   overflow: 'hidden',
   display: 'flex',
@@ -223,24 +223,24 @@ const brand: React.CSSProperties = {
 /* decorative circles */
 const deco1: React.CSSProperties = {
   position: 'absolute', top: -80, right: -80,
-  width: 340, height: 340, borderRadius: '50%',
-  background: 'rgba(234,3,69,0.18)',
-  filter: 'blur(1px)',
+  width: 380, height: 380, borderRadius: '50%',
+  background: 'rgba(234,3,69,0.10)',
+  filter: 'blur(60px)',
 };
 const deco2: React.CSSProperties = {
   position: 'absolute', bottom: -100, left: -60,
   width: 280, height: 280, borderRadius: '50%',
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: 'rgba(234,3,69,0.04)',
+  border: '1px solid rgba(234,3,69,0.09)',
 };
 const deco3: React.CSSProperties = {
   position: 'absolute', top: '38%', right: 60,
   width: 120, height: 120, borderRadius: '50%',
-  border: '1.5px solid rgba(234,3,69,0.35)',
+  border: '1.5px solid rgba(234,3,69,0.16)',
 };
 const dotGrid: React.CSSProperties = {
   position: 'absolute', inset: 0,
-  backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)',
+  backgroundImage: 'radial-gradient(circle, rgba(234,3,69,0.06) 1px, transparent 1px)',
   backgroundSize: '28px 28px',
 };
 
@@ -250,31 +250,30 @@ const brandInner: React.CSSProperties = {
 };
 
 const logo: React.CSSProperties = {
-  height: 44, display: 'block', marginBottom: 52,
-  filter: 'brightness(0) invert(1)',
+  height: 210, display: 'block', marginBottom: 28,
 };
 
 const headline: React.CSSProperties = {
-  fontSize: 36, fontWeight: 800, lineHeight: 1.25,
-  color: '#fff', letterSpacing: '-0.01em', marginBottom: 20,
+  fontSize: 54, fontWeight: 800, lineHeight: 1.25,
+  color: '#000947', letterSpacing: '-0.01em', marginBottom: 20,
 };
 
 const pills: React.CSSProperties = {
   display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24,
 };
 const pill: React.CSSProperties = {
-  fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.9)',
-  background: 'rgba(255,255,255,0.1)',
-  border: '1px solid rgba(255,255,255,0.2)',
+  fontSize: 13, fontWeight: 700, color: '#ea0345',
+  background: 'rgba(234,3,69,0.07)',
+  border: '1px solid rgba(234,3,69,0.18)',
   borderRadius: 99, padding: '3px 12px',
 };
 const pipeSep: React.CSSProperties = {
-  color: 'rgba(255,255,255,0.25)', fontSize: 12,
+  color: 'rgba(0,9,71,0.20)', fontSize: 12,
 };
 
 const desc: React.CSSProperties = {
-  fontSize: 13.5, lineHeight: 1.75, color: 'rgba(255,255,255,0.6)',
-  margin: '0 0 40px 0', maxWidth: 360,
+  fontSize: 13.5, lineHeight: 1.75, color: 'rgba(0,9,71,0.55)',
+  margin: '0 0 32px 0', maxWidth: 360,
 };
 
 const features: React.CSSProperties = {
@@ -285,23 +284,23 @@ const featureItem: React.CSSProperties = {
 };
 const featureIcon: React.CSSProperties = {
   fontSize: 22, width: 40, height: 40,
-  background: 'rgba(255,255,255,0.08)',
-  border: '1px solid rgba(255,255,255,0.12)',
+  background: 'rgba(234,3,69,0.06)',
+  border: '1px solid rgba(234,3,69,0.13)',
   borderRadius: 10,
   display: 'flex', alignItems: 'center', justifyContent: 'center',
   flexShrink: 0,
 };
 const featureLabel: React.CSSProperties = {
-  fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 2,
+  fontSize: 13, fontWeight: 700, color: '#000947', marginBottom: 2,
 };
 const featureSub: React.CSSProperties = {
-  fontSize: 12, color: 'rgba(255,255,255,0.5)',
+  fontSize: 12, color: 'rgba(0,9,71,0.45)',
 };
 
 const brandFooter: React.CSSProperties = {
   position: 'relative', zIndex: 1,
-  fontSize: 11, color: 'rgba(255,255,255,0.3)',
-  paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.08)',
+  fontSize: 11, color: 'rgba(0,9,71,0.32)',
+  paddingTop: 24, borderTop: '1px solid rgba(234,3,69,0.10)',
 };
 
 /* ── Form panel ── */

@@ -14,6 +14,8 @@ import { OrderLogsPage } from "@/features/order-logs/OrderLogsPage";
 import { OverviewPage } from "@/features/overview/OverviewPage";
 import { PerformancePage } from "@/features/performance/PerformancePage";
 import { ReportsPage } from "@/features/reports/ReportsPage";
+import { HotHotelsPage } from "@/features/hot-hotels/HotHotelsPage";
+import { DirectHotelsPage } from "@/features/direct-hotels/DirectHotelsPage";
 
 export type PageProps = {
   selectedFeed: string;
@@ -35,4 +37,6 @@ export const routes: Record<PageId, ComponentType<PageProps>> = {
   bookings: BookingsPage,
   contact: ContactPage,
   "dida-api": DidaApiPage,
+  "hot-hotels": HotHotelsPage,
+  "direct-hotels": DirectHotelsPage,
 };

@@ -4,6 +4,7 @@ import "@/styles/layout.css";
 
 import {
   Bell,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Filter,
@@ -273,6 +274,16 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
     setDateRange,
   } = useAppState();
 
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+
+  const toggleSection = (title: string) => {
+    setExpandedSections(prev => {
+      const next = new Set(prev);
+      next.has(title) ? next.delete(title) : next.add(title);
+      return next;
+    });
+  };
+
   const [clientIdOptions, setClientIdOptions] = useState<string[]>([]);
 
   useEffect(() => {
@@ -296,10 +307,22 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
         </div>
 
         <nav className="nav">
-          {navSections.map((section) => (
+          {navSections.map((section) => {
+            const isOpen = collapsed || expandedSections.has(section.title);
+            return (
             <div className="nav-section" key={section.title}>
-              <p className="section-title">{section.title}</p>
-              {section.items.map((item) => {
+              <button
+                type="button"
+                className="section-header"
+                onClick={() => toggleSection(section.title)}
+              >
+                <span className="section-title">{section.title}</span>
+                <ChevronDown
+                  className={`section-chevron${isOpen ? " open" : ""}`}
+                  size={13}
+                />
+              </button>
+              {isOpen && section.items.map((item) => {
                 const Icon = item.icon;
                 return (
                   <button
@@ -320,7 +343,8 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
                 );
               })}
             </div>
-          ))}
+            );
+          })}
         </nav>
 
         <button
