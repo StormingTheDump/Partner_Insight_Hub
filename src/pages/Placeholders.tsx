@@ -40,18 +40,6 @@ export function MatchingPage() {
   );
 }
 
-export function FinancePage() {
-  return (
-    <PlaceholderPage
-      icon="💰"
-      title="财务信息"
-      description="展示押金、保险、授信额度、剩余额度，以及账期、未结算金额、月度账单下载等财务信息。"
-      iconBg="#f5edff"
-      iconColor="#8b35ff"
-    />
-  );
-}
-
 export function ContactPage() {
   return (
     <PlaceholderPage

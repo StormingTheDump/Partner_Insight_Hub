@@ -7,7 +7,8 @@ import DashboardLayout from './components/DashboardLayout';
 import MetricsPage from './pages/Metrics';
 import OrderManagementPage from './pages/OrderManagement';
 import LogsPage from './pages/Logs';
-import { MatchingPage, FinancePage, ContactPage } from './pages/Placeholders';
+import { MatchingPage, ContactPage } from './pages/Placeholders';
+import FinancePage from './pages/Finance';
 import type { User } from './data/users';
 
 export default function App() {
