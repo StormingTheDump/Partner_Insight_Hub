@@ -33,7 +33,7 @@ export const navSections: NavSection[] = [
   {
     title: "业务指标",
     items: [
-      { id: "overview",    label: "概览",     icon: Home },
+      { id: "overview",    label: "业务概览", icon: Home },
       { id: "performance", label: "业绩表现", icon: BarChart3 },
     ],
   },

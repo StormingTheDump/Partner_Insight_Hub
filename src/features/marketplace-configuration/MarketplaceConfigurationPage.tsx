@@ -282,7 +282,7 @@ const cardWrap: CSSProperties = {
 const cardHead: CSSProperties = {
   display: "flex", alignItems: "center", justifyContent: "space-between",
   padding: "16px 22px",
-  background: "linear-gradient(135deg, #000947 0%, #1a237e 100%)",
+  background: "linear-gradient(135deg, #4f5fb8 0%, #818cf8 100%)",
 };
 const cardBody: CSSProperties = {
   display: "grid",
