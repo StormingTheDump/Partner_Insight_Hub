@@ -132,14 +132,14 @@ function PaginationBar({ meta, onPageChange }: { meta: PaginationMeta; onPageCha
 
 const TH_STYLE: React.CSSProperties = {
   position: "sticky",
-  top: "var(--topbar-height)" as string,
+  top: 0,          // 0 = relative to .table-wrap scroll area (not viewport)
   zIndex: 2,
   background: "#f8fafd",
   color: "#526078",
   fontSize: 12,
   fontWeight: 800,
   padding: "11px 13px",
-  borderBottom: "1px solid var(--line-soft)",
+  borderBottom: "2px solid var(--line)",
   whiteSpace: "nowrap",
   verticalAlign: "middle",
   textAlign: "left",
@@ -275,13 +275,14 @@ export function BookingsPage() {
             value={orderQuery}
             onChange={(e) => setOrderQuery(e.target.value)}
             placeholder="支持任意订单号检索（逗号、空格或换行分隔批量查询）"
-            rows={2}
+            rows={3}
             style={{
               border: 0,
               outline: 0,
               background: "transparent",
               resize: "vertical",
               minWidth: 340,
+              padding: "3px 0",
               fontFamily: "inherit",
               fontSize: "inherit",
               color: "inherit",
@@ -296,7 +297,7 @@ export function BookingsPage() {
         <div className="empty-state">加载中…</div>
       ) : (
         <>
-          <div className="table-wrap">
+          <div className="table-wrap" style={{ maxHeight: "calc(100vh - 360px)", overflowY: "auto" }}>
             <table
               style={{
                 width: "100%",
