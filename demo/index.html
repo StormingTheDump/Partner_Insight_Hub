@@ -870,7 +870,6 @@
           <button class="nav-item" data-page="finance"><i data-lucide="wallet-cards"></i><span class="nav-label">Finance Status</span></button>
           <button class="nav-item" data-page="order-logs"><i data-lucide="list-tree"></i><span class="nav-label">Order Logs</span></button>
           <button class="nav-item" data-page="bookings"><i data-lucide="calendar-days"></i><span class="nav-label">Bookings</span></button>
-          <button class="nav-item" data-page="order-details"><i data-lucide="table-2"></i><span class="nav-label">Order Details</span></button>
         </div>
       </nav>
       <button class="collapse" aria-label="Collapse sidebar"><i data-lucide="chevron-left"></i></button>
@@ -1275,17 +1274,6 @@
           <div><h1>Bookings</h1><p>View your bookings with DIDA.</p></div>
           <button class="button" id="bookingsExportBtn"><i data-lucide="download"></i>Export to CSV</button>
         </div>
-        <div class="filters">
-          <div class="dp-wrap" id="bookingsFilterWrap">
-            <button class="control" id="bookingsFilterBtn"><i data-lucide="filter"></i><span id="bookingsFilterText">All Client IDs</span><i data-lucide="chevron-down"></i></button>
-            <div class="feed-panel hidden" id="bookingsFilterPanel">
-              <label class="feed-opt all-opt" id="bookingsFilterAll">
-                <input type="radio" name="bkClientId" value="" checked> <strong>All Client IDs</strong>
-              </label>
-              <div id="bookingsClientList"></div>
-            </div>
-          </div>
-        </div>
         <div id="bookingsState"></div>
         <div class="table-wrap" id="bookingsWrap" style="display:none">
           <table>
@@ -1313,33 +1301,6 @@
         <article class="card"><h1>Custom Reports</h1><p>This module is marked Soon in the source dashboard. Use this space for report templates and scheduled exports.</p></article>
       </section>
 
-      <section class="page" id="order-details">
-        <div class="page-title">
-          <div><h1>Order Details</h1><p>Order detail records fetched from the backend database.</p></div>
-          <button class="button" id="orderDetailsRefresh"><i data-lucide="refresh-cw"></i>Refresh</button>
-        </div>
-        <div id="orderDetailsState"></div>
-        <div class="table-wrap" id="orderDetailsWrap" style="display:none">
-          <table>
-            <thead>
-              <tr>
-                <th>Client Reference</th>
-                <th>Dida No.</th>
-                <th>Channel Status</th>
-                <th>Dida Hotel ID</th>
-                <th>Client Hotel ID</th>
-                <th>Dida Hotel Name</th>
-                <th class="num">Price</th>
-                <th>Client ID</th>
-                <th>Channel Create Time</th>
-                <th>CheckIn Date</th>
-                <th>CheckOut Date</th>
-              </tr>
-            </thead>
-            <tbody id="orderDetailsRows"></tbody>
-          </table>
-        </div>
-      </section>
     </main>
   </div>
   <button class="support" aria-label="Support"><i data-lucide="headphones"></i></button>
@@ -1594,80 +1555,73 @@
     renderCharts();
     if (window.lucide) lucide.createIcons();
 
-    const ORDER_DETAILS_API = "http://localhost:3001/api/orders";
-    let orderDetailsLoaded = false;
+    /* ===== BOOKINGS PAGE ===== */
+    const BOOKINGS_API = "http://localhost:3001/api/orders";
 
     function statusClass(s) {
       if (s === "Confirmed") return "status";
       if (s === "Canceled") return "status warning";
       return "status danger";
     }
-
-    function renderOrderDetails(rows) {
-      const tbody = document.getElementById("orderDetailsRows");
-      tbody.innerHTML = rows.map(r => `
-        <tr>
-          <td>${r.client_ref}</td>
-          <td>${r.dida_ref}</td>
-          <td><span class="${statusClass(r.channel_status)}">${r.channel_status}</span></td>
-          <td>${r.dida_hotel_id}</td>
-          <td>${r.client_hotel_id}</td>
-          <td>${r.dida_hotel_name}</td>
-          <td class="num">${r.price}</td>
-          <td>${r.client_id}</td>
-          <td>${r.channel_create_time}</td>
-          <td>${r.checkin_date}</td>
-          <td>${r.checkout_date}</td>
-        </tr>`).join("");
-      document.getElementById("orderDetailsWrap").style.display = "";
-      document.getElementById("orderDetailsState").innerHTML = "";
-    }
-
-    function loadOrderDetails() {
-      const state = document.getElementById("orderDetailsState");
-      const wrap = document.getElementById("orderDetailsWrap");
-      wrap.style.display = "none";
-      state.innerHTML = `<div class="card" style="text-align:center;padding:40px;color:var(--muted)">Loading order details…</div>`;
-      fetch(ORDER_DETAILS_API)
-        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-        .then(json => {
-          const rows = json.data || [];
-          if (rows.length === 0) {
-            state.innerHTML = `<div class="card" style="text-align:center;padding:48px;color:var(--muted)">No order records found.</div>`;
-          } else {
-            renderOrderDetails(rows);
-          }
-          orderDetailsLoaded = true;
-        })
-        .catch(err => {
-          state.innerHTML = `<div class="card blue-alert" style="padding:20px">
-            <strong>Failed to load order details.</strong><br>
-            <span class="muted tiny">Make sure the backend is running at <code>http://localhost:3001</code> — Error: ${err.message}</span>
-          </div>`;
-        });
-    }
-
-    document.getElementById("orderDetailsRefresh").addEventListener("click", loadOrderDetails);
-
-    document.querySelectorAll(".nav-item").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (btn.dataset.page === "order-details" && !orderDetailsLoaded) {
-          loadOrderDetails();
-        }
-      });
-    });
-
-    /* ===== BOOKINGS PAGE ===== */
-    const BOOKINGS_API = "http://localhost:3001/api/orders";
     let allBookingsData = [];
     let bookingsLoaded = false;
-    let activeBookingClientId = "";
+
+    function getCheckedClientIds() {
+      return new Set([...document.querySelectorAll(".bk-client-chk:checked")].map(c => c.value));
+    }
 
     function applyBookingsFilter() {
-      const filtered = activeBookingClientId
-        ? allBookingsData.filter(r => r.client_id === activeBookingClientId)
-        : allBookingsData;
+      const checked = getCheckedClientIds();
+      const allIds = new Set(allBookingsData.map(r => r.client_id));
+      const filtered = (checked.size === 0 || checked.size === allIds.size)
+        ? allBookingsData
+        : allBookingsData.filter(r => checked.has(r.client_id));
       renderBookingsTable(filtered);
+    }
+
+    function updateFeedBtnLabel() {
+      const checked = getCheckedClientIds();
+      const allIds = new Set(allBookingsData.map(r => r.client_id));
+      const btn = document.getElementById("feedBtnText");
+      if (checked.size === 0 || checked.size === allIds.size) btn.textContent = "All Client IDs";
+      else if (checked.size === 1) btn.textContent = [...checked][0];
+      else btn.textContent = checked.size + " Client IDs";
+    }
+
+    function onBkClientChkChange() {
+      const allChecks = [...document.querySelectorAll(".bk-client-chk")];
+      document.getElementById("chkAll").checked = allChecks.every(c => c.checked);
+      updateFeedBtnLabel();
+      applyBookingsFilter();
+    }
+
+    function onBkChkAllChange() {
+      const on = document.getElementById("chkAll").checked;
+      document.querySelectorAll(".bk-client-chk").forEach(c => c.checked = on);
+      document.getElementById("feedBtnText").textContent = "All Client IDs";
+      applyBookingsFilter();
+    }
+
+    function enterBookingsPage() {
+      const ids = [...new Set(allBookingsData.map(r => r.client_id))].sort();
+      document.getElementById("feedList").innerHTML = ids.map(id => `
+        <label class="feed-opt">
+          <input type="checkbox" class="bk-client-chk" value="${id}" checked>
+          <span class="feed-dot" style="background:#4f5fb8"></span> ${id}
+        </label>`).join("");
+      document.querySelector("#feedPanel .all-opt strong").textContent = "All Client IDs";
+      document.getElementById("feedBtnText").textContent = "All Client IDs";
+      document.getElementById("chkAll").checked = true;
+      document.getElementById("chkAll").addEventListener("change", onBkChkAllChange);
+      document.querySelectorAll(".bk-client-chk").forEach(c => c.addEventListener("change", onBkClientChkChange));
+    }
+
+    function leaveBookingsPage() {
+      document.getElementById("feedList").innerHTML = "";
+      document.querySelector("#feedPanel .all-opt strong").textContent = "All feeds";
+      document.getElementById("feedBtnText").textContent = "All feeds";
+      document.getElementById("chkAll").checked = true;
+      document.getElementById("chkAll").removeEventListener("change", onBkChkAllChange);
     }
 
     function renderBookingsTable(rows) {
@@ -1696,22 +1650,6 @@
       state.innerHTML = "";
     }
 
-    function populateBookingsClientFilter(rows) {
-      const ids = [...new Set(rows.map(r => r.client_id))].sort();
-      document.getElementById("bookingsClientList").innerHTML = ids.map(id => `
-        <label class="feed-opt">
-          <input type="radio" name="bkClientId" value="${id}"> ${id}
-        </label>`).join("");
-      document.querySelectorAll("input[name='bkClientId']").forEach(radio => {
-        radio.addEventListener("change", () => {
-          activeBookingClientId = radio.value;
-          document.getElementById("bookingsFilterText").textContent = radio.value || "All Client IDs";
-          document.getElementById("bookingsFilterPanel").classList.add("hidden");
-          applyBookingsFilter();
-        });
-      });
-    }
-
     function loadBookings() {
       const state = document.getElementById("bookingsState");
       const wrap = document.getElementById("bookingsWrap");
@@ -1721,9 +1659,9 @@
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
         .then(json => {
           allBookingsData = json.data || [];
-          populateBookingsClientFilter(allBookingsData);
-          renderBookingsTable(allBookingsData);
           bookingsLoaded = true;
+          enterBookingsPage();
+          renderBookingsTable(allBookingsData);
         })
         .catch(err => {
           state.innerHTML = `<div class="card blue-alert" style="padding:20px">
@@ -1733,23 +1671,13 @@
         });
     }
 
-    document.getElementById("bookingsFilterBtn").addEventListener("click", e => {
-      e.stopPropagation();
-      document.getElementById("bookingsFilterPanel").classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", e => {
-      const wrap = document.getElementById("bookingsFilterWrap");
-      if (!wrap.contains(e.target)) {
-        document.getElementById("bookingsFilterPanel").classList.add("hidden");
-      }
-    });
-
     document.getElementById("bookingsExportBtn").addEventListener("click", () => {
       if (!bookingsLoaded || allBookingsData.length === 0) return;
-      const filtered = activeBookingClientId
-        ? allBookingsData.filter(r => r.client_id === activeBookingClientId)
-        : allBookingsData;
+      const checked = getCheckedClientIds();
+      const allIds = new Set(allBookingsData.map(r => r.client_id));
+      const filtered = (checked.size === 0 || checked.size === allIds.size)
+        ? allBookingsData
+        : allBookingsData.filter(r => checked.has(r.client_id));
       const cols = ["client_ref","dida_ref","channel_status","dida_hotel_id","client_hotel_id","dida_hotel_name","price","client_id","channel_create_time","checkin_date","checkout_date"];
       const headers = ["Client Reference","Dida No.","Channel Status","Dida Hotel ID","Client Hotel ID","Dida Hotel Name","Price","Client ID","Channel Create Time","CheckIn Date","CheckOut Date"];
       const csv = [
@@ -1760,7 +1688,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = activeBookingClientId ? `bookings_${activeBookingClientId}.csv` : "bookings_all.csv";
+      a.download = (checked.size === 1 ? `bookings_${[...checked][0]}` : "bookings_all") + ".csv";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1769,8 +1697,12 @@
 
     document.querySelectorAll(".nav-item").forEach(btn => {
       btn.addEventListener("click", () => {
-        if (btn.dataset.page === "bookings" && !bookingsLoaded) {
-          loadBookings();
+        const page = btn.dataset.page;
+        if (page === "bookings") {
+          if (!bookingsLoaded) loadBookings();
+          else enterBookingsPage();
+        } else if (bookingsLoaded) {
+          leaveBookingsPage();
         }
       });
     });
