@@ -1271,10 +1271,41 @@
       </section>
 
       <section class="page" id="bookings">
-        <div class="page-title"><div><h1>Bookings</h1><p>View your bookings with Nuitée.</p></div><button class="button"><i data-lucide="download"></i>Export to CSV</button></div>
-        <div class="table-wrap">
-          <table><thead><tr><th>ID</th><th>Hotel ID</th><th>Hotel Name</th><th>Feed</th><th class="num">Price</th><th>Adjustment %</th><th>Adj. amount</th><th>Check-in</th><th>Booking date</th></tr></thead>
-            <tbody id="bookingRows"></tbody></table>
+        <div class="page-title">
+          <div><h1>Bookings</h1><p>View your bookings with DIDA.</p></div>
+          <button class="button" id="bookingsExportBtn"><i data-lucide="download"></i>Export to CSV</button>
+        </div>
+        <div class="filters">
+          <div class="dp-wrap" id="bookingsFilterWrap">
+            <button class="control" id="bookingsFilterBtn"><i data-lucide="filter"></i><span id="bookingsFilterText">All Client IDs</span><i data-lucide="chevron-down"></i></button>
+            <div class="feed-panel hidden" id="bookingsFilterPanel">
+              <label class="feed-opt all-opt" id="bookingsFilterAll">
+                <input type="radio" name="bkClientId" value="" checked> <strong>All Client IDs</strong>
+              </label>
+              <div id="bookingsClientList"></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookingsState"></div>
+        <div class="table-wrap" id="bookingsWrap" style="display:none">
+          <table>
+            <thead>
+              <tr>
+                <th>Client Reference</th>
+                <th>Dida No.</th>
+                <th>Channel Status</th>
+                <th>Dida Hotel ID</th>
+                <th>Client Hotel ID</th>
+                <th>Dida Hotel Name</th>
+                <th class="num">Price</th>
+                <th>Client ID</th>
+                <th>Channel Create Time</th>
+                <th>CheckIn Date</th>
+                <th>CheckOut Date</th>
+              </tr>
+            </thead>
+            <tbody id="bookingRows"></tbody>
+          </table>
         </div>
       </section>
 
@@ -1536,11 +1567,7 @@
       const ql = document.getElementById("qualityLegend");
       if (ql) ql.innerHTML = [{name:"All feeds", color:"#3b82f6"}].concat(feeds).map(f => `<span><i class="dot" style="background:${f.color}"></i>${f.name}</span>`).join("");
     }
-    function renderBookings() {
-      const hotels = ["Comfort Inn Downtown", "Hampton Inn & Suites Raleigh Cary Lenovo Center", "Hilton Garden Inn Ames", "Hampton Inn Austin/Oak Hill", "The Lofton Hotel, Tapestry Collection by Hilton", "Hampton Inn Binghamton/Johnson City", "The Wylie Inn and Conference Center at Endicott College", "Hampton Inn Pampa", "Econo Lodge Whiteville", "Hilton Garden Inn Springfield, IL."];
-      const rows = hotels.map((h,i)=>`<tr><td>${1774107878+i*34421}</td><td>${[40204,44099,87149,621824,991378,84627,48454,111282,97131,1012902][i]}</td><td>${h}</td><td>${i%3===0?"HUB_Dida_NonTravel_BankOnly":"HUB_Dida_B2B"}</td><td class="num">$${(93+i*47.63).toFixed(2)}</td><td>${(.5+(i%5)*.4).toFixed(1)}%</td><td>$${(.74+i*.39).toFixed(2)}</td><td>Jun ${9+i}, 2026</td><td>Jun 10, 2026</td></tr>`).join("");
-      document.getElementById("bookingRows").innerHTML = rows;
-    }
+    function renderBookings() { /* replaced by loadBookings() */ }
     function renderOrderLogs() {
       const logs = [
         ["DIDA-20260610-88421", "Hampton Inn Binghamton/Johnson City", "HUB_Dida_B2B", "Passed", "Confirmed", "pc_91bf4 / bk_3de21", "Jun 10, 11:09:05"],
@@ -1626,6 +1653,124 @@
       btn.addEventListener("click", () => {
         if (btn.dataset.page === "order-details" && !orderDetailsLoaded) {
           loadOrderDetails();
+        }
+      });
+    });
+
+    /* ===== BOOKINGS PAGE ===== */
+    const BOOKINGS_API = "http://localhost:3001/api/orders";
+    let allBookingsData = [];
+    let bookingsLoaded = false;
+    let activeBookingClientId = "";
+
+    function applyBookingsFilter() {
+      const filtered = activeBookingClientId
+        ? allBookingsData.filter(r => r.client_id === activeBookingClientId)
+        : allBookingsData;
+      renderBookingsTable(filtered);
+    }
+
+    function renderBookingsTable(rows) {
+      const state = document.getElementById("bookingsState");
+      const wrap = document.getElementById("bookingsWrap");
+      if (rows.length === 0) {
+        wrap.style.display = "none";
+        state.innerHTML = `<div class="card" style="text-align:center;padding:48px;color:var(--muted)">No bookings found for this filter.</div>`;
+        return;
+      }
+      document.getElementById("bookingRows").innerHTML = rows.map(r => `
+        <tr>
+          <td>${r.client_ref}</td>
+          <td>${r.dida_ref}</td>
+          <td><span class="${statusClass(r.channel_status)}">${r.channel_status}</span></td>
+          <td>${r.dida_hotel_id}</td>
+          <td>${r.client_hotel_id}</td>
+          <td>${r.dida_hotel_name}</td>
+          <td class="num">${r.price}</td>
+          <td>${r.client_id}</td>
+          <td>${r.channel_create_time}</td>
+          <td>${r.checkin_date}</td>
+          <td>${r.checkout_date}</td>
+        </tr>`).join("");
+      wrap.style.display = "";
+      state.innerHTML = "";
+    }
+
+    function populateBookingsClientFilter(rows) {
+      const ids = [...new Set(rows.map(r => r.client_id))].sort();
+      document.getElementById("bookingsClientList").innerHTML = ids.map(id => `
+        <label class="feed-opt">
+          <input type="radio" name="bkClientId" value="${id}"> ${id}
+        </label>`).join("");
+      document.querySelectorAll("input[name='bkClientId']").forEach(radio => {
+        radio.addEventListener("change", () => {
+          activeBookingClientId = radio.value;
+          document.getElementById("bookingsFilterText").textContent = radio.value || "All Client IDs";
+          document.getElementById("bookingsFilterPanel").classList.add("hidden");
+          applyBookingsFilter();
+        });
+      });
+    }
+
+    function loadBookings() {
+      const state = document.getElementById("bookingsState");
+      const wrap = document.getElementById("bookingsWrap");
+      wrap.style.display = "none";
+      state.innerHTML = `<div class="card" style="text-align:center;padding:40px;color:var(--muted)">Loading bookings…</div>`;
+      fetch(BOOKINGS_API)
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+        .then(json => {
+          allBookingsData = json.data || [];
+          populateBookingsClientFilter(allBookingsData);
+          renderBookingsTable(allBookingsData);
+          bookingsLoaded = true;
+        })
+        .catch(err => {
+          state.innerHTML = `<div class="card blue-alert" style="padding:20px">
+            <strong>Failed to load bookings.</strong><br>
+            <span class="muted tiny">Make sure the backend is running at <code>http://localhost:3001</code> — Error: ${err.message}</span>
+          </div>`;
+        });
+    }
+
+    document.getElementById("bookingsFilterBtn").addEventListener("click", e => {
+      e.stopPropagation();
+      document.getElementById("bookingsFilterPanel").classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", e => {
+      const wrap = document.getElementById("bookingsFilterWrap");
+      if (!wrap.contains(e.target)) {
+        document.getElementById("bookingsFilterPanel").classList.add("hidden");
+      }
+    });
+
+    document.getElementById("bookingsExportBtn").addEventListener("click", () => {
+      if (!bookingsLoaded || allBookingsData.length === 0) return;
+      const filtered = activeBookingClientId
+        ? allBookingsData.filter(r => r.client_id === activeBookingClientId)
+        : allBookingsData;
+      const cols = ["client_ref","dida_ref","channel_status","dida_hotel_id","client_hotel_id","dida_hotel_name","price","client_id","channel_create_time","checkin_date","checkout_date"];
+      const headers = ["Client Reference","Dida No.","Channel Status","Dida Hotel ID","Client Hotel ID","Dida Hotel Name","Price","Client ID","Channel Create Time","CheckIn Date","CheckOut Date"];
+      const csv = [
+        headers.join(","),
+        ...filtered.map(r => cols.map(c => `"${(r[c] || "").replace(/"/g, '""')}"`).join(","))
+      ].join("\n");
+      const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = activeBookingClientId ? `bookings_${activeBookingClientId}.csv` : "bookings_all.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    document.querySelectorAll(".nav-item").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.dataset.page === "bookings" && !bookingsLoaded) {
+          loadBookings();
         }
       });
     });
