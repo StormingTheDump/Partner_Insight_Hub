@@ -43,26 +43,28 @@ export function OrderLogsPage(_: PageProps) {
   const [orders, setOrders]               = useState<OrderSummary[]>([]);
   const [loading, setLoading]             = useState(true);
   const [query, setQuery]                 = useState("");
+  const [statusFilter, setStatusFilter]   = useState("");
   const [page, setPage]                   = useState(1);
   const [selected, setSelected]           = useState<OrderSummary | null>(null);
   const [logEntries, setLogEntries]       = useState<LogEntry[]>([]);
   const [drawerLoading, setDrawerLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const fetchOrders = useCallback(async (q: string) => {
+  const fetchOrders = useCallback(async (q: string, sf: string) => {
     setLoading(true);
     const p = new URLSearchParams();
     if (q.trim()) p.set("order_no", q.trim());
+    if (sf)       p.set("order_status", sf);
     const data: OrderSummary[] = await fetch(`${API}/api/order-logs?${p}`).then(r => r.json());
     setOrders(data);
     setPage(1);
     setLoading(false);
   }, []);
 
-  useEffect(() => { fetchOrders(""); }, [fetchOrders]);
+  useEffect(() => { fetchOrders("", ""); }, [fetchOrders]);
 
-  const handleSearch = () => fetchOrders(query);
-  const handleClear  = () => { setQuery(""); fetchOrders(""); };
+  const handleSearch = () => fetchOrders(query, statusFilter);
+  const handleClear  = () => { setQuery(""); setStatusFilter(""); fetchOrders("", ""); };
 
   const openDrawer = async (order: OrderSummary) => {
     setSelected(order);
@@ -99,8 +101,18 @@ export function OrderLogsPage(_: PageProps) {
             style={inputStyle}
           />
         </div>
+        <select
+          value={statusFilter}
+          onChange={e => setStatusFilter(e.target.value)}
+          style={selectStyle}
+        >
+          <option value="">全部状态</option>
+          <option value="confirmed">已确认</option>
+          <option value="cancelled">已取消</option>
+          <option value="failed">失败</option>
+        </select>
         <button type="button" onClick={handleSearch} style={searchBtn}>搜索</button>
-        {query && (
+        {(query || statusFilter) && (
           <button type="button" onClick={handleClear} style={clearBtn}>清除</button>
         )}
         <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
@@ -165,7 +177,7 @@ export function OrderLogsPage(_: PageProps) {
                   </td>
                   <td style={td}>
                     <button type="button" onClick={() => openDrawer(order)} style={logBtn}>
-                      <FileText size={12} /> 查看详细日志
+                      <FileText size={12} /> 详细日志
                     </button>
                   </td>
                 </tr>
@@ -313,6 +325,11 @@ const inputStyle: CSSProperties = {
   border: "none", outline: "none", background: "transparent",
   fontSize: 13, color: "var(--text)", width: "100%",
 };
+const selectStyle: CSSProperties = {
+  height: 34, padding: "0 10px", borderRadius: 6,
+  border: "1px solid var(--line)", background: "var(--surface-soft)",
+  fontSize: 13, color: "var(--text)", cursor: "pointer", outline: "none",
+};
 const searchBtn: CSSProperties = {
   height: 34, padding: "0 16px", borderRadius: 6,
   background: "var(--dida-navy)", color: "#fff", border: "none",
@@ -343,6 +360,7 @@ const logBtn: CSSProperties = {
   height: 28, padding: "0 10px", borderRadius: 6,
   border: "1px solid var(--line)", background: "var(--surface-soft)",
   cursor: "pointer", fontSize: 12, color: "var(--text)", fontWeight: 600,
+  whiteSpace: "nowrap",
 };
 const pagerBar: CSSProperties = {
   display: "flex", alignItems: "center", gap: 4, marginTop: 12,
