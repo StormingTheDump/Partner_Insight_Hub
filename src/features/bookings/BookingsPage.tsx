@@ -3,10 +3,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useAppState } from "@/dashboard/app-state";
 import { Button } from "@/shared/components/Button";
 import { DataTable } from "@/shared/components/DataTable";
-import { SearchFilter } from "@/shared/components/FilterControl";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { useCsvExport } from "@/shared/hooks/useCsvExport";
 import type { TableColumn } from "@/shared/types/table";
+
 type OrderRow = {
   client_ref: string;
   dida_ref: string;
@@ -22,22 +22,22 @@ type OrderRow = {
 };
 
 const columns: TableColumn<OrderRow>[] = [
-  { key: "client_ref", header: "客户订单号" },
-  { key: "dida_ref", header: "DIDA订单号" },
-  { key: "channel_status", header: "状态" },
-  { key: "client_id", header: "客户ID" },
-  { key: "dida_hotel_id", header: "DIDA酒店ID" },
-  { key: "client_hotel_id", header: "客户酒店ID" },
-  { key: "dida_hotel_name", header: "酒店名称" },
-  { key: "price", header: "价格", align: "right" },
-  { key: "channel_create_time", header: "创建时间" },
-  { key: "checkin_date", header: "入住日期" },
-  { key: "checkout_date", header: "退房日期" },
+  { key: "client_ref", header: "client_ref" },
+  { key: "dida_ref", header: "dida_ref" },
+  { key: "channel_status", header: "channel_status" },
+  { key: "client_id", header: "client_id" },
+  { key: "dida_hotel_id", header: "dida_hotel_id" },
+  { key: "client_hotel_id", header: "client_hotel_id" },
+  { key: "dida_hotel_name", header: "dida_hotel_name" },
+  { key: "price", header: "price", align: "right" },
+  { key: "channel_create_time", header: "channel_create_time" },
+  { key: "checkin_date", header: "checkin_date" },
+  { key: "checkout_date", header: "checkout_date" },
 ];
 
 function parseBatch(input: string): string[] {
   return input
-    .split(/[\n,]/)
+    .split(/[\n, ]+/)
     .map((s) => s.trim())
     .filter(Boolean);
 }
@@ -46,8 +46,7 @@ export function BookingsPage() {
   const { selectedFeed, dateRange } = useAppState();
   const [rows, setRows] = useState<OrderRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [clientRefQuery, setClientRefQuery] = useState("");
-  const [didaRefQuery, setDidaRefQuery] = useState("");
+  const [orderQuery, setOrderQuery] = useState("");
 
   useEffect(() => {
     fetch("/api/orders")
@@ -72,18 +71,15 @@ export function BookingsPage() {
       });
     }
 
-    const clientRefs = parseBatch(clientRefQuery);
-    if (clientRefs.length > 0) {
-      result = result.filter((r) => clientRefs.includes(r.client_ref));
-    }
-
-    const didaRefs = parseBatch(didaRefQuery);
-    if (didaRefs.length > 0) {
-      result = result.filter((r) => didaRefs.includes(r.dida_ref));
+    const refs = parseBatch(orderQuery);
+    if (refs.length > 0) {
+      result = result.filter(
+        (r) => refs.includes(r.client_ref) || refs.includes(r.dida_ref)
+      );
     }
 
     return result;
-  }, [rows, selectedFeed, dateRange, clientRefQuery, didaRefQuery]);
+  }, [rows, selectedFeed, dateRange, orderQuery]);
 
   const exportCsv = useCsvExport("dida-bookings.csv", columns, filteredRows);
 
@@ -98,21 +94,27 @@ export function BookingsPage() {
           </Button>
         }
       />
-      <div className="filter-row">
-        <SearchFilter
-          icon={<Search className="icon" />}
-          placeholder="client_ref 精确匹配（逗号或换行分隔）"
-          value={clientRefQuery}
-          onChange={(e) => setClientRefQuery(e.target.value)}
-          style={{ minWidth: 260 }}
-        />
-        <SearchFilter
-          icon={<Search className="icon" />}
-          placeholder="dida_ref 精确匹配（逗号或换行分隔）"
-          value={didaRefQuery}
-          onChange={(e) => setDidaRefQuery(e.target.value)}
-          style={{ minWidth: 260 }}
-        />
+      <div className="filter-row" style={{ alignItems: "flex-start" }}>
+        <label className="filter-control" style={{ alignItems: "flex-start", paddingTop: 7, paddingBottom: 7 }}>
+          <Search className="icon" style={{ marginTop: 2, flexShrink: 0 }} />
+          <textarea
+            value={orderQuery}
+            onChange={(e) => setOrderQuery(e.target.value)}
+            placeholder="支持任意订单号检索（逗号、空格或换行分隔批量查询）"
+            rows={2}
+            style={{
+              border: 0,
+              outline: 0,
+              background: "transparent",
+              resize: "vertical",
+              minWidth: 320,
+              fontFamily: "inherit",
+              fontSize: "inherit",
+              color: "inherit",
+              lineHeight: 1.45,
+            }}
+          />
+        </label>
       </div>
       {loading ? (
         <div className="empty-state">加载中…</div>

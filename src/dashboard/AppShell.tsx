@@ -4,7 +4,6 @@ import "@/styles/layout.css";
 
 import {
   Bell,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Filter,
@@ -126,7 +125,6 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
                   <option key={feed} value={feed}>{feed}</option>
                 ))}
               </select>
-              <ChevronDown className="icon" />
             </label>
           </div>
 
