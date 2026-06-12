@@ -21,7 +21,7 @@ import { navSections } from "@/dashboard/navigation";
 import { routes } from "@/dashboard/routes";
 import type { User as AuthUser } from "@/data/users";
 
-const API = "http://localhost:3001";
+const API = "";
 
 interface AppShellInnerProps {
   user: AuthUser;

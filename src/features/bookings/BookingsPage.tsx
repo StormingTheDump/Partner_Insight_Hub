@@ -50,7 +50,7 @@ export function BookingsPage() {
   const [didaRefQuery, setDidaRefQuery] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/orders")
+    fetch("/api/orders")
       .then((r) => r.json())
       .then(({ data }: { data: OrderRow[] }) => setRows(data))
       .catch(() => setRows([]))
