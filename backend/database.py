@@ -123,12 +123,26 @@ def init_tables():
         )
     """)
 
+    # ── 订单日志表 ────────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS order_logs (
+            id           INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_no     TEXT    NOT NULL,
+            client_id    TEXT    NOT NULL,
+            order_status TEXT    NOT NULL,
+            log_type     TEXT    NOT NULL,
+            log_detail   TEXT    NOT NULL,
+            updated_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+        )
+    """)
+
     conn.commit()
     _seed_dida_contacts(conn)
     _seed_my_contacts(conn)
     _seed_channel_mappings(conn)
     _seed_channel_hot_sales(conn)
     _seed_channel_configurations(conn)
+    _seed_order_logs(conn)
     conn.close()
 
 
@@ -302,6 +316,197 @@ def _seed_channel_configurations(conn):
             qps, pps, search_timeout, verify_timeout, book_timeout,
             max_hotels_per_request, return_audit_data, updated_at)
            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+        rows,
+    )
+    conn.commit()
+
+
+def _seed_order_logs(conn):
+    count = conn.execute("SELECT COUNT(*) FROM order_logs").fetchone()[0]
+    if count > 0:
+        return
+
+    import random, datetime, json as _json
+    rng = random.Random(88)
+
+    client_ids  = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"]
+    currencies  = {"Agoda": "USD", "AgodaUK": "GBP", "AgodaEBK": "USD",
+                   "Lvzan": "CNY", "Barli2b": "USD", "DidaOpaq": "EUR"}
+    hotels = [
+        ("HID00023", "Grand Hyatt Tokyo"),
+        ("HID00056", "Marriott Bangkok"),
+        ("HID00089", "Hilton Singapore"),
+        ("HID00112", "Sofitel Paris"),
+        ("HID00145", "InterContinental Dubai"),
+        ("HID00178", "Sheraton Sydney"),
+        ("HID00211", "Westin Seoul"),
+        ("HID00244", "Hyatt Regency Kuala Lumpur"),
+        ("HID00277", "Novotel Ho Chi Minh City"),
+        ("HID00310", "Crowne Plaza Beijing"),
+        ("HID00343", "Radisson Blu Bali"),
+        ("HID00376", "Holiday Inn Shanghai"),
+    ]
+    room_types = ["Deluxe Double Room", "Superior King Room", "Deluxe Twin Room",
+                  "Executive Suite", "Standard Room", "Club Room"]
+    rate_plans  = ["RP-STD", "RP-BRF", "RP-NRF", "RP-AAA", "RP-COR", "RP-PKG"]
+    first_names = ["John", "Emma", "Michael", "Sarah", "David", "Lisa",
+                   "James", "Wei", "Li", "Hiroshi", "Yuki", "Mia"]
+    last_names  = ["Smith", "Johnson", "Williams", "Brown", "Jones",
+                   "Garcia", "Wang", "Zhang", "Tanaka", "Kim", "Lee"]
+    cancel_reasons = ["Guest request", "Schedule change", "Force majeure",
+                      "Double booking", "Price dispute"]
+    error_codes = [("3015", "Availability Or Price Invalid"),
+                   ("3001", "Incorrect Booking Information"),
+                   ("3016", "Failed To Confirm Booking"),
+                   ("3014", "Not Enough Credit")]
+    px = {"USD": 1.0, "GBP": 0.79, "CNY": 7.2, "EUR": 0.92}
+
+    rows = []
+    for seq in range(1, 101):
+        order_no   = f"ORD2026{seq:05d}"
+        client_id  = client_ids[seq % len(client_ids)]
+        hotel_id, hotel_name = hotels[seq % len(hotels)]
+        room_type  = room_types[seq % len(room_types)]
+        rate_plan  = rate_plans[seq % len(rate_plans)]
+        currency   = currencies[client_id]
+
+        # booking creation time
+        day_offset = rng.randint(0, 150)
+        base_ts = (datetime.datetime(2026, 1, 1,
+                                     rng.randint(8, 22), rng.randint(0, 59), rng.randint(0, 59))
+                   + datetime.timedelta(days=day_offset))
+        checkin = base_ts.date() + datetime.timedelta(days=rng.randint(14, 90))
+        nights  = rng.randint(1, 7)
+        checkout = checkin + datetime.timedelta(days=nights)
+
+        base_price    = round(rng.uniform(80, 600), 2)
+        total_price   = round(base_price * px[currency] * nights, 2)
+
+        fn = first_names[rng.randint(0, len(first_names) - 1)]
+        ln = last_names[rng.randint(0, len(last_names) - 1)]
+
+        booking_ref = f"DIDAREF-{base_ts.strftime('%Y%m%d')}-{seq:05d}"
+        client_ref  = f"{client_id[:4].upper()}-{base_ts.strftime('%Y%m%d')}-{seq:05d}"
+        pc_ts = base_ts
+        bc_ts = base_ts + datetime.timedelta(seconds=rng.randint(5, 60))
+
+        # status distribution: 50 confirmed / 30 cancelled / 20 failed
+        if seq <= 50:
+            order_status = "confirmed"
+        elif seq <= 80:
+            order_status = "cancelled"
+        else:
+            order_status = "failed"
+
+        # ── PriceConfirm ─────────────────────────────────────────
+        pc_req = {
+            "Header": {"ClientID": client_id, "LicenseKey": "***"},
+            "HotelPriceConfirmRequest": {
+                "RequestID": f"REQ-PCFM-{seq:06d}",
+                "RateKey": f"RK_{hotel_id}_{rate_plan}_{checkin.strftime('%Y%m%d')}_{checkout.strftime('%Y%m%d')}",
+                "CheckIn": checkin.strftime("%Y-%m-%d"),
+                "CheckOut": checkout.strftime("%Y-%m-%d"),
+                "RoomCount": 1,
+                "AdultCount": 2,
+                "Currency": currency,
+            },
+        }
+        pc_resp = {
+            "Header": {"ClientID": client_id, "RequestID": f"REQ-PCFM-{seq:06d}"},
+            "HotelPriceConfirmResponse": {
+                "BookingReference": booking_ref,
+                "HotelID": hotel_id,
+                "HotelName": hotel_name,
+                "CheckIn": checkin.strftime("%Y-%m-%d"),
+                "CheckOut": checkout.strftime("%Y-%m-%d"),
+                "Nights": nights,
+                "RoomType": room_type,
+                "RatePlanID": rate_plan,
+                "Currency": currency,
+                "TotalPrice": total_price,
+                "Remarks": "Non-refundable" if "NRF" in rate_plan else "Free cancellation",
+                "Status": "Success",
+            },
+        }
+        rows.append((order_no, client_id, order_status, "price_confirm",
+                     _json.dumps({"request": pc_req, "response": pc_resp}, ensure_ascii=False),
+                     pc_ts.strftime("%Y-%m-%d %H:%M:%S")))
+
+        # ── BookingConfirm ────────────────────────────────────────
+        bc_req = {
+            "Header": {"ClientID": client_id, "LicenseKey": "***"},
+            "HotelBookingConfirmRequest": {
+                "RequestID": f"REQ-BKCF-{seq:06d}",
+                "BookingReference": booking_ref,
+                "ClientReference": client_ref,
+                "CheckIn": checkin.strftime("%Y-%m-%d"),
+                "CheckOut": checkout.strftime("%Y-%m-%d"),
+                "HotelID": hotel_id,
+                "RatePlanID": rate_plan,
+                "RoomCount": 1,
+                "Rooms": [{"Index": 1,
+                            "Adults": [{"FirstName": fn, "LastName": ln}],
+                            "Children": []}],
+                "ContactInfo": {
+                    "Name": f"{fn} {ln}",
+                    "Email": f"{fn.lower()}.{ln.lower()}@example.com",
+                    "Phone": f"+{rng.randint(1, 99)}-{rng.randint(100, 999)}-{rng.randint(1000, 9999)}",
+                },
+            },
+        }
+        if order_status in ("confirmed", "cancelled"):
+            bc_body = {"BookingID": order_no, "Status": 2, "StatusDesc": "Confirmed",
+                       "ConfirmationCode": f"HTL-CONF-{seq:05d}",
+                       "HotelID": hotel_id, "HotelName": hotel_name,
+                       "CheckIn": checkin.strftime("%Y-%m-%d"),
+                       "CheckOut": checkout.strftime("%Y-%m-%d"),
+                       "Nights": nights, "RoomCount": 1,
+                       "TotalPrice": total_price, "Currency": currency}
+        else:
+            ec, em = error_codes[seq % len(error_codes)]
+            bc_body = {"BookingID": order_no, "Status": 4, "StatusDesc": "Failed",
+                       "ErrorCode": ec, "ErrorMessage": em,
+                       "HotelID": hotel_id, "TotalPrice": total_price, "Currency": currency}
+        bc_resp = {
+            "Header": {"ClientID": client_id, "RequestID": f"REQ-BKCF-{seq:06d}"},
+            "HotelBookingConfirmResponse": bc_body,
+        }
+        rows.append((order_no, client_id, order_status, "booking_confirm",
+                     _json.dumps({"request": bc_req, "response": bc_resp}, ensure_ascii=False),
+                     bc_ts.strftime("%Y-%m-%d %H:%M:%S")))
+
+        # ── Cancel (cancelled orders only) ────────────────────────
+        if order_status == "cancelled":
+            cancel_ts = bc_ts + datetime.timedelta(
+                days=rng.randint(1, 14), seconds=rng.randint(0, 86400))
+            reason = cancel_reasons[rng.randint(0, len(cancel_reasons) - 1)]
+            cncl_req = {
+                "Header": {"ClientID": client_id, "LicenseKey": "***"},
+                "HotelBookingCancelRequest": {
+                    "RequestID": f"REQ-CNCL-{seq:06d}",
+                    "BookingID": order_no,
+                    "Reason": reason,
+                },
+            }
+            cncl_resp = {
+                "Header": {"ClientID": client_id, "RequestID": f"REQ-CNCL-{seq:06d}"},
+                "HotelBookingCancelResponse": {
+                    "BookingID": order_no,
+                    "Status": 3,
+                    "StatusDesc": "Canceled",
+                    "CancelConfirmID": f"CC-{cancel_ts.strftime('%Y%m%d%H%M')}-{seq:05d}",
+                    "CancelTime": cancel_ts.strftime("%Y-%m-%d %H:%M:%S"),
+                    "RefundAmount": total_price,
+                    "Currency": currency,
+                },
+            }
+            rows.append((order_no, client_id, order_status, "cancel",
+                         _json.dumps({"request": cncl_req, "response": cncl_resp}, ensure_ascii=False),
+                         cancel_ts.strftime("%Y-%m-%d %H:%M:%S")))
+
+    conn.executemany(
+        "INSERT INTO order_logs (order_no, client_id, order_status, log_type, log_detail, updated_at)"
+        " VALUES (?,?,?,?,?,?)",
         rows,
     )
     conn.commit()
