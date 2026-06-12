@@ -47,7 +47,33 @@ async function get<T>(path: string): Promise<T> {
   return res.json();
 }
 
+export interface FunnelClientRow {
+  client_id: string;
+  searches: number;
+  confirms: number;
+  bookings: number;
+  search_to_confirm_rate: number;
+  confirm_to_book_rate: number;
+  search_success_rate: number;
+  avg_response_ms: number;
+}
+
+export interface FunnelData {
+  overall: {
+    searches: number;
+    confirms: number;
+    bookings: number;
+    search_to_confirm: number;
+    confirm_to_book: number;
+    search_success_rate: number;
+    confirm_success_rate: number;
+    avg_response_ms: number;
+  };
+  by_client: FunnelClientRow[];
+}
+
 export const metricsApi = {
-  overview: () => get<OverviewData>('/api/metrics/overview'),
+  overview:    () => get<OverviewData>('/api/metrics/overview'),
   performance: () => get<PerformanceData>('/api/metrics/performance'),
+  funnel:      () => get<FunnelData>('/api/metrics/funnel'),
 };

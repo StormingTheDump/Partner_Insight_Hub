@@ -187,7 +187,63 @@ Answer questions based on this documentation. If asked something outside this sc
 
 # ── Agoda Metrics API ─────────────────────────────────────────────────────────
 
-@app.get("/api/metrics/overview")
+@app.get("/api/metrics/funnel")
+def metrics_funnel():
+    """
+    查价 → 验价 → 订单 转化漏斗（总量 + 各 Client ID 分项）
+    """
+    conn = get_connection()
+
+    # 整体漏斗
+    overall = conn.execute("""
+        SELECT
+          (SELECT SUM(search_requests)  FROM agoda_price_search)  AS searches,
+          (SELECT SUM(confirm_requests) FROM agoda_price_confirm) AS confirms,
+          (SELECT SUM(bookings)         FROM agoda_daily_metrics) AS bookings,
+          (SELECT ROUND(AVG(success_rate),1) FROM agoda_price_search)  AS search_success_rate,
+          (SELECT ROUND(AVG(success_rate),1) FROM agoda_price_confirm) AS confirm_success_rate,
+          (SELECT ROUND(AVG(avg_response_ms)) FROM agoda_price_search) AS avg_response_ms
+    """).fetchone()
+
+    # 各 Client ID 漏斗
+    by_client = conn.execute("""
+        SELECT
+            s.client_id,
+            SUM(s.search_requests)                                              AS searches,
+            SUM(c.confirm_requests)                                             AS confirms,
+            SUM(m.bookings)                                                     AS bookings,
+            ROUND(SUM(c.confirm_requests)*100.0/NULLIF(SUM(s.search_requests),0),1) AS search_to_confirm_rate,
+            ROUND(SUM(m.bookings)*100.0/NULLIF(SUM(c.confirm_requests),0),1)        AS confirm_to_book_rate,
+            ROUND(AVG(s.success_rate),1)                                        AS search_success_rate,
+            ROUND(AVG(s.avg_response_ms))                                       AS avg_response_ms
+        FROM agoda_price_search  s
+        JOIN agoda_price_confirm c ON s.date = c.date AND s.client_id = c.client_id
+        JOIN agoda_daily_metrics m ON s.date = m.date AND s.client_id = m.client_id
+        GROUP BY s.client_id
+        ORDER BY searches DESC
+    """).fetchall()
+
+    conn.close()
+
+    searches = overall["searches"]
+    confirms = overall["confirms"]
+    bookings = overall["bookings"]
+
+    return {
+        "overall": {
+            "searches":            searches,
+            "confirms":            confirms,
+            "bookings":            bookings,
+            "search_to_confirm":   round(confirms / searches * 100, 1),
+            "confirm_to_book":     round(bookings / confirms * 100, 1),
+            "search_success_rate": overall["search_success_rate"],
+            "confirm_success_rate":overall["confirm_success_rate"],
+            "avg_response_ms":     overall["avg_response_ms"],
+        },
+        "by_client": [dict(r) for r in by_client],
+    }
+
+
 def metrics_overview():
     """
     汇总卡片 + 30天日时序（供概览页折线图/sparkline使用）

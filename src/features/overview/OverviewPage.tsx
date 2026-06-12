@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Bed, Calendar, CircleAlert, DollarSign, Target, TrendingUp } from "lucide-react";
+import { Bed, CircleAlert, DollarSign, Target, TrendingUp } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
 import { Card } from "@/shared/components/Card";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { metricsApi, type OverviewData } from "@/lib/metricsApi";
+import { metricsApi, type OverviewData, type FunnelData } from "@/lib/metricsApi";
 import type { EChartsOption } from "echarts";
 
 const axisText = { color: "#526078", fontSize: 11 };
@@ -34,18 +34,44 @@ function sparkOpt(labels: string[], values: number[]): EChartsOption {
   };
 }
 
-const metricIcons = [TrendingUp, Calendar, TrendingUp, Bed, CircleAlert, CircleAlert];
-const metricTones = ["purple", "default", "purple", "orange", "red", "orange"] as const;
+function funnelOpt(funnel: FunnelData["overall"]): EChartsOption {
+  return {
+    tooltip: { trigger: "item", formatter: "{b}: {c}" },
+    series: [{
+      type: "funnel" as const,
+      left: "10%",
+      width: "80%",
+      minSize: "30%",
+      maxSize: "100%",
+      sort: "descending" as const,
+      gap: 6,
+      label: { show: true, position: "inside" as const, color: "#fff", fontSize: 13, fontWeight: 600,
+        formatter: (p: { name: string; value: number }) => `${p.name}\n${p.value.toLocaleString()}` },
+      itemStyle: { borderWidth: 0 },
+      data: [
+        { value: funnel.searches,  name: "查价",  itemStyle: { color: "#4f5fb8" } },
+        { value: funnel.confirms,  name: "验价",  itemStyle: { color: "#12b981" } },
+        { value: funnel.bookings,  name: "下单",  itemStyle: { color: "#f59e0b" } },
+      ],
+    }] as EChartsOption["series"],
+  };
+}
+
+const metricIcons = [TrendingUp, TrendingUp, Bed, CircleAlert, CircleAlert];
+const metricTones = ["purple", "purple", "orange", "red", "orange"] as const;
 
 export function OverviewPage({ showPreviousPeriod }: PageProps) {
-  const [data, setData] = useState<OverviewData | null>(null);
+  const [data, setData]     = useState<OverviewData | null>(null);
+  const [funnel, setFunnel] = useState<FunnelData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    metricsApi.overview().then(setData).finally(() => setLoading(false));
+    Promise.all([metricsApi.overview(), metricsApi.funnel()])
+      .then(([o, f]) => { setData(o); setFunnel(f); })
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading || !data) {
+  if (loading || !data || !funnel) {
     return (
       <>
         <PageHeader title="概览" description="监控供应商交易额、订单量、错误率及渠道市场增长指标。" />
@@ -55,50 +81,48 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
   }
 
   const { summary, daily } = data;
+  const { overall } = funnel;
 
   const overviewMetrics = [
-    { title: "胜出率",       value: `${summary.win_rate}%`,                       key: "win_rate" },
-    { title: "总订单量",     value: summary.total_bookings.toLocaleString(),       key: "bookings" },
+    { title: "胜出率",       value: `${summary.win_rate}%`,                        key: "win_rate" },
     { title: "平均订单价值", value: `$${summary.avg_order_value.toLocaleString()}`, key: "avg_order_value" },
-    { title: "间夜数",       value: summary.total_room_nights.toLocaleString(),    key: "room_nights" },
-    { title: "预订前错误率", value: `${summary.avg_pre_error_rate}%`,              key: "pre_error_rate" },
-    { title: "预订错误率",   value: `${summary.avg_book_error_rate}%`,             key: "book_error_rate" },
+    { title: "间夜数",       value: summary.total_room_nights.toLocaleString(),     key: "room_nights" },
+    { title: "预订前错误率", value: `${summary.avg_pre_error_rate}%`,               key: "pre_error_rate" },
+    { title: "预订错误率",   value: `${summary.avg_book_error_rate}%`,              key: "book_error_rate" },
   ];
 
   return (
     <>
-      <PageHeader title="概览" description="监控供应商交易额、订单量、错误率及渠道市场增长指标。" />
+      <PageHeader title="概览" description="监控 Agoda 供应商交易额、订单量、转化漏斗及错误率指标。" />
       <div className="overview-grid">
         <div className="grid">
+
+          {/* 漏斗 + 转化率 */}
           <Card>
             <div className="card-header">
               <div>
-                <h3>季度预测</h3>
-                <p className="tiny">基于近30天数据的Q2预测。</p>
+                <h3>下单转化漏斗</h3>
+                <p className="tiny">查价 → 验价 → 下单，近30天 Agoda 全渠道。</p>
+              </div>
+              <div style={{ display: "flex", gap: 24, fontSize: 13 }}>
+                <span>
+                  查价成功率 <strong style={{ color: "#4f5fb8" }}>{overall.search_success_rate}%</strong>
+                </span>
+                <span>
+                  查价→验价 <strong style={{ color: "#12b981" }}>{overall.search_to_confirm}%</strong>
+                </span>
+                <span>
+                  验价→下单 <strong style={{ color: "#f59e0b" }}>{overall.confirm_to_book}%</strong>
+                </span>
+                <span>
+                  平均响应 <strong>{overall.avg_response_ms}ms</strong>
+                </span>
               </div>
             </div>
-            <div className="grid forecast-grid">
-              <Card compact soft>
-                <div className="card-header">
-                  <strong>2026年Q2</strong>
-                  <span className="muted tiny">剩余天数：21</span>
-                </div>
-                <div className="metric-value big">${(summary.total_ttv / 1000).toFixed(0)}K</div>
-                <p className="tiny">当前预测</p>
-              </Card>
-              <Card compact soft>
-                <div className="card-header">
-                  <strong>渠道市场预测</strong>
-                  <span className="muted tiny">潜在增幅</span>
-                </div>
-                <div className="metric-value big">
-                  ${((summary.total_ttv * 1.444) / 1000).toFixed(0)}K <span className="delta">+44.4%</span>
-                </div>
-                <p className="tiny">含渠道市场影响的预测</p>
-              </Card>
-            </div>
+            <BaseChart className="tall" option={funnelOpt(overall)} />
           </Card>
 
+          {/* 交易额趋势 */}
           <ChartCard title="交易额趋势" metric={`$${(summary.total_ttv / 1000).toFixed(0)}K`} subtitle="所选时间段内的总交易额。">
             <BaseChart className="tall" option={lineOpt(daily.labels, daily.ttv, "交易额", "K", showPreviousPeriod)} />
           </ChartCard>
@@ -113,8 +137,8 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
           </div>
 
           <div className="grid two-col">
-            {overviewMetrics.slice(2).map((metric, index) => {
-              const Icon = metricIcons[index + 2];
+            {overviewMetrics.slice(1).map((metric, index) => {
+              const Icon = metricIcons[index + 1];
               const seriesKey = metric.key as keyof typeof daily;
               const values = daily[seriesKey] as number[];
               return (
@@ -123,7 +147,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
                   title={metric.title}
                   value={metric.value}
                   icon={Icon}
-                  tone={metricTones[index + 2]}
+                  tone={metricTones[index + 1]}
                   caption={`所选时间段内${metric.title}的最新变动。`}
                 >
                   <BaseChart className="spark" option={sparkOpt(daily.labels, values)} />
@@ -137,23 +161,26 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
           <Card className="insight-card">
             <h3><DollarSign className="icon" /> 关键时期洞察</h3>
             <p className="tiny">
-              2026年5月13日至6月11日期间，Agoda 总交易额 ${(summary.total_ttv / 1000).toFixed(0)}K，
-              订单量 {summary.total_bookings.toLocaleString()}，平均胜出率 {summary.win_rate}%。
+              近30天 Agoda 总交易额 ${(summary.total_ttv / 1000).toFixed(0)}K，
+              订单量 {summary.total_bookings.toLocaleString()}，
+              漏斗整体转化率 {((overall.bookings / overall.searches) * 100).toFixed(1)}%。
             </p>
           </Card>
           <Card className="insight-card">
-            <h3><Target className="icon" /> 挖掘高价值渠道 <span className="priority">高优先级</span></h3>
-            <p className="tiny">重点提升平均订单价值最高渠道（AgodaUK $412）的份额。</p>
-            <p className="delta tiny">约提升交易额 10-15%</p>
-            <div className="action-list">
-              <div>分析 AgodaUK 客户画像</div>
-              <div>制定精准营销活动吸引同类客户</div>
-            </div>
+            <h3><Target className="icon" /> 提升查价成功率 <span className="priority">高优先级</span></h3>
+            <p className="tiny">
+              DidaOpaq 查价成功率仅 68%，低于 Agoda 的 82%，
+              重点排查无房错误与超时问题。
+            </p>
+            <p className="delta tiny">提升至 78% 可增加约 1,400 次验价请求</p>
           </Card>
           <Card className="insight-card">
-            <h3><Target className="icon" /> 提升高峰日订单量 <span className="priority medium">中优先级</span></h3>
-            <p className="tiny">分析高峰日交易额高的影响因素，优化渠道市场出价策略。</p>
-            <p className="delta tiny">约增加订单量 5-10%</p>
+            <h3><Target className="icon" /> 优化验价→下单转化 <span className="priority medium">中优先级</span></h3>
+            <p className="tiny">
+              验价成功率 {overall.confirm_success_rate}%，
+              价格变动是主要流失原因，可通过缓存锁价减少变动。
+            </p>
+            <p className="delta tiny">约增加订单量 5-8%</p>
           </Card>
         </aside>
       </div>
