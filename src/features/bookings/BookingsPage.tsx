@@ -44,18 +44,18 @@ const STATUS_CLASS: Record<string, string> = {
 };
 
 const columns: (TableColumn<OrderRow> & { px: number; ellipsis?: boolean })[] = [
-  { key: "client_ref",          header: "client_ref",          px: 140 },
-  { key: "dida_ref",            header: "dida_ref",            px: 110 },
-  { key: "channel_status",      header: "channel_status",      px: 130,
+  { key: "client_ref",          header: "Client Reference",    px: 140 },
+  { key: "dida_ref",            header: "Dida No.",            px: 110 },
+  { key: "channel_status",      header: "Channel Status",      px: 130,
     render: (row) => <span className={STATUS_CLASS[row.channel_status] ?? "status neutral"}>{row.channel_status}</span> },
-  { key: "client_id",           header: "client_id",           px: 110 },
-  { key: "dida_hotel_id",       header: "dida_hotel_id",       px: 130 },
-  { key: "client_hotel_id",     header: "client_hotel_id",     px: 140 },
-  { key: "dida_hotel_name",     header: "dida_hotel_name",     px: 320, ellipsis: true },
-  { key: "price",               header: "price",               px: 110, align: "right" },
-  { key: "channel_create_time", header: "channel_create_time", px: 180 },
-  { key: "checkin_date",        header: "checkin_date",        px: 130 },
-  { key: "checkout_date",       header: "checkout_date",       px: 140 },
+  { key: "dida_hotel_id",       header: "Dida Hotel ID",       px: 130 },
+  { key: "client_hotel_id",     header: "Client Hotel ID",     px: 140 },
+  { key: "dida_hotel_name",     header: "Dida Hotel Name",     px: 320, ellipsis: true },
+  { key: "price",               header: "Price",               px: 110, align: "right" },
+  { key: "client_id",           header: "Client ID",           px: 110 },
+  { key: "channel_create_time", header: "Channel Create Time", px: 180 },
+  { key: "checkin_date",        header: "CheckIn Date",        px: 130 },
+  { key: "checkout_date",       header: "CheckOut Date",       px: 140 },
 ];
 
 const TOTAL_MIN_WIDTH = columns.reduce((s, c) => s + c.px, 0); // 1640

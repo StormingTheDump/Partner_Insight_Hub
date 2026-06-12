@@ -268,11 +268,6 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
           <img src={collapsed ? didaIcon : didaLogo} alt="DIDA" />
         </div>
 
-        <div className="account">
-          <img src={didaIcon} alt="" />
-          <span title={user.channelName}>{user.channelName}</span>
-        </div>
-
         <nav className="nav">
           {navSections.map((section) => (
             <div className="nav-section" key={section.title}>
