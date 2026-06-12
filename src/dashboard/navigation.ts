@@ -33,8 +33,9 @@ export const navSections: NavSection[] = [
   {
     title: "业务指标",
     items: [
-      { id: "overview",    label: "业务概览", icon: Home },
-      { id: "performance", label: "业绩表现", icon: BarChart3 },
+      { id: "overview",     label: "概览",     icon: Home },
+      { id: "performance",  label: "订单分析", icon: BarChart3 },
+      { id: "reports",      label: "分析报告", icon: FileText },
     ],
   },
   {

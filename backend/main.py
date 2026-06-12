@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -254,40 +254,49 @@ def metrics_funnel():
 
 
 @app.get("/api/metrics/overview")
-def metrics_overview():
+def metrics_overview(client_id: str = Query(default=None)):
     """
     汇总卡片 + 30天日时序（供概览页折线图/sparkline使用）
+    可选 ?client_id=Agoda 按渠道筛选
     """
     conn = get_connection()
+    where  = "WHERE client_id = ?" if client_id else ""
+    params = (client_id,) if client_id else ()
+
+    where_m = f"WHERE m.client_id = ?" if client_id else ""
 
     # 汇总卡片
-    summary = conn.execute("""
+    summary = conn.execute(f"""
         SELECT
-            SUM(bookings)                                    AS total_bookings,
-            ROUND(SUM(ttv), 2)                               AS total_ttv,
-            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)   AS avg_order_value,
-            SUM(room_nights)                                 AS total_room_nights,
-            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate,
-            ROUND(AVG(pre_error_rate), 2)                    AS avg_pre_error_rate,
-            ROUND(AVG(book_error_rate), 2)                   AS avg_book_error_rate
-        FROM agoda_daily_metrics
-    """).fetchone()
+            SUM(m.bookings)                                              AS total_bookings,
+            ROUND(SUM(m.ttv), 2)                                         AS total_ttv,
+            ROUND(SUM(m.ttv) / NULLIF(SUM(m.bookings), 0), 2)           AS avg_order_value,
+            SUM(m.room_nights)                                           AS total_room_nights,
+            ROUND(AVG(m.pre_error_rate), 2)                              AS avg_pre_error_rate,
+            ROUND(AVG(m.book_error_rate), 2)                             AS avg_book_error_rate,
+            ROUND(AVG(s.avg_response_ms))                                AS avg_response_ms
+        FROM agoda_daily_metrics m
+        LEFT JOIN agoda_price_search s ON m.date = s.date AND m.client_id = s.client_id
+        {where_m}
+    """, params).fetchone()
 
-    # 日时序（所有 Client ID 合并，按日聚合）
-    daily = conn.execute("""
+    # 日时序
+    daily = conn.execute(f"""
         SELECT
-            date,
-            SUM(bookings)                                     AS bookings,
-            ROUND(SUM(ttv) / 1000.0, 1)                      AS ttv_k,
-            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)    AS avg_order_value,
-            SUM(room_nights)                                  AS room_nights,
-            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate,
-            ROUND(AVG(pre_error_rate), 2)                     AS pre_error_rate,
-            ROUND(AVG(book_error_rate), 2)                    AS book_error_rate
-        FROM agoda_daily_metrics
-        GROUP BY date
-        ORDER BY date
-    """).fetchall()
+            m.date,
+            SUM(m.bookings)                                              AS bookings,
+            ROUND(SUM(m.ttv) / 1000.0, 1)                               AS ttv_k,
+            ROUND(SUM(m.ttv) / NULLIF(SUM(m.bookings), 0), 2)           AS avg_order_value,
+            SUM(m.room_nights)                                           AS room_nights,
+            ROUND(AVG(m.pre_error_rate), 2)                              AS pre_error_rate,
+            ROUND(AVG(m.book_error_rate), 2)                             AS book_error_rate,
+            ROUND(AVG(s.avg_response_ms))                                AS avg_response_ms
+        FROM agoda_daily_metrics m
+        LEFT JOIN agoda_price_search s ON m.date = s.date AND m.client_id = s.client_id
+        {where_m}
+        GROUP BY m.date
+        ORDER BY m.date
+    """, params).fetchall()
 
     conn.close()
 
@@ -300,11 +309,81 @@ def metrics_overview():
             "bookings":        [r["bookings"]        for r in daily],
             "avg_order_value": [r["avg_order_value"] for r in daily],
             "room_nights":     [r["room_nights"]     for r in daily],
-            "win_rate":        [r["win_rate"]        for r in daily],
             "pre_error_rate":  [r["pre_error_rate"]  for r in daily],
             "book_error_rate": [r["book_error_rate"] for r in daily],
+            "avg_response_ms": [r["avg_response_ms"] for r in daily],
         },
     }
+
+
+@app.get("/api/metrics/dimensions")
+def metrics_dimensions(client_id: str = Query(default=None)):
+    """
+    订单维度细分：LT（提前预订）/ Chain（酒店类型）/ Country（目的地国家）
+    """
+    conn = get_connection()
+    where  = "WHERE client_id = ?" if client_id else ""
+    params = (client_id,) if client_id else ()
+
+    lt = conn.execute(f"""
+        SELECT lt_bucket,
+               SUM(bookings)    AS bookings,
+               ROUND(SUM(ttv),2) AS ttv,
+               SUM(room_nights) AS room_nights
+        FROM agoda_orders_by_lt {where}
+        GROUP BY lt_bucket
+        ORDER BY CASE lt_bucket
+            WHEN '0-3天'   THEN 1 WHEN '4-7天'   THEN 2
+            WHEN '8-14天'  THEN 3 WHEN '15-30天'  THEN 4
+            WHEN '31+天'   THEN 5 ELSE 9 END
+    """, params).fetchall()
+
+    chain = conn.execute(f"""
+        SELECT chain_type,
+               SUM(bookings)    AS bookings,
+               ROUND(SUM(ttv),2) AS ttv,
+               SUM(room_nights) AS room_nights
+        FROM agoda_orders_by_chain {where}
+        GROUP BY chain_type
+        ORDER BY bookings DESC
+    """, params).fetchall()
+
+    country = conn.execute(f"""
+        SELECT country,
+               SUM(bookings)    AS bookings,
+               ROUND(SUM(ttv),2) AS ttv,
+               SUM(room_nights) AS room_nights
+        FROM agoda_orders_by_country {where}
+        GROUP BY country
+        ORDER BY bookings DESC
+    """, params).fetchall()
+
+    star = conn.execute(f"""
+        SELECT star_rating,
+               SUM(bookings)     AS bookings,
+               ROUND(SUM(ttv),2) AS ttv,
+               SUM(room_nights)  AS room_nights
+        FROM agoda_orders_by_star {where}
+        GROUP BY star_rating
+        ORDER BY CASE star_rating
+            WHEN '0星' THEN 0 WHEN '1星' THEN 1 WHEN '2星' THEN 2
+            WHEN '3星' THEN 3 WHEN '4星' THEN 4 WHEN '5星' THEN 5
+            ELSE 9 END
+    """, params).fetchall()
+
+    conn.close()
+
+    def with_pct(rows, key="bookings"):
+        total = sum(r[key] for r in rows) or 1
+        return [{**dict(r), "pct": round(r[key] / total * 100, 1)} for r in rows]
+
+    return {
+        "lt":      with_pct(lt),
+        "chain":   with_pct(chain),
+        "country": with_pct(country),
+        "star":    with_pct(star),
+    }
+
 
 
 @app.get("/api/metrics/performance")
