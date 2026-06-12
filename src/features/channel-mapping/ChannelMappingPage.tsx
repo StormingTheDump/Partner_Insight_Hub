@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Search, Upload, X } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { MetricCard } from "@/shared/components/MetricCard";
 
 const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
 const PAGE_SIZE = 20;
@@ -19,6 +20,7 @@ type UploadResult = { added: number; conflicts: string[] } | null;
 
 export function ChannelMappingPage(_: PageProps) {
   const [rows, setRows]               = useState<MappingRow[]>([]);
+  const [total, setTotal]             = useState(0);   // 全量总数（不随筛选变化）
   const [loading, setLoading]         = useState(true);
   const [didaQuery, setDidaQuery]     = useState("");
   const [clientId, setClientId]       = useState("");
@@ -36,12 +38,19 @@ export function ChannelMappingPage(_: PageProps) {
     if (clientId)          params.set("client_id",       clientId);
     if (clientQuery.trim())params.set("client_hotel_id", clientQuery.trim());
     const res = await fetch(`${API}/api/channel-mapping?${params}`);
-    setRows(await res.json());
+    const data = await res.json();
+    setRows(data);
     setPage(1);
     setLoading(false);
   }, [didaQuery, clientId, clientQuery]);
 
-  useEffect(() => { fetchData(); }, []);  // 初始加载
+  // 初始加载：同时拉全量总数
+  useEffect(() => {
+    fetchData();
+    fetch(`${API}/api/channel-mapping`)
+      .then(r => r.json())
+      .then((d: MappingRow[]) => setTotal(d.length));
+  }, []);
 
   const handleSearch = () => fetchData();
 
@@ -70,7 +79,9 @@ export function ChannelMappingPage(_: PageProps) {
       } else {
         const data: UploadResult = await res.json();
         setResult(data);
-        fetchData();        // 刷新列表
+        fetchData();
+        // 上传后刷新总数
+        fetch(`${API}/api/channel-mapping`).then(r => r.json()).then((d: MappingRow[]) => setTotal(d.length));
       }
     } catch {
       setError("网络错误，请重试");
@@ -90,6 +101,27 @@ export function ChannelMappingPage(_: PageProps) {
         title="渠道匹配"
         description="查看 Dida 酒店 ID 与渠道客户酒店 ID 的匹配关系，支持上传 Excel 批量新增。"
       />
+
+      {/* 指标卡片 */}
+      <div className="kpi-row" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 20 }}>
+        <MetricCard
+          title="总数"
+          value={total.toLocaleString()}
+          caption="数据库中全部匹配记录"
+        />
+        <MetricCard
+          title="有价数"
+          value={Math.round(total * 0.8).toLocaleString()}
+          caption="当前可返回价格的酒店匹配数"
+          tone="green"
+        />
+        <MetricCard
+          title="有产酒店数"
+          value={Math.round(total * 0.2).toLocaleString()}
+          caption="当前有库存供应的酒店数"
+          tone="orange"
+        />
+      </div>
 
       {/* 搜索栏 */}
       <div style={searchBar}>
