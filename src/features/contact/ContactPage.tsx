@@ -1,98 +1,305 @@
-import { Mail, MessageCircle, Phone, Users } from "lucide-react";
+import { useState, useEffect, type CSSProperties } from "react";
+import { Mail, MessageCircle, Phone, Users, Briefcase, Settings2, Plus, Pencil, Trash2, Check, X, Headphones, Siren } from "lucide-react";
+import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-export function ContactPage() {
+const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+
+// ── icon map ──────────────────────────────────────────────────
+const ICON_MAP: Record<string, React.FC<{ size?: number; style?: CSSProperties }>> = {
+  MessageCircle, Phone, Mail, Users, Headphones, Siren,
+};
+
+// ── types ─────────────────────────────────────────────────────
+type DidaField = { label: string; value: string };
+type DidaContact = {
+  id: number; title: string; subtitle: string;
+  icon_key: string; color: string; bg_color: string;
+  fields: DidaField[];
+};
+
+type MyContact = {
+  id: number; type: "ops" | "biz";
+  name: string; role: string; email: string; phone: string; wechat: string;
+};
+
+// ── ContactRow ────────────────────────────────────────────────
+function ContactRow({ contact, onSave, onDelete }: {
+  contact: MyContact;
+  onSave: (c: MyContact) => Promise<void>;
+  onDelete: () => Promise<void>;
+}) {
+  const [editing, setEditing] = useState(!contact.name);
+  const [draft, setDraft] = useState({ ...contact });
+  const [busy, setBusy] = useState(false);
+
+  const save = async () => {
+    setBusy(true);
+    await onSave(draft);
+    setBusy(false);
+    setEditing(false);
+  };
+  const cancel = () => { setDraft({ ...contact }); setEditing(false); };
+
+  const field = (key: keyof MyContact, placeholder: string) => (
+    <input
+      value={draft[key] as string}
+      onChange={e => setDraft({ ...draft, [key]: e.target.value })}
+      placeholder={placeholder}
+      style={inputStyle}
+    />
+  );
+
+  if (editing) {
+    return (
+      <div style={rowCard}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          {field("name", "姓名")}
+          {field("role", "职位 / 角色")}
+          {field("email", "邮箱")}
+          {field("phone", "电话")}
+          {field("wechat", "微信号")}
+        </div>
+        <div style={{ display: "flex", gap: 8, marginTop: 10, justifyContent: "flex-end" }}>
+          <button type="button" onClick={cancel} disabled={busy} style={{ ...actionBtn, background: "var(--surface-soft)", color: "var(--muted-strong)" }}>
+            <X size={13} /> 取消
+          </button>
+          <button type="button" onClick={save} disabled={busy} style={{ ...actionBtn, background: "var(--dida-navy)", color: "#fff" }}>
+            <Check size={13} /> {busy ? "保存中…" : "保存"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={rowCard}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 14 }}>
+            {contact.name || <span style={{ color: "var(--muted)" }}>（未填写）</span>}
+          </div>
+          <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{contact.role}</div>
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button type="button" onClick={() => { setDraft({ ...contact }); setEditing(true); }} style={iconBtn} title="编辑">
+            <Pencil size={13} />
+          </button>
+          <button type="button" onClick={onDelete} style={{ ...iconBtn, color: "var(--dida-red)" }} title="删除">
+            <Trash2 size={13} />
+          </button>
+        </div>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "6px 12px", marginTop: 10 }}>
+        {contact.email && <InfoChip icon={<Mail size={11} />} label="邮箱" value={contact.email} />}
+        {contact.phone && <InfoChip icon={<Phone size={11} />} label="电话" value={contact.phone} />}
+        {contact.wechat && <InfoChip icon={<MessageCircle size={11} />} label="微信" value={contact.wechat} />}
+        {!contact.email && !contact.phone && !contact.wechat && (
+          <span style={{ fontSize: 12, color: "var(--muted)", gridColumn: "1/-1" }}>点击编辑填写联系方式</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function InfoChip({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div>
+      <div style={{ display: "flex", alignItems: "center", gap: 3, color: "var(--muted)", fontSize: 11, marginBottom: 1 }}>{icon}{label}</div>
+      <div style={{ fontWeight: 600, fontSize: 12, color: "var(--text)", wordBreak: "break-all" }}>{value}</div>
+    </div>
+  );
+}
+
+// ── Main page ─────────────────────────────────────────────────
+export function ContactPage(_: PageProps) {
+  const [didaList, setDidaList] = useState<DidaContact[]>([]);
+  const [myList, setMyList] = useState<MyContact[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`${API}/api/contacts/dida`).then(r => r.json()),
+      fetch(`${API}/api/contacts/my`).then(r => r.json()),
+    ]).then(([dida, my]) => {
+      setDidaList(dida);
+      setMyList(my);
+      setLoading(false);
+    });
+  }, []);
+
+  const addContact = async (type: "ops" | "biz") => {
+    const res = await fetch(`${API}/api/contacts/my`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, name: "", role: type === "ops" ? "运营" : "商务", email: "", phone: "", wechat: "" }),
+    });
+    const created: MyContact = await res.json();
+    setMyList(prev => [...prev, created]);
+  };
+
+  const saveContact = async (updated: MyContact) => {
+    const res = await fetch(`${API}/api/contacts/my/${updated.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updated),
+    });
+    const saved: MyContact = await res.json();
+    setMyList(prev => prev.map(c => c.id === saved.id ? saved : c));
+  };
+
+  const deleteContact = async (id: number) => {
+    await fetch(`${API}/api/contacts/my/${id}`, { method: "DELETE" });
+    setMyList(prev => prev.filter(c => c.id !== id));
+  };
+
+  const ops = myList.filter(c => c.type === "ops");
+  const biz = myList.filter(c => c.type === "biz");
+
+  if (loading) return <div style={{ padding: 40, color: "var(--muted)" }}>加载中…</div>;
+
   return (
     <>
-      <PageHeader title="联系方式" description="获取 Dida 团队的支持与帮助。" />
-      <div className="grid two-col">
-        <Card>
-          <div className="card-header" style={{ justifyContent: "flex-start", gap: 14 }}>
-            <div className="icon-tile" style={{ background: "#eef1ff" }}>
-              <MessageCircle className="icon" style={{ color: "#4f5fb8" }} />
+      <PageHeader title="联系方式" description="Dida 服务团队联系方式及我方对接人信息。" />
+
+      {/* Dida 联系方式（只读） */}
+      <section>
+        <div style={sectionHeader}>
+          <div style={sectionDot} />
+          <h2 style={sectionTitle}>Dida 联系方式</h2>
+          <span style={lockBadge}>只读</span>
+        </div>
+        <div className="grid two-col" style={{ marginTop: 12 }}>
+          {didaList.map(c => {
+            const Icon = ICON_MAP[c.icon_key] ?? Mail;
+            return (
+              <Card key={c.id}>
+                <div className="card-header" style={{ justifyContent: "flex-start", gap: 12 }}>
+                  <div className="icon-tile" style={{ background: c.bg_color, flexShrink: 0 }}>
+                    <Icon size={16} style={{ color: c.color }} />
+                  </div>
+                  <div>
+                    <h3>{c.title}</h3>
+                    <p className="tiny">{c.subtitle}</p>
+                  </div>
+                </div>
+                <div className="action-list" style={{ marginTop: 12 }}>
+                  {c.fields.map(f => (
+                    <div key={f.label} style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+                      <span className="muted" style={{ fontSize: 12, flexShrink: 0 }}>{f.label}</span>
+                      <strong style={{ fontSize: 12, textAlign: "right" }}>{f.value}</strong>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 我方对接人（可编辑） */}
+      <section style={{ marginTop: 32 }}>
+        <div style={sectionHeader}>
+          <div style={{ ...sectionDot, background: "#16a34a" }} />
+          <h2 style={sectionTitle}>我方对接人</h2>
+          <span style={{ ...lockBadge, background: "#f0fff4", color: "#16a34a", border: "1px solid #bbf7d0" }}>可编辑</span>
+        </div>
+
+        <div className="grid two-col" style={{ marginTop: 12 }}>
+          {/* 运营对接人 */}
+          <Card>
+            <div className="card-header">
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div className="icon-tile" style={{ background: "#eef1ff", flexShrink: 0 }}>
+                  <Settings2 size={16} style={{ color: "#4f5fb8" }} />
+                </div>
+                <div>
+                  <h3>运营对接人</h3>
+                  <p className="tiny">负责日常运营与系统对接</p>
+                </div>
+              </div>
+              <button type="button" onClick={() => addContact("ops")} style={addBtn}>
+                <Plus size={13} /> 添加
+              </button>
             </div>
-            <div>
-              <h3>客户经理</h3>
-              <p className="tiny">您的专属合作伙伴支持联系人</p>
+            <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+              {ops.length === 0 ? (
+                <p className="tiny" style={{ color: "var(--muted)", textAlign: "center", padding: "16px 0" }}>
+                  暂无运营对接人，点击「添加」新增
+                </p>
+              ) : (
+                ops.map(c => (
+                  <ContactRow
+                    key={c.id} contact={c}
+                    onSave={saveContact}
+                    onDelete={() => deleteContact(c.id)}
+                  />
+                ))
+              )}
             </div>
-          </div>
-          <div className="action-list" style={{ marginTop: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">姓名</span>
-              <strong>Dida 客户成功团队</strong>
+          </Card>
+
+          {/* 商务对接人 */}
+          <Card>
+            <div className="card-header">
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div className="icon-tile" style={{ background: "#fff0f5", flexShrink: 0 }}>
+                  <Briefcase size={16} style={{ color: "#ea0345" }} />
+                </div>
+                <div>
+                  <h3>商务对接人</h3>
+                  <p className="tiny">负责商务谈判与合同对接</p>
+                </div>
+              </div>
+              <button type="button" onClick={() => addContact("biz")} style={addBtn}>
+                <Plus size={13} /> 添加
+              </button>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">邮箱</span>
-              <strong>partner-support@dida.travel</strong>
+            <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+              {biz.length === 0 ? (
+                <p className="tiny" style={{ color: "var(--muted)", textAlign: "center", padding: "16px 0" }}>
+                  暂无商务对接人，点击「添加」新增
+                </p>
+              ) : (
+                biz.map(c => (
+                  <ContactRow
+                    key={c.id} contact={c}
+                    onSave={saveContact}
+                    onDelete={() => deleteContact(c.id)}
+                  />
+                ))
+              )}
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">响应时间</span>
-              <strong>工作日 24 小时内</strong>
-            </div>
-          </div>
-        </Card>
-        <Card>
-          <div className="card-header" style={{ justifyContent: "flex-start", gap: 14 }}>
-            <div className="icon-tile" style={{ background: "#fff0f5" }}>
-              <Phone className="icon" style={{ color: "#ea0345" }} />
-            </div>
-            <div>
-              <h3>技术支持</h3>
-              <p className="tiny">API 集成与技术问题</p>
-            </div>
-          </div>
-          <div className="action-list" style={{ marginTop: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">邮箱</span>
-              <strong>tech-support@dida.travel</strong>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">服务时间</span>
-              <strong>7×24 小时</strong>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">紧急热线</span>
-              <strong>+86 400-XXX-XXXX</strong>
-            </div>
-          </div>
-        </Card>
-        <Card>
-          <div className="card-header" style={{ justifyContent: "flex-start", gap: 14 }}>
-            <div className="icon-tile" style={{ background: "#f0fff4" }}>
-              <Mail className="icon" style={{ color: "#16a34a" }} />
-            </div>
-            <div>
-              <h3>商务合作</h3>
-              <p className="tiny">渠道拓展与合作意向</p>
-            </div>
-          </div>
-          <div className="action-list" style={{ marginTop: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">邮箱</span>
-              <strong>bd@dida.travel</strong>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span className="muted">响应时间</span>
-              <strong>工作日 48 小时内</strong>
-            </div>
-          </div>
-        </Card>
-        <Card>
-          <div className="card-header" style={{ justifyContent: "flex-start", gap: 14 }}>
-            <div className="icon-tile" style={{ background: "#fffbeb" }}>
-              <Users className="icon" style={{ color: "#d97706" }} />
-            </div>
-            <div>
-              <h3>团队微信群</h3>
-              <p className="tiny">实时沟通与问题反馈</p>
-            </div>
-          </div>
-          <p className="tiny" style={{ marginTop: 12 }}>
-            请联系您的客户经理申请加入 Dida 合作伙伴专属微信群，获取最新公告和快速响应支持。
-          </p>
-        </Card>
-      </div>
+          </Card>
+        </div>
+      </section>
     </>
   );
 }
+
+// ── styles ────────────────────────────────────────────────────
+const sectionHeader: CSSProperties = { display: "flex", alignItems: "center", gap: 10 };
+const sectionDot: CSSProperties = { width: 4, height: 18, borderRadius: 2, background: "var(--dida-navy)", flexShrink: 0 };
+const sectionTitle: CSSProperties = { margin: 0, fontSize: 15, fontWeight: 700, color: "var(--text-strong)" };
+const lockBadge: CSSProperties = { fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 99, background: "#f4f4f5", color: "var(--muted-strong)", border: "1px solid var(--line)" };
+const rowCard: CSSProperties = { background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 8, padding: "12px 14px" };
+const inputStyle: CSSProperties = {
+  width: "100%", height: 34, padding: "0 10px", fontSize: 13,
+  border: "1px solid var(--line)", borderRadius: 6, outline: "none",
+  background: "var(--surface)", color: "var(--text)", boxSizing: "border-box",
+};
+const actionBtn: CSSProperties = {
+  display: "flex", alignItems: "center", gap: 4, padding: "5px 12px",
+  borderRadius: 6, border: "none", cursor: "pointer", fontSize: 12, fontWeight: 600,
+};
+const iconBtn: CSSProperties = {
+  display: "flex", alignItems: "center", justifyContent: "center",
+  width: 26, height: 26, borderRadius: 6, border: "1px solid var(--line)",
+  background: "var(--surface)", cursor: "pointer", color: "var(--muted-strong)",
+};
+const addBtn: CSSProperties = {
+  display: "flex", alignItems: "center", gap: 4, padding: "4px 10px", borderRadius: 6,
+  border: "1px solid var(--dida-navy)", background: "transparent",
+  color: "var(--dida-navy)", fontSize: 12, fontWeight: 600, cursor: "pointer",
+};
