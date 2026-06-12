@@ -23,15 +23,15 @@ type LogEntry = {
 };
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string; border: string }> = {
-  confirmed: { label: "已确认", color: "#16a34a", bg: "#f0fff4", border: "#bbf7d0" },
-  cancelled: { label: "已取消", color: "#d97706", bg: "#fffbeb", border: "#fde68a" },
-  failed:    { label: "失败",   color: "#dc2626", bg: "#fef2f2", border: "#fecaca" },
+  confirmed: { label: "已确认", color: "#188038", bg: "#e6f4ea", border: "#c3e6cb" },
+  cancelled: { label: "已取消", color: "#935100", bg: "#fff4db", border: "#fde08a" },
+  failed:    { label: "失败",   color: "#d93025", bg: "#fce8e6", border: "#f5c6c3" },
 };
 
 const LOG_META: Record<string, { label: string; apiName: string; color: string; bg: string; border: string }> = {
-  price_confirm:   { label: "验价", apiName: "HotelPriceConfirm",   color: "#3b82f6", bg: "#eff6ff", border: "#bfdbfe" },
-  booking_confirm: { label: "下单", apiName: "HotelBookingConfirm",  color: "#16a34a", bg: "#f0fff4", border: "#bbf7d0" },
-  cancel:          { label: "取消", apiName: "HotelBookingCancel",   color: "#d97706", bg: "#fffbeb", border: "#fde68a" },
+  price_confirm:   { label: "验价", apiName: "HotelPriceConfirm",   color: "#1a73e8", bg: "#e8f0fe", border: "#bfdbfe" },
+  booking_confirm: { label: "下单", apiName: "HotelBookingConfirm",  color: "#188038", bg: "#e6f4ea", border: "#c3e6cb" },
+  cancel:          { label: "取消", apiName: "HotelBookingCancel",   color: "#935100", bg: "#fff4db", border: "#fde08a" },
 };
 
 const LOG_ORDER: Array<"price_confirm" | "booking_confirm" | "cancel"> =
@@ -168,7 +168,7 @@ export function OrderLogsPage(_: PageProps) {
               const sm   = statusMeta(order.order_status);
               const types = order.log_types.split("|");
               return (
-                <tr key={order.order_no} style={{ background: i % 2 === 0 ? "#fff" : "var(--surface-soft)" }}>
+                <tr key={order.order_no} style={{ background: i % 2 === 0 ? "#fff" : "#f8fafd" }}>
                   <td style={{ ...td, fontFamily: "monospace", fontWeight: 700, fontSize: 12 }}>
                     {order.order_no}
                   </td>
@@ -194,7 +194,7 @@ export function OrderLogsPage(_: PageProps) {
                   </td>
                   <td style={td}>
                     <span style={{ padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700,
-                      background: "#eef1ff", color: "#4f5fb8" }}>
+                      background: "#e8f0fe", color: "#1a73e8" }}>
                       {order.client_id}
                     </span>
                   </td>
@@ -272,10 +272,10 @@ function LogSection({ entry }: { entry: LogEntry }) {
   const status   = respBody["Status"];
 
   const statusBadge =
-    status === 2 ? { label: "Confirmed", color: "#16a34a", bg: "#f0fff4" } :
-    status === 3 ? { label: "Canceled",  color: "#d97706", bg: "#fffbeb" } :
-    status === 4 ? { label: "Failed",    color: "#dc2626", bg: "#fef2f2" } :
-    status === "Success" ? { label: "Success", color: "#16a34a", bg: "#f0fff4" } : null;
+    status === 2 ? { label: "Confirmed", color: "#188038", bg: "#e6f4ea" } :
+    status === 3 ? { label: "Canceled",  color: "#935100", bg: "#fff4db" } :
+    status === 4 ? { label: "Failed",    color: "#d93025", bg: "#fce8e6" } :
+    status === "Success" ? { label: "Success", color: "#188038", bg: "#e6f4ea" } : null;
 
   return (
     <div style={{ border: `1px solid ${meta.border}`, borderRadius: 8, overflow: "hidden" }}>
@@ -297,7 +297,7 @@ function LogSection({ entry }: { entry: LogEntry }) {
         <div>
           <button type="button" onClick={() => setReqOpen(o => !o)} style={toggleBtn}>
             {reqOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#64748b",
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#526078",
               textTransform: "uppercase", letterSpacing: "0.5px" }}>REQUEST</span>
           </button>
           {reqOpen && <JsonBlock data={entry.log_detail.request} />}
@@ -308,7 +308,7 @@ function LogSection({ entry }: { entry: LogEntry }) {
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
             <button type="button" onClick={() => setResOpen(o => !o)} style={toggleBtn}>
               {resOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#64748b",
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#526078",
                 textTransform: "uppercase", letterSpacing: "0.5px" }}>RESPONSE</span>
             </button>
             {statusBadge && (
@@ -344,53 +344,53 @@ function JsonBlock({ data }: { data: unknown }) {
 
 const searchBar: CSSProperties = {
   display: "flex", alignItems: "center", gap: 8,
-  background: "#fff", border: "1px solid var(--line)",
+  background: "#fff", border: "1px solid #dfe5ef",
   borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap",
 };
 const inputWrap: CSSProperties = {
   display: "flex", alignItems: "center", gap: 6,
-  border: "1px solid var(--line)", borderRadius: 6, padding: "0 10px",
-  height: 34, background: "var(--surface-soft)", flex: "0 0 300px",
+  border: "1px solid #dfe5ef", borderRadius: 6, padding: "0 10px",
+  height: 34, background: "#f8fafd", flex: "0 0 300px",
 };
 const inputStyle: CSSProperties = {
   border: "none", outline: "none", background: "transparent",
-  fontSize: 13, color: "var(--text)", width: "100%",
+  fontSize: 13, color: "#17213f", width: "100%",
 };
 const selectStyle: CSSProperties = {
   height: 34, padding: "0 10px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  fontSize: 13, color: "var(--text)", cursor: "pointer", outline: "none",
+  border: "1px solid #dfe5ef", background: "#f8fafd",
+  fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none",
 };
 const searchBtn: CSSProperties = {
-  height: 34, padding: "0 16px", borderRadius: 6,
-  background: "var(--dida-navy)", color: "#fff", border: "none",
+  height: 34, padding: "0 16px", borderRadius: 7,
+  background: "#1a73e8", color: "#fff", border: "none",
   cursor: "pointer", fontSize: 13, fontWeight: 600,
 };
 const clearBtn: CSSProperties = {
   height: 34, padding: "0 14px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  cursor: "pointer", fontSize: 13, color: "var(--muted-strong)",
+  border: "1px solid #dfe5ef", background: "#fff",
+  cursor: "pointer", fontSize: 13, color: "#17213f",
 };
 const tableWrap: CSSProperties = {
-  background: "#fff", border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden",
+  background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, overflow: "hidden",
 };
 const table: CSSProperties = { width: "100%", borderCollapse: "collapse" };
 const th: CSSProperties = {
   padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700,
-  color: "var(--muted-strong)", background: "var(--surface-soft)",
-  borderBottom: "1px solid var(--line)", whiteSpace: "nowrap",
+  color: "#526078", background: "#f8fafd",
+  borderBottom: "1px solid #edf1f7", whiteSpace: "nowrap",
 };
 const td: CSSProperties = {
-  padding: "9px 14px", fontSize: 13, color: "var(--text)", borderBottom: "1px solid var(--line)",
+  padding: "9px 14px", fontSize: 13, color: "#17213f", borderBottom: "1px solid #edf1f7",
 };
 const emptyCell: CSSProperties = {
-  textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13,
+  textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13,
 };
 const logBtn: CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 5,
   height: 28, padding: "0 10px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  cursor: "pointer", fontSize: 12, color: "var(--text)", fontWeight: 600,
+  border: "1px solid #dfe5ef", background: "#fff",
+  cursor: "pointer", fontSize: 12, color: "#17213f", fontWeight: 600,
   whiteSpace: "nowrap",
 };
 const dlBtn: CSSProperties = {
@@ -405,8 +405,8 @@ const pagerBar: CSSProperties = {
 };
 const pageBtn: CSSProperties = {
   height: 30, padding: "0 12px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "#fff",
-  cursor: "pointer", fontSize: 13, color: "var(--text)",
+  border: "1px solid #dfe5ef", background: "#fff",
+  cursor: "pointer", fontSize: 13, color: "#17213f",
 };
 const toggleBtn: CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 4,

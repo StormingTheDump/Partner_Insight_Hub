@@ -180,8 +180,8 @@ export function HotSalesPage(_: PageProps) {
 
       {/* 上传结果 */}
       {result && (
-        <div style={{ ...banner, background: result.added > 0 ? "#f0fff4" : "#f4f4f5", borderColor: result.added > 0 ? "#bbf7d0" : "var(--line)" }}>
-          <span style={{ color: result.added > 0 ? "#16a34a" : "var(--muted-strong)", fontWeight: 600 }}>
+        <div style={{ ...banner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "#dfe5ef" }}>
+          <span style={{ color: result.added > 0 ? "#188038" : "#526078", fontWeight: 600 }}>
             ✓ 已新增 {result.added} 条热销记录，数据库已更新
             {result.skipped > 0 && `（跳过 ${result.skipped} 条已存在记录）`}
           </span>
@@ -189,8 +189,8 @@ export function HotSalesPage(_: PageProps) {
         </div>
       )}
       {error && (
-        <div style={{ ...banner, background: "#fef2f2", borderColor: "#fecaca" }}>
-          <span style={{ color: "#dc2626", fontWeight: 600 }}>✕ {error}</span>
+        <div style={{ ...banner, background: "#fce8e6", borderColor: "#f5c6c3" }}>
+          <span style={{ color: "#d93025", fontWeight: 600 }}>✕ {error}</span>
           <button type="button" onClick={() => setError("")} style={bannerClose}><X size={14} /></button>
         </div>
       )}
@@ -227,7 +227,7 @@ export function HotSalesPage(_: PageProps) {
               <tr><td colSpan={7} style={emptyCell}>未找到热销记录</td></tr>
             ) : (
               pageRows.map((r, i) => (
-                <tr key={r.id} style={{ background: i % 2 === 0 ? "#fff" : "var(--surface-soft)" }}>
+                <tr key={r.id} style={{ background: i % 2 === 0 ? "#fff" : "#f8fafd" }}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
                   <td style={td}><span style={channelBadge}>{r.channel_id}</span></td>
                   <td style={{ ...td, fontFamily: "monospace", fontWeight: 600 }}>{r.hotel_id}</td>
@@ -270,24 +270,24 @@ function pagerPages(current: number, total: number): (number | "…")[] {
 }
 
 // ── styles ───────────────────────────────────────────────────────
-const searchBar: CSSProperties   = { display: "flex", alignItems: "center", gap: 8, background: "#fff", border: "1px solid var(--line)", borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap" };
-const inputWrap: CSSProperties   = { display: "flex", alignItems: "center", gap: 6, border: "1px solid var(--line)", borderRadius: 6, padding: "0 10px", height: 34, background: "var(--surface-soft)" };
-const inputStyle: CSSProperties  = { border: "none", outline: "none", background: "transparent", fontSize: 13, color: "var(--text)", width: 120 };
-const selectStyle: CSSProperties = { height: 34, padding: "0 10px", borderRadius: 6, border: "1px solid var(--line)", background: "var(--surface-soft)", fontSize: 13, color: "var(--text)", cursor: "pointer", outline: "none" };
-const searchBtn: CSSProperties   = { height: 34, padding: "0 16px", borderRadius: 6, background: "var(--dida-navy)", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600 };
-const uploadBtn: CSSProperties   = { display: "flex", alignItems: "center", gap: 5, height: 34, padding: "0 14px", borderRadius: 6, border: "1px solid #16a34a", background: "transparent", color: "#16a34a", cursor: "pointer", fontSize: 13, fontWeight: 600 };
-const clearBtn: CSSProperties    = { height: 34, width: 34, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--line)", background: "var(--surface-soft)", cursor: "pointer", color: "var(--muted-strong)" };
+const searchBar: CSSProperties   = { display: "flex", alignItems: "center", gap: 8, background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap" };
+const inputWrap: CSSProperties   = { display: "flex", alignItems: "center", gap: 6, border: "1px solid #dfe5ef", borderRadius: 6, padding: "0 10px", height: 34, background: "#f8fafd" };
+const inputStyle: CSSProperties  = { border: "none", outline: "none", background: "transparent", fontSize: 13, color: "#17213f", width: 120 };
+const selectStyle: CSSProperties = { height: 34, padding: "0 10px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#f8fafd", fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none" };
+const searchBtn: CSSProperties   = { height: 34, padding: "0 16px", borderRadius: 7, background: "#1a73e8", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600 };
+const uploadBtn: CSSProperties   = { display: "flex", alignItems: "center", gap: 5, height: 34, padding: "0 14px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#fff", color: "#17213f", cursor: "pointer", fontSize: 13, fontWeight: 600 };
+const clearBtn: CSSProperties    = { height: 34, width: 34, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #dfe5ef", background: "#fff", cursor: "pointer", color: "#17213f" };
 const banner: CSSProperties      = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
-const bannerClose: CSSProperties = { position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "var(--muted)" };
-const hintBar: CSSProperties     = { marginBottom: 12, padding: "8px 14px", background: "var(--surface-soft)", borderRadius: 6, border: "1px solid var(--line)" };
-const codeStyle: CSSProperties   = { background: "#e8eaf0", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11, marginLeft: 3, marginRight: 3 };
-const tableWrap: CSSProperties   = { background: "#fff", border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden" };
+const bannerClose: CSSProperties = { position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "#66728a" };
+const hintBar: CSSProperties     = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid #dfe5ef" };
+const codeStyle: CSSProperties   = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11, marginLeft: 3, marginRight: 3 };
+const tableWrap: CSSProperties   = { background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, overflow: "hidden" };
 const table: CSSProperties       = { width: "100%", borderCollapse: "collapse" };
-const th: CSSProperties          = { padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700, color: "var(--muted-strong)", background: "var(--surface-soft)", borderBottom: "1px solid var(--line)", whiteSpace: "nowrap" };
-const td: CSSProperties          = { padding: "9px 14px", fontSize: 13, color: "var(--text)", borderBottom: "1px solid var(--line)" };
-const emptyCell: CSSProperties   = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };
-const channelBadge: CSSProperties = { display: "inline-block", padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700, background: "#eef1ff", color: "#4f5fb8" };
-const countryTag: CSSProperties   = { display: "inline-flex", alignItems: "center", padding: "2px 7px", borderRadius: 99, fontSize: 11, fontWeight: 600, background: "#fff7ed", color: "#c2410c" };
+const th: CSSProperties          = { padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700, color: "#526078", background: "#f8fafd", borderBottom: "1px solid #edf1f7", whiteSpace: "nowrap" };
+const td: CSSProperties          = { padding: "9px 14px", fontSize: 13, color: "#17213f", borderBottom: "1px solid #edf1f7" };
+const emptyCell: CSSProperties   = { textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13 };
+const channelBadge: CSSProperties = { display: "inline-block", padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700, background: "#e8f0fe", color: "#1a73e8" };
+const countryTag: CSSProperties   = { display: "inline-flex", alignItems: "center", padding: "2px 7px", borderRadius: 99, fontSize: 11, fontWeight: 600, background: "#fff4db", color: "#b06000" };
 const pagerBar: CSSProperties    = { display: "flex", alignItems: "center", gap: 4, marginTop: 16, flexWrap: "wrap" };
-const pageBtn: CSSProperties     = { height: 30, minWidth: 30, padding: "0 8px", borderRadius: 6, border: "1px solid var(--line)", background: "#fff", cursor: "pointer", fontSize: 13, color: "var(--text)" };
-const pageBtnActive: CSSProperties = { background: "var(--dida-navy)", color: "#fff", border: "1px solid var(--dida-navy)", fontWeight: 700 };
+const pageBtn: CSSProperties     = { height: 30, minWidth: 30, padding: "0 8px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#fff", cursor: "pointer", fontSize: 13, color: "#17213f" };
+const pageBtnActive: CSSProperties = { background: "#1a73e8", color: "#fff", border: "1px solid #1a73e8", fontWeight: 700 };
