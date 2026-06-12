@@ -13,6 +13,7 @@ import { MarketplaceConfigurationPage } from "@/features/marketplace-configurati
 import { OrderLogsPage } from "@/features/order-logs/OrderLogsPage";
 import { OverviewPage } from "@/features/overview/OverviewPage";
 import { PerformancePage } from "@/features/performance/PerformancePage";
+import { ReportsPage } from "@/features/reports/ReportsPage";
 
 export type PageProps = {
   selectedFeed: string;
@@ -22,6 +23,7 @@ export type PageProps = {
 export const routes: Record<PageId, ComponentType<PageProps>> = {
   overview: OverviewPage,
   performance: PerformancePage,
+  reports: ReportsPage,
   api: ApiPerformancePage,
   errors: ErrorsPage,
   conversion: ConversionPage,

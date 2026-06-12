@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from "re
 export type PageId =
   | "overview"
   | "performance"
+  | "reports"
   | "api"
   | "errors"
   | "conversion"

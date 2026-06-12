@@ -1,62 +1,481 @@
-import { Download, Search } from "lucide-react";
-import { useMemo, useState } from "react";
-import { horizontalLossOption } from "@/data/chart-options";
-import { errorRows } from "@/data/dashboard";
-import { includesText } from "@/data/formatters";
-import { BaseChart } from "@/shared/charts/BaseChart";
-import { Button } from "@/shared/components/Button";
-import { Card } from "@/shared/components/Card";
+import * as echarts from "echarts";
+import { Search, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import type { EChartsOption } from "echarts";
+import type { PageProps } from "@/dashboard/routes";
+import { withChartDefaults } from "@/shared/charts/chart-theme";
 import { ChartCard } from "@/shared/components/ChartCard";
-import { DataTable } from "@/shared/components/DataTable";
-import { SearchFilter } from "@/shared/components/FilterControl";
 import { PageHeader } from "@/shared/components/PageHeader";
-import type { TableColumn } from "@/shared/types/table";
 
-const columns: TableColumn<(typeof errorRows)[number]>[] = [
-  { key: "date", header: "日期" },
-  { key: "source", header: "来源" },
-  { key: "action", header: "操作" },
-  { key: "errorType", header: "错误类型" },
-  { key: "message", header: "供应商消息" },
-  { key: "errors", header: "错误次数", align: "right" },
-  { key: "leadTime", header: "提前期" },
-  { key: "hotelId", header: "酒店ID" },
-  { key: "rateCode", header: "价格代码" },
-  { key: "actions", header: "操作", render: () => <Button>查看详情</Button> }
-];
+const API_BASE = import.meta.env.VITE_API_BASE ?? "";
+const PAGE_SIZE = 15;
 
-export function ErrorsPage() {
-  const [query, setQuery] = useState("");
-  const rows = useMemo(() => errorRows.filter((row) => includesText(Object.values(row), query)), [query]);
+// ── 类型 ────────────────────────────────────────────────────────
+type ChartItem  = { error_type: string; count: number };
+type PreRow     = { log_time: string; client_id: string; dida_rate_plan_id: string; dida_hotel_id: number; error_type: string; rate_record_channel: string };
+type BookRow    = { channel_createtime: string; client_id: string; channel_bookingnumber: string; dida_hotel_id: number; error_type: string };
+type Meta       = { channels: string[]; error_types: string[] };
+
+// ── 图表（水平柱状图，复用原有样式）────────────────────────────
+const axisText = { color: "#526078", fontSize: 11 };
+
+function horizBarOption(data: ChartItem[]): EChartsOption {
+  const names  = data.map((d) => d.error_type);
+  const values = data.map((d) => d.count);
+  const max    = Math.max(...values, 1);
+  return {
+    grid: { left: 160, right: 24, top: 12, bottom: 20, containLabel: false },
+    xAxis: {
+      type: "value",
+      max,
+      axisLabel: axisText,
+      splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } },
+    },
+    yAxis: {
+      type: "category",
+      data: names,
+      axisLabel: { ...axisText, width: 148, overflow: "truncate" },
+      inverse: true,
+    },
+    legend: { show: false },
+    series: [{
+      type: "bar",
+      data: values,
+      barWidth: 28,
+      itemStyle: { color: "#4c4597", borderRadius: 4 },
+      label: { show: true, position: "right", color: "#526078", fontSize: 11, formatter: "{c}" },
+    }],
+  };
+}
+
+// ── 动态高度图表（按条目数自动伸缩）────────────────────────────
+const PER_BAR = 52;  // 28px bar + ~24px gap
+const CHART_PADDING = 44;  // grid top(12) + bottom(20) + 12 extra
+
+function DynChart({ data }: { data: ChartItem[] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<echarts.ECharts | null>(null);
+  const height = data.length > 0 ? Math.max(220, data.length * PER_BAR + CHART_PADDING) : 220;
+
+  // 初始化一次，生命周期与 DOM 节点绑定
+  useEffect(() => {
+    if (!ref.current) return;
+    const chart = echarts.init(ref.current, undefined, { renderer: "canvas" });
+    chartRef.current = chart;
+    const ro = new ResizeObserver(() => chart.resize());
+    ro.observe(ref.current);
+    return () => { ro.disconnect(); chart.dispose(); chartRef.current = null; };
+  }, []);
+
+  // 数据变化时更新 option 和容器高度
+  useEffect(() => {
+    if (!chartRef.current) return;
+    if (data.length === 0) { chartRef.current.clear(); return; }
+    chartRef.current.setOption(withChartDefaults(horizBarOption(data)), true);
+    // DOM 高度已由 React 更新，通知 ECharts 重新适配
+    requestAnimationFrame(() => chartRef.current?.resize());
+  }, [data]);
+
+  return (
+    <div style={{ width: "100%", height, position: "relative" }}>
+      {data.length === 0 && (
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#b0bac8" }}>
+          暂无数据
+        </div>
+      )}
+      <div ref={ref} style={{ width: "100%", height: "100%" }} />
+    </div>
+  );
+}
+
+// ── JSON 弹窗 ────────────────────────────────────────────────────
+function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  let parsed: unknown = raw;
+  let pretty = raw;
+  try {
+    parsed = JSON.parse(raw);
+    pretty = JSON.stringify(parsed, null, 2);
+  } catch { /* keep as string */ }
+
+  return (
+    <div
+      ref={overlayRef}
+      onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
+      style={{
+        position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)",
+        display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000,
+      }}
+    >
+      <div style={{
+        background: "#fff", borderRadius: 10, width: "min(860px, 90vw)",
+        maxHeight: "80vh", display: "flex", flexDirection: "column",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #e8edf4" }}>
+          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>Rate Record Channel</span>
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex" }}>
+            <X size={18} />
+          </button>
+        </div>
+        <pre style={{
+          margin: 0, padding: "16px 20px", overflowY: "auto", flex: 1,
+          fontSize: 12, lineHeight: 1.6, color: "#334155",
+          fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          background: "#f8fafc", borderRadius: "0 0 10px 10px",
+          whiteSpace: "pre-wrap", wordBreak: "break-all",
+        }}>
+          {pretty}
+        </pre>
+      </div>
+    </div>
+  );
+}
+
+// ── 分页条 ───────────────────────────────────────────────────────
+function Pagination({ page, total, pageSize, onChange }: { page: number; total: number; pageSize: number; onChange: (p: number) => void }) {
+  const totalPages = Math.ceil(total / pageSize);
+  if (totalPages <= 1) return null;
+  const pages: (number | "...")[] = [];
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) pages.push(i);
+    else if (pages[pages.length - 1] !== "...") pages.push("...");
+  }
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 16, justifyContent: "flex-end" }}>
+      <button onClick={() => onChange(page - 1)} disabled={page === 1} style={btnStyle(false)}>‹</button>
+      {pages.map((p, i) =>
+        p === "..." ? <span key={i} style={{ color: "#94a3b8", padding: "0 4px" }}>…</span>
+          : <button key={p} onClick={() => onChange(p as number)} style={btnStyle(p === page)}>{p}</button>
+      )}
+      <button onClick={() => onChange(page + 1)} disabled={page === totalPages} style={btnStyle(false)}>›</button>
+      <span style={{ fontSize: 12, color: "#94a3b8", marginLeft: 6 }}>共 {total} 条</span>
+    </div>
+  );
+}
+
+function btnStyle(active: boolean): React.CSSProperties {
+  return {
+    minWidth: 30, height: 28, borderRadius: 6, border: "1px solid",
+    borderColor: active ? "#4c4597" : "#d4dbe6",
+    background: active ? "#4c4597" : "#fff",
+    color: active ? "#fff" : "#526078",
+    fontSize: 13, cursor: active ? "default" : "pointer", fontWeight: active ? 600 : 400,
+  };
+}
+
+// ── 验价报错 Tab ─────────────────────────────────────────────────
+function PrebookTab({ meta }: { meta: Meta }) {
+  const [channel,     setChannel]     = useState("");
+  const [errorType,   setErrorType]   = useState("");
+  const [ratePlanId,  setRatePlanId]  = useState("");
+  const [applied,     setApplied]     = useState({ channel: "", errorType: "", ratePlanId: "" });
+  const [chart,       setChart]       = useState<ChartItem[]>([]);
+  const [rows,        setRows]        = useState<PreRow[]>([]);
+  const [total,       setTotal]       = useState(0);
+  const [page,        setPage]        = useState(1);
+  const [loading,     setLoading]     = useState(false);
+  const [modal,       setModal]       = useState<string | null>(null);
+
+  const fetch_ = (p: number, filters = applied) => {
+    setLoading(true);
+    const q = new URLSearchParams({
+      client_id:    filters.channel,
+      error_type:   filters.errorType,
+      rate_plan_id: filters.ratePlanId,
+      page:         String(p),
+      page_size:    String(PAGE_SIZE),
+    });
+    fetch(`${API_BASE}/api/errors/prebook?${q}`)
+      .then((r) => r.json())
+      .then((d) => { setChart(d.chart); setRows(d.rows); setTotal(d.total); setPage(p); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => { fetch_(1); }, []);
+
+  const search = () => {
+    const f = { channel, errorType, ratePlanId };
+    setApplied(f);
+    fetch_(1, f);
+  };
+
+  return (
+    <>
+      {/* 筛选器 */}
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 18 }}>
+        <label style={labelStyle}>
+          <span style={labelText}>渠道</span>
+          <select value={channel} onChange={(e) => setChannel(e.target.value)} style={selectStyle}>
+            <option value="">全部渠道</option>
+            {meta.channels.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <label style={labelStyle}>
+          <span style={labelText}>错误类型</span>
+          <select value={errorType} onChange={(e) => setErrorType(e.target.value)} style={selectStyle}>
+            <option value="">全部类型</option>
+            {meta.error_types.map((e) => <option key={e} value={e}>{e}</option>)}
+          </select>
+        </label>
+        <label style={labelStyle}>
+          <span style={labelText}>Rate Plan ID</span>
+          <input
+            value={ratePlanId}
+            onChange={(e) => setRatePlanId(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && search()}
+            placeholder="输入 Rate Plan ID"
+            style={inputStyle}
+          />
+        </label>
+        <button onClick={search} style={searchBtnStyle}>
+          <Search size={14} style={{ marginRight: 4 }} /> 搜索
+        </button>
+      </div>
+
+      {/* 图表 */}
+      <ChartCard title="按错误类型分布" subtitle="当前筛选范围内各错误类型出现次数">
+        <DynChart data={chart} />
+      </ChartCard>
+
+      {/* 表格 */}
+      <div style={{ marginTop: 22 }}>
+        <div style={{ overflowX: "auto" }}>
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                {["时间", "渠道", "错误类型", "Hotel ID", "Rate Plan ID", "操作"].map((h) => (
+                  <th key={h} style={thStyle}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={6} style={{ textAlign: "center", padding: 32, color: "#b0bac8" }}>加载中…</td></tr>
+              ) : rows.length === 0 ? (
+                <tr><td colSpan={6} style={{ textAlign: "center", padding: 32, color: "#b0bac8" }}>无匹配记录</td></tr>
+              ) : rows.map((r, i) => (
+                <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafbfc" }}>
+                  <td style={tdStyle}>{r.log_time?.replace("T", " ").substring(0, 19)}</td>
+                  <td style={tdStyle}>{r.client_id}</td>
+                  <td style={tdStyle}><span style={errorBadge}>{r.error_type}</span></td>
+                  <td style={tdStyle}>{r.dida_hotel_id}</td>
+                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: 11 }}>{r.dida_rate_plan_id}</td>
+                  <td style={tdStyle}>
+                    <button onClick={() => setModal(r.rate_record_channel)} style={viewBtnStyle}>查看</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Pagination page={page} total={total} pageSize={PAGE_SIZE} onChange={(p) => fetch_(p)} />
+      </div>
+
+      {modal && <JsonModal raw={modal} onClose={() => setModal(null)} />}
+    </>
+  );
+}
+
+// ── 下单报错 Tab ─────────────────────────────────────────────────
+function BookTab({ meta }: { meta: Meta }) {
+  const [channel,       setChannel]       = useState("");
+  const [errorType,     setErrorType]     = useState("");
+  const [bookingNumber, setBookingNumber] = useState("");
+  const [applied,       setApplied]       = useState({ channel: "", errorType: "", bookingNumber: "" });
+  const [chart,         setChart]         = useState<ChartItem[]>([]);
+  const [rows,          setRows]          = useState<BookRow[]>([]);
+  const [total,         setTotal]         = useState(0);
+  const [page,          setPage]          = useState(1);
+  const [loading,       setLoading]       = useState(false);
+
+  const fetch_ = (p: number, filters = applied) => {
+    setLoading(true);
+    const q = new URLSearchParams({
+      client_id:      filters.channel,
+      error_type:     filters.errorType,
+      booking_number: filters.bookingNumber,
+      page:           String(p),
+      page_size:      String(PAGE_SIZE),
+    });
+    fetch(`${API_BASE}/api/errors/book?${q}`)
+      .then((r) => r.json())
+      .then((d) => { setChart(d.chart); setRows(d.rows); setTotal(d.total); setPage(p); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => { fetch_(1); }, []);
+
+  const search = () => {
+    const f = { channel, errorType, bookingNumber };
+    setApplied(f);
+    fetch_(1, f);
+  };
+
+  return (
+    <>
+      {/* 筛选器 */}
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 18 }}>
+        <label style={labelStyle}>
+          <span style={labelText}>渠道</span>
+          <select value={channel} onChange={(e) => setChannel(e.target.value)} style={selectStyle}>
+            <option value="">全部渠道</option>
+            {meta.channels.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <label style={labelStyle}>
+          <span style={labelText}>错误类型</span>
+          <select value={errorType} onChange={(e) => setErrorType(e.target.value)} style={selectStyle}>
+            <option value="">全部类型</option>
+            {meta.error_types.map((e) => <option key={e} value={e}>{e}</option>)}
+          </select>
+        </label>
+        <label style={labelStyle}>
+          <span style={labelText}>Dida Booking Number</span>
+          <input
+            value={bookingNumber}
+            onChange={(e) => setBookingNumber(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && search()}
+            placeholder="输入订单号"
+            style={inputStyle}
+          />
+        </label>
+        <button onClick={search} style={searchBtnStyle}>
+          <Search size={14} style={{ marginRight: 4 }} /> 搜索
+        </button>
+      </div>
+
+      {/* 图表 */}
+      <ChartCard title="按错误类型分布" subtitle="当前筛选范围内各错误类型出现次数">
+        <DynChart data={chart} />
+      </ChartCard>
+
+      {/* 表格 */}
+      <div style={{ marginTop: 22 }}>
+        <div style={{ overflowX: "auto" }}>
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                {["时间", "渠道", "错误类型", "Hotel ID", "Dida Booking Number"].map((h) => (
+                  <th key={h} style={thStyle}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={5} style={{ textAlign: "center", padding: 32, color: "#b0bac8" }}>加载中…</td></tr>
+              ) : rows.length === 0 ? (
+                <tr><td colSpan={5} style={{ textAlign: "center", padding: 32, color: "#b0bac8" }}>无匹配记录</td></tr>
+              ) : rows.map((r, i) => (
+                <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafbfc" }}>
+                  <td style={tdStyle}>{r.channel_createtime?.substring(0, 19)}</td>
+                  <td style={tdStyle}>{r.client_id}</td>
+                  <td style={tdStyle}><span style={errorBadge}>{r.error_type}</span></td>
+                  <td style={tdStyle}>{r.dida_hotel_id}</td>
+                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: 12 }}>{r.channel_bookingnumber}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Pagination page={page} total={total} pageSize={PAGE_SIZE} onChange={(p) => fetch_(p)} />
+      </div>
+    </>
+  );
+}
+
+// ── 主页面 ────────────────────────────────────────────────────────
+export function ErrorsPage(_: PageProps) {
+  const [tab,  setTab]  = useState<"prebook" | "book">("prebook");
+  const [meta, setMeta] = useState<{ prebook: Meta; book: Meta } | null>(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/errors/meta`)
+      .then((r) => r.json())
+      .then(setMeta)
+      .catch(() => {});
+  }, []);
 
   return (
     <>
       <PageHeader
         title="错误日志"
-        description="查看近期供应商错误及预估营收影响。"
-        actions={
-          <Button>
-            <Download className="icon" /> 导出错误
-          </Button>
-        }
+        description="过去 48 小时内验价及下单报错记录，支持渠道、错误类型筛选。"
       />
-      <Card>
-        <strong>48小时日志窗口</strong>
-        <p className="tiny">本系统保留最近48小时的详细供应商日志。</p>
-      </Card>
-      <div className="filter-row" style={{ marginTop: 18 }}>
-        <button className="filter-control" type="button">操作</button>
-        <button className="filter-control" type="button">错误类型</button>
-        <button className="filter-control" type="button">来源</button>
-        <button className="filter-control" type="button">提前期</button>
-        <SearchFilter icon={<Search className="icon" />} placeholder="搜索日志" value={query} onChange={(event) => setQuery(event.target.value)} />
+
+      {/* Tab 切换 */}
+      <div style={{ display: "flex", gap: 0, marginTop: 20, borderBottom: "2px solid #e8edf4" }}>
+        {(["prebook", "book"] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            style={{
+              padding: "8px 24px",
+              border: "none",
+              borderBottom: tab === t ? "2px solid #4c4597" : "2px solid transparent",
+              marginBottom: -2,
+              background: "none",
+              color: tab === t ? "#4c4597" : "#7a8fa6",
+              fontWeight: tab === t ? 600 : 400,
+              fontSize: 14,
+              cursor: "pointer",
+            }}
+          >
+            {t === "prebook" ? "验价报错" : "下单报错"}
+          </button>
+        ))}
       </div>
-      <ChartCard title="按错误原因划分的交易额损失" subtitle="按供应商消息分组的预估损失。">
-        <BaseChart className="small" option={horizontalLossOption()} />
-      </ChartCard>
+
       <div style={{ marginTop: 22 }}>
-        <DataTable columns={columns} rows={rows} getRowKey={(row) => `${row.date}-${row.hotelId}`} />
+        {!meta ? (
+          <div style={{ textAlign: "center", padding: 48, color: "#b0bac8" }}>加载中…</div>
+        ) : tab === "prebook" ? (
+          <PrebookTab meta={meta.prebook} />
+        ) : (
+          <BookTab meta={meta.book} />
+        )}
       </div>
     </>
   );
 }
+
+// ── 样式常量 ──────────────────────────────────────────────────────
+const labelStyle: React.CSSProperties = { display: "flex", flexDirection: "column", gap: 4 };
+const labelText:  React.CSSProperties = { fontSize: 11, color: "#7a8fa6", fontWeight: 500 };
+const selectStyle: React.CSSProperties = {
+  height: 34, borderRadius: 6, border: "1px solid #d4dbe6",
+  padding: "0 10px", fontSize: 13, color: "#2c3e50", background: "#fff", minWidth: 140,
+};
+const inputStyle: React.CSSProperties = {
+  height: 34, borderRadius: 6, border: "1px solid #d4dbe6",
+  padding: "0 10px", fontSize: 13, color: "#2c3e50", background: "#fff", minWidth: 180,
+};
+const searchBtnStyle: React.CSSProperties = {
+  height: 34, borderRadius: 6, border: "none",
+  background: "#4c4597", color: "#fff",
+  padding: "0 16px", fontSize: 13, cursor: "pointer",
+  display: "flex", alignItems: "center", alignSelf: "flex-end",
+};
+const tableStyle: React.CSSProperties = {
+  width: "100%", borderCollapse: "collapse",
+  fontSize: 13, border: "1px solid #e8edf4", borderRadius: 8, overflow: "hidden",
+};
+const thStyle: React.CSSProperties = {
+  padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 600,
+  color: "#526078", background: "#f4f6fa", borderBottom: "1px solid #e8edf4",
+  whiteSpace: "nowrap",
+};
+const tdStyle: React.CSSProperties = {
+  padding: "9px 14px", color: "#334155", borderBottom: "1px solid #f0f3f8", whiteSpace: "nowrap",
+};
+const errorBadge: React.CSSProperties = {
+  display: "inline-block", padding: "2px 8px", borderRadius: 4,
+  background: "#fce8e6", color: "#c0392b", fontSize: 12, fontWeight: 500,
+};
+const viewBtnStyle: React.CSSProperties = {
+  padding: "3px 12px", borderRadius: 5, border: "1px solid #d4dbe6",
+  background: "#fff", color: "#4c4597", fontSize: 12, cursor: "pointer", fontWeight: 500,
+};

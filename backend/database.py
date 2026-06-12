@@ -123,6 +123,50 @@ def init_tables():
         )
     """)
 
+    # ── 转化指标每日数据表 ────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS conversion_daily_metrics (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            date       TEXT    NOT NULL,
+            channel    TEXT    NOT NULL,
+            look       INTEGER NOT NULL DEFAULT 0,
+            property   INTEGER NOT NULL DEFAULT 0,
+            avail_look INTEGER NOT NULL DEFAULT 0,
+            prebook    INTEGER NOT NULL DEFAULT 0,
+            book       INTEGER NOT NULL DEFAULT 0,
+            UNIQUE(date, channel)
+        )
+    """)
+
+    # ── 验价报错日志 ──────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS prebook_error_logs (
+            id                   INTEGER PRIMARY KEY AUTOINCREMENT,
+            log_time             TEXT    NOT NULL,
+            client_id            TEXT    NOT NULL,
+            dida_rate_plan_id    TEXT,
+            dida_hotel_id        INTEGER,
+            error_type           TEXT    NOT NULL,
+            rate_record_channel  TEXT
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_pre_client ON prebook_error_logs(client_id)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_pre_error  ON prebook_error_logs(error_type)")
+
+    # ── 下单报错日志 ──────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS book_error_logs (
+            id                      INTEGER PRIMARY KEY AUTOINCREMENT,
+            channel_createtime      TEXT    NOT NULL,
+            client_id               TEXT    NOT NULL,
+            channel_bookingnumber   TEXT,
+            dida_hotel_id           INTEGER,
+            error_type              TEXT    NOT NULL
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_book_client ON book_error_logs(client_id)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_book_error  ON book_error_logs(error_type)")
+
     # ── 订单日志表 ────────────────────────────────────────────────
     conn.execute("""
         CREATE TABLE IF NOT EXISTS order_logs (
@@ -156,6 +200,8 @@ def init_tables():
     _seed_channel_hot_sales(conn)
     _seed_channel_configurations(conn)
     _seed_order_logs(conn)
+    _seed_conversion_metrics(conn)
+    _seed_error_logs(conn)
     conn.close()
 
 
@@ -545,3 +591,76 @@ def _seed_order_logs(conn):
         rows,
     )
     conn.commit()
+
+
+def _seed_conversion_metrics(conn):
+    count = conn.execute("SELECT COUNT(*) FROM conversion_daily_metrics").fetchone()[0]
+    if count > 0:
+        return
+
+    import math
+    from datetime import date, timedelta
+
+    START = date(2026, 5, 12)
+    DATES = [(START + timedelta(days=i)).isoformat() for i in range(30)]
+
+    # 每渠道基础参数：(look, property, avail_look, prebook, book)
+    # 设计目标：
+    #   Agoda/AgodaEBK        → 全部合格
+    #   AgodaUK               → L2C 不合格（avail_look/prebook > 500）
+    #   Lvzan                 → C2B 不合格（prebook/book > 500）
+    #   DidaOpaq              → L2B & P2B 不合格（大量查询极少下单）
+    #   Barli2b               → C2B 严重不合格
+    CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
+    BASE = {
+        #              look        property    avail_look  prebook  book
+        "Agoda":    (1_000_000,  4_200_000,   660_000,   3_000,   280),
+        "AgodaEBK": (  520_000,  2_100_000,   320_000,   1_500,   105),
+        "AgodaUK":  (  700_000,  3_000_000,   210_000,     360,    80),  # L2C = 210000/360 ≈ 583 不合格
+        "Lvzan":    (  300_000,  1_500_000,   190_000,   2_200,     4),  # C2B = 2200/4 = 550 不合格
+        "DidaOpaq": (2_400_000, 12_500_000,   400_000,     820,     6),  # L2B=400000, P2B=2083333 不合格
+        "Barli2b":  (   80_000,    520_000,    28_000,   3_200,     4),  # C2B = 800 不合格
+    }
+    PHASES = {"Agoda": 0.0, "AgodaEBK": 2.1, "AgodaUK": 4.3,
+              "Lvzan": 1.5, "DidaOpaq": 3.7, "Barli2b": 5.2}
+
+    rows = []
+    for i, d in enumerate(DATES):
+        for ch in CHANNELS:
+            ph = PHASES[ch]
+            # 每渠道独立波动 ±8%
+            jitter = 1.0 + 0.08 * math.sin(i * 0.7 + ph) + 0.04 * math.cos(i * 0.45 + ph * 1.2)
+            b = BASE[ch]
+            look       = max(1, round(b[0] * jitter))
+            prop       = max(1, round(b[1] * jitter))
+            avail_look = max(1, round(b[2] * jitter))
+            prebook    = max(1, round(b[3] * jitter))
+            book       = max(1, round(b[4] * jitter))
+            rows.append((d, ch, look, prop, avail_look, prebook, book))
+
+    conn.executemany(
+        "INSERT OR IGNORE INTO conversion_daily_metrics"
+        " (date, channel, look, property, avail_look, prebook, book) VALUES (?,?,?,?,?,?,?)",
+        rows,
+    )
+    conn.commit()
+    print(f"conversion_daily_metrics: 写入 {len(rows)} 行")
+
+
+def _seed_error_logs(conn):
+    """委托给 seed_errors.py，Excel 文件不存在时静默跳过"""
+    import os
+    prebook_xlsx = os.path.expanduser("~/Downloads/报错验价底表示例.xlsx")
+    book_xlsx    = os.path.expanduser("~/Downloads/报错下单底表示例.xlsx")
+    if not (os.path.exists(prebook_xlsx) and os.path.exists(book_xlsx)):
+        return
+    pre_count  = conn.execute("SELECT COUNT(*) FROM prebook_error_logs").fetchone()[0]
+    book_count = conn.execute("SELECT COUNT(*) FROM book_error_logs").fetchone()[0]
+    if pre_count > 0 and book_count > 0:
+        return
+    try:
+        import seed_errors
+        seed_errors.seed()
+    except Exception as e:
+        print(f"seed_errors: 跳过（{e}）")
+
