@@ -4,14 +4,14 @@ import {
   CalendarDays,
   Code2,
   FileText,
+  Flame,
+  GitMerge,
   Home,
   ListTree,
   MessageCircle,
-  Percent,
   ScrollText,
   SquareCheckBig,
   Store,
-  TrendingUp,
   WalletCards,
 } from "lucide-react";
 import type { ComponentType } from "react";
@@ -48,14 +48,14 @@ export const navSections: NavSection[] = [
     ],
   },
   {
-    title: "渠道市场",
+    title: "渠道信息",
     items: [
-      { id: "configuration", label: "渠道配置", icon: Store,       badge: "已激活", badgeTone: "active" },
-      { id: "analytics",     label: "数据分析", icon: TrendingUp },
-      { id: "cost",          label: "成本分析", icon: Percent },
-      { id: "finance",       label: "财务信息", icon: WalletCards },
-      { id: "order-logs",    label: "订单日志", icon: ListTree },
-      { id: "bookings",      label: "订单管理", icon: CalendarDays },
+      { id: "configuration",    label: "渠道配置",  icon: Store },
+      { id: "channel-mapping",  label: "渠道匹配",  icon: GitMerge },
+      { id: "hot-sales",        label: "渠道热销",  icon: Flame },
+      { id: "finance",          label: "财务信息",  icon: WalletCards },
+      { id: "order-logs",       label: "订单日志",  icon: ListTree },
+      { id: "bookings",         label: "订单管理",  icon: CalendarDays },
     ],
   },
   {
