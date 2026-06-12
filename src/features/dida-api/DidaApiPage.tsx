@@ -1,5 +1,4 @@
 import { BookOpen, Code2, ExternalLink, Zap } from "lucide-react";
-import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 
@@ -17,7 +16,7 @@ const methodColor: Record<string, string> = {
   DELETE: "#dc2626",
 };
 
-export function DidaApiPage(_: PageProps) {
+export function DidaApiPage() {
   return (
     <>
       <PageHeader title="Dida API" description="Dida 供应商 API 接入文档与快速参考。" />

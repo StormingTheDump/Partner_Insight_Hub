@@ -1,9 +1,8 @@
 import { Mail, MessageCircle, Phone, Users } from "lucide-react";
-import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-export function ContactPage(_: PageProps) {
+export function ContactPage() {
   return (
     <>
       <PageHeader title="联系方式" description="获取 Dida 团队的支持与帮助。" />

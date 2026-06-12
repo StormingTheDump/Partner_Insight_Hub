@@ -54,6 +54,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAppState() {
   const context = useContext(AppStateContext);
   if (!context) throw new Error("useAppState must be used within AppStateProvider");

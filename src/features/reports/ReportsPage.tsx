@@ -1,8 +1,7 @@
-import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-export function ReportsPage(_: PageProps) {
+export function ReportsPage() {
   return (
     <>
       <PageHeader title="自定义报表" description="定时报表模板及自定义导出。" />

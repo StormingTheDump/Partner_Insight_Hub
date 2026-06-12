@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { PageProps } from "@/dashboard/routes";
 import { marketplaceSegments } from "@/data/dashboard";
 import { Card } from "@/shared/components/Card";
 import { DataTable } from "@/shared/components/DataTable";
@@ -15,7 +14,7 @@ const columns: TableColumn<(typeof marketplaceSegments)[number]>[] = [
   { key: "status", header: "状态", render: (row) => <StatusPill label={row.status} tone={row.status === "观察中" ? "warning" : "success"} /> }
 ];
 
-export function MarketplaceConfigurationPage(_: PageProps) {
+export function MarketplaceConfigurationPage() {
   const [tolerance, setTolerance] = useState(0.7);
 
   return (

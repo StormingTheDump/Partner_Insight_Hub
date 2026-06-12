@@ -1,6 +1,5 @@
 import { Download, Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { PageProps } from "@/dashboard/routes";
 import { bookingRows } from "@/data/bookings";
 import { includesText } from "@/data/formatters";
 import { Button } from "@/shared/components/Button";
@@ -22,7 +21,7 @@ const columns: TableColumn<(typeof bookingRows)[number]>[] = [
   { key: "bookingDate", header: "预订日期" }
 ];
 
-export function BookingsPage(_: PageProps) {
+export function BookingsPage() {
   const [query, setQuery] = useState("");
   const rows = useMemo(() => bookingRows.filter((row) => includesText(Object.values(row), query)), [query]);
   const exportCsv = useCsvExport("dida-bookings.csv", columns, rows);
