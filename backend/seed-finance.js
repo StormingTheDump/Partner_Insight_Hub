@@ -152,8 +152,8 @@ db.transaction(() => paymentRows.forEach(r => insertPayment.run(r)))();
 //  billing_period 2026-05 → latest_collection_date 2026-06-15
 //  billing_period 2026-06 → latest_collection_date 2026-07-15
 //
-//  Statuses used: 已逾期 / 部分结账 / 待结账  (NOT "高风险")
-//  settlement_date: filled for 已逾期 and 部分结账; NULL for 待结账
+//  Statuses used: 已逾期 / 已结清 / 待结账  (NOT "高风险")
+//  settlement_date: filled for 已逾期 and 已结清; NULL for 待结账
 
 const billRows = [
   // ── April period (billing_period = 2026-04) ──────────────────────────────
@@ -169,7 +169,7 @@ const billRows = [
   },
   {
     bill_no: "BILL-202604-003", client_id: "AgodaEBK", billing_period: "2026-04",
-    latest_collection_date: "2026-05-15", status: "部分结账", settlement_date: "2026-05-12",
+    latest_collection_date: "2026-05-15", status: "已结清", settlement_date: "2026-05-12",
     contact: "Jane", order_count: 98,  amount: 87320.50,
   },
   {
@@ -185,7 +185,7 @@ const billRows = [
   },
   {
     bill_no: "BILL-202605-006", client_id: "DidaOpaq", billing_period: "2026-05",
-    latest_collection_date: "2026-06-15", status: "部分结账", settlement_date: "2026-06-10",
+    latest_collection_date: "2026-06-15", status: "已结清", settlement_date: "2026-06-10",
     contact: "Jane", order_count: 183, amount: 156320.75,
   },
   {
@@ -200,7 +200,7 @@ const billRows = [
   },
   {
     bill_no: "BILL-202605-009", client_id: "AgodaEBK", billing_period: "2026-05",
-    latest_collection_date: "2026-06-15", status: "部分结账", settlement_date: "2026-06-08",
+    latest_collection_date: "2026-06-15", status: "已结清", settlement_date: "2026-06-08",
     contact: "Jane", order_count: 89,  amount: 74580.00,
   },
   // ── June period (billing_period = 2026-06) ───────────────────────────────
