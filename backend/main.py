@@ -16,6 +16,8 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "http://10.6.20.87:5173",
+        "http://198.19.107.12:5173",
         "https://huangxiaozhen.github.io",
     ],
     allow_methods=["*"],
@@ -186,6 +188,192 @@ Answer questions based on this documentation. If asked something outside this sc
 """
 
 
+# ── Agoda Metrics API ─────────────────────────────────────────────────────────
+
+@app.get("/api/metrics/funnel")
+def metrics_funnel():
+    """
+    5层转化漏斗：查价数 → 有价数 → 验价数 → 准确验价数 → 下单数
+    """
+    conn = get_connection()
+
+    overall = conn.execute("""
+        SELECT
+          (SELECT SUM(search_requests)  FROM agoda_price_search)  AS searches,
+          (SELECT SUM(result_count)     FROM agoda_price_search)  AS results,
+          (SELECT SUM(confirm_requests) FROM agoda_price_confirm) AS confirms,
+          (SELECT SUM(accurate_count)   FROM agoda_price_confirm) AS accurates,
+          (SELECT SUM(bookings)         FROM agoda_daily_metrics) AS bookings,
+          (SELECT ROUND(AVG(accurate_rate),1)  FROM agoda_price_confirm) AS confirm_accurate_rate,
+          (SELECT ROUND(AVG(avg_response_ms))  FROM agoda_price_search)  AS avg_response_ms
+    """).fetchone()
+
+    by_client = conn.execute("""
+        SELECT
+            s.client_id,
+            SUM(s.search_requests)                                                  AS searches,
+            SUM(s.result_count)                                                     AS results,
+            SUM(c.confirm_requests)                                                 AS confirms,
+            SUM(c.accurate_count)                                                   AS accurates,
+            SUM(m.bookings)                                                         AS bookings,
+            ROUND(SUM(s.result_count)*100.0/NULLIF(SUM(s.search_requests),0),1)    AS result_rate,
+            ROUND(SUM(c.confirm_requests)*100.0/NULLIF(SUM(s.search_requests),0),1) AS search_to_confirm_rate,
+            ROUND(SUM(c.accurate_count)*100.0/NULLIF(SUM(c.confirm_requests),0),1) AS accurate_rate,
+            ROUND(SUM(m.bookings)*100.0/NULLIF(SUM(c.confirm_requests),0),1)       AS confirm_to_book_rate,
+            ROUND(AVG(s.avg_response_ms))                                           AS avg_response_ms
+        FROM agoda_price_search  s
+        JOIN agoda_price_confirm c ON s.date = c.date AND s.client_id = c.client_id
+        JOIN agoda_daily_metrics m ON s.date = m.date AND s.client_id = m.client_id
+        GROUP BY s.client_id
+        ORDER BY searches DESC
+    """).fetchall()
+
+    conn.close()
+
+    searches = overall["searches"]
+    results  = overall["results"]
+    confirms = overall["confirms"]
+    accurates= overall["accurates"]
+    bookings = overall["bookings"]
+
+    return {
+        "overall": {
+            "searches":          searches,
+            "results":           results,
+            "confirms":          confirms,
+            "accurates":         accurates,
+            "bookings":          bookings,
+            "result_rate":       round(results   / searches * 100, 1),
+            "search_to_confirm": round(confirms  / searches * 100, 1),
+            "accurate_rate":     round(accurates / confirms * 100, 1),
+            "confirm_to_book":   round(bookings  / confirms * 100, 1),
+            "avg_response_ms":   overall["avg_response_ms"],
+        },
+        "by_client": [dict(r) for r in by_client],
+    }
+
+
+@app.get("/api/metrics/overview")
+def metrics_overview():
+    """
+    汇总卡片 + 30天日时序（供概览页折线图/sparkline使用）
+    """
+    conn = get_connection()
+
+    # 汇总卡片
+    summary = conn.execute("""
+        SELECT
+            SUM(bookings)                                    AS total_bookings,
+            ROUND(SUM(ttv), 2)                               AS total_ttv,
+            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)   AS avg_order_value,
+            SUM(room_nights)                                 AS total_room_nights,
+            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate,
+            ROUND(AVG(pre_error_rate), 2)                    AS avg_pre_error_rate,
+            ROUND(AVG(book_error_rate), 2)                   AS avg_book_error_rate
+        FROM agoda_daily_metrics
+    """).fetchone()
+
+    # 日时序（所有 Client ID 合并，按日聚合）
+    daily = conn.execute("""
+        SELECT
+            date,
+            SUM(bookings)                                     AS bookings,
+            ROUND(SUM(ttv) / 1000.0, 1)                      AS ttv_k,
+            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)    AS avg_order_value,
+            SUM(room_nights)                                  AS room_nights,
+            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate,
+            ROUND(AVG(pre_error_rate), 2)                     AS pre_error_rate,
+            ROUND(AVG(book_error_rate), 2)                    AS book_error_rate
+        FROM agoda_daily_metrics
+        GROUP BY date
+        ORDER BY date
+    """).fetchall()
+
+    conn.close()
+
+    dates = [r["date"] for r in daily]
+    return {
+        "summary": dict(summary),
+        "daily": {
+            "labels":          dates,
+            "ttv":             [r["ttv_k"]          for r in daily],
+            "bookings":        [r["bookings"]        for r in daily],
+            "avg_order_value": [r["avg_order_value"] for r in daily],
+            "room_nights":     [r["room_nights"]     for r in daily],
+            "win_rate":        [r["win_rate"]        for r in daily],
+            "pre_error_rate":  [r["pre_error_rate"]  for r in daily],
+            "book_error_rate": [r["book_error_rate"] for r in daily],
+        },
+    }
+
+
+@app.get("/api/metrics/performance")
+def metrics_performance():
+    """
+    各 Client ID 的聚合业绩（业绩表现页表格 + 堆叠柱状图）
+    """
+    conn = get_connection()
+
+    # 每个 Client ID 汇总行
+    rows = conn.execute("""
+        SELECT
+            client_id,
+            SUM(wins)                                                    AS wins,
+            SUM(opportunities)                                           AS opportunities,
+            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate_pct,
+            SUM(bookings)                                                AS bookings,
+            ROUND(SUM(ttv), 2)                                           AS ttv,
+            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)               AS avg_order_value,
+            SUM(room_nights)                                             AS room_nights
+        FROM agoda_daily_metrics
+        GROUP BY client_id
+        ORDER BY ttv DESC
+    """).fetchall()
+
+    # 按日 × Client ID（供堆叠柱状图）
+    daily_by_client = conn.execute("""
+        SELECT date, client_id, bookings
+        FROM agoda_daily_metrics
+        ORDER BY date, client_id
+    """).fetchall()
+
+    conn.close()
+
+    # 整理堆叠图数据：{client_id: [day0_bookings, day1_bookings, ...]}
+    from collections import defaultdict
+    stacked: dict = defaultdict(list)
+    dates_set: list = []
+    for r in daily_by_client:
+        if r["date"] not in dates_set:
+            dates_set.append(r["date"])
+    for client_row in rows:
+        cid = client_row["client_id"]
+        day_map = {r["date"]: r["bookings"] for r in daily_by_client if r["client_id"] == cid}
+        stacked[cid] = [day_map.get(d, 0) for d in dates_set]
+
+    return {
+        "rows": [
+            {
+                "client_id":      r["client_id"],
+                "wins":           r["wins"],
+                "opportunities":  r["opportunities"],
+                "win_rate":       f'{r["win_rate_pct"]}%',
+                "bookings":       r["bookings"],
+                "ttv":            r["ttv"],
+                "avg_order_value":r["avg_order_value"],
+                "room_nights":    r["room_nights"],
+            }
+            for r in rows
+        ],
+        "stacked": {
+            "labels": dates_set,
+            "series": dict(stacked),
+        },
+    }
+
+
+# ── Auth & Chat ────────────────────────────────────────────────────────────────
+
 @app.post("/api/auth/login")
 def api_login(body: LoginRequest):
     result = login(body.email, body.password)
@@ -193,6 +381,95 @@ def api_login(body: LoginRequest):
         err = result["error"]
         raise HTTPException(status_code=ERROR_STATUS[err], detail=ERROR_MSG[err])
     return result
+
+
+_CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
+
+
+@app.get("/api/integration/api-metrics")
+def api_integration_metrics():
+    from database import get_connection
+    from datetime import datetime
+    from collections import defaultdict
+
+    conn = get_connection()
+    rows = conn.execute(
+        """SELECT date, channel,
+                  total_orders, failed_orders,
+                  total_price_checks, inaccurate_checks
+           FROM api_daily_metrics
+           ORDER BY date, channel"""
+    ).fetchall()
+    conn.close()
+
+    # group by date
+    date_data: dict = defaultdict(dict)
+    all_dates: list = []
+    for row in rows:
+        d = row["date"]
+        if d not in all_dates:
+            all_dates.append(d)
+        date_data[d][row["channel"]] = {
+            "to": row["total_orders"],
+            "fo": row["failed_orders"],
+            "tc": row["total_price_checks"],
+            "ic": row["inaccurate_checks"],
+        }
+
+    def fmt_date(d: str) -> str:
+        dt = datetime.strptime(d, "%Y-%m-%d")
+        return f"{dt.strftime('%b')} {dt.day}"
+
+    display_dates = [fmt_date(d) for d in all_dates]
+
+    # per-channel accuracy trend
+    accuracy_by_channel: dict = {ch: [] for ch in _CHANNELS}
+    pre_error_trend: list = []
+    book_error_trend: list = []
+
+    for d in all_dates:
+        day = date_data[d]
+        day_tc = sum(day.get(ch, {}).get("tc", 0) for ch in _CHANNELS)
+        day_ic = sum(day.get(ch, {}).get("ic", 0) for ch in _CHANNELS)
+        day_to = sum(day.get(ch, {}).get("to", 0) for ch in _CHANNELS)
+        day_fo = sum(day.get(ch, {}).get("fo", 0) for ch in _CHANNELS)
+
+        pre_error_trend.append(round(day_ic / day_tc * 100, 2) if day_tc else 0)
+        book_error_trend.append(round(day_fo / day_to * 100, 2) if day_to else 0)
+
+        for ch in _CHANNELS:
+            ch_d = day.get(ch, {})
+            tc, ic = ch_d.get("tc", 0), ch_d.get("ic", 0)
+            accuracy_by_channel[ch].append(round((tc - ic) / tc * 100, 1) if tc else 0)
+
+    # per-channel book_error trend
+    book_error_by_channel: dict = {ch: [] for ch in _CHANNELS}
+    for d in all_dates:
+        day = date_data[d]
+        for ch in _CHANNELS:
+            ch_d = day.get(ch, {})
+            to_, fo = ch_d.get("to", 0), ch_d.get("fo", 0)
+            book_error_by_channel[ch].append(round(fo / to_ * 100, 2) if to_ else 0)
+
+    # overall summary
+    total_tc = sum(r["total_price_checks"] for r in rows)
+    total_ic = sum(r["inaccurate_checks"] for r in rows)
+    total_to = sum(r["total_orders"] for r in rows)
+    total_fo = sum(r["failed_orders"] for r in rows)
+
+    return {
+        "summary": {
+            "pre_error_rate": round(total_ic / total_tc * 100, 2) if total_tc else 0,
+            "book_error_rate": round(total_fo / total_to * 100, 2) if total_to else 0,
+            "total_price_checks": total_tc,
+            "total_orders": total_to,
+        },
+        "dates": display_dates,
+        "accuracy_by_channel": accuracy_by_channel,
+        "book_error_by_channel": book_error_by_channel,
+        "pre_error_trend": pre_error_trend,
+        "book_error_trend": book_error_trend,
+    }
 
 
 @app.post("/api/chat/dida-api")

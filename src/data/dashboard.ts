@@ -1,20 +1,29 @@
 import { feeds } from "@/data/chart-series";
 
 export const overviewMetrics = [
-  { title: "胜出率", value: "2.70%", key: "win" },
-  { title: "总订单量", value: "10,599", key: "bookings" },
-  { title: "平均订单价值", value: "$333", key: "avg" },
-  { title: "间夜数", value: "21,907", key: "rooms" },
-  { title: "预订前错误率", value: "7.36%", key: "preError" },
-  { title: "预订错误率", value: "5.71%", key: "bookError" }
+  { title: "胜出率",       value: "3.12%",   key: "win" },
+  { title: "总订单量",     value: "10,599",  key: "bookings" },
+  { title: "平均订单价值", value: "$333",    key: "avg" },
+  { title: "间夜数",       value: "21,907",  key: "rooms" },
+  { title: "预订前错误率", value: "7.36%",   key: "preError" },
+  { title: "预订错误率",   value: "5.71%",   key: "bookError" },
 ];
 
-export const performanceRows = feeds.slice(0, 5).map((feed, index) => ({
+const performanceData = [
+  { wins: 4120, opportunities: 118650, winRate: "3.47%", status: "活跃" },
+  { wins: 2853, opportunities: 95210,  winRate: "3.00%", status: "活跃" },
+  { wins: 1640, opportunities: 78430,  winRate: "2.09%", status: "已启用" },
+  { wins: 980,  opportunities: 42100,  winRate: "2.33%", status: "已启用" },
+  { wins: 620,  opportunities: 28760,  winRate: "2.16%", status: "已启用" },
+  { wins: 386,  opportunities: 19200,  winRate: "2.01%", status: "观察中" },
+];
+
+export const performanceRows = feeds.map((feed, i) => ({
   feed: feed.name,
-  wins: [3001, 2653, 2163, 1874, 908][index],
-  opportunities: [85765, 98486, 96712, 60310, 33792][index],
-  winRate: ["3.5%", "2.7%", "2.2%", "3.1%", "2.6%"][index],
-  status: index === 1 ? "活跃" : "已启用"
+  wins: performanceData[i].wins,
+  opportunities: performanceData[i].opportunities,
+  winRate: performanceData[i].winRate,
+  status: performanceData[i].status,
 }));
 
 export const errorRows = [

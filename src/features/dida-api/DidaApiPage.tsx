@@ -54,8 +54,16 @@ export function DidaApiPage() {
         description="Dida Open API v2.0 — 酒店内容、价格搜索及预订全流程接入文档。"
         actions={
           <a href="https://apidoc.didatravel.com/" target="_blank" rel="noopener noreferrer"
-            style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--dida-navy)", fontWeight: 600, textDecoration: "none" }}>
-            <ExternalLink size={14} /> 完整文档
+            style={{
+              display: "flex", alignItems: "center", gap: 7,
+              fontSize: 13, fontWeight: 700, textDecoration: "none",
+              color: "#0369a1",
+              background: "#e0f2fe",
+              border: "1px solid #7dd3fc",
+              borderRadius: 7,
+              padding: "6px 14px",
+            }}>
+            <ExternalLink size={14} /> DidaAPI 完整文档
           </a>
         }
       />
