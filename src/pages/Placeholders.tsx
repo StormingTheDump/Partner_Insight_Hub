@@ -1,74 +1,67 @@
-import { Card, Typography, Tag } from 'antd';
-import { LineChartOutlined } from '@ant-design/icons';
-
-const { Title, Text } = Typography;
+import { Tag } from 'antd';
 
 interface PlaceholderProps {
-  icon: React.ReactNode;
+  icon: string;
   title: string;
   description: string;
-  color: string;
+  iconBg: string;
+  iconColor: string;
+  tags?: string[];
 }
 
-export function PlaceholderPage({ icon, title, description, color }: PlaceholderProps) {
+function PlaceholderPage({ icon, title, description, iconBg, iconColor, tags = [] }: PlaceholderProps) {
   return (
     <div style={styles.wrapper}>
-      <Card style={styles.card} bordered={false}>
-        <div style={{ ...styles.iconCircle, background: color }}>{icon}</div>
-        <Title level={3} style={{ marginBottom: 8 }}>{title}</Title>
-        <Text type="secondary" style={{ fontSize: 15 }}>{description}</Text>
-        <div style={styles.tagRow}>
-          <Tag color="processing">开发中</Tag>
-          <Tag color="blue">M1 阶段</Tag>
+      <div style={styles.card}>
+        <div style={{ ...styles.iconTile, background: iconBg, color: iconColor }}>
+          <span style={{ fontSize: 28 }}>{icon}</span>
         </div>
-      </Card>
+        <h2 style={styles.title}>{title}</h2>
+        <p style={styles.desc}>{description}</p>
+        <div style={styles.tagRow}>
+          <Tag color="processing" style={{ borderRadius: 6 }}>开发中</Tag>
+          <Tag color="blue" style={{ borderRadius: 6 }}>M1 阶段</Tag>
+          {tags.map(t => <Tag key={t} color="default" style={{ borderRadius: 6 }}>{t}</Tag>)}
+        </div>
+      </div>
     </div>
   );
 }
 
-export function MetricsPage() {
-  return <PlaceholderPage
-    icon={<LineChartOutlined style={{ fontSize: 32, color: '#fff' }} />}
-    title="指标界面"
-    description="展示有价率、准确率、失败率折线图，支持时间范围筛选及配置指标只读展示。"
-    color="linear-gradient(135deg, #1a73e8, #4fa3f7)"
-  />;
-}
-
-export function OrdersPage() {
-  return <PlaceholderPage
-    icon={<span style={{ fontSize: 32, color: '#fff' }}>🔍</span>}
-    title="订单搜索下载"
-    description="按订单号、日期维度、订单状态搜索订单，支持验价/下单/取消请求日志导出。"
-    color="linear-gradient(135deg, #52c41a, #389e0d)"
-  />;
-}
-
 export function MatchingPage() {
-  return <PlaceholderPage
-    icon={<span style={{ fontSize: 32, color: '#fff' }}>⇌</span>}
-    title="渠道匹配关系管理"
-    description="上传宝米酒店匹配关系文件，查看历史匹配记录，展示匹配覆盖率与 OSS 数据对比。"
-    color="linear-gradient(135deg, #fa8c16, #d46b08)"
-  />;
+  return (
+    <PlaceholderPage
+      icon="⇌"
+      title="渠道匹配关系管理"
+      description="上传宝米酒店匹配关系文件，查看历史匹配记录，展示匹配覆盖率与 OSS 数据对比。"
+      iconBg="#fff5e8"
+      iconColor="#f97316"
+    />
+  );
 }
 
 export function FinancePage() {
-  return <PlaceholderPage
-    icon={<span style={{ fontSize: 32, color: '#fff' }}>💰</span>}
-    title="财务信息"
-    description="展示押金、保险、授信额度、剩余额度，以及账期、未结算金额、月度账单下载等财务信息。"
-    color="linear-gradient(135deg, #722ed1, #531dab)"
-  />;
+  return (
+    <PlaceholderPage
+      icon="💰"
+      title="财务信息"
+      description="展示押金、保险、授信额度、剩余额度，以及账期、未结算金额、月度账单下载等财务信息。"
+      iconBg="#f5edff"
+      iconColor="#8b35ff"
+    />
+  );
 }
 
 export function ContactPage() {
-  return <PlaceholderPage
-    icon={<span style={{ fontSize: 32, color: '#fff' }}>📞</span>}
-    title="联系方式"
-    description="展示专属客户经理、BD 经理、CS、财务联系人信息，以及 7×24 小时客服电话与邮箱。"
-    color="linear-gradient(135deg, #eb2f96, #c41d7f)"
-  />;
+  return (
+    <PlaceholderPage
+      icon="📞"
+      title="联系方式"
+      description="展示专属客户经理、BD 经理、CS、财务联系人信息，以及 7×24 小时客服电话与邮箱。"
+      iconBg="#fff0f5"
+      iconColor="#eb2f96"
+    />
+  );
 }
 
 const styles: Record<string, React.CSSProperties> = {
@@ -81,24 +74,39 @@ const styles: Record<string, React.CSSProperties> = {
   card: {
     textAlign: 'center',
     padding: '48px 56px',
-    borderRadius: 16,
-    boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
-    maxWidth: 500,
+    background: '#fff',
+    borderRadius: 12,
+    border: '1px solid #dfe5ef',
+    boxShadow: '0 2px 12px rgba(0,9,71,0.06)',
+    maxWidth: 480,
     width: '100%',
   },
-  iconCircle: {
+  iconTile: {
     width: 72,
     height: 72,
-    borderRadius: '50%',
+    borderRadius: 16,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     margin: '0 auto 24px',
   },
+  title: {
+    margin: '0 0 12px',
+    fontSize: 22,
+    fontWeight: 700,
+    color: '#000947',
+  },
+  desc: {
+    color: '#66728a',
+    fontSize: 14,
+    lineHeight: 1.7,
+    margin: 0,
+  },
   tagRow: {
-    marginTop: 20,
+    marginTop: 24,
     display: 'flex',
     gap: 8,
     justifyContent: 'center',
+    flexWrap: 'wrap' as const,
   },
 };

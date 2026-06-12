@@ -1,29 +1,57 @@
 import { useState } from 'react';
-import { Layout, Menu, Avatar, Dropdown, Typography, Tag } from 'antd';
+import { Avatar, Dropdown, Badge } from 'antd';
 import {
   LineChartOutlined,
-  SearchOutlined,
+  ShoppingOutlined,
   SwapOutlined,
   WalletOutlined,
   PhoneOutlined,
   RobotOutlined,
   LogoutOutlined,
   UserOutlined,
+  BellOutlined,
+  FileTextOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { User } from '../data/users';
 
-const { Sider, Header, Content } = Layout;
-const { Text } = Typography;
+interface NavItem {
+  key: string;
+  icon: React.ReactNode;
+  label: string;
+  pill?: string;
+  pillActive?: boolean;
+}
 
-const NAV_ITEMS = [
-  { key: '/dashboard/metrics',  icon: <LineChartOutlined />, label: '指标界面' },
-  { key: '/dashboard/orders',   icon: <SearchOutlined />,    label: '订单搜索下载' },
-  { key: '/dashboard/matching', icon: <SwapOutlined />,      label: '渠道匹配关系管理' },
-  { key: '/dashboard/finance',  icon: <WalletOutlined />,    label: '财务信息' },
-  { key: '/dashboard/contact',  icon: <PhoneOutlined />,     label: '联系方式' },
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+const NAV_SECTIONS: NavSection[] = [
+  {
+    title: '业务指标',
+    items: [
+      { key: '/dashboard/metrics',  icon: <LineChartOutlined />, label: '指标概览' },
+      { key: '/dashboard/orders',   icon: <ShoppingOutlined />,  label: '订单管理' },
+      { key: '/dashboard/finance',  icon: <WalletOutlined />,    label: '财务信息' },
+    ],
+  },
+  {
+    title: '渠道管理',
+    items: [
+      { key: '/dashboard/matching', icon: <SwapOutlined />,    label: '渠道匹配关系管理' },
+      { key: '/dashboard/contact',  icon: <PhoneOutlined />,   label: '联系方式' },
+    ],
+  },
+  {
+    title: '系统监控',
+    items: [
+      { key: '/dashboard/logs', icon: <FileTextOutlined />, label: '日志查询', pill: '48h' },
+    ],
+  },
 ];
 
 interface Props {
@@ -53,92 +81,146 @@ export default function DashboardLayout({ user, onLogout }: Props) {
     ],
   };
 
+  const sidebarWidth = collapsed ? 64 : 250;
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        trigger={null}
-        width={220}
-        style={styles.sider}
-      >
+    <div style={{ ...styles.app, gridTemplateColumns: `${sidebarWidth}px minmax(0, 1fr)` }}>
+      {/* Sidebar */}
+      <aside style={{ ...styles.sidebar, width: sidebarWidth }}>
+        {/* Brand */}
         <div style={styles.brand}>
-          <div style={styles.brandIcon}>D</div>
+          <div style={styles.brandIcon}>P</div>
           {!collapsed && <span style={styles.brandText}>Partner Insight Hub</span>}
         </div>
 
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[location.pathname]}
-          style={{ background: 'transparent', border: 'none', marginTop: 8 }}
-          items={NAV_ITEMS.map((item) => ({
-            key: item.key,
-            icon: item.icon,
-            label: item.label,
-            onClick: () => navigate(item.key),
-          }))}
-        />
-      </Sider>
+        {/* Account */}
+        <div style={styles.account}>
+          <Avatar size={22} icon={<UserOutlined />} style={{ background: '#ea0345', flexShrink: 0 }} />
+          {!collapsed && <span style={styles.accountName}>{user.channelName}</span>}
+        </div>
 
-      <Layout>
-        <Header style={styles.header}>
-          <div style={styles.headerLeft}>
-            <span
-              style={styles.collapseBtn}
-              onClick={() => setCollapsed(!collapsed)}
-            >
-              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </span>
-            <Text style={styles.channelName}>{user.channelName}</Text>
+        {/* Nav */}
+        <nav style={{ flex: 1, overflowY: 'auto' }}>
+          {NAV_SECTIONS.map((section) => (
+            <div key={section.title} style={styles.navSection}>
+              {!collapsed && <p style={styles.sectionTitle}>{section.title}</p>}
+              {section.items.map((item) => {
+                const active = location.pathname === item.key;
+                return (
+                  <button
+                    key={item.key}
+                    onClick={() => navigate(item.key)}
+                    style={{
+                      ...styles.navItem,
+                      ...(active ? styles.navItemActive : {}),
+                      justifyContent: collapsed ? 'center' : 'flex-start',
+                    }}
+                  >
+                    <span style={{ ...styles.navIcon, ...(active ? styles.navIconActive : {}) }}>
+                      {item.icon}
+                    </span>
+                    {!collapsed && (
+                      <>
+                        <span style={styles.navLabel}>{item.label}</span>
+                        {item.pill && (
+                          <span style={{
+                            ...styles.pill,
+                            ...(item.pillActive ? styles.pillActive : {}),
+                          }}>
+                            {item.pill}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </nav>
+
+        {/* Collapse button */}
+        <button
+          style={styles.collapseBtn}
+          onClick={() => setCollapsed(!collapsed)}
+          title={collapsed ? '展开侧栏' : '收起侧栏'}
+        >
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </button>
+      </aside>
+
+      {/* Main */}
+      <main style={styles.main}>
+        {/* Topbar */}
+        <header style={styles.topbar}>
+          <div style={styles.topbarLeft}>
+            <span style={styles.pageTitle}>{user.channelName}</span>
           </div>
-
-          <div style={styles.headerRight}>
-            <Tag color="green" style={{ marginRight: 12 }}>已连接</Tag>
+          <div style={styles.topbarRight}>
             <Dropdown menu={userMenu} placement="bottomRight">
-              <div style={styles.avatarRow}>
-                <Avatar icon={<UserOutlined />} style={{ background: '#1a73e8' }} />
-                {!collapsed && (
-                  <span style={styles.userName}>{user.contactName}</span>
-                )}
+              <div style={styles.userChip}>
+                <Avatar size={28} icon={<UserOutlined />} style={{ background: '#4f5fb8' }} />
+                <span style={styles.userName}>{user.contactName}</span>
               </div>
             </Dropdown>
+            <button style={styles.iconBtn} title="通知">
+              <Badge count={1} size="small">
+                <BellOutlined style={{ fontSize: 16, color: '#778199' }} />
+              </Badge>
+            </button>
           </div>
-        </Header>
+        </header>
 
-        <Content style={styles.content}>
+        {/* Page content */}
+        <div style={styles.content}>
           <Outlet />
-        </Content>
-      </Layout>
+        </div>
+      </main>
 
-      {/* AI 助手悬浮按钮 */}
-      <div style={styles.aiBtn} title="AI 智能助手（API 文档问答）">
-        <RobotOutlined style={{ fontSize: 22, color: '#fff' }} />
-      </div>
-    </Layout>
+      {/* AI assistant FAB */}
+      <button style={styles.aiBtn} title="AI 智能助手">
+        <RobotOutlined style={{ fontSize: 20, color: '#fff' }} />
+      </button>
+    </div>
   );
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  sider: {
-    background: 'linear-gradient(180deg, #0f1b35 0%, #1a2d52 100%)',
-    boxShadow: '2px 0 12px rgba(0,0,0,0.2)',
+  app: {
+    minHeight: '100vh',
+    display: 'grid',
+    fontFamily: '"Poppins", "PingFang SC", "Microsoft YaHei UI", system-ui, sans-serif',
+  },
+
+  /* Sidebar */
+  sidebar: {
+    position: 'sticky',
+    top: 0,
+    height: '100vh',
+    padding: '18px 12px',
+    background: '#fff',
+    borderRight: '1px solid #dfe5ef',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+    zIndex: 3,
+    overflowX: 'hidden',
+    transition: 'width 0.2s ease',
   },
   brand: {
+    height: 44,
     display: 'flex',
     alignItems: 'center',
     gap: 10,
-    padding: '20px 16px 16px',
-    borderBottom: '1px solid rgba(255,255,255,0.08)',
-    marginBottom: 4,
+    overflow: 'hidden',
   },
   brandIcon: {
     width: 32,
     height: 32,
-    background: 'linear-gradient(135deg, #1a73e8, #4fa3f7)',
     borderRadius: 8,
+    background: 'linear-gradient(135deg, #000947, #4f5fb8)',
     color: '#fff',
-    fontWeight: 700,
+    fontWeight: 800,
     fontSize: 16,
     display: 'flex',
     alignItems: 'center',
@@ -146,53 +228,174 @@ const styles: Record<string, React.CSSProperties> = {
     flexShrink: 0,
   },
   brandText: {
-    color: '#fff',
-    fontWeight: 600,
+    color: '#000947',
+    fontWeight: 700,
     fontSize: 13,
-    lineHeight: '1.3',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
-  header: {
-    background: '#fff',
-    padding: '0 24px',
+  account: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-    height: 60,
+    gap: 10,
+    border: '1px solid #dfe5ef',
+    background: '#f6f7fa',
+    padding: '10px 12px',
+    borderRadius: 8,
+    overflow: 'hidden',
   },
-  headerLeft: { display: 'flex', alignItems: 'center', gap: 16 },
-  headerRight: { display: 'flex', alignItems: 'center' },
-  collapseBtn: {
-    fontSize: 18,
+  accountName: {
+    fontWeight: 700,
+    fontSize: 13,
+    color: '#000947',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  navSection: {
+    borderTop: '1px solid #dfe5ef',
+    paddingTop: 14,
+    marginTop: 0,
+  },
+  sectionTitle: {
+    margin: '0 0 8px 8px',
+    color: '#8390ad',
+    fontSize: 11,
+    fontWeight: 800,
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+  },
+  navItem: {
+    width: '100%',
+    border: 0,
+    background: 'transparent',
+    color: '#1e2b4d',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+    padding: '9px 10px',
+    borderRadius: 7,
+    textAlign: 'left',
     cursor: 'pointer',
-    color: '#555',
-    padding: 4,
-    borderRadius: 4,
-    transition: 'color 0.2s',
+    transition: 'background 0.15s ease',
+    fontSize: 13,
+    fontWeight: 500,
+    whiteSpace: 'nowrap',
   },
-  channelName: { fontSize: 15, fontWeight: 600, color: '#222' },
-  avatarRow: { display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' },
-  userName: { fontSize: 14, color: '#333' },
-  content: {
-    margin: 24,
-    minHeight: 'calc(100vh - 108px)',
+  navItemActive: {
+    background: '#eef1ff',
+    color: '#3f4fb2',
   },
-  aiBtn: {
-    position: 'fixed',
-    bottom: 32,
-    right: 32,
-    width: 52,
-    height: 52,
+  navIcon: {
+    fontSize: 16,
+    color: '#9299a8',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  navIconActive: {
+    color: '#4d5cbc',
+  },
+  navLabel: {
+    flex: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  pill: {
+    marginLeft: 'auto',
+    borderRadius: 999,
+    padding: '2px 7px',
+    fontSize: 10,
+    fontWeight: 800,
+    background: '#e1e5ec',
+    color: '#5d6676',
+    flexShrink: 0,
+  },
+  pillActive: {
+    color: '#fff',
+    background: '#12a052',
+  },
+  collapseBtn: {
+    marginTop: 'auto',
+    alignSelf: 'center',
+    width: 36,
+    height: 36,
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #1a73e8, #0f5bbf)',
+    border: '1px solid #dfe5ef',
+    background: '#fff',
+    color: '#71809b',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    boxShadow: '0 4px 16px rgba(26,115,232,0.45)',
-    zIndex: 999,
-    transition: 'transform 0.2s',
+    fontSize: 15,
+  },
+
+  /* Main */
+  main: { minWidth: 0, display: 'flex', flexDirection: 'column' },
+  topbar: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 2,
+    height: 64,
+    background: 'rgba(255,255,255,0.92)',
+    backdropFilter: 'blur(14px)',
+    borderBottom: '1px solid #edf1f7',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '0 32px',
+  },
+  topbarLeft: { display: 'flex', alignItems: 'center', gap: 14 },
+  topbarRight: { display: 'flex', alignItems: 'center', gap: 10 },
+  pageTitle: { fontSize: 14, fontWeight: 600, color: '#17213f' },
+  userChip: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    cursor: 'pointer',
+    padding: '4px 10px',
+    borderRadius: 7,
+    border: '1px solid #dfe5ef',
+    background: '#fff',
+  },
+  userName: { fontSize: 13, color: '#17213f', fontWeight: 600 },
+  iconBtn: {
+    width: 34,
+    height: 34,
+    border: '1px solid #dfe5ef',
+    borderRadius: 7,
+    background: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+
+  /* Content */
+  content: {
+    flex: 1,
+    padding: '24px 32px 64px',
+    background: '#f8f9fc',
+    minHeight: 'calc(100vh - 64px)',
+  },
+
+  /* AI FAB */
+  aiBtn: {
+    position: 'fixed',
+    right: 24,
+    bottom: 24,
+    width: 44,
+    height: 44,
+    borderRadius: '50%',
+    border: 0,
+    background: '#4f5fb8',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    boxShadow: '0 8px 20px rgba(0,9,71,0.22)',
+    zIndex: 4,
   },
 };
