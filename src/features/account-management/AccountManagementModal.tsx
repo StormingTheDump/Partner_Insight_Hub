@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AlertCircle, Plus, Trash2, UserCheck, UserX, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { User } from "@/data/users";
@@ -86,11 +87,10 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
     setForm({ email: "", password: "", channel_name: "", contact_name: "" });
   };
 
-  return (
+  return createPortal(
     <>
       <div style={backdrop} onClick={onClose}>
         <div style={modalWrap} onClick={e => e.stopPropagation()}>
-        {/* Header */}
         <div style={modalHeader}>
           <div>
             <div style={{ fontWeight: 700, fontSize: 15 }}>账号管理</div>
@@ -214,7 +214,8 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
         )}
       </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }
 
