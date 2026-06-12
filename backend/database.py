@@ -90,11 +90,33 @@ def init_tables():
         )
     """)
 
+    # ── 渠道参数配置表 ────────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS channel_configurations (
+            id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+            client_id             TEXT    NOT NULL UNIQUE,
+            ip_filter_enable      INTEGER NOT NULL DEFAULT 1,
+            ip_filter             TEXT    NOT NULL DEFAULT '',
+            allowed_currencies    TEXT    NOT NULL DEFAULT 'CNY|USD',
+            ignore_cn_price       INTEGER NOT NULL DEFAULT 1,
+            max_rooms             INTEGER NOT NULL DEFAULT 4,
+            qps                   INTEGER NOT NULL DEFAULT 30,
+            pps                   INTEGER NOT NULL DEFAULT 300,
+            search_timeout        INTEGER NOT NULL DEFAULT 5,
+            verify_timeout        INTEGER NOT NULL DEFAULT 20,
+            book_timeout          INTEGER NOT NULL DEFAULT 60,
+            max_hotels_per_request INTEGER NOT NULL DEFAULT 100,
+            return_audit_data     INTEGER NOT NULL DEFAULT 1,
+            updated_at            TEXT    NOT NULL DEFAULT (datetime('now'))
+        )
+    """)
+
     conn.commit()
     _seed_dida_contacts(conn)
     _seed_my_contacts(conn)
     _seed_channel_mappings(conn)
     _seed_channel_hot_sales(conn)
+    _seed_channel_configurations(conn)
     conn.close()
 
 
@@ -233,6 +255,41 @@ def _seed_channel_hot_sales(conn):
 
     conn.executemany(
         "INSERT OR IGNORE INTO channel_hot_sales (channel_id, hotel_id, country, city, address, updated_at) VALUES (?,?,?,?,?,?)",
+        rows,
+    )
+    conn.commit()
+
+
+def _seed_channel_configurations(conn):
+    count = conn.execute("SELECT COUNT(*) FROM channel_configurations").fetchone()[0]
+    if count > 0:
+        return
+
+    rows = [
+        # (client_id, ip_filter_enable, ip_filter,
+        #  allowed_currencies, ignore_cn_price, max_rooms,
+        #  qps, pps, search_timeout, verify_timeout, book_timeout,
+        #  max_hotels_per_request, return_audit_data, updated_at)
+        ("Agoda",    1, "103.26.118.42|103.26.118.43|202.12.34.56",
+         "CNY|USD|EUR|THB", 1, 4, 50,  500, 5, 20, 60, 100, 1, "2026-01-15 10:00:00"),
+        ("AgodaUK",  1, "185.76.8.100|185.76.8.101|151.101.0.81",
+         "GBP|USD|EUR",     1, 4, 30,  300, 5, 20, 60, 100, 1, "2026-01-20 14:30:00"),
+        ("AgodaEBK", 1, "103.26.118.44|103.26.118.45",
+         "USD|EUR",         1, 4, 20,  200, 5, 20, 60, 100, 0, "2026-02-01 09:15:00"),
+        ("Lvzan",    1, "47.92.33.18|47.92.33.19|120.92.56.78",
+         "CNY",             0, 4, 40,  400, 5, 20, 60, 100, 1, "2026-02-10 11:00:00"),
+        ("Barli2b",  1, "119.29.52.100|119.29.52.101",
+         "CNY|USD",         1, 4, 15,  150, 5, 20, 60,  80, 1, "2026-03-05 16:45:00"),
+        ("DidaOpaq", 1, "212.58.242.10|212.58.242.11|195.56.12.43",
+         "USD|EUR|GBP",     1, 4, 60,  600, 5, 20, 60, 100, 1, "2026-03-15 10:30:00"),
+    ]
+    conn.executemany(
+        """INSERT OR IGNORE INTO channel_configurations
+           (client_id, ip_filter_enable, ip_filter,
+            allowed_currencies, ignore_cn_price, max_rooms,
+            qps, pps, search_timeout, verify_timeout, book_timeout,
+            max_hotels_per_request, return_audit_data, updated_at)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
         rows,
     )
     conn.commit()

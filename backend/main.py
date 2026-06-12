@@ -541,3 +541,21 @@ async def upload_hot_sales(file: UploadFile = File(...)):
     conn.commit()
     conn.close()
     return {"added": added, "skipped": skipped}
+
+
+# ── 渠道参数配置 ─────────────────────────────────────────────────────
+
+@app.get("/api/channel-config")
+def get_channel_config(client_id: Optional[str] = None):
+    conn = get_connection()
+    if client_id:
+        rows = conn.execute(
+            "SELECT * FROM channel_configurations WHERE client_id = ? ORDER BY id",
+            (client_id,),
+        ).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT * FROM channel_configurations ORDER BY id"
+        ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
