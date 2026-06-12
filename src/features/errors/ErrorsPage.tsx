@@ -1,6 +1,5 @@
 import { Download, Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { PageProps } from "@/dashboard/routes";
 import { horizontalLossOption } from "@/data/chart-options";
 import { errorRows } from "@/data/dashboard";
 import { includesText } from "@/data/formatters";
@@ -26,7 +25,7 @@ const columns: TableColumn<(typeof errorRows)[number]>[] = [
   { key: "actions", header: "操作", render: () => <Button>查看详情</Button> }
 ];
 
-export function ErrorsPage(_: PageProps) {
+export function ErrorsPage() {
   const [query, setQuery] = useState("");
   const rows = useMemo(() => errorRows.filter((row) => includesText(Object.values(row), query)), [query]);
 

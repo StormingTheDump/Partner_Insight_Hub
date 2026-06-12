@@ -46,7 +46,7 @@ const goLiveSteps = [
   { n: 7, title: "上线", desc: "告知Dida团队正式上线" },
 ];
 
-export function DidaApiPage(_: PageProps) {
+export function DidaApiPage() {
   return (
     <>
       <PageHeader
