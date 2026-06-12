@@ -244,6 +244,7 @@ def metrics_funnel():
     }
 
 
+@app.get("/api/metrics/overview")
 def metrics_overview():
     """
     汇总卡片 + 30天日时序（供概览页折线图/sparkline使用）
