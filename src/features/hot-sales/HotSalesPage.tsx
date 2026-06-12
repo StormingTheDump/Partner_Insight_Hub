@@ -1,0 +1,293 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Search, Upload, X, Globe, Flame } from "lucide-react";
+import type { CSSProperties } from "react";
+import type { PageProps } from "@/dashboard/routes";
+import { PageHeader } from "@/shared/components/PageHeader";
+import { MetricCard } from "@/shared/components/MetricCard";
+
+const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const PAGE_SIZE = 20;
+const CHANNEL_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
+const COUNTRIES = ["中国", "日本", "泰国", "新加坡", "韩国", "马来西亚", "印度尼西亚", "越南", "澳大利亚", "阿联酋"];
+
+type HotSaleRow = {
+  id: number;
+  channel_id: string;
+  hotel_id: string;
+  country: string;
+  city: string;
+  address: string;
+  updated_at: string;
+};
+
+type Stats = { total: number; matched: number; countries: number };
+type UploadResult = { added: number; skipped: number } | null;
+
+export function HotSalesPage(_: PageProps) {
+  const [rows, setRows]             = useState<HotSaleRow[]>([]);
+  const [stats, setStats]           = useState<Stats>({ total: 0, matched: 0, countries: 0 });
+  const [loading, setLoading]       = useState(true);
+  const [channelId, setChannelId]   = useState("");
+  const [hotelId, setHotelId]       = useState("");
+  const [country, setCountry]       = useState("");
+  const [city, setCity]             = useState("");
+  const [page, setPage]             = useState(1);
+  const [uploading, setUploading]   = useState(false);
+  const [result, setResult]         = useState<UploadResult>(null);
+  const [error, setError]           = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const refreshStats = useCallback(() => {
+    fetch(`${API}/api/hot-sales/stats`).then(r => r.json()).then(setStats);
+  }, []);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const p = new URLSearchParams();
+    if (channelId) p.set("channel_id", channelId);
+    if (hotelId.trim()) p.set("hotel_id", hotelId.trim());
+    if (country) p.set("country", country);
+    if (city.trim()) p.set("city", city.trim());
+    const data: HotSaleRow[] = await fetch(`${API}/api/hot-sales?${p}`).then(r => r.json());
+    setRows(data);
+    setPage(1);
+    setLoading(false);
+  }, [channelId, hotelId, country, city]);
+
+  useEffect(() => {
+    fetchData();
+    refreshStats();
+  }, []);
+
+  const handleSearch = () => fetchData();
+
+  const clearAll = () => {
+    setChannelId(""); setHotelId(""); setCountry(""); setCity("");
+    setResult(null); setError("");
+    setLoading(true);
+    Promise.all([
+      fetch(`${API}/api/hot-sales`).then(r => r.json()),
+      fetch(`${API}/api/hot-sales/stats`).then(r => r.json()),
+    ]).then(([d, s]) => { setRows(d); setStats(s); setPage(1); setLoading(false); });
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = "";
+    setUploading(true); setResult(null); setError("");
+    const form = new FormData();
+    form.append("file", file);
+    try {
+      const res = await fetch(`${API}/api/hot-sales/upload`, { method: "POST", body: form });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.detail ?? "上传失败");
+      } else {
+        const data: UploadResult = await res.json();
+        setResult(data);
+        fetchData();
+        refreshStats();
+      }
+    } catch {
+      setError("网络错误，请重试");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const matchPct = stats.total > 0 ? ((stats.matched / stats.total) * 100).toFixed(1) : "0.0";
+  const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const safePage   = Math.min(page, totalPages);
+  const pageRows   = rows.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const hasFilter  = channelId || hotelId || country || city;
+
+  return (
+    <>
+      <PageHeader
+        title="渠道热销"
+        description="管理渠道上传的热销酒店列表，追踪与 Dida 库存的匹配覆盖情况。"
+      />
+
+      {/* 指标卡片 */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 20 }}>
+        <MetricCard
+          title="已上传热销酒店"
+          value={stats.total.toLocaleString()}
+          caption="数据库中全部热销记录"
+        />
+        <MetricCard
+          title="与 Dida 已匹配"
+          value={stats.matched.toLocaleString()}
+          caption={`匹配率 ${matchPct}%，其余待对照补全`}
+          tone="green"
+          delta={`${matchPct}%`}
+        />
+        <MetricCard
+          title="覆盖国家 / 地区"
+          value={String(stats.countries)}
+          caption="热销酒店分布的国家与地区数"
+          tone="blue" as any
+        />
+      </div>
+
+      {/* 搜索栏 */}
+      <div style={searchBar}>
+        {/* 渠道 ID */}
+        <select value={channelId} onChange={e => setChannelId(e.target.value)} style={selectStyle}>
+          <option value="">全部渠道 ID</option>
+          {CHANNEL_IDS.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+
+        {/* 酒店 ID */}
+        <div style={inputWrap}>
+          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
+          <input value={hotelId} onChange={e => setHotelId(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleSearch()}
+            placeholder="酒店 ID" style={inputStyle} />
+        </div>
+
+        {/* 国家 */}
+        <select value={country} onChange={e => setCountry(e.target.value)} style={selectStyle}>
+          <option value="">全部国家</option>
+          {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+
+        {/* 城市 */}
+        <div style={inputWrap}>
+          <Globe size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
+          <input value={city} onChange={e => setCity(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleSearch()}
+            placeholder="城市" style={inputStyle} />
+        </div>
+
+        <button type="button" onClick={handleSearch} style={searchBtn}>搜索</button>
+
+        <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} style={uploadBtn}>
+          <Upload size={13} />
+          {uploading ? "上传中…" : "上传 Excel"}
+        </button>
+        <input ref={fileRef} type="file" accept=".xlsx,.xls" style={{ display: "none" }} onChange={handleUpload} />
+
+        {hasFilter && (
+          <button type="button" onClick={clearAll} style={clearBtn} title="清除筛选"><X size={14} /></button>
+        )}
+
+        <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
+          共 <strong>{rows.length.toLocaleString()}</strong> 条
+        </span>
+      </div>
+
+      {/* 上传结果 */}
+      {result && (
+        <div style={{ ...banner, background: result.added > 0 ? "#f0fff4" : "#f4f4f5", borderColor: result.added > 0 ? "#bbf7d0" : "var(--line)" }}>
+          <span style={{ color: result.added > 0 ? "#16a34a" : "var(--muted-strong)", fontWeight: 600 }}>
+            ✓ 已新增 {result.added} 条热销记录，数据库已更新
+            {result.skipped > 0 && `（跳过 ${result.skipped} 条已存在记录）`}
+          </span>
+          <button type="button" onClick={() => setResult(null)} style={bannerClose}><X size={14} /></button>
+        </div>
+      )}
+      {error && (
+        <div style={{ ...banner, background: "#fef2f2", borderColor: "#fecaca" }}>
+          <span style={{ color: "#dc2626", fontWeight: 600 }}>✕ {error}</span>
+          <button type="button" onClick={() => setError("")} style={bannerClose}><X size={14} /></button>
+        </div>
+      )}
+
+      {/* 格式说明 */}
+      <div style={hintBar}>
+        <span style={{ color: "var(--muted)", fontSize: 12 }}>
+          📎 上传格式：Excel 文件，列顺序&nbsp;
+          {["渠道ID", "酒店ID", "酒店国家", "酒店城市", "酒店地址"].map(h => (
+            <code key={h} style={codeStyle}>{h}</code>
+          ))}
+          ，第一行为表头跳过。同一渠道下相同酒店 ID 自动跳过，重复行报错。
+        </span>
+      </div>
+
+      {/* 表格 */}
+      <div style={tableWrap}>
+        <table style={table}>
+          <thead>
+            <tr>
+              <th style={{ ...th, width: 50 }}>#</th>
+              <th style={th}>渠道 ID</th>
+              <th style={th}>酒店 ID</th>
+              <th style={th}>国家 / 地区</th>
+              <th style={th}>城市</th>
+              <th style={{ ...th, minWidth: 180 }}>酒店地址</th>
+              <th style={{ ...th, width: 120 }}>更新时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr><td colSpan={7} style={emptyCell}>加载中…</td></tr>
+            ) : pageRows.length === 0 ? (
+              <tr><td colSpan={7} style={emptyCell}>未找到热销记录</td></tr>
+            ) : (
+              pageRows.map((r, i) => (
+                <tr key={r.id} style={{ background: i % 2 === 0 ? "#fff" : "var(--surface-soft)" }}>
+                  <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
+                  <td style={td}><span style={channelBadge}>{r.channel_id}</span></td>
+                  <td style={{ ...td, fontFamily: "monospace", fontWeight: 600 }}>{r.hotel_id}</td>
+                  <td style={td}><span style={countryTag}><Flame size={10} style={{ display: "inline", marginRight: 3 }} />{r.country}</span></td>
+                  <td style={td}>{r.city}</td>
+                  <td style={{ ...td, fontSize: 12, color: "var(--muted-strong)" }}>{r.address}</td>
+                  <td style={{ ...td, fontSize: 12, color: "var(--muted)" }}>{r.updated_at}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 分页 */}
+      {totalPages > 1 && (
+        <div style={pagerBar}>
+          <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1} style={pageBtn}>上一页</button>
+          {pagerPages(safePage, totalPages).map((p, i) =>
+            p === "…"
+              ? <span key={`e${i}`} style={{ padding: "0 4px", color: "var(--muted)" }}>…</span>
+              : <button key={p} type="button" onClick={() => setPage(p as number)} style={{ ...pageBtn, ...(p === safePage ? pageBtnActive : {}) }}>{p}</button>
+          )}
+          <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} style={pageBtn}>下一页</button>
+          <span style={{ marginLeft: 8, fontSize: 12, color: "var(--muted)" }}>第 {safePage} / {totalPages} 页</span>
+        </div>
+      )}
+    </>
+  );
+}
+
+function pagerPages(current: number, total: number): (number | "…")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages: (number | "…")[] = [1];
+  if (current > 3) pages.push("…");
+  for (let p = Math.max(2, current - 1); p <= Math.min(total - 1, current + 1); p++) pages.push(p);
+  if (current < total - 2) pages.push("…");
+  pages.push(total);
+  return pages;
+}
+
+// ── styles ───────────────────────────────────────────────────────
+const searchBar: CSSProperties   = { display: "flex", alignItems: "center", gap: 8, background: "#fff", border: "1px solid var(--line)", borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap" };
+const inputWrap: CSSProperties   = { display: "flex", alignItems: "center", gap: 6, border: "1px solid var(--line)", borderRadius: 6, padding: "0 10px", height: 34, background: "var(--surface-soft)" };
+const inputStyle: CSSProperties  = { border: "none", outline: "none", background: "transparent", fontSize: 13, color: "var(--text)", width: 120 };
+const selectStyle: CSSProperties = { height: 34, padding: "0 10px", borderRadius: 6, border: "1px solid var(--line)", background: "var(--surface-soft)", fontSize: 13, color: "var(--text)", cursor: "pointer", outline: "none" };
+const searchBtn: CSSProperties   = { height: 34, padding: "0 16px", borderRadius: 6, background: "var(--dida-navy)", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600 };
+const uploadBtn: CSSProperties   = { display: "flex", alignItems: "center", gap: 5, height: 34, padding: "0 14px", borderRadius: 6, border: "1px solid #16a34a", background: "transparent", color: "#16a34a", cursor: "pointer", fontSize: 13, fontWeight: 600 };
+const clearBtn: CSSProperties    = { height: 34, width: 34, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--line)", background: "var(--surface-soft)", cursor: "pointer", color: "var(--muted-strong)" };
+const banner: CSSProperties      = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
+const bannerClose: CSSProperties = { position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "var(--muted)" };
+const hintBar: CSSProperties     = { marginBottom: 12, padding: "8px 14px", background: "var(--surface-soft)", borderRadius: 6, border: "1px solid var(--line)" };
+const codeStyle: CSSProperties   = { background: "#e8eaf0", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11, marginLeft: 3, marginRight: 3 };
+const tableWrap: CSSProperties   = { background: "#fff", border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden" };
+const table: CSSProperties       = { width: "100%", borderCollapse: "collapse" };
+const th: CSSProperties          = { padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700, color: "var(--muted-strong)", background: "var(--surface-soft)", borderBottom: "1px solid var(--line)", whiteSpace: "nowrap" };
+const td: CSSProperties          = { padding: "9px 14px", fontSize: 13, color: "var(--text)", borderBottom: "1px solid var(--line)" };
+const emptyCell: CSSProperties   = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };
+const channelBadge: CSSProperties = { display: "inline-block", padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700, background: "#eef1ff", color: "#4f5fb8" };
+const countryTag: CSSProperties   = { display: "inline-flex", alignItems: "center", padding: "2px 7px", borderRadius: 99, fontSize: 11, fontWeight: 600, background: "#fff7ed", color: "#c2410c" };
+const pagerBar: CSSProperties    = { display: "flex", alignItems: "center", gap: 4, marginTop: 16, flexWrap: "wrap" };
+const pageBtn: CSSProperties     = { height: 30, minWidth: 30, padding: "0 8px", borderRadius: 6, border: "1px solid var(--line)", background: "#fff", cursor: "pointer", fontSize: 13, color: "var(--text)" };
+const pageBtnActive: CSSProperties = { background: "var(--dida-navy)", color: "#fff", border: "1px solid var(--dida-navy)", fontWeight: 700 };

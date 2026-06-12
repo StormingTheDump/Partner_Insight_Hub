@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
@@ -7,13 +7,10 @@ import { AppShell } from './dashboard/AppShell';
 import type { User } from './data/users';
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const stored =
-      localStorage.getItem('pih_user') || sessionStorage.getItem('pih_user');
-    if (stored) setUser(JSON.parse(stored));
-  }, []);
+  const [user, setUser] = useState<User | null>(() => {
+    const stored = localStorage.getItem('pih_user') || sessionStorage.getItem('pih_user');
+    return stored ? (JSON.parse(stored) as User) : null;
+  });
 
   const handleLogout = () => setUser(null);
 

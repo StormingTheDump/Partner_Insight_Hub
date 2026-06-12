@@ -4,20 +4,228 @@ import "@/styles/layout.css";
 
 import {
   Bell,
-  Calendar,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Filter,
   LogOut,
   User,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
+import { DatePicker } from "antd";
 import didaIcon from "@/assets/Icon-DIDA_red.svg";
 import didaLogo from "@/assets/logo-DIDA_positive.svg";
 import { useAppState, AppStateProvider } from "@/dashboard/app-state";
-import { feedOptions, navSections } from "@/dashboard/navigation";
+import { navSections } from "@/dashboard/navigation";
 import { routes } from "@/dashboard/routes";
 import type { User as AuthUser } from "@/data/users";
+
+const API = "";
+
+// ─── types ────────────────────────────────────────────────────────────────────
+
+type OverdueBill = {
+  bill_no: string;
+  client_id: string;
+  latest_collection_date: string;
+  amount: number;
+  status: string;
+};
+
+// ─── NotifBell ────────────────────────────────────────────────────────────────
+
+function NotifBell({ onGoFinance }: { onGoFinance: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [bills, setBills] = useState<OverdueBill[]>([]);
+  const [readIds, setReadIds] = useState<Set<string>>(() => {
+    const s = localStorage.getItem("pih_notif_read");
+    return s ? new Set(JSON.parse(s) as string[]) : new Set();
+  });
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const load = () =>
+      fetch("/api/finance/unsettled-bills?client_id=all")
+        .then((r) => r.json())
+        .then(({ data }) =>
+          setBills((data ?? []).filter((b: OverdueBill) => b.status === "已逾期"))
+        )
+        .catch(() => {});
+    load();
+    const t = setInterval(load, 60_000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const unread = bills.filter((b) => !readIds.has(b.bill_no)).length;
+
+  function toggle() {
+    if (!open) {
+      const next = new Set([...readIds, ...bills.map((b) => b.bill_no)]);
+      setReadIds(next);
+      localStorage.setItem("pih_notif_read", JSON.stringify([...next]));
+    }
+    setOpen((o) => !o);
+  }
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <button type="button" className="icon-button" aria-label="通知" onClick={toggle}>
+        <Bell className="icon" />
+        {unread > 0 && <span className="badge">{unread}</span>}
+      </button>
+
+      {open && (
+        <div className="topbar-dropdown" style={{ width: 320 }}>
+          <div style={{
+            padding: "12px 16px",
+            borderBottom: "1px solid var(--line)",
+            display: "flex", justifyContent: "space-between", alignItems: "center",
+          }}>
+            <span style={{ fontWeight: 700, fontSize: 13 }}>通知</span>
+            <span style={{ fontSize: 12, color: "var(--muted)" }}>{bills.length} 条逾期账单</span>
+          </div>
+
+          {bills.length === 0 ? (
+            <div style={{ padding: "24px 16px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
+              暂无逾期账单
+            </div>
+          ) : (
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              {bills.map((b) => (
+                <button
+                  key={b.bill_no}
+                  type="button"
+                  onClick={() => { onGoFinance(); setOpen(false); }}
+                  style={{
+                    width: "100%", textAlign: "left",
+                    padding: "12px 16px",
+                    borderBottom: "1px solid var(--line-soft)",
+                    background: "none", border: "none", cursor: "pointer", display: "block",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                    <span style={{ fontFamily: "monospace", fontSize: 12, color: "var(--muted-strong)" }}>
+                      {b.bill_no}
+                    </span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "#ea0345" }}>已逾期</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", display: "flex", gap: 12 }}>
+                    <span>{b.client_id}</span>
+                    <span>回款截止 {b.latest_collection_date}</span>
+                    <span style={{ marginLeft: "auto" }}>
+                      ${b.amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ padding: "10px 16px", borderTop: "1px solid var(--line)" }}>
+            <button
+              type="button"
+              onClick={() => { onGoFinance(); setOpen(false); }}
+              style={{
+                width: "100%", fontSize: 12, color: "#604696", fontWeight: 700,
+                background: "none", border: "none", cursor: "pointer", textAlign: "center",
+              }}
+            >
+              查看全部账单 →
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── UserMenu ─────────────────────────────────────────────────────────────────
+
+function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  function handleLogout() {
+    localStorage.removeItem("pih_user");
+    sessionStorage.removeItem("pih_user");
+    onLogout();
+  }
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <button
+        type="button"
+        className="filter-control"
+        onClick={() => setOpen((o) => !o)}
+        style={{ gap: 8, cursor: "pointer" }}
+      >
+        <User className="icon" />
+        <span style={{ maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {user.contactName}
+        </span>
+      </button>
+
+      {open && (
+        <div className="topbar-dropdown">
+          <div style={{ padding: "16px", borderBottom: "1px solid var(--line)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: "50%",
+                background: "#eef1ff", color: "#604696",
+                display: "grid", placeItems: "center",
+                fontWeight: 800, fontSize: 16, flexShrink: 0,
+              }}>
+                {user.contactName.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>{user.contactName}</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{user.email}</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{user.channelName}</div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ padding: "8px" }}>
+            <button
+              type="button"
+              onClick={handleLogout}
+              style={{
+                width: "100%", padding: "9px 12px", borderRadius: 6,
+                border: "none", cursor: "pointer",
+                display: "flex", alignItems: "center", gap: 8,
+                fontSize: 13, fontWeight: 600,
+                color: "#ea0345", background: "#fce8e6",
+              }}
+            >
+              <LogOut style={{ width: 15, height: 15 }} />
+              退出登录
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── AppShellInner ────────────────────────────────────────────────────────────
 
 interface AppShellInnerProps {
   user: AuthUser;
@@ -34,25 +242,32 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
     setSelectedFeed,
     showPreviousPeriod,
     setShowPreviousPeriod,
-    dateRangeLabel,
+    dateRange,
+    setDateRange,
   } = useAppState();
+
+  const [clientIdOptions, setClientIdOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch(`${API}/api/orders`)
+      .then((r) => r.json())
+      .then(({ data }: { data: Array<{ client_id: string }> }) => {
+        const ids = Array.from(new Set(data.map((r) => r.client_id))).sort() as string[];
+        setClientIdOptions(ids);
+      })
+      .catch(() => {});
+  }, []);
+
+  const feedChoices = ["全部渠道", ...clientIdOptions];
   const ActivePage = routes[activePage];
 
   return (
     <div className={`app${collapsed ? " collapsed" : ""}`}>
       <aside className="sidebar" aria-label="渠道管理平台导航">
-        {/* Logo */}
         <div className="brand">
           <img src={collapsed ? didaIcon : didaLogo} alt="DIDA" />
         </div>
 
-        {/* Channel account info */}
-        <div className="account">
-          <img src={didaIcon} alt="" />
-          <span title={user.channelName}>{user.channelName}</span>
-        </div>
-
-        {/* Nav sections */}
         <nav className="nav">
           {navSections.map((section) => (
             <div className="nav-section" key={section.title}>
@@ -81,7 +296,6 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
           ))}
         </nav>
 
-        {/* Collapse toggle */}
         <button
           type="button"
           className="button icon-only collapse"
@@ -93,7 +307,6 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
       </aside>
 
       <main className="main">
-        {/* Topbar */}
         <header className="topbar">
           <div className="topbar-left">
             <label className="filter-control">
@@ -103,11 +316,10 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
                 onChange={(e) => setSelectedFeed(e.target.value)}
                 aria-label="渠道筛选"
               >
-                {feedOptions.map((feed) => (
+                {feedChoices.map((feed) => (
                   <option key={feed} value={feed}>{feed}</option>
                 ))}
               </select>
-              <ChevronDown className="icon" />
             </label>
           </div>
 
@@ -120,43 +332,24 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
               aria-label="切换上期对比"
               onClick={() => setShowPreviousPeriod(!showPreviousPeriod)}
             />
-            <button type="button" className="filter-control">
-              <Calendar className="icon" />
-              {dateRangeLabel}
-            </button>
-            <button type="button" className="icon-button" aria-label="通知">
-              <Bell className="icon" />
-              <span className="badge">1</span>
-            </button>
-            {/* User + logout */}
-            <button
-              type="button"
-              className="filter-control"
-              title={`${user.contactName} · 退出登录`}
-              style={{ gap: 8, cursor: "pointer" }}
-            >
-              <User className="icon" />
-              <span style={{ maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {user.contactName}
-              </span>
-            </button>
-            <button
-              type="button"
-              className="button danger icon-only"
-              aria-label="退出登录"
-              title="退出登录"
-              onClick={() => {
-                localStorage.removeItem("pih_user");
-                sessionStorage.removeItem("pih_user");
-                onLogout();
+            <DatePicker.RangePicker
+              value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
+              onChange={(dates) => {
+                if (dates?.[0] && dates?.[1]) {
+                  setDateRange([dates[0].format("YYYY-MM-DD"), dates[1].format("YYYY-MM-DD")]);
+                } else {
+                  setDateRange(null);
+                }
               }}
-            >
-              <LogOut className="icon" />
-            </button>
+              allowClear
+              placeholder={["开始日期", "结束日期"]}
+              style={{ borderRadius: 7, minWidth: 220 }}
+            />
+            <NotifBell onGoFinance={() => setActivePage("finance")} />
+            <UserMenu user={user} onLogout={onLogout} />
           </div>
         </header>
 
-        {/* Page content */}
         <section className="page">
           <ActivePage selectedFeed={selectedFeed} showPreviousPeriod={showPreviousPeriod} />
         </section>
@@ -164,6 +357,8 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
     </div>
   );
 }
+
+// ─── AppShell ─────────────────────────────────────────────────────────────────
 
 export function AppShell({ user, onLogout }: AppShellInnerProps) {
   return (

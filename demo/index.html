@@ -6,7 +6,7 @@
   <title>DIDA Supplier Insight Hub Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
@@ -30,7 +30,7 @@
       --chart-secondary: #94a3b8;
       --radius: 8px;
       --shadow-card: 0 1px 2px rgba(0, 9, 71, .06);
-      font-family: "Poppins", "Harmony Sans SC", "Microsoft YaHei UI", system-ui, sans-serif;
+      font-family: "Inter", "Poppins", "Harmony Sans SC", "Microsoft YaHei UI", system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -86,7 +86,7 @@
       background: #f6f7fa;
       padding: 14px 12px;
       border-radius: var(--radius);
-      font-weight: 700;
+      font-weight: 600;
     }
     .account img { width: 22px; height: 22px; }
 
@@ -98,9 +98,10 @@
     .section-title {
       margin: 0 0 8px 8px;
       color: #8390ad;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .02em;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
     .nav-item {
       width: 100%;
@@ -250,18 +251,21 @@
     }
     h1 {
       margin: 0 0 6px;
-      font-size: 32px;
+      font-size: 28px;
+      font-weight: 600;
       line-height: 1.15;
-      letter-spacing: 0;
+      letter-spacing: -0.01em;
     }
     h2 {
       margin: 0 0 8px;
-      font-size: 22px;
-      letter-spacing: 0;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
     }
     h3 {
       margin: 0 0 8px;
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 600;
       letter-spacing: 0;
     }
     p { margin: 0; color: var(--muted); }
@@ -322,13 +326,14 @@
     .metric-value {
       margin-top: 4px;
       color: #000;
-      font-size: 24px;
+      font-size: 22px;
       line-height: 1.1;
-      font-weight: 800;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
     }
-    .metric-value.big { font-size: 28px; }
-    .delta { color: #00924c; font-size: 13px; font-weight: 800; }
+    .metric-value.big { font-size: 26px; }
+    .delta { color: #00924c; font-size: 13px; font-weight: 600; }
     .delta.bad { color: #e11d48; }
     .muted { color: var(--muted); }
     .tiny { font-size: 12px; }
@@ -422,7 +427,11 @@
       width: 100%;
       height: 300px;
       display: block;
-      overflow: visible;
+      overflow: hidden;
+    }
+    .chart-wrap {
+      overflow: hidden;
+      border-radius: 4px;
     }
     .chart-tall { height: 360px; }
     .chart-small { height: 175px; }
@@ -547,6 +556,71 @@
       color: #00854a;
       background: #e8f8ee;
     }
+    .status.warning {
+      color: #b45309;
+      background: #fff3d6;
+    }
+    .status.danger {
+      color: #be123c;
+      background: #ffe6ec;
+    }
+    .progress-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #e8edf5;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--dida-sky), var(--chart-primary));
+    }
+    .finance-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+      margin-top: 18px;
+    }
+    .invoice-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .invoice-summary .mini {
+      border: 1px solid var(--line-soft);
+      border-radius: 7px;
+      background: #fbfcff;
+      padding: 12px;
+    }
+    .log-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, .7fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .log-stack {
+      display: grid;
+      gap: 12px;
+    }
+    .log-entry {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .log-entry:last-child { border-bottom: 0; }
+    .event-code {
+      font-family: "JetBrains Mono", "Consolas", monospace;
+      font-size: 12px;
+      color: #465574;
+      background: #f4f6fb;
+      border-radius: 6px;
+      padding: 2px 6px;
+      white-space: nowrap;
+    }
     .settings-panel {
       display: grid;
       gap: 18px;
@@ -594,6 +668,7 @@
       .metric-grid-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .metric-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .three-col { grid-template-columns: 1fr; }
+      .log-layout { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 760px) {
@@ -611,8 +686,161 @@
       .topbar-left, .topbar-right { flex-wrap: wrap; }
       .page { padding: 18px 16px 80px; }
       .forecast-grid, .two-col, .metric-grid-5, .metric-grid-4, .metric-grid-3, .insight-rail { grid-template-columns: 1fr; }
+      .invoice-summary { grid-template-columns: 1fr; }
+      .log-entry { grid-template-columns: 1fr; }
       h1 { font-size: 28px; }
     }
+
+    /* ===== DROPDOWN WRAPPERS ===== */
+    .dp-wrap, .feed-wrap { position: relative; display: inline-flex; }
+
+    /* ===== DATE PICKER PANEL ===== */
+    .dp-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,9,71,.16);
+      display: flex;
+      z-index: 200;
+      overflow: hidden;
+      min-width: 640px;
+    }
+    .dp-panel.hidden { display: none !important; }
+    .dp-presets {
+      border-right: 1px solid var(--line);
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 144px;
+      background: #fbfcff;
+    }
+    .dp-preset {
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #1e2b4d;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .dp-preset:hover { background: #eef1ff; }
+    .dp-preset.active { background: var(--active-bg); color: #3f4fb2; font-weight: 600; }
+    .dp-right { padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .dp-months { display: flex; gap: 28px; }
+    .dp-month { min-width: 210px; }
+    .dp-month-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #0d1933;
+    }
+    .dp-nav-btn {
+      width: 26px; height: 26px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: #526078;
+      font-size: 15px;
+      line-height: 1;
+    }
+    .dp-nav-btn:hover { background: #f4f6fb; }
+    .dp-cal { display: grid; grid-template-columns: repeat(7, 30px); gap: 2px; }
+    .dp-cal-lbl {
+      height: 26px;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8390ad;
+    }
+    .dp-cal-day {
+      height: 30px;
+      width: 30px;
+      border-radius: 6px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1e2b4d;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+    .dp-cal-day:hover:not(:disabled):not(.dp-empty) { background: #eef1ff; }
+    .dp-cal-day.dp-today { color: var(--dida-navy); font-weight: 700; }
+    .dp-cal-day.dp-in-range { background: #eef1ff; border-radius: 0; }
+    .dp-cal-day.dp-range-start {
+      background: var(--dida-navy) !important;
+      color: #fff !important;
+      border-radius: 6px 0 0 6px !important;
+    }
+    .dp-cal-day.dp-range-end {
+      background: var(--dida-navy) !important;
+      color: #fff !important;
+      border-radius: 0 6px 6px 0 !important;
+    }
+    .dp-cal-day.dp-range-single {
+      background: var(--dida-navy) !important;
+      color: #fff !important;
+      border-radius: 6px !important;
+    }
+    .dp-cal-day.dp-empty { pointer-events: none; visibility: hidden; }
+    .dp-cal-day:disabled { color: #c5ccd9 !important; background: none !important; cursor: default; }
+    .dp-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      justify-content: flex-end;
+    }
+    .dp-range-lbl { font-size: 13px; color: #526078; margin-right: auto; }
+    .dp-range-lbl strong { color: #0d1933; }
+
+    /* ===== FEED DROPDOWN PANEL ===== */
+    .feed-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 8px 28px rgba(0,9,71,.13);
+      padding: 8px;
+      min-width: 265px;
+      z-index: 200;
+    }
+    .feed-panel.hidden { display: none !important; }
+    .feed-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1e2b4d;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    .feed-opt:hover { background: #f4f6fb; }
+    .feed-opt input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--chart-primary); cursor: pointer; flex-shrink: 0; }
+    .feed-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .feed-opt.all-opt { border-bottom: 1px solid var(--line-soft); margin-bottom: 4px; padding-bottom: 12px; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -639,6 +867,8 @@
           <button class="nav-item" data-page="configuration"><i data-lucide="store"></i><span class="nav-label">Configuration</span><span class="pill active-pill">Active</span></button>
           <button class="nav-item" data-page="analytics"><i data-lucide="trending-up"></i><span class="nav-label">Analytics</span></button>
           <button class="nav-item" data-page="cost"><i data-lucide="percent"></i><span class="nav-label">Cost analysis</span></button>
+          <button class="nav-item" data-page="finance"><i data-lucide="wallet-cards"></i><span class="nav-label">Finance Status</span></button>
+          <button class="nav-item" data-page="order-logs"><i data-lucide="list-tree"></i><span class="nav-label">Order Logs</span></button>
           <button class="nav-item" data-page="bookings"><i data-lucide="calendar-days"></i><span class="nav-label">Bookings</span></button>
         </div>
       </nav>
@@ -648,12 +878,46 @@
     <main class="main">
       <header class="topbar">
         <div class="topbar-left">
-          <button class="control"><i data-lucide="filter"></i>All feeds<i data-lucide="chevron-down"></i></button>
+          <div class="feed-wrap">
+            <button class="control" id="feedBtn"><i data-lucide="filter"></i><span id="feedBtnText">All feeds</span><i data-lucide="chevron-down"></i></button>
+            <div class="feed-panel hidden" id="feedPanel">
+              <label class="feed-opt all-opt"><input type="checkbox" id="chkAll" checked><strong>All feeds</strong></label>
+              <div id="feedList"></div>
+            </div>
+          </div>
         </div>
         <div class="topbar-right">
           <span class="toggle-label">Show previous period</span>
           <button class="toggle" id="prevToggle" aria-label="Toggle previous period"></button>
-          <button class="control"><i data-lucide="calendar"></i>May 11, 2026 - Jun 10, 2026</button>
+          <div class="dp-wrap">
+            <button class="control" id="dateBtn"><i data-lucide="calendar"></i><span id="dateBtnText">May 11, 2026 – Jun 10, 2026</span><i data-lucide="chevron-down"></i></button>
+            <div class="dp-panel hidden" id="dpPanel">
+              <div class="dp-presets" id="dpPresets">
+                <button class="dp-preset" data-preset="today">Today</button>
+                <button class="dp-preset" data-preset="yesterday">Yesterday</button>
+                <button class="dp-preset" data-preset="last7">Last 7 days</button>
+                <button class="dp-preset" data-preset="last14">Last 14 days</button>
+                <button class="dp-preset" data-preset="last30">Last 30 days</button>
+                <button class="dp-preset" data-preset="thisweek">This week</button>
+                <button class="dp-preset" data-preset="thismonth">This month</button>
+                <button class="dp-preset" data-preset="lastmonth">Last month</button>
+                <button class="dp-preset" data-preset="thisquarter">This quarter</button>
+                <button class="dp-preset" data-preset="thisyear">This year</button>
+                <button class="dp-preset" data-preset="lastyear">Last year</button>
+              </div>
+              <div class="dp-right">
+                <div class="dp-months">
+                  <div class="dp-month" id="dpCalL"></div>
+                  <div class="dp-month" id="dpCalR"></div>
+                </div>
+                <div class="dp-footer">
+                  <span class="dp-range-lbl" id="dpRangeLbl">Select a start date</span>
+                  <button class="button" id="dpCancel">Cancel</button>
+                  <button class="button primary" id="dpApply">Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <button class="icon-button" aria-label="Notifications"><i data-lucide="bell"></i><span class="badge">1</span></button>
           <button class="icon-button" aria-label="Account"><i data-lucide="user"></i></button>
         </div>
@@ -665,7 +929,7 @@
             <article class="card">
               <div class="card-header">
                 <h3>Quarterly forecast</h3>
-                <button class="button green">Boost your TTV with the Marketplace -></button>
+                <button class="button green" id="boostTtvBtn">Boost your TTV with the Marketplace -></button>
               </div>
               <div class="grid forecast-grid">
                 <div class="card compact soft">
@@ -684,7 +948,7 @@
             <article class="card">
               <div class="card-header">
                 <div class="card-title"><i data-lucide="dollar-sign"></i><h3>TTV over time</h3></div>
-                <div class="metric-value">$3,532,888</div>
+                <div class="metric-value" id="ov-ttv">$3,532,888</div>
               </div>
               <svg class="svg-chart chart-tall" data-chart="line" data-key="ttv"></svg>
               <p class="tiny">Total transaction value in the selected period.</p>
@@ -692,12 +956,12 @@
 
             <div class="grid two-col">
               <article class="card">
-                <div class="card-header"><div class="card-title"><i data-lucide="bar-chart-4"></i><h3>Win Rate</h3></div><div class="metric-value">2.70%</div></div>
+                <div class="card-header"><div class="card-title"><i data-lucide="bar-chart-4"></i><h3>Win Rate</h3></div><div class="metric-value" id="ov-win">2.70%</div></div>
                 <svg class="svg-chart chart-small" data-chart="line" data-key="win"></svg>
                 <p class="tiny">Share of opportunities won in the selected period.</p>
               </article>
               <article class="card">
-                <div class="card-header"><div class="card-title"><i data-lucide="calendar"></i><h3>Total Bookings</h3></div><div class="metric-value">10,599</div></div>
+                <div class="card-header"><div class="card-title"><i data-lucide="calendar"></i><h3>Total Bookings</h3></div><div class="metric-value" id="ov-bookings">10,599</div></div>
                 <svg class="svg-chart chart-small" data-chart="line" data-key="bookings"></svg>
                 <p class="tiny">Number of confirmed bookings over the selected period.</p>
               </article>
@@ -705,22 +969,22 @@
 
             <div class="grid two-col">
               <article class="card compact">
-                <div class="card-header"><div><p>Avg Booking Value</p><div class="metric-value">$333</div></div><div class="icon-tile purple"><i data-lucide="trending-up"></i></div></div>
+                <div class="card-header"><div><p>Avg Booking Value</p><div class="metric-value" id="ov-avg">$333</div></div><div class="icon-tile purple"><i data-lucide="trending-up"></i></div></div>
                 <svg class="svg-chart spark" data-chart="spark" data-key="avg"></svg>
                 <p class="tiny">Average revenue per booking over time.</p>
               </article>
               <article class="card compact">
-                <div class="card-header"><div><p>Room Nights</p><div class="metric-value">21,907</div></div><div class="icon-tile orange"><i data-lucide="bed"></i></div></div>
+                <div class="card-header"><div><p>Room Nights</p><div class="metric-value" id="ov-rooms">21,907</div></div><div class="icon-tile orange"><i data-lucide="bed"></i></div></div>
                 <svg class="svg-chart spark" data-chart="spark" data-key="rooms"></svg>
                 <p class="tiny">Total room nights sold in the selected period.</p>
               </article>
               <article class="card compact">
-                <div class="card-header"><div><p>Pre-Book Error Rate</p><div class="metric-value">7.36%</div></div><div class="icon-tile red"><i data-lucide="circle-alert"></i></div></div>
+                <div class="card-header"><div><p>Pre-Book Error Rate</p><div class="metric-value" id="ov-preerr">7.36%</div></div><div class="icon-tile red"><i data-lucide="circle-alert"></i></div></div>
                 <svg class="svg-chart spark" data-chart="spark" data-key="preError"></svg>
                 <p class="tiny">Share of pre-book requests that failed before confirmation.</p>
               </article>
               <article class="card compact">
-                <div class="card-header"><div><p>Booking Error Rate</p><div class="metric-value">5.71%</div></div><div class="icon-tile orange"><i data-lucide="circle-alert"></i></div></div>
+                <div class="card-header"><div><p>Booking Error Rate</p><div class="metric-value" id="ov-bookerr">5.71%</div></div><div class="icon-tile orange"><i data-lucide="circle-alert"></i></div></div>
                 <svg class="svg-chart spark" data-chart="spark" data-key="bookError"></svg>
                 <p class="tiny">Share of booking requests that failed during confirmation.</p>
               </article>
@@ -730,7 +994,7 @@
           <aside class="insight-rail">
             <article class="card purple insight-card">
               <h3><i data-lucide="target"></i>KEY INSIGHTS</h3>
-              <p class="tiny">During 2026-05-11 to 2026-06-10, TTV increased by 1.53% while bookings decreased by 8.23%.</p>
+              <p class="tiny">During <span id="insight-range">2026-05-11 to 2026-06-10</span>, TTV increased by 1.53% while bookings decreased by 8.23%.</p>
             </article>
             <article class="card purple insight-card">
               <h3><i data-lucide="target"></i>Leverage high-value channels <span class="priority">high</span></h3>
@@ -911,17 +1175,132 @@
         <article class="card" style="margin-top:24px"><h3>By hotel chain</h3><p>Top 25 chains by booking volume-highest at the top.</p><svg class="svg-chart chart-tall" data-chart="hotelBars"></svg></article>
       </section>
 
+      <section class="page" id="finance">
+        <div class="page-title">
+          <div><h1>Finance Status</h1><p>Monitor customer credit limits, expiry dates, settlement exposure, and unsettled bills.</p></div>
+          <button class="button"><i data-lucide="download"></i>Export finance report</button>
+        </div>
+        <div class="grid metric-grid-5">
+          <article class="card compact"><div class="card-header"><div><p>Credit Limit</p><div class="metric-value">$2,500,000</div></div><div class="icon-tile"><i data-lucide="landmark"></i></div></div><p class="tiny">Global credit facility for marketplace settlement.</p></article>
+          <article class="card compact"><div class="card-header"><div><p>Available Credit</p><div class="metric-value">$812,450</div></div><div class="icon-tile green"><i data-lucide="badge-dollar-sign"></i></div></div><p class="delta tiny">32.5% remaining</p></article>
+          <article class="card compact"><div class="card-header"><div><p>Used Credit</p><div class="metric-value">$1,687,550</div></div><div class="icon-tile orange"><i data-lucide="receipt-text"></i></div></div><p class="tiny">67.5% utilization</p></article>
+          <article class="card compact"><div class="card-header"><div><p>Credit Expiry</p><div class="metric-value" style="font-size:22px">Jul 31, 2026</div></div><div class="icon-tile purple"><i data-lucide="calendar-clock"></i></div></div><p class="tiny">50 days remaining</p></article>
+          <article class="card compact"><div class="card-header"><div><p>Account Status</p><div class="metric-value" style="font-size:22px">Healthy</div></div><div class="icon-tile green"><i data-lucide="shield-check"></i></div></div><p><span class="status">Within terms</span></p></article>
+        </div>
+
+        <div class="grid two-col" style="margin-top:24px">
+          <article class="card">
+            <div class="card-header"><div><h2>Credit utilization</h2><p>Current exposure across unsettled bookings and open invoices.</p></div><strong>67.5%</strong></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:67.5%"></div></div>
+            <div class="finance-strip">
+              <div><p class="tiny">Risk threshold</p><strong>$2,125,000</strong></div>
+              <span class="status warning">Review at 85%</span>
+            </div>
+            <div class="invoice-summary">
+              <div class="mini"><p>Unbilled exposure</p><strong>$642,180</strong></div>
+              <div class="mini"><p>Open invoices</p><strong>$1,045,370</strong></div>
+              <div class="mini"><p>Overdue amount</p><strong>$0</strong></div>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Settlement calendar</h2>
+            <div class="log-stack">
+              <div class="log-entry"><span class="event-code">Jun 15</span><div><strong>Invoice PIH-2026-0601 due</strong><p>$386,420 expected to settle via bank transfer.</p></div></div>
+              <div class="log-entry"><span class="event-code">Jun 20</span><div><strong>Credit review checkpoint</strong><p>Auto review if utilization stays above 75% for three days.</p></div></div>
+              <div class="log-entry"><span class="event-code">Jul 31</span><div><strong>Credit line expires</strong><p>Renewal documents should be confirmed before Jul 15.</p></div></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:24px">
+          <div class="card-header">
+            <div><h2>Unsettled bill details</h2><p>Open invoice and unbilled booking exposure by billing period.</p></div>
+            <button class="button"><i data-lucide="filter"></i>All statuses</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Bill ID</th><th>Billing period</th><th>Due date</th><th>Type</th><th class="num">Bookings</th><th class="num">Amount</th><th>Status</th><th>Aging</th><th>Owner</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>PIH-2026-0601</td><td>Jun 1 - Jun 7</td><td>Jun 15, 2026</td><td>Invoice</td><td class="num">1,284</td><td class="num">$386,420</td><td><span class="status warning">Pending payment</span></td><td>3 days</td><td>Finance Ops</td><td><button class="button">View</button></td></tr>
+                <tr><td>PIH-2026-0608</td><td>Jun 8 - Jun 10</td><td>Jun 22, 2026</td><td>Invoice draft</td><td class="num">842</td><td class="num">$254,870</td><td><span class="status">Draft ready</span></td><td>Not due</td><td>Finance Ops</td><td><button class="button">Review</button></td></tr>
+                <tr><td>UNB-2026-0611</td><td>Current cycle</td><td>Jul 1, 2026</td><td>Unbilled</td><td class="num">2,106</td><td class="num">$642,180</td><td><span class="status">Accruing</span></td><td>Not due</td><td>Auto accrual</td><td><button class="button">Export</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="page" id="order-logs">
+        <div class="page-title">
+          <div><h1>Order Logs</h1><p>Inspect price-check and booking logs by order number with request status, provider trace, and final outcome.</p></div>
+          <button class="button"><i data-lucide="download"></i>Export logs</button>
+        </div>
+        <div class="filters">
+          <div class="search"><i data-lucide="search"></i><input placeholder="Search order number, hotel, trace id"></div>
+          <button class="select">All feeds<i data-lucide="chevron-down"></i></button>
+          <button class="select">All statuses<i data-lucide="chevron-down"></i></button>
+          <button class="select">All log stages<i data-lucide="chevron-down"></i></button>
+          <button class="button primary"><i data-lucide="search"></i>Search Logs</button>
+        </div>
+        <div class="log-layout">
+          <article class="card">
+            <div class="card-header"><div><h2>Order-level log table</h2><p>Each row is grouped by order number and shows both valuation and booking stages.</p></div></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Order No.</th><th>Hotel</th><th>Feed</th><th>Price-check</th><th>Booking</th><th>Trace IDs</th><th>Last event</th><th>Actions</th></tr></thead>
+                <tbody id="orderLogRows"></tbody>
+              </table>
+            </div>
+          </article>
+          <aside class="card">
+            <h2>Selected order detail</h2>
+            <p class="tiny">Order DIDA-20260610-88421</p>
+            <div class="log-stack" style="margin-top:18px">
+              <h3>Price-check logs</h3>
+              <div class="log-entry"><span class="event-code">11:08:12</span><div><strong>Valuation request sent</strong><p>Rate code RN-2201, 1 room, refundable=false.</p></div></div>
+              <div class="log-entry"><span class="event-code">11:08:13</span><div><strong>Provider returned net price</strong><p>Original $182.68, adjusted $179.03 after 2.0% marketplace budget.</p></div></div>
+              <div class="log-entry"><span class="event-code">11:08:13</span><div><strong>Price-check passed</strong><p>Trace pc_91bf4 resolved in 620ms.</p></div></div>
+              <h3 style="margin-top:14px">Booking logs</h3>
+              <div class="log-entry"><span class="event-code">11:09:02</span><div><strong>Booking request created</strong><p>Guest and payment token validated.</p></div></div>
+              <div class="log-entry"><span class="event-code">11:09:04</span><div><strong>Supplier confirmation received</strong><p>Provider booking id 1774073844.</p></div></div>
+              <div class="log-entry"><span class="event-code">11:09:05</span><div><strong>Order completed</strong><p>Voucher generated and settlement exposure updated.</p></div></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
       <section class="page" id="bookings">
-        <div class="page-title"><div><h1>Bookings</h1><p>View your bookings with Nuitée.</p></div><button class="button"><i data-lucide="download"></i>Export to CSV</button></div>
-        <div class="table-wrap">
-          <table><thead><tr><th>ID</th><th>Hotel ID</th><th>Hotel Name</th><th>Feed</th><th class="num">Price</th><th>Adjustment %</th><th>Adj. amount</th><th>Check-in</th><th>Booking date</th></tr></thead>
-            <tbody id="bookingRows"></tbody></table>
+        <div class="page-title">
+          <div><h1>Bookings</h1><p>View your bookings with DIDA.</p></div>
+          <button class="button" id="bookingsExportBtn"><i data-lucide="download"></i>Export to CSV</button>
+        </div>
+        <div id="bookingsState"></div>
+        <div class="table-wrap" id="bookingsWrap" style="display:none">
+          <table>
+            <thead>
+              <tr>
+                <th>Client Reference</th>
+                <th>Dida No.</th>
+                <th>Channel Status</th>
+                <th>Dida Hotel ID</th>
+                <th>Client Hotel ID</th>
+                <th>Dida Hotel Name</th>
+                <th class="num">Price</th>
+                <th>Client ID</th>
+                <th>Channel Create Time</th>
+                <th>CheckIn Date</th>
+                <th>CheckOut Date</th>
+              </tr>
+            </thead>
+            <tbody id="bookingRows"></tbody>
+          </table>
         </div>
       </section>
 
       <section class="page" id="reports">
         <article class="card"><h1>Custom Reports</h1><p>This module is marked Soon in the source dashboard. Use this space for report templates and scheduled exports.</p></article>
       </section>
+
     </main>
   </div>
   <button class="support" aria-label="Support"><i data-lucide="headphones"></i></button>
@@ -959,7 +1338,7 @@
       const w = el.clientWidth || 900;
       const h = el.clientHeight || 300;
       el.setAttribute("viewBox", `0 0 ${w} ${h}`);
-      return { w, h, m: { l: 58, r: 24, t: 20, b: 48 } };
+      return { w, h, m: { l: 80, r: 28, t: 20, b: 56 } };
     }
     function grid(el, box, yTicks = 4, xEvery = 3, max = 1, formatter = v => v) {
       const { w, h, m } = box;
@@ -976,7 +1355,7 @@
         const x = m.l + cw * i / (labels.length - 1);
         if (i % xEvery === 0 || i === labels.length - 1) {
           el.appendChild(svg("line", { x1: x, y1: m.t, x2: x, y2: h - m.b, stroke: "#e8edf4", "stroke-dasharray": "3 4" }));
-          const tx = svg("text", { x, y: h - 28, "text-anchor": "middle", fill: "#526078", "font-size": "11" });
+          const tx = svg("text", { x, y: h - 36, "text-anchor": "middle", fill: "#526078", "font-size": "11" });
           tx.textContent = label;
           el.appendChild(tx);
         }
@@ -1034,14 +1413,22 @@
     }
     function horizontalLoss(el) {
       clear(el);
-      const box = chartBox(el), { w, h, m } = box;
-      grid(el, box, 3, 99, 60000, v => Math.round(v).toLocaleString());
+      const w = el.clientWidth || 900, h = el.clientHeight || 300;
+      el.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      const m = { l: 160, r: 28, t: 20, b: 40 };
+      const cw = w - m.l - m.r, ch = h - m.t - m.b;
+      [0,20000,40000,60000].forEach((v,i) => {
+        const y = m.t + ch - ch * v / 60000;
+        el.appendChild(svg("line",{x1:m.l,y1:y,x2:w-m.r,y2:y,stroke:"#e8edf4","stroke-dasharray":"3 4"}));
+        const tx=svg("text",{x:m.l-8,y:y+4,"text-anchor":"end",fill:"#526078","font-size":12}); tx.textContent=v.toLocaleString(); el.appendChild(tx);
+      });
       const bars = [["No available room.", 58500], ["Miscellaneous", 900]];
       bars.forEach(([name, val], i) => {
-        const y = m.t + 58 + i * 96;
-        el.appendChild(svg("text", { x: m.l - 8, y: y + 19, "text-anchor": "end", fill: "#526078", "font-size": 12 })).textContent = name;
-        el.appendChild(svg("rect", { x: m.l, y, width: (w - m.l - m.r) * val / 60000, height: 58, rx: 3, fill: "#4c4597" }));
+        const y = m.t + 40 + i * 80;
+        const t=svg("text",{x:m.l-8,y:y+19,"text-anchor":"end",fill:"#526078","font-size":12}); t.textContent=name; el.appendChild(t);
+        el.appendChild(svg("rect",{x:m.l,y,width:cw*val/60000,height:52,rx:3,fill:"#4c4597"}));
       });
+      el.appendChild(svg("line",{x1:m.l,y1:m.t,x2:m.l,y2:h-m.b,stroke:"#8b95a6"}));
     }
     function comboChart(el) {
       clear(el);
@@ -1076,12 +1463,14 @@
       clear(el);
       const names = ["Minor Hotels","Catalonia Hotels","Event Hospitality","Highgate Independent","Motel One","Millennium","Ascott","Dorsett Hospitality","Louvre Hotels","Red Roof Inn","Radisson Hotel Group","Sonesta Hotel","Motel 6","Hyatt Hotels","Best Western","Marriott","Accor","Wyndham Worldwide","Choice","IHG","Hilton Worldwide","Independent"];
       const vals = names.map((_,i)=>.18 + (Math.sin(i*1.7)+1)*.42 + (i%6===0?.28:0));
-      const box = chartBox(el), { w, h, m } = box;
+      const w = el.clientWidth || 900, h = el.clientHeight || 300;
+      el.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      const m = { l: 140, r: 28, t: 16, b: 40 };
       const max = 1.4, ch = h - m.t - m.b, cw = w - m.l - m.r;
       [0,.35,.7,1.05,1.4].forEach(v => {
         const x = m.l + cw*v/max;
         el.appendChild(svg("line",{x1:x,y1:m.t,x2:x,y2:h-m.b,stroke:"#edf1f7","stroke-dasharray":"3 4"}));
-        const t=svg("text",{x,y:h-24,"text-anchor":"middle",fill:"#526078","font-size":11}); t.textContent=`${v}%`; el.appendChild(t);
+        const t=svg("text",{x,y:h-m.b+14,"text-anchor":"middle",fill:"#526078","font-size":11}); t.textContent=`${v}%`; el.appendChild(t);
       });
       names.forEach((name,i)=>{
         const y = m.t + i*(ch/names.length)+2;
@@ -1139,10 +1528,17 @@
       const ql = document.getElementById("qualityLegend");
       if (ql) ql.innerHTML = [{name:"All feeds", color:"#3b82f6"}].concat(feeds).map(f => `<span><i class="dot" style="background:${f.color}"></i>${f.name}</span>`).join("");
     }
-    function renderBookings() {
-      const hotels = ["Comfort Inn Downtown", "Hampton Inn & Suites Raleigh Cary Lenovo Center", "Hilton Garden Inn Ames", "Hampton Inn Austin/Oak Hill", "The Lofton Hotel, Tapestry Collection by Hilton", "Hampton Inn Binghamton/Johnson City", "The Wylie Inn and Conference Center at Endicott College", "Hampton Inn Pampa", "Econo Lodge Whiteville", "Hilton Garden Inn Springfield, IL."];
-      const rows = hotels.map((h,i)=>`<tr><td>${1774107878+i*34421}</td><td>${[40204,44099,87149,621824,991378,84627,48454,111282,97131,1012902][i]}</td><td>${h}</td><td>${i%3===0?"HUB_Dida_NonTravel_BankOnly":"HUB_Dida_B2B"}</td><td class="num">$${(93+i*47.63).toFixed(2)}</td><td>${(.5+(i%5)*.4).toFixed(1)}%</td><td>$${(.74+i*.39).toFixed(2)}</td><td>Jun ${9+i}, 2026</td><td>Jun 10, 2026</td></tr>`).join("");
-      document.getElementById("bookingRows").innerHTML = rows;
+    function renderBookings() { /* replaced by loadBookings() */ }
+    function renderOrderLogs() {
+      const logs = [
+        ["DIDA-20260610-88421", "Hampton Inn Binghamton/Johnson City", "HUB_Dida_B2B", "Passed", "Confirmed", "pc_91bf4 / bk_3de21", "Jun 10, 11:09:05"],
+        ["DIDA-20260610-88422", "Comfort Inn Downtown", "HUB_Dida_B2B", "Passed", "Pending supplier", "pc_77ab2 / bk_71c09", "Jun 10, 11:12:44"],
+        ["DIDA-20260610-88423", "Hilton Garden Inn Ames", "HUB_Dida_CUG", "Price changed", "Stopped", "pc_30ef1 / -", "Jun 10, 11:15:18"],
+        ["DIDA-20260610-88424", "The Lofton Hotel", "HUB_Dida_NonTravel_BankOnly", "Passed", "Confirmed", "pc_64aa8 / bk_5580d", "Jun 10, 11:22:39"],
+        ["DIDA-20260610-88425", "Econo Lodge Whiteville", "HUB_Dida_B2B", "No room", "Not attempted", "pc_5f2c0 / -", "Jun 10, 11:24:02"]
+      ];
+      const statusClass = value => value === "Confirmed" || value === "Passed" ? "status" : value === "Stopped" || value === "No room" ? "status danger" : "status warning";
+      document.getElementById("orderLogRows").innerHTML = logs.map(row => `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td><td><span class="${statusClass(row[3])}">${row[3]}</span></td><td><span class="${statusClass(row[4])}">${row[4]}</span></td><td><span class="event-code">${row[5]}</span></td><td>${row[6]}</td><td><button class="button">View logs</button></td></tr>`).join("");
     }
     document.querySelectorAll(".nav-item").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -1155,8 +1551,161 @@
     document.getElementById("prevToggle").addEventListener("click", e => e.currentTarget.classList.toggle("on"));
     window.addEventListener("resize", () => setTimeout(renderCharts, 80));
     renderBookings();
+    renderOrderLogs();
     renderCharts();
     if (window.lucide) lucide.createIcons();
+
+    /* ===== BOOKINGS PAGE ===== */
+    const BOOKINGS_API = "http://localhost:3001/api/orders";
+
+    function statusClass(s) {
+      if (s === "Confirmed") return "status";
+      if (s === "Canceled") return "status warning";
+      return "status danger";
+    }
+    let allBookingsData = [];
+    let bookingsLoaded = false;
+
+    function getCheckedClientIds() {
+      return new Set([...document.querySelectorAll(".bk-client-chk:checked")].map(c => c.value));
+    }
+
+    function applyBookingsFilter() {
+      const checked = getCheckedClientIds();
+      const allIds = new Set(allBookingsData.map(r => r.client_id));
+      const filtered = (checked.size === 0 || checked.size === allIds.size)
+        ? allBookingsData
+        : allBookingsData.filter(r => checked.has(r.client_id));
+      renderBookingsTable(filtered);
+    }
+
+    function updateFeedBtnLabel() {
+      const checked = getCheckedClientIds();
+      const allIds = new Set(allBookingsData.map(r => r.client_id));
+      const btn = document.getElementById("feedBtnText");
+      if (checked.size === 0 || checked.size === allIds.size) btn.textContent = "All Client IDs";
+      else if (checked.size === 1) btn.textContent = [...checked][0];
+      else btn.textContent = checked.size + " Client IDs";
+    }
+
+    function onBkClientChkChange() {
+      const allChecks = [...document.querySelectorAll(".bk-client-chk")];
+      document.getElementById("chkAll").checked = allChecks.every(c => c.checked);
+      updateFeedBtnLabel();
+      applyBookingsFilter();
+    }
+
+    function onBkChkAllChange() {
+      const on = document.getElementById("chkAll").checked;
+      document.querySelectorAll(".bk-client-chk").forEach(c => c.checked = on);
+      document.getElementById("feedBtnText").textContent = "All Client IDs";
+      applyBookingsFilter();
+    }
+
+    function enterBookingsPage() {
+      const ids = [...new Set(allBookingsData.map(r => r.client_id))].sort();
+      document.getElementById("feedList").innerHTML = ids.map(id => `
+        <label class="feed-opt">
+          <input type="checkbox" class="bk-client-chk" value="${id}" checked>
+          <span class="feed-dot" style="background:#4f5fb8"></span> ${id}
+        </label>`).join("");
+      document.querySelector("#feedPanel .all-opt strong").textContent = "All Client IDs";
+      document.getElementById("feedBtnText").textContent = "All Client IDs";
+      document.getElementById("chkAll").checked = true;
+      document.getElementById("chkAll").addEventListener("change", onBkChkAllChange);
+      document.querySelectorAll(".bk-client-chk").forEach(c => c.addEventListener("change", onBkClientChkChange));
+    }
+
+    function leaveBookingsPage() {
+      document.getElementById("feedList").innerHTML = "";
+      document.querySelector("#feedPanel .all-opt strong").textContent = "All feeds";
+      document.getElementById("feedBtnText").textContent = "All feeds";
+      document.getElementById("chkAll").checked = true;
+      document.getElementById("chkAll").removeEventListener("change", onBkChkAllChange);
+    }
+
+    function renderBookingsTable(rows) {
+      const state = document.getElementById("bookingsState");
+      const wrap = document.getElementById("bookingsWrap");
+      if (rows.length === 0) {
+        wrap.style.display = "none";
+        state.innerHTML = `<div class="card" style="text-align:center;padding:48px;color:var(--muted)">No bookings found for this filter.</div>`;
+        return;
+      }
+      document.getElementById("bookingRows").innerHTML = rows.map(r => `
+        <tr>
+          <td>${r.client_ref}</td>
+          <td>${r.dida_ref}</td>
+          <td><span class="${statusClass(r.channel_status)}">${r.channel_status}</span></td>
+          <td>${r.dida_hotel_id}</td>
+          <td>${r.client_hotel_id}</td>
+          <td>${r.dida_hotel_name}</td>
+          <td class="num">${r.price}</td>
+          <td>${r.client_id}</td>
+          <td>${r.channel_create_time}</td>
+          <td>${r.checkin_date}</td>
+          <td>${r.checkout_date}</td>
+        </tr>`).join("");
+      wrap.style.display = "";
+      state.innerHTML = "";
+    }
+
+    function loadBookings() {
+      const state = document.getElementById("bookingsState");
+      const wrap = document.getElementById("bookingsWrap");
+      wrap.style.display = "none";
+      state.innerHTML = `<div class="card" style="text-align:center;padding:40px;color:var(--muted)">Loading bookings…</div>`;
+      fetch(BOOKINGS_API)
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+        .then(json => {
+          allBookingsData = json.data || [];
+          bookingsLoaded = true;
+          enterBookingsPage();
+          renderBookingsTable(allBookingsData);
+        })
+        .catch(err => {
+          state.innerHTML = `<div class="card blue-alert" style="padding:20px">
+            <strong>Failed to load bookings.</strong><br>
+            <span class="muted tiny">Make sure the backend is running at <code>http://localhost:3001</code> — Error: ${err.message}</span>
+          </div>`;
+        });
+    }
+
+    document.getElementById("bookingsExportBtn").addEventListener("click", () => {
+      if (!bookingsLoaded || allBookingsData.length === 0) return;
+      const checked = getCheckedClientIds();
+      const allIds = new Set(allBookingsData.map(r => r.client_id));
+      const filtered = (checked.size === 0 || checked.size === allIds.size)
+        ? allBookingsData
+        : allBookingsData.filter(r => checked.has(r.client_id));
+      const cols = ["client_ref","dida_ref","channel_status","dida_hotel_id","client_hotel_id","dida_hotel_name","price","client_id","channel_create_time","checkin_date","checkout_date"];
+      const headers = ["Client Reference","Dida No.","Channel Status","Dida Hotel ID","Client Hotel ID","Dida Hotel Name","Price","Client ID","Channel Create Time","CheckIn Date","CheckOut Date"];
+      const csv = [
+        headers.join(","),
+        ...filtered.map(r => cols.map(c => `"${(r[c] || "").replace(/"/g, '""')}"`).join(","))
+      ].join("\n");
+      const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = (checked.size === 1 ? `bookings_${[...checked][0]}` : "bookings_all") + ".csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    document.querySelectorAll(".nav-item").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const page = btn.dataset.page;
+        if (page === "bookings") {
+          if (!bookingsLoaded) loadBookings();
+          else enterBookingsPage();
+        } else if (bookingsLoaded) {
+          leaveBookingsPage();
+        }
+      });
+    });
   </script>
 </body>
 </html>
