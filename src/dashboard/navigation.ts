@@ -69,9 +69,10 @@ export const navSections: NavSection[] = [
 
 export const feedOptions = [
   "全部渠道",
-  "HUB_Dida_B2B",
-  "HUB_Dida_CUG",
-  "HUB_Dida_Snap feeds",
-  "HUB_Dida_NonTravel_BankOnly",
-  "HUB_Dida_CUG_Only_AGODA_Client",
+  "Agoda",
+  "AgodaEBK",
+  "AgodaUK",
+  "Lvzan",
+  "DidaOpaq",
+  "Barli2b",
 ];
