@@ -1,122 +1,174 @@
-import { Download, Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
-import { Button } from "@/shared/components/Button";
-import { ChartCard } from "@/shared/components/ChartCard";
-import { DataTable } from "@/shared/components/DataTable";
-import { MetricCard } from "@/shared/components/MetricCard";
+import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { SearchFilter } from "@/shared/components/FilterControl";
-import { metricsApi, type PerformanceData, type PerformanceRow } from "@/lib/metricsApi";
-import type { TableColumn } from "@/shared/types/table";
+import { metricsApi, type DimensionsData } from "@/lib/metricsApi";
 import type { EChartsOption } from "echarts";
 
-const CLIENT_COLORS: Record<string, string> = {
-  Agoda:     "#3b82f6",
-  AgodaUK:   "#12b981",
-  AgodaEBK:  "#f59e0b",
-  Lvzan:     "#ef4444",
-  Barli2b:   "#8b5cf6",
-  DidaOpaq:  "#e54897",
-};
+const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 
-function stackedOpt(data: PerformanceData["stacked"]): EChartsOption {
-  const axisText = { color: "#526078", fontSize: 11 };
+const LT_COLORS    = ["#ef4444", "#f97316", "#f59e0b", "#22c55e", "#3b82f6"];
+const CHAIN_COLORS  = ["#4f5fb8", "#12b981"];
+const STAR_COLORS   = ["#94a3b8", "#cbd5e1", "#fbbf24", "#f59e0b", "#3b82f6", "#8b5cf6"];
+const COUNTRY_COLORS = ["#3b82f6","#12b981","#f59e0b","#ef4444","#8b5cf6","#e54897","#06b6d4","#84cc16","#94a3b8"];
+
+function hbarOpt(labels: string[], values: number[], colors: string[], unit = "订单"): EChartsOption {
   return {
-    xAxis: { type: "category", data: data.labels, axisLabel: { ...axisText, interval: 5, hideOverlap: true }, axisLine: { lineStyle: { color: "#8b95a6" } } },
-    yAxis: { type: "value", axisLabel: { ...axisText }, splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } } },
-    series: Object.entries(data.series).map(([name, values]) => ({
-      name,
-      type: "bar" as const,
-      stack: "bookings",
-      barWidth: "68%",
-      data: values,
-      itemStyle: { color: CLIENT_COLORS[name] ?? "#888" },
-    })),
-    legend: { bottom: 0, textStyle: { fontSize: 11 } },
+    grid: { left: 72, right: 48, top: 8, bottom: 8, containLabel: false },
+    xAxis: { type: "value", axisLabel: { color: "#526078", fontSize: 11 }, splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } } },
+    yAxis: { type: "category", data: labels, inverse: true, axisLabel: { color: "#17213f", fontSize: 12 } },
+    tooltip: { formatter: (p: { name: string; value: number }) => `${p.name}：${p.value.toLocaleString()} ${unit}` },
+    series: [{
+      type: "bar",
+      data: values.map((v, i) => ({ value: v, itemStyle: { color: colors[i % colors.length] } })),
+      barMaxWidth: 28,
+      label: { show: true, position: "right" as const, formatter: (p: { value: number }) => p.value.toLocaleString(), color: "#526078", fontSize: 11 },
+    }],
   };
 }
 
-const columns: TableColumn<PerformanceRow>[] = [
-  { key: "client_id",       header: "Client ID" },
-  { key: "wins",            header: "胜出次数",   align: "right" },
-  { key: "opportunities",   header: "机会次数",   align: "right" },
-  { key: "win_rate",        header: "胜出率",     align: "right" },
-  { key: "bookings",        header: "订单数",     align: "right" },
-  { key: "ttv",             header: "TTV ($)",    align: "right", render: (r) => r.ttv.toLocaleString() },
-  { key: "avg_order_value", header: "均价 ($)",   align: "right" },
-  { key: "room_nights",     header: "间夜数",     align: "right" },
-];
+function donutOpt(data: { name: string; value: number; color: string }[]): EChartsOption {
+  return {
+    tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
+    legend: { orient: "vertical" as const, right: 0, top: "center", textStyle: { color: "#17213f", fontSize: 12 } },
+    series: [{
+      type: "pie",
+      radius: ["48%", "72%"],
+      center: ["38%", "50%"],
+      data: data.map(d => ({ name: d.name, value: d.value, itemStyle: { color: d.color } })),
+      label: { show: false },
+      emphasis: { label: { show: true, fontSize: 13, fontWeight: 700 } },
+    }],
+  };
+}
 
-export function PerformancePage({ selectedFeed }: PageProps) {
-  const [perf, setPerf] = useState<PerformanceData | null>(null);
+function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+  return (
+    <div style={{ marginBottom: 12 }}>
+      <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#17213f" }}>{title}</h3>
+      {subtitle && <p className="tiny" style={{ margin: "3px 0 0", color: "#8390ad" }}>{subtitle}</p>}
+    </div>
+  );
+}
+
+function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[]; dimKey: string; dimLabel: string }) {
+  return (
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+      <thead>
+        <tr style={{ borderBottom: "1px solid #e8edf4" }}>
+          {[dimLabel, "订单数", "占比", "TTV ($)", "间夜数"].map(h => (
+            <th key={h} style={{ padding: "6px 10px", textAlign: h === dimLabel ? "left" : "right", color: "#8390ad", fontWeight: 600, fontSize: 12 }}>{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i} style={{ borderBottom: "1px solid #f1f4f9" }}>
+            <td style={{ padding: "7px 10px", color: "#17213f", fontWeight: 500 }}>{r[dimKey] as string}</td>
+            <td style={{ padding: "7px 10px", textAlign: "right" }}>{(r.bookings as number).toLocaleString()}</td>
+            <td style={{ padding: "7px 10px", textAlign: "right", color: "#4f5fb8", fontWeight: 600 }}>{r.pct as number}%</td>
+            <td style={{ padding: "7px 10px", textAlign: "right" }}>{(r.ttv as number).toLocaleString()}</td>
+            <td style={{ padding: "7px 10px", textAlign: "right" }}>{(r.room_nights as number).toLocaleString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+export function PerformancePage({ }: PageProps) {
+  const [data, setData]       = useState<DimensionsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState("");
+  const [clientQuery, setClientQuery] = useState("");
+
+  const activeClient = CLIENT_IDS.find(c => c.toLowerCase() === clientQuery.trim().toLowerCase()) ?? null;
 
   useEffect(() => {
-    metricsApi.performance().then(setPerf).finally(() => setLoading(false));
-  }, []);
+    setLoading(true);
+    metricsApi.dimensions(activeClient ?? undefined)
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, [activeClient]);
 
-  const rows = useMemo(() => {
-    if (!perf) return [];
-    return perf.rows.filter((r) => {
-      if (selectedFeed !== "全部渠道" && r.client_id !== selectedFeed) return false;
-      if (query && !r.client_id.toLowerCase().includes(query.toLowerCase())) return false;
-      return true;
-    });
-  }, [perf, selectedFeed, query]);
-
-  const summary = useMemo(() => {
-    if (!rows.length) return null;
-    return {
-      bookings:  rows.reduce((s, r) => s + r.bookings, 0),
-      ttv:       rows.reduce((s, r) => s + r.ttv, 0),
-      rooms:     rows.reduce((s, r) => s + r.room_nights, 0),
-      wins:      rows.reduce((s, r) => s + r.wins, 0),
-      opps:      rows.reduce((s, r) => s + r.opportunities, 0),
-    };
-  }, [rows]);
-
-  if (loading || !perf) {
+  if (!data) {
     return (
       <>
-        <PageHeader title="业绩表现" description="按渠道追踪订单量、胜出率、间夜数及营收。" />
-        <p className="tiny" style={{ padding: 32 }}>加载中…</p>
+        <PageHeader title="订单分析" description="按提前预订天数、酒店类型、目的地国家多维细分订单结构。" />
+        <p className="tiny" style={{ padding: 32 }}>{loading ? "加载中…" : "暂无数据"}</p>
       </>
     );
   }
 
+  const ltLabels      = data.lt.map(r => r.lt_bucket);
+  const ltValues      = data.lt.map(r => r.bookings);
+  const countryLabels = data.country.map(r => r.country);
+  const countryValues = data.country.map(r => r.bookings);
+  const chainDonut    = data.chain.map((r, i) => ({ name: r.chain_type, value: r.bookings, color: CHAIN_COLORS[i] }));
+  const starLabels    = data.star.map(r => r.star_rating);
+  const starValues    = data.star.map(r => r.bookings);
+
   return (
     <>
-      <PageHeader
-        title="业绩表现"
-        description="按 Client ID 追踪订单量、胜出率、间夜数及营收。"
-        actions={
-          <Button>
-            <Download className="icon" /> 导出 CSV
-          </Button>
-        }
-      />
+      <PageHeader title="订单分析" description={`按 LT / Chain / Country 细分近30天订单结构${activeClient ? `（${activeClient}）` : ""}。`} />
+
       <div className="filter-row">
-        <SearchFilter icon={<Search className="icon" />} placeholder="搜索 Client ID" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <SearchFilter
+          icon={<Search className="icon" />}
+          placeholder="搜索 Client ID（如 Agoda、AgodaUK…）"
+          value={clientQuery}
+          onChange={e => setClientQuery(e.target.value)}
+        />
+        {activeClient && (
+          <span style={{ fontSize: 12, color: "#4f5fb8", fontWeight: 600, padding: "4px 10px", background: "#eef1ff", borderRadius: 6 }}>
+            {activeClient}
+          </span>
+        )}
+        {clientQuery && !activeClient && (
+          <span style={{ fontSize: 12, color: "#94a3b8" }}>输入完整 Client ID 以筛选</span>
+        )}
       </div>
-      <div className="grid metric-grid-5">
-        <MetricCard title="总订单量"     value={summary ? summary.bookings.toLocaleString() : "-"} />
-        <MetricCard title="总营收（TTV）" value={summary ? `$${summary.ttv.toLocaleString()}` : "-"} />
-        <MetricCard title="平均订单价值" value={summary ? `$${Math.round(summary.ttv / summary.bookings)}` : "-"} />
-        <MetricCard title="间夜数"       value={summary ? summary.rooms.toLocaleString() : "-"} />
-        <MetricCard title="胜出率"       value={summary ? `${((summary.wins / summary.opps) * 100).toFixed(2)}%` : "-"} />
-      </div>
-      <div style={{ marginTop: 22 }}>
-        <ChartCard title="订单量趋势" subtitle="按 Client ID 叠加的日订单量（近30天）。">
-          <BaseChart className="tall" option={stackedOpt(perf.stacked)} />
-        </ChartCard>
-      </div>
-      <div style={{ marginTop: 22 }}>
-        <ChartCard title="各 Client ID 业绩" subtitle="按 Client ID 比较胜出次数、机会次数与TTV。">
-          <DataTable columns={columns} rows={rows} getRowKey={(r) => r.client_id} />
-        </ChartCard>
+
+      <div className="grid" style={{ gap: 20 }}>
+
+        {/* LT 分布 */}
+        <Card>
+          <SectionHeader title="提前预订天数（LT）分布" subtitle="订单按预订到入住的天数区间细分，短 LT 订单均价通常更高。" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
+            <BaseChart style={{ height: 200 }} option={hbarOpt(ltLabels, ltValues, LT_COLORS)} />
+            <DimTable rows={data.lt as unknown as Record<string, unknown>[]} dimKey="lt_bucket" dimLabel="LT 区间" />
+          </div>
+        </Card>
+
+        {/* Chain 分布 */}
+        <Card>
+          <SectionHeader title="酒店类型（Chain / Independent）分布" subtitle="连锁酒店 vs 独立酒店的订单结构，影响均价和间夜数。" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "center" }}>
+            <BaseChart style={{ height: 200 }} option={donutOpt(chainDonut)} />
+            <DimTable rows={data.chain as unknown as Record<string, unknown>[]} dimKey="chain_type" dimLabel="酒店类型" />
+          </div>
+        </Card>
+
+        {/* Star 分布 */}
+        <Card>
+          <SectionHeader title="酒店星级分布（0–5星）" subtitle="高星级酒店均价更高，低星级走量，结构反映渠道客群偏好。" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
+            <BaseChart style={{ height: 220 }} option={hbarOpt(starLabels, starValues, STAR_COLORS)} />
+            <DimTable rows={data.star as unknown as Record<string, unknown>[]} dimKey="star_rating" dimLabel="星级" />
+          </div>
+        </Card>
+
+        {/* Country 分布 */}
+        <Card>
+          <SectionHeader title="目的地国家分布" subtitle="按订单量排序，反映渠道的热门目的地集中度。" />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
+            <BaseChart style={{ height: 260 }} option={hbarOpt(countryLabels, countryValues, COUNTRY_COLORS)} />
+            <DimTable rows={data.country as unknown as Record<string, unknown>[]} dimKey="country" dimLabel="目的地" />
+          </div>
+        </Card>
+
       </div>
     </>
   );

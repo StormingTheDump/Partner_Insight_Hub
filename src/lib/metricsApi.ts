@@ -6,9 +6,9 @@ export interface OverviewData {
     total_ttv: number;
     avg_order_value: number;
     total_room_nights: number;
-    win_rate: number;
     avg_pre_error_rate: number;
     avg_book_error_rate: number;
+    avg_response_ms: number;
   };
   daily: {
     labels: string[];
@@ -16,9 +16,9 @@ export interface OverviewData {
     bookings: number[];
     avg_order_value: number[];
     room_nights: number[];
-    win_rate: number[];
     pre_error_rate: number[];
     book_error_rate: number[];
+    avg_response_ms: number[];
   };
 }
 
@@ -77,8 +77,28 @@ export interface FunnelData {
   by_client: FunnelClientRow[];
 }
 
+export interface DimensionRow {
+  bookings: number;
+  ttv: number;
+  room_nights: number;
+  pct: number;
+}
+export interface DimensionsData {
+  lt:      (DimensionRow & { lt_bucket: string })[];
+  chain:   (DimensionRow & { chain_type: string })[];
+  country: (DimensionRow & { country: string })[];
+  star:    (DimensionRow & { star_rating: string })[];
+}
+
 export const metricsApi = {
-  overview:    () => get<OverviewData>('/api/metrics/overview'),
+  overview:    (clientId?: string) => {
+    const qs = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
+    return get<OverviewData>(`/api/metrics/overview${qs}`);
+  },
   performance: () => get<PerformanceData>('/api/metrics/performance'),
+  dimensions:  (clientId?: string) => {
+    const qs = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
+    return get<DimensionsData>(`/api/metrics/dimensions${qs}`);
+  },
   funnel:      () => get<FunnelData>('/api/metrics/funnel'),
 };
