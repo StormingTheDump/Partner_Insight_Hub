@@ -5,12 +5,11 @@ import { PageHeader } from "@/shared/components/PageHeader";
 export function ReportsPage(_: PageProps) {
   return (
     <>
-      <PageHeader title="Custom Reports" description="Scheduled report templates and custom exports." />
+      <PageHeader title="自定义报表" description="定时报表模板及自定义导出。" />
       <Card>
-        <h3>Custom Reports</h3>
-        <p className="tiny">This module is marked Soon in the source dashboard. Use this space for report templates and scheduled exports.</p>
+        <h3>自定义报表</h3>
+        <p className="tiny">该模块即将上线。可在此配置报表模板和定时导出任务。</p>
       </Card>
     </>
   );
 }
-

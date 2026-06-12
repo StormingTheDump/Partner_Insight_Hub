@@ -2,7 +2,9 @@ import type { ComponentType } from "react";
 import type { PageId } from "@/dashboard/app-state";
 import { ApiPerformancePage } from "@/features/api-performance/ApiPerformancePage";
 import { BookingsPage } from "@/features/bookings/BookingsPage";
+import { ContactPage } from "@/features/contact/ContactPage";
 import { CostAnalysisPage } from "@/features/cost-analysis/CostAnalysisPage";
+import { DidaApiPage } from "@/features/dida-api/DidaApiPage";
 import { ErrorsPage } from "@/features/errors/ErrorsPage";
 import { FinanceStatusPage } from "@/features/finance-status/FinanceStatusPage";
 import { InventoryPage } from "@/features/inventory/InventoryPage";
@@ -31,4 +33,6 @@ export const routes: Record<PageId, ComponentType<PageProps>> = {
   finance: FinanceStatusPage,
   "order-logs": OrderLogsPage,
   bookings: BookingsPage,
+  contact: ContactPage,
+  "dida-api": DidaApiPage,
 };

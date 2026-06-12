@@ -14,51 +14,51 @@ const metricTones = ["purple", "default", "purple", "orange", "red", "orange"] a
 export function OverviewPage({ showPreviousPeriod }: PageProps) {
   return (
     <>
-      <PageHeader title="Overview" description="Monitor supplier transaction value, bookings, error rate, and marketplace growth signals." />
+      <PageHeader title="概览" description="监控供应商交易额、订单量、错误率及渠道市场增长指标。" />
       <div className="overview-grid">
         <div className="grid">
           <Card>
             <div className="card-header">
               <div>
-                <h3>Quarterly forecast</h3>
-                <p className="tiny">Forecast incl. Marketplace impact.</p>
+                <h3>季度预测</h3>
+                <p className="tiny">含渠道市场影响的预测。</p>
               </div>
               <button className="button green" type="button">
-                Boost your TTV with the Marketplace
+                通过渠道市场提升交易额
               </button>
             </div>
             <div className="grid forecast-grid">
               <Card compact soft>
                 <div className="card-header">
-                  <strong>Q2 2026</strong>
-                  <span className="muted tiny">Remaining days: 21</span>
+                  <strong>2026年Q2</strong>
+                  <span className="muted tiny">剩余天数：21</span>
                 </div>
                 <div className="metric-value big">$8,063,330</div>
-                <p className="tiny">Current forecast</p>
+                <p className="tiny">当前预测</p>
               </Card>
               <Card compact soft>
                 <div className="card-header">
-                  <strong>Marketplace forecast</strong>
-                  <span className="muted tiny">Potential uplift</span>
+                  <strong>渠道市场预测</strong>
+                  <span className="muted tiny">潜在增幅</span>
                 </div>
                 <div className="metric-value big">
                   $11,645,006 <span className="delta">+44.4%</span>
                 </div>
-                <p className="tiny">Forecast incl. Marketplace impact</p>
+                <p className="tiny">含渠道市场影响的预测</p>
               </Card>
             </div>
           </Card>
 
-          <ChartCard title="TTV over time" metric="$3,532,888" subtitle="Total transaction value in the selected period.">
-            <BaseChart className="tall" option={lineOption("ttv", "TTV", "K", showPreviousPeriod)} />
+          <ChartCard title="交易额趋势" metric="$3,532,888" subtitle="所选时间段内的总交易额。">
+            <BaseChart className="tall" option={lineOption("ttv", "交易额", "K", showPreviousPeriod)} />
           </ChartCard>
 
           <div className="grid two-col">
-            <ChartCard title="Win Rate" metric="2.70%">
-              <BaseChart className="small" option={lineOption("win", "Win Rate", "%", showPreviousPeriod)} />
+            <ChartCard title="胜出率" metric="2.70%">
+              <BaseChart className="small" option={lineOption("win", "胜出率", "%", showPreviousPeriod)} />
             </ChartCard>
-            <ChartCard title="Total Bookings" metric="10,599">
-              <BaseChart className="small" option={lineOption("bookings", "Bookings", "", showPreviousPeriod)} />
+            <ChartCard title="总订单量" metric="10,599">
+              <BaseChart className="small" option={lineOption("bookings", "订单量", "", showPreviousPeriod)} />
             </ChartCard>
           </div>
 
@@ -72,7 +72,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
                   value={metric.value}
                   icon={Icon}
                   tone={metricTones[index + 2]}
-                  caption={`Latest ${metric.title.toLowerCase()} movement in the selected period.`}
+                  caption={`所选时间段内${metric.title}的最新变动。`}
                 >
                   <BaseChart className="spark" option={sparkOption(metric.key as Parameters<typeof sparkOption>[0])} />
                 </MetricCard>
@@ -84,31 +84,30 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
         <aside className="insight-rail">
           <Card className="insight-card">
             <h3>
-              <DollarSign className="icon" /> Key period insight
+              <DollarSign className="icon" /> 关键时期洞察
             </h3>
-            <p className="tiny">During 2026-05-11 to 2026-06-10, TTV increased by 1.53% while bookings decreased by 8.23%.</p>
+            <p className="tiny">2026年5月11日至6月10日期间，交易额增长1.53%，订单量下降8.23%。</p>
           </Card>
           <Card className="insight-card">
             <h3>
-              <Target className="icon" /> Leverage high-value channels <span className="priority">high</span>
+              <Target className="icon" /> 挖掘高价值渠道 <span className="priority">高优先级</span>
             </h3>
-            <p className="tiny">Focus on increasing share from the channel with the highest average booking value.</p>
-            <p className="delta tiny">~ 10-15% TTV increase</p>
+            <p className="tiny">重点提升平均订单价值最高渠道的份额。</p>
+            <p className="delta tiny">约提升交易额 10-15%</p>
             <div className="action-list">
-              <div>Analyze customer demographics</div>
-              <div>Tailor campaigns to attract similar customers</div>
+              <div>分析客户画像</div>
+              <div>制定精准营销活动吸引同类客户</div>
             </div>
           </Card>
           <Card className="insight-card">
             <h3>
-              <Target className="icon" /> Boost bookings on peak days <span className="priority medium">medium</span>
+              <Target className="icon" /> 提升高峰日订单量 <span className="priority medium">中优先级</span>
             </h3>
-            <p className="tiny">Identify factors contributing to high TTV on peak days and align marketplace bids.</p>
-            <p className="delta tiny">~ 5-10% more bookings</p>
+            <p className="tiny">分析高峰日交易额高的影响因素，优化渠道市场出价策略。</p>
+            <p className="delta tiny">约增加订单量 5-10%</p>
           </Card>
         </aside>
       </div>
     </>
   );
 }
-

@@ -12,7 +12,9 @@ export type PageId =
   | "cost"
   | "finance"
   | "order-logs"
-  | "bookings";
+  | "bookings"
+  | "contact"
+  | "dida-api";
 
 type AppState = {
   activePage: PageId;

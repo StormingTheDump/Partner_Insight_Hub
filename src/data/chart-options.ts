@@ -22,7 +22,7 @@ export function lineOption(key: keyof typeof series, name: string, suffix = "", 
       ...(previous
         ? [
             {
-              name: "Previous period",
+              name: "上期",
               type: "line" as const,
               data: prevValues,
               smooth: true,

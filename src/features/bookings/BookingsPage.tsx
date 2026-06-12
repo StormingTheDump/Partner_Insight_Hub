@@ -11,15 +11,15 @@ import { useCsvExport } from "@/shared/hooks/useCsvExport";
 import type { TableColumn } from "@/shared/types/table";
 
 const columns: TableColumn<(typeof bookingRows)[number]>[] = [
-  { key: "id", header: "ID" },
-  { key: "hotelId", header: "Hotel ID" },
-  { key: "hotelName", header: "Hotel Name" },
-  { key: "feed", header: "Feed" },
-  { key: "price", header: "Price", align: "right" },
-  { key: "adjustment", header: "Adjustment %" },
-  { key: "amount", header: "Adj. amount" },
-  { key: "checkIn", header: "Check-in" },
-  { key: "bookingDate", header: "Booking date" }
+  { key: "id", header: "订单ID" },
+  { key: "hotelId", header: "酒店ID" },
+  { key: "hotelName", header: "酒店名称" },
+  { key: "feed", header: "渠道" },
+  { key: "price", header: "价格", align: "right" },
+  { key: "adjustment", header: "调整比例" },
+  { key: "amount", header: "调整金额" },
+  { key: "checkIn", header: "入住日期" },
+  { key: "bookingDate", header: "预订日期" }
 ];
 
 export function BookingsPage(_: PageProps) {
@@ -30,19 +30,18 @@ export function BookingsPage(_: PageProps) {
   return (
     <>
       <PageHeader
-        title="Bookings"
-        description="View your bookings with Nuitee."
+        title="订单管理"
+        description="查看您在平台上的所有订单。"
         actions={
           <Button onClick={exportCsv} disabled={!rows.length}>
-            <Download className="icon" /> Export to CSV
+            <Download className="icon" /> 导出 CSV
           </Button>
         }
       />
       <div className="filter-row">
-        <SearchFilter icon={<Search className="icon" />} placeholder="Search bookings" value={query} onChange={(event) => setQuery(event.target.value)} />
+        <SearchFilter icon={<Search className="icon" />} placeholder="搜索订单" value={query} onChange={(event) => setQuery(event.target.value)} />
       </div>
       <DataTable columns={columns} rows={rows} getRowKey={(row) => row.id} />
     </>
   );
 }
-

@@ -2,9 +2,11 @@ import {
   Activity,
   BarChart3,
   CalendarDays,
+  Code2,
   FileText,
   Home,
   ListTree,
+  MessageCircle,
   Percent,
   ScrollText,
   SquareCheckBig,
@@ -54,6 +56,13 @@ export const navSections: NavSection[] = [
       { id: "finance",       label: "财务信息", icon: WalletCards },
       { id: "order-logs",    label: "订单日志", icon: ListTree },
       { id: "bookings",      label: "订单管理", icon: CalendarDays },
+    ],
+  },
+  {
+    title: "支持与资源",
+    items: [
+      { id: "contact", label: "联系方式", icon: MessageCircle },
+      { id: "dida-api", label: "Dida API", icon: Code2 },
     ],
   },
 ];

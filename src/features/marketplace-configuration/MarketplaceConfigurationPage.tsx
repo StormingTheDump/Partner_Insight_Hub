@@ -9,10 +9,10 @@ import { StatusPill } from "@/shared/components/StatusPill";
 import type { TableColumn } from "@/shared/types/table";
 
 const columns: TableColumn<(typeof marketplaceSegments)[number]>[] = [
-  { key: "segment", header: "Segment" },
-  { key: "tolerance", header: "Tolerance", align: "right" },
-  { key: "impact", header: "Forecast impact", align: "right" },
-  { key: "status", header: "Status", render: (row) => <StatusPill label={row.status} tone={row.status === "Watch" ? "warning" : "success"} /> }
+  { key: "segment", header: "细分市场" },
+  { key: "tolerance", header: "容差", align: "right" },
+  { key: "impact", header: "预测影响", align: "right" },
+  { key: "status", header: "状态", render: (row) => <StatusPill label={row.status} tone={row.status === "观察中" ? "warning" : "success"} /> }
 ];
 
 export function MarketplaceConfigurationPage(_: PageProps) {
@@ -20,18 +20,18 @@ export function MarketplaceConfigurationPage(_: PageProps) {
 
   return (
     <>
-      <PageHeader title="Marketplace Configuration" description="Configure feed-level Marketplace activation, budgets, and price tolerance." />
+      <PageHeader title="渠道配置" description="配置渠道级渠道市场激活、预算及价格容差。" />
       <div className="grid three-col">
-        <MetricCard title="Q2 2026 Forecast" value="$8,063,330" />
-        <MetricCard title="Marketplace Forecast" value="$11,645,006" delta="+44.4%" tone="green" />
-        <MetricCard title="Quarter progress" value="77%" caption="21 days remaining." />
+        <MetricCard title="2026年Q2预测" value="$8,063,330" />
+        <MetricCard title="渠道市场预测" value="$11,645,006" delta="+44.4%" tone="green" />
+        <MetricCard title="季度进度" value="77%" caption="剩余21天。" />
       </div>
       <div className="grid two-col" style={{ marginTop: 22 }}>
         <Card>
           <div className="card-header">
             <div>
-              <h3>Price tolerance slider</h3>
-              <p className="tiny">Adjust marketplace price tolerance for simulated segment overrides.</p>
+              <h3>价格容差调节</h3>
+              <p className="tiny">调整模拟细分市场覆盖的渠道市场价格容差。</p>
             </div>
             <span className="status info">{tolerance.toFixed(2)}%</span>
           </div>
@@ -45,15 +45,15 @@ export function MarketplaceConfigurationPage(_: PageProps) {
             style={{ width: "100%" }}
           />
           <p className="tiny" style={{ marginTop: 12 }}>
-            Higher tolerance can improve win rate, but increases marketplace cost exposure.
+            更高的容差可提升胜出率，但会增加渠道市场成本风险。
           </p>
         </Card>
         <Card>
-          <h3>FAQ</h3>
+          <h3>常见问题</h3>
           <div className="action-list">
-            <div>How does tolerance affect price-check stops?</div>
-            <div>Which feeds are eligible for Marketplace boosts?</div>
-            <div>How are segment overrides prioritized?</div>
+            <div>容差如何影响价格检查停止？</div>
+            <div>哪些渠道有资格获得渠道市场提升？</div>
+            <div>细分市场覆盖优先级如何确定？</div>
           </div>
         </Card>
       </div>
@@ -63,4 +63,3 @@ export function MarketplaceConfigurationPage(_: PageProps) {
     </>
   );
 }
-

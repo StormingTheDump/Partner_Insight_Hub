@@ -422,3 +422,7 @@ tbody tr:last-child td {
     font-size: 24px;
   }
 }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -11,11 +11,11 @@ import { PageHeader } from "@/shared/components/PageHeader";
 export function InventoryPage({ showPreviousPeriod }: PageProps) {
   return (
     <>
-      <PageHeader title="Inventory" description="Track mapped, available, and sold hotels across feeds." />
+      <PageHeader title="库存" description="按渠道追踪已映射、可用及已售出酒店。" />
       <div className="grid three-col">
-        <MetricCard title="Avg Mapped Properties" value="299" caption="Mapped hotels in selected period." />
-        <MetricCard title="Avg Available Hotels" value="188" caption="Available properties returned to marketplace." />
-        <MetricCard title="Hotels Sold" value="10,599" caption="Sold hotels from current demand." />
+        <MetricCard title="平均映射房源" value="299" caption="所选时间段内已映射酒店数。" />
+        <MetricCard title="平均可用酒店" value="188" caption="返回渠道市场的可用房源数。" />
+        <MetricCard title="已售出酒店" value="10,599" caption="当前需求下已售出酒店数。" />
       </div>
       <div className="filter-row" style={{ marginTop: 18 }}>
         {inventoryDownloads.map((label) => (
@@ -25,17 +25,16 @@ export function InventoryPage({ showPreviousPeriod }: PageProps) {
         ))}
       </div>
       <div className="grid three-col">
-        <ChartCard title="Mapped Properties Over Time">
-          <BaseChart className="small" option={lineOption("mapped", "Mapped", "", showPreviousPeriod)} />
+        <ChartCard title="已映射房源趋势">
+          <BaseChart className="small" option={lineOption("mapped", "已映射", "", showPreviousPeriod)} />
         </ChartCard>
-        <ChartCard title="Available Hotels Over Time">
-          <BaseChart className="small" option={lineOption("available", "Available", "", showPreviousPeriod)} />
+        <ChartCard title="可用酒店趋势">
+          <BaseChart className="small" option={lineOption("available", "可用", "", showPreviousPeriod)} />
         </ChartCard>
-        <ChartCard title="Sold Hotels Over Time">
-          <BaseChart className="small" option={lineOption("sold", "Sold", "", showPreviousPeriod)} />
+        <ChartCard title="已售出酒店趋势">
+          <BaseChart className="small" option={lineOption("sold", "已售出", "", showPreviousPeriod)} />
         </ChartCard>
       </div>
     </>
   );
 }
-

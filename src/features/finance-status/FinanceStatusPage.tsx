@@ -8,26 +8,26 @@ import { StatusPill } from "@/shared/components/StatusPill";
 import type { TableColumn, Tone } from "@/shared/types/table";
 
 const billColumns: TableColumn<(typeof bills)[number]>[] = [
-  { key: "id", header: "Bill ID" },
-  { key: "period", header: "Billing period" },
-  { key: "dueDate", header: "Due date" },
-  { key: "type", header: "Type" },
-  { key: "bookings", header: "Bookings", align: "right" },
-  { key: "amount", header: "Amount", align: "right" },
+  { key: "id", header: "账单编号" },
+  { key: "period", header: "计费周期" },
+  { key: "dueDate", header: "到期日" },
+  { key: "type", header: "类型" },
+  { key: "bookings", header: "订单数", align: "right" },
+  { key: "amount", header: "金额", align: "right" },
   {
     key: "status",
-    header: "Status",
-    render: (row) => <StatusPill label={row.status} tone={row.status === "At risk" ? "danger" : row.status === "Due soon" ? "warning" : "info"} />
+    header: "状态",
+    render: (row) => <StatusPill label={row.status} tone={row.status === "高风险" ? "danger" : row.status === "即将到期" ? "warning" : "info"} />
   },
-  { key: "aging", header: "Aging" },
-  { key: "owner", header: "Owner" },
-  { key: "actions", header: "Actions", render: () => <button className="button" type="button">View</button> }
+  { key: "aging", header: "账龄" },
+  { key: "owner", header: "负责人" },
+  { key: "actions", header: "操作", render: () => <button className="button" type="button">查看</button> }
 ];
 
 export function FinanceStatusPage(_: PageProps) {
   return (
     <>
-      <PageHeader title="Finance Status" description="Monitor credit exposure, upcoming settlement events, and unsettled bills." />
+      <PageHeader title="财务信息" description="监控信用敞口、即将到来的结算事件及未结账单。" />
       <div className="grid four-col">
         {financeSummary.map((item) => (
           <MetricCard key={item.title} title={item.title} value={item.value} tone={item.tone as Parameters<typeof MetricCard>[0]["tone"]} />
@@ -37,8 +37,8 @@ export function FinanceStatusPage(_: PageProps) {
         <Card>
           <div className="card-header">
             <div>
-              <h3>Credit utilization</h3>
-              <p className="tiny">$1.46M used of $2.50M credit limit.</p>
+              <h3>信用使用情况</h3>
+              <p className="tiny">已使用$2.50M信用额度中的$1.46M。</p>
             </div>
             <span className="status warning">58.4%</span>
           </div>
@@ -46,11 +46,11 @@ export function FinanceStatusPage(_: PageProps) {
             <div className="progress-fill" style={{ width: "58.4%" }} />
           </div>
           <p className="tiny" style={{ marginTop: 12 }}>
-            Alert threshold starts at 70%; danger threshold starts at 85%.
+            警告阈值为70%；危险阈值为85%。
           </p>
         </Card>
         <Card>
-          <h3>Settlement calendar</h3>
+          <h3>结算日历</h3>
           <div className="action-list">
             {settlementCalendar.map((item) => (
               <div key={item.date} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
@@ -67,8 +67,8 @@ export function FinanceStatusPage(_: PageProps) {
         <Card>
           <div className="card-header">
             <div>
-              <h3>Unsettled bill details</h3>
-              <p className="tiny">Open and at-risk bills by period, amount, owner, and aging.</p>
+              <h3>未结账单详情</h3>
+              <p className="tiny">按期间、金额、负责人及账龄划分的未结及高风险账单。</p>
             </div>
           </div>
           <DataTable columns={billColumns} rows={bills} getRowKey={(row) => row.id} />
@@ -77,4 +77,3 @@ export function FinanceStatusPage(_: PageProps) {
     </>
   );
 }
-
