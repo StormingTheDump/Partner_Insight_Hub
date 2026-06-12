@@ -25,7 +25,8 @@ type AppState = {
   setSelectedFeed: (feed: string) => void;
   showPreviousPeriod: boolean;
   setShowPreviousPeriod: (value: boolean) => void;
-  dateRangeLabel: string;
+  dateRange: [string, string] | null;
+  setDateRange: (range: [string, string] | null) => void;
 };
 
 const AppStateContext = createContext<AppState | null>(null);
@@ -35,6 +36,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedFeed, setSelectedFeed] = useState("全部渠道");
   const [showPreviousPeriod, setShowPreviousPeriod] = useState(false);
+  const [dateRange, setDateRange] = useState<[string, string] | null>(null);
 
   const value = useMemo<AppState>(
     () => ({
@@ -46,9 +48,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setSelectedFeed,
       showPreviousPeriod,
       setShowPreviousPeriod,
-      dateRangeLabel: "2026年5月11日 - 6月10日",
+      dateRange,
+      setDateRange,
     }),
-    [activePage, collapsed, selectedFeed, showPreviousPeriod]
+    [activePage, collapsed, selectedFeed, showPreviousPeriod, dateRange]
   );
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;

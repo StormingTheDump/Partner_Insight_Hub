@@ -4,7 +4,6 @@ import "@/styles/layout.css";
 
 import {
   Bell,
-  Calendar,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -12,12 +11,17 @@ import {
   LogOut,
   User,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { DatePicker } from "antd";
 import didaIcon from "@/assets/Icon-DIDA_red.svg";
 import didaLogo from "@/assets/logo-DIDA_positive.svg";
 import { useAppState, AppStateProvider } from "@/dashboard/app-state";
-import { feedOptions, navSections } from "@/dashboard/navigation";
+import { navSections } from "@/dashboard/navigation";
 import { routes } from "@/dashboard/routes";
 import type { User as AuthUser } from "@/data/users";
+
+const API = "http://localhost:3001";
 
 interface AppShellInnerProps {
   user: AuthUser;
@@ -34,8 +38,23 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
     setSelectedFeed,
     showPreviousPeriod,
     setShowPreviousPeriod,
-    dateRangeLabel,
+    dateRange,
+    setDateRange,
   } = useAppState();
+
+  const [clientIdOptions, setClientIdOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch(`${API}/api/orders`)
+      .then((r) => r.json())
+      .then(({ data }: { data: Array<{ client_id: string }> }) => {
+        const ids = Array.from(new Set(data.map((r) => r.client_id))).sort() as string[];
+        setClientIdOptions(ids);
+      })
+      .catch(() => {});
+  }, []);
+
+  const feedChoices = ["全部渠道", ...clientIdOptions];
   const ActivePage = routes[activePage];
 
   return (
@@ -103,7 +122,7 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
                 onChange={(e) => setSelectedFeed(e.target.value)}
                 aria-label="渠道筛选"
               >
-                {feedOptions.map((feed) => (
+                {feedChoices.map((feed) => (
                   <option key={feed} value={feed}>{feed}</option>
                 ))}
               </select>
@@ -120,10 +139,19 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
               aria-label="切换上期对比"
               onClick={() => setShowPreviousPeriod(!showPreviousPeriod)}
             />
-            <button type="button" className="filter-control">
-              <Calendar className="icon" />
-              {dateRangeLabel}
-            </button>
+            <DatePicker.RangePicker
+              value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
+              onChange={(dates) => {
+                if (dates?.[0] && dates?.[1]) {
+                  setDateRange([dates[0].format("YYYY-MM-DD"), dates[1].format("YYYY-MM-DD")]);
+                } else {
+                  setDateRange(null);
+                }
+              }}
+              allowClear
+              placeholder={["开始日期", "结束日期"]}
+              style={{ borderRadius: 7, minWidth: 220 }}
+            />
             <button type="button" className="icon-button" aria-label="通知">
               <Bell className="icon" />
               <span className="badge">1</span>
