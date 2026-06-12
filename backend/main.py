@@ -2,9 +2,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-from database import init_tables
+from database import init_tables, get_connection
 from auth import login
 import os
+from typing import Optional
 
 app = FastAPI(title="Partner Insight Hub API")
 
@@ -221,3 +222,95 @@ def chat_dida_api(body: ChatRequest):
         yield stdout
 
     return StreamingResponse(generate(), media_type="text/plain; charset=utf-8")
+
+
+# ── Dida 联系方式（只读） ────────────────────────────────────────
+
+@app.get("/api/contacts/dida")
+def get_dida_contacts():
+    conn = get_connection()
+    contacts = conn.execute(
+        "SELECT * FROM dida_contacts ORDER BY sort_order"
+    ).fetchall()
+    result = []
+    for c in contacts:
+        fields = conn.execute(
+            "SELECT label, value FROM dida_contact_fields WHERE contact_id=? ORDER BY sort_order",
+            (c["id"],),
+        ).fetchall()
+        result.append({
+            "id": c["id"],
+            "title": c["title"],
+            "subtitle": c["subtitle"],
+            "icon_key": c["icon_key"],
+            "color": c["color"],
+            "bg_color": c["bg_color"],
+            "fields": [{"label": f["label"], "value": f["value"]} for f in fields],
+        })
+    conn.close()
+    return result
+
+
+# ── 我方对接人（CRUD） ───────────────────────────────────────────
+
+class MyContactBody(BaseModel):
+    type: str
+    name: Optional[str] = ""
+    role: Optional[str] = ""
+    email: Optional[str] = ""
+    phone: Optional[str] = ""
+    wechat: Optional[str] = ""
+
+
+@app.get("/api/contacts/my")
+def get_my_contacts():
+    conn = get_connection()
+    rows = conn.execute(
+        "SELECT * FROM my_contacts ORDER BY type, sort_order, id"
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+@app.post("/api/contacts/my", status_code=201)
+def create_my_contact(body: MyContactBody):
+    if body.type not in ("ops", "biz"):
+        raise HTTPException(status_code=400, detail="type must be ops or biz")
+    conn = get_connection()
+    max_order = conn.execute(
+        "SELECT COALESCE(MAX(sort_order),0) FROM my_contacts WHERE type=?", (body.type,)
+    ).fetchone()[0]
+    cur = conn.execute(
+        "INSERT INTO my_contacts (type, name, role, email, phone, wechat, sort_order) VALUES (?,?,?,?,?,?,?)",
+        (body.type, body.name, body.role, body.email, body.phone, body.wechat, max_order + 1),
+    )
+    conn.commit()
+    row = conn.execute("SELECT * FROM my_contacts WHERE id=?", (cur.lastrowid,)).fetchone()
+    conn.close()
+    return dict(row)
+
+
+@app.put("/api/contacts/my/{contact_id}")
+def update_my_contact(contact_id: int, body: MyContactBody):
+    conn = get_connection()
+    existing = conn.execute("SELECT id FROM my_contacts WHERE id=?", (contact_id,)).fetchone()
+    if not existing:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Contact not found")
+    conn.execute(
+        "UPDATE my_contacts SET type=?, name=?, role=?, email=?, phone=?, wechat=? WHERE id=?",
+        (body.type, body.name, body.role, body.email, body.phone, body.wechat, contact_id),
+    )
+    conn.commit()
+    row = conn.execute("SELECT * FROM my_contacts WHERE id=?", (contact_id,)).fetchone()
+    conn.close()
+    return dict(row)
+
+
+@app.delete("/api/contacts/my/{contact_id}", status_code=204)
+def delete_my_contact(contact_id: int):
+    conn = get_connection()
+    conn.execute("DELETE FROM my_contacts WHERE id=?", (contact_id,))
+    conn.commit()
+    conn.close()
+
