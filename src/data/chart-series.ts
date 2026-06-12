@@ -46,11 +46,11 @@ export const series = {
 };
 
 export const feeds = [
-  { name: "HUB_Dida_Snap feeds", color: "#3b82f6" },
-  { name: "HUB_Dida_B2B", color: "#12b981" },
-  { name: "HUB_Dida_B2C", color: "#f59e0b" },
-  { name: "HUB_Dida_CUG", color: "#ef4444" },
-  { name: "HUB_Dida_NonTravel_BankOnly", color: "#8b5cf6" },
-  { name: "HUB_Dida_CUG_Only_AGODA_Client", color: "#e54897" }
+  { name: "Agoda",     color: "#3b82f6" },
+  { name: "AgodaUK",  color: "#12b981" },
+  { name: "AgodaEBK", color: "#f59e0b" },
+  { name: "Lvzan",    color: "#ef4444" },
+  { name: "Barli2b",  color: "#8b5cf6" },
+  { name: "DidaOpaq", color: "#e54897" },
 ];
 
