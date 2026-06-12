@@ -920,29 +920,28 @@ def get_channel_config(client_id: Optional[str] = None):
 # ── 订单日志 ──────────────────────────────────────────────────────────
 
 @app.get("/api/order-logs")
-def get_order_logs(order_no: Optional[str] = None):
+def get_order_logs(order_no: Optional[str] = None, order_status: Optional[str] = None):
     conn = get_connection()
+    conditions = []
+    params: list = []
     if order_no and order_no.strip():
-        rows = conn.execute(
-            """SELECT order_no, client_id, order_status,
-                      GROUP_CONCAT(log_type, '|') AS log_types,
-                      MAX(updated_at) AS updated_at
-               FROM order_logs
-               WHERE order_no LIKE ?
-               GROUP BY order_no, client_id, order_status
-               ORDER BY MAX(updated_at) DESC""",
-            (f"%{order_no.strip()}%",),
-        ).fetchall()
-    else:
-        rows = conn.execute(
-            """SELECT order_no, client_id, order_status,
-                      GROUP_CONCAT(log_type, '|') AS log_types,
-                      MAX(updated_at) AS updated_at
-               FROM order_logs
-               GROUP BY order_no, client_id, order_status
-               ORDER BY MAX(updated_at) DESC
-               LIMIT 50"""
-        ).fetchall()
+        conditions.append("order_no LIKE ?")
+        params.append(f"%{order_no.strip()}%")
+    if order_status and order_status.strip():
+        conditions.append("order_status = ?")
+        params.append(order_status.strip())
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    rows = conn.execute(
+        f"""SELECT order_no, client_id, order_status,
+                  GROUP_CONCAT(log_type, '|') AS log_types,
+                  MAX(updated_at) AS updated_at
+           FROM order_logs
+           {where}
+           GROUP BY order_no, client_id, order_status
+           ORDER BY MAX(updated_at) DESC
+           LIMIT 50""",
+        params,
+    ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
