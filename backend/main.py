@@ -961,3 +961,89 @@ def get_order_log_detail(order_no: str):
     return [{"log_type": r["log_type"],
              "log_detail": _json.loads(r["log_detail"]),
              "updated_at": r["updated_at"]} for r in rows]
+
+
+# ── 转化指标 ─────────────────────────────────────────────────────
+
+_CONV_CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
+
+
+@app.get("/api/conversion/metrics")
+def conversion_metrics():
+    from collections import defaultdict
+    from datetime import datetime
+
+    conn = get_connection()
+    rows = conn.execute(
+        """SELECT date, channel, look, property, avail_look, prebook, book
+           FROM conversion_daily_metrics
+           ORDER BY date, channel"""
+    ).fetchall()
+    conn.close()
+
+    date_data: dict = defaultdict(dict)
+    all_dates: list = []
+    for r in rows:
+        d = r["date"]
+        if d not in all_dates:
+            all_dates.append(d)
+        date_data[d][r["channel"]] = dict(r)
+
+    def fmt(d: str) -> str:
+        dt = datetime.strptime(d, "%Y-%m-%d")
+        return f"{dt.strftime('%b')} {dt.day}"
+
+    display_dates = [fmt(d) for d in all_dates]
+
+    # 每渠道每日趋势
+    trends: dict = {ch: {"l2b": [], "p2b": [], "l2c": [], "c2b": []} for ch in _CONV_CHANNELS}
+    for d in all_dates:
+        day = date_data[d]
+        for ch in _CONV_CHANNELS:
+            v = day.get(ch, {})
+            look  = v.get("look",       0)
+            prop  = v.get("property",   0)
+            avail = v.get("avail_look", 0)
+            pre   = v.get("prebook",    0)
+            book  = v.get("book",       0)
+            trends[ch]["l2b"].append(round(look  / book, 1) if book else None)
+            trends[ch]["p2b"].append(round(prop  / book, 1) if book else None)
+            trends[ch]["l2c"].append(round(avail / pre,  1) if pre  else None)
+            trends[ch]["c2b"].append(round(pre   / book, 1) if book else None)
+
+    # 全渠道汇总（sum/sum）
+    totals = {"look": 0, "property": 0, "avail_look": 0, "prebook": 0, "book": 0}
+    for r in rows:
+        for k in totals:
+            totals[k] += r[k]
+
+    def safe(a, b):
+        return round(a / b, 1) if b else None
+
+    summary = {
+        "l2b": safe(totals["look"],       totals["book"]),
+        "p2b": safe(totals["property"],   totals["book"]),
+        "l2c": safe(totals["avail_look"], totals["prebook"]),
+        "c2b": safe(totals["prebook"],    totals["book"]),
+    }
+
+    # 全渠道每日汇总趋势
+    agg_trend: dict = {"l2b": [], "p2b": [], "l2c": [], "c2b": []}
+    for d in all_dates:
+        day = date_data[d]
+        lk = sum(day.get(ch, {}).get("look",       0) for ch in _CONV_CHANNELS)
+        pp = sum(day.get(ch, {}).get("property",   0) for ch in _CONV_CHANNELS)
+        av = sum(day.get(ch, {}).get("avail_look", 0) for ch in _CONV_CHANNELS)
+        pb = sum(day.get(ch, {}).get("prebook",    0) for ch in _CONV_CHANNELS)
+        bk = sum(day.get(ch, {}).get("book",       0) for ch in _CONV_CHANNELS)
+        agg_trend["l2b"].append(round(lk / bk, 1) if bk else None)
+        agg_trend["p2b"].append(round(pp / bk, 1) if bk else None)
+        agg_trend["l2c"].append(round(av / pb, 1) if pb else None)
+        agg_trend["c2b"].append(round(pb / bk, 1) if bk else None)
+
+    return {
+        "dates":     display_dates,
+        "summary":   summary,
+        "trends":    trends,
+        "agg_trend": agg_trend,
+    }
