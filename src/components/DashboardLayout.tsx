@@ -89,8 +89,13 @@ export default function DashboardLayout({ user, onLogout }: Props) {
       <aside style={{ ...styles.sidebar, width: sidebarWidth }}>
         {/* Brand */}
         <div style={styles.brand}>
-          <div style={styles.brandIcon}>P</div>
-          {!collapsed && <span style={styles.brandText}>Partner Insight Hub</span>}
+          <div style={styles.brandIcon}>渠</div>
+          {!collapsed && (
+            <div style={styles.brandText}>
+              <span style={styles.brandZh}>渠道管理平台</span>
+              <span style={styles.brandEn}>Partner Insight Hub</span>
+            </div>
+          )}
         </div>
 
         {/* Account */}
@@ -208,15 +213,15 @@ const styles: Record<string, React.CSSProperties> = {
     transition: 'width 0.2s ease',
   },
   brand: {
-    height: 44,
+    height: 52,
     display: 'flex',
     alignItems: 'center',
     gap: 10,
     overflow: 'hidden',
   },
   brandIcon: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: 8,
     background: 'linear-gradient(135deg, #000947, #4f5fb8)',
     color: '#fff',
@@ -228,12 +233,29 @@ const styles: Record<string, React.CSSProperties> = {
     flexShrink: 0,
   },
   brandText: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: 1,
+    overflow: 'hidden',
+  },
+  brandZh: {
     color: '#000947',
-    fontWeight: 700,
-    fontSize: 13,
+    fontWeight: 800,
+    fontSize: 14,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    lineHeight: 1.3,
+  },
+  brandEn: {
+    color: '#8390ad',
+    fontWeight: 500,
+    fontSize: 10,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineHeight: 1.3,
+    letterSpacing: '0.01em',
   },
   account: {
     display: 'flex',
