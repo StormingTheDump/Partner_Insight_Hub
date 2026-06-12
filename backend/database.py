@@ -138,6 +138,35 @@ def init_tables():
         )
     """)
 
+    # ── 验价报错日志 ──────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS prebook_error_logs (
+            id                   INTEGER PRIMARY KEY AUTOINCREMENT,
+            log_time             TEXT    NOT NULL,
+            client_id            TEXT    NOT NULL,
+            dida_rate_plan_id    TEXT,
+            dida_hotel_id        INTEGER,
+            error_type           TEXT    NOT NULL,
+            rate_record_channel  TEXT
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_pre_client ON prebook_error_logs(client_id)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_pre_error  ON prebook_error_logs(error_type)")
+
+    # ── 下单报错日志 ──────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS book_error_logs (
+            id                      INTEGER PRIMARY KEY AUTOINCREMENT,
+            channel_createtime      TEXT    NOT NULL,
+            client_id               TEXT    NOT NULL,
+            channel_bookingnumber   TEXT,
+            dida_hotel_id           INTEGER,
+            error_type              TEXT    NOT NULL
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_book_client ON book_error_logs(client_id)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_book_error  ON book_error_logs(error_type)")
+
     # ── 订单日志表 ────────────────────────────────────────────────
     conn.execute("""
         CREATE TABLE IF NOT EXISTS order_logs (
@@ -159,6 +188,7 @@ def init_tables():
     _seed_channel_configurations(conn)
     _seed_order_logs(conn)
     _seed_conversion_metrics(conn)
+    _seed_error_logs(conn)
     conn.close()
 
 
@@ -580,3 +610,22 @@ def _seed_conversion_metrics(conn):
     )
     conn.commit()
     print(f"conversion_daily_metrics: 写入 {len(rows)} 行")
+
+
+def _seed_error_logs(conn):
+    """委托给 seed_errors.py，Excel 文件不存在时静默跳过"""
+    import os
+    prebook_xlsx = os.path.expanduser("~/Downloads/报错验价底表示例.xlsx")
+    book_xlsx    = os.path.expanduser("~/Downloads/报错下单底表示例.xlsx")
+    if not (os.path.exists(prebook_xlsx) and os.path.exists(book_xlsx)):
+        return
+    pre_count  = conn.execute("SELECT COUNT(*) FROM prebook_error_logs").fetchone()[0]
+    book_count = conn.execute("SELECT COUNT(*) FROM book_error_logs").fetchone()[0]
+    if pre_count > 0 and book_count > 0:
+        return
+    try:
+        import seed_errors
+        seed_errors.seed()
+    except Exception as e:
+        print(f"seed_errors: 跳过（{e}）")
+
