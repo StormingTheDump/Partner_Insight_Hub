@@ -3,15 +3,14 @@ import {
   BarChart3,
   CalendarDays,
   Code2,
-  FileText,
   Flame,
   GitMerge,
   Home,
   ListTree,
   MessageCircle,
   ScrollText,
-  SquareCheckBig,
   Store,
+  TrendingUp,
   WalletCards,
 } from "lucide-react";
 import type { ComponentType } from "react";
@@ -34,17 +33,16 @@ export const navSections: NavSection[] = [
   {
     title: "业务指标",
     items: [
-      { id: "overview",     label: "概览",       icon: Home },
-      { id: "performance",  label: "业绩表现",   icon: BarChart3 },
-      { id: "reports",      label: "自定义报表", icon: FileText, badge: "即将上线", badgeTone: "soon" },
+      { id: "overview",    label: "概览",     icon: Home },
+      { id: "performance", label: "业绩表现", icon: BarChart3 },
     ],
   },
   {
-    title: "系统集成",
+    title: "运营指标",
     items: [
-      { id: "api",       label: "API 性能",  icon: Activity },
-      { id: "errors",    label: "错误日志",  icon: ScrollText },
-      { id: "inventory", label: "库存",      icon: SquareCheckBig },
+      { id: "api",        label: "技术指标", icon: Activity },
+      { id: "errors",     label: "错误日志", icon: ScrollText },
+      { id: "conversion", label: "转化指标", icon: TrendingUp },
     ],
   },
   {
