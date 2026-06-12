@@ -74,9 +74,8 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
             <div className="card-header">
               <div>
                 <h3>季度预测</h3>
-                <p className="tiny">含渠道市场影响的预测。</p>
+                <p className="tiny">基于近30天数据的Q2预测。</p>
               </div>
-              <button className="button green" type="button">通过渠道市场提升交易额</button>
             </div>
             <div className="grid forecast-grid">
               <Card compact soft>
