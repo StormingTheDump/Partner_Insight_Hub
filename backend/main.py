@@ -1047,3 +1047,114 @@ def conversion_metrics():
         "trends":    trends,
         "agg_trend": agg_trend,
     }
+
+
+# ── 错误日志 ──────────────────────────────────────────────────────
+
+@app.get("/api/errors/prebook")
+def errors_prebook(
+    client_id:    str = Query(""),
+    error_type:   str = Query(""),
+    rate_plan_id: str = Query(""),
+    page:         int = Query(1, ge=1),
+    page_size:    int = Query(15, ge=1, le=100),
+):
+    conn = get_connection()
+
+    # 动态筛选条件
+    where, params = ["1=1"], []
+    if client_id:
+        where.append("client_id = ?");    params.append(client_id)
+    if error_type:
+        where.append("error_type = ?");   params.append(error_type)
+    if rate_plan_id:
+        where.append("dida_rate_plan_id LIKE ?"); params.append(f"%{rate_plan_id}%")
+
+    w = " AND ".join(where)
+
+    # 图表数据（筛选后按错误类型汇总）
+    chart_rows = conn.execute(
+        f"SELECT error_type, COUNT(*) AS cnt FROM prebook_error_logs WHERE {w} GROUP BY error_type ORDER BY cnt DESC",
+        params,
+    ).fetchall()
+    chart = [{"error_type": r["error_type"], "count": r["cnt"]} for r in chart_rows]
+
+    # 总数
+    total = conn.execute(f"SELECT COUNT(*) FROM prebook_error_logs WHERE {w}", params).fetchone()[0]
+
+    # 分页明细
+    offset = (page - 1) * page_size
+    rows = conn.execute(
+        f"SELECT log_time, client_id, dida_rate_plan_id, dida_hotel_id, error_type, rate_record_channel"
+        f" FROM prebook_error_logs WHERE {w} ORDER BY log_time DESC LIMIT ? OFFSET ?",
+        params + [page_size, offset],
+    ).fetchall()
+
+    conn.close()
+    return {
+        "chart": chart,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "rows": [dict(r) for r in rows],
+    }
+
+
+@app.get("/api/errors/book")
+def errors_book(
+    client_id:      str = Query(""),
+    error_type:     str = Query(""),
+    booking_number: str = Query(""),
+    page:           int = Query(1, ge=1),
+    page_size:      int = Query(15, ge=1, le=100),
+):
+    conn = get_connection()
+
+    where, params = ["1=1"], []
+    if client_id:
+        where.append("client_id = ?");        params.append(client_id)
+    if error_type:
+        where.append("error_type = ?");       params.append(error_type)
+    if booking_number:
+        where.append("channel_bookingnumber LIKE ?"); params.append(f"%{booking_number}%")
+
+    w = " AND ".join(where)
+
+    chart_rows = conn.execute(
+        f"SELECT error_type, COUNT(*) AS cnt FROM book_error_logs WHERE {w} GROUP BY error_type ORDER BY cnt DESC",
+        params,
+    ).fetchall()
+    chart = [{"error_type": r["error_type"], "count": r["cnt"]} for r in chart_rows]
+
+    total = conn.execute(f"SELECT COUNT(*) FROM book_error_logs WHERE {w}", params).fetchone()[0]
+
+    offset = (page - 1) * page_size
+    rows = conn.execute(
+        f"SELECT channel_createtime, client_id, channel_bookingnumber, dida_hotel_id, error_type"
+        f" FROM book_error_logs WHERE {w} ORDER BY channel_createtime DESC LIMIT ? OFFSET ?",
+        params + [page_size, offset],
+    ).fetchall()
+
+    conn.close()
+    return {
+        "chart": chart,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "rows": [dict(r) for r in rows],
+    }
+
+
+@app.get("/api/errors/meta")
+def errors_meta():
+    """返回下拉框所需的渠道和错误类型列表"""
+    conn = get_connection()
+    pre_clients  = [r[0] for r in conn.execute("SELECT DISTINCT client_id FROM prebook_error_logs ORDER BY client_id").fetchall()]
+    pre_errors   = [r[0] for r in conn.execute("SELECT DISTINCT error_type  FROM prebook_error_logs ORDER BY error_type").fetchall()]
+    book_clients = [r[0] for r in conn.execute("SELECT DISTINCT client_id FROM book_error_logs ORDER BY client_id").fetchall()]
+    book_errors  = [r[0] for r in conn.execute("SELECT DISTINCT error_type  FROM book_error_logs ORDER BY error_type").fetchall()]
+    conn.close()
+    return {
+        "prebook": {"channels": pre_clients,  "error_types": pre_errors},
+        "book":    {"channels": book_clients, "error_types": book_errors},
+    }

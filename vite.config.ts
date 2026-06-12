@@ -14,6 +14,8 @@ export default defineConfig({
     proxy: {
       '/api/metrics': 'http://localhost:8000',
       '/api/auth': 'http://localhost:8000',
+      '/api/conversion': 'http://localhost:8000',
+      '/api/errors': 'http://localhost:8000',
       '/api': 'http://localhost:3001',
     },
   },
