@@ -180,7 +180,12 @@ function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) 
           type="button"
           className="filter-control"
           onClick={() => setOpen((o) => !o)}
-          style={{ gap: 8, cursor: "pointer" }}
+          style={{
+            gap: 8, cursor: "pointer",
+            background: "rgba(234,3,69,0.06)",
+            border: "1px solid rgba(234,3,69,0.22)",
+            color: "#000947",
+          }}
         >
           <User className="icon" />
           <span style={{ maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -304,6 +309,7 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
       <aside className="sidebar" aria-label="渠道管理平台导航">
         <div className="brand">
           <img src={collapsed ? didaIcon : didaLogo} alt="DIDA" />
+          {!collapsed && <span className="platform-tag">渠道开放平台</span>}
         </div>
 
         <nav className="nav">
