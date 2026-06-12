@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-from database import init_tables
+from database import init_tables, get_connection
 from auth import login
 import os
 
@@ -184,6 +184,129 @@ Two-step process:
 Answer questions based on this documentation. If asked something outside this scope, say so honestly.
 """
 
+
+# ── Agoda Metrics API ─────────────────────────────────────────────────────────
+
+@app.get("/api/metrics/overview")
+def metrics_overview():
+    """
+    汇总卡片 + 30天日时序（供概览页折线图/sparkline使用）
+    """
+    conn = get_connection()
+
+    # 汇总卡片
+    summary = conn.execute("""
+        SELECT
+            SUM(bookings)                                    AS total_bookings,
+            ROUND(SUM(ttv), 2)                               AS total_ttv,
+            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)   AS avg_order_value,
+            SUM(room_nights)                                 AS total_room_nights,
+            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate,
+            ROUND(AVG(pre_error_rate), 2)                    AS avg_pre_error_rate,
+            ROUND(AVG(book_error_rate), 2)                   AS avg_book_error_rate
+        FROM agoda_daily_metrics
+    """).fetchone()
+
+    # 日时序（所有 Client ID 合并，按日聚合）
+    daily = conn.execute("""
+        SELECT
+            date,
+            SUM(bookings)                                     AS bookings,
+            ROUND(SUM(ttv) / 1000.0, 1)                      AS ttv_k,
+            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)    AS avg_order_value,
+            SUM(room_nights)                                  AS room_nights,
+            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate,
+            ROUND(AVG(pre_error_rate), 2)                     AS pre_error_rate,
+            ROUND(AVG(book_error_rate), 2)                    AS book_error_rate
+        FROM agoda_daily_metrics
+        GROUP BY date
+        ORDER BY date
+    """).fetchall()
+
+    conn.close()
+
+    dates = [r["date"] for r in daily]
+    return {
+        "summary": dict(summary),
+        "daily": {
+            "labels":          dates,
+            "ttv":             [r["ttv_k"]          for r in daily],
+            "bookings":        [r["bookings"]        for r in daily],
+            "avg_order_value": [r["avg_order_value"] for r in daily],
+            "room_nights":     [r["room_nights"]     for r in daily],
+            "win_rate":        [r["win_rate"]        for r in daily],
+            "pre_error_rate":  [r["pre_error_rate"]  for r in daily],
+            "book_error_rate": [r["book_error_rate"] for r in daily],
+        },
+    }
+
+
+@app.get("/api/metrics/performance")
+def metrics_performance():
+    """
+    各 Client ID 的聚合业绩（业绩表现页表格 + 堆叠柱状图）
+    """
+    conn = get_connection()
+
+    # 每个 Client ID 汇总行
+    rows = conn.execute("""
+        SELECT
+            client_id,
+            SUM(wins)                                                    AS wins,
+            SUM(opportunities)                                           AS opportunities,
+            ROUND(SUM(wins) * 100.0 / NULLIF(SUM(opportunities), 0), 2) AS win_rate_pct,
+            SUM(bookings)                                                AS bookings,
+            ROUND(SUM(ttv), 2)                                           AS ttv,
+            ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)               AS avg_order_value,
+            SUM(room_nights)                                             AS room_nights
+        FROM agoda_daily_metrics
+        GROUP BY client_id
+        ORDER BY ttv DESC
+    """).fetchall()
+
+    # 按日 × Client ID（供堆叠柱状图）
+    daily_by_client = conn.execute("""
+        SELECT date, client_id, bookings
+        FROM agoda_daily_metrics
+        ORDER BY date, client_id
+    """).fetchall()
+
+    conn.close()
+
+    # 整理堆叠图数据：{client_id: [day0_bookings, day1_bookings, ...]}
+    from collections import defaultdict
+    stacked: dict = defaultdict(list)
+    dates_set: list = []
+    for r in daily_by_client:
+        if r["date"] not in dates_set:
+            dates_set.append(r["date"])
+    for client_row in rows:
+        cid = client_row["client_id"]
+        day_map = {r["date"]: r["bookings"] for r in daily_by_client if r["client_id"] == cid}
+        stacked[cid] = [day_map.get(d, 0) for d in dates_set]
+
+    return {
+        "rows": [
+            {
+                "client_id":      r["client_id"],
+                "wins":           r["wins"],
+                "opportunities":  r["opportunities"],
+                "win_rate":       f'{r["win_rate_pct"]}%',
+                "bookings":       r["bookings"],
+                "ttv":            r["ttv"],
+                "avg_order_value":r["avg_order_value"],
+                "room_nights":    r["room_nights"],
+            }
+            for r in rows
+        ],
+        "stacked": {
+            "labels": dates_set,
+            "series": dict(stacked),
+        },
+    }
+
+
+# ── Auth & Chat ────────────────────────────────────────────────────────────────
 
 @app.post("/api/auth/login")
 def api_login(body: LoginRequest):
