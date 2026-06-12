@@ -1,4 +1,4 @@
-date,client_id,confirm_requests,success_count,price_changed_count,expired_count,other_error_count,success_rate,avg_price_change_pct
+date,client_id,confirm_requests,accurate_count,price_changed_count,expired_count,other_error_count,accurate_rate,avg_price_change_pct
 2026-05-13,Agoda,402,356,34,8,4,88.56,6.97
 2026-05-13,AgodaEBK,184,159,19,4,2,86.41,8.27
 2026-05-13,AgodaUK,337,304,22,7,4,90.21,5.35

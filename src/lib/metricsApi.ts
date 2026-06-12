@@ -50,23 +50,28 @@ async function get<T>(path: string): Promise<T> {
 export interface FunnelClientRow {
   client_id: string;
   searches: number;
+  results: number;
   confirms: number;
+  accurates: number;
   bookings: number;
+  result_rate: number;
   search_to_confirm_rate: number;
+  accurate_rate: number;
   confirm_to_book_rate: number;
-  search_success_rate: number;
   avg_response_ms: number;
 }
 
 export interface FunnelData {
   overall: {
     searches: number;
+    results: number;
     confirms: number;
+    accurates: number;
     bookings: number;
+    result_rate: number;
     search_to_confirm: number;
+    accurate_rate: number;
     confirm_to_book: number;
-    search_success_rate: number;
-    confirm_success_rate: number;
     avg_response_ms: number;
   };
   by_client: FunnelClientRow[];

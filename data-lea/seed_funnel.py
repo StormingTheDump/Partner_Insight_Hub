@@ -44,24 +44,24 @@ TABLES = [
                 date                 TEXT NOT NULL,
                 client_id            TEXT NOT NULL,
                 confirm_requests     INTEGER,
-                success_count        INTEGER,
+                accurate_count       INTEGER,
                 price_changed_count  INTEGER,
                 expired_count        INTEGER,
                 other_error_count    INTEGER,
-                success_rate         REAL,
+                accurate_rate        REAL,
                 avg_price_change_pct REAL,
                 PRIMARY KEY (date, client_id)
             )""",
         "upsert": """
             INSERT OR REPLACE INTO agoda_price_confirm
-              (date, client_id, confirm_requests, success_count, price_changed_count,
-               expired_count, other_error_count, success_rate, avg_price_change_pct)
+              (date, client_id, confirm_requests, accurate_count, price_changed_count,
+               expired_count, other_error_count, accurate_rate, avg_price_change_pct)
             VALUES (?,?,?,?,?,?,?,?,?)""",
         "cast": lambda r: (
             r["date"], r["client_id"], int(r["confirm_requests"]),
-            int(r["success_count"]), int(r["price_changed_count"]),
+            int(r["accurate_count"]), int(r["price_changed_count"]),
             int(r["expired_count"]), int(r["other_error_count"]),
-            float(r["success_rate"]), float(r["avg_price_change_pct"]),
+            float(r["accurate_rate"]), float(r["avg_price_change_pct"]),
         ),
     },
 ]

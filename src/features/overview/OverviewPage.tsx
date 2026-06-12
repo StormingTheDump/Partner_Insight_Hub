@@ -41,17 +41,19 @@ function funnelOpt(funnel: FunnelData["overall"]): EChartsOption {
       type: "funnel" as const,
       left: "10%",
       width: "80%",
-      minSize: "30%",
+      minSize: "20%",
       maxSize: "100%",
       sort: "descending" as const,
-      gap: 6,
-      label: { show: true, position: "inside" as const, color: "#fff", fontSize: 13, fontWeight: 600,
-        formatter: (p: { name: string; value: number }) => `${p.name}\n${p.value.toLocaleString()}` },
+      gap: 5,
+      label: { show: true, position: "inside" as const, color: "#fff", fontSize: 12, fontWeight: 600,
+        formatter: (p: { name: string; value: number }) => `${p.name}  ${p.value.toLocaleString()}` },
       itemStyle: { borderWidth: 0 },
       data: [
-        { value: funnel.searches,  name: "查价",  itemStyle: { color: "#4f5fb8" } },
-        { value: funnel.confirms,  name: "验价",  itemStyle: { color: "#12b981" } },
-        { value: funnel.bookings,  name: "下单",  itemStyle: { color: "#f59e0b" } },
+        { value: funnel.searches,  name: "查价数",    itemStyle: { color: "#4f5fb8" } },
+        { value: funnel.results,   name: "有价数",    itemStyle: { color: "#6b7fd4" } },
+        { value: funnel.confirms,  name: "验价数",    itemStyle: { color: "#12b981" } },
+        { value: funnel.accurates, name: "准确验价数", itemStyle: { color: "#34d399" } },
+        { value: funnel.bookings,  name: "下单数",    itemStyle: { color: "#f59e0b" } },
       ],
     }] as EChartsOption["series"],
   };
@@ -104,19 +106,12 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
                 <h3>下单转化漏斗</h3>
                 <p className="tiny">查价 → 验价 → 下单，近30天 Agoda 全渠道。</p>
               </div>
-              <div style={{ display: "flex", gap: 24, fontSize: 13 }}>
-                <span>
-                  查价成功率 <strong style={{ color: "#4f5fb8" }}>{overall.search_success_rate}%</strong>
-                </span>
-                <span>
-                  查价→验价 <strong style={{ color: "#12b981" }}>{overall.search_to_confirm}%</strong>
-                </span>
-                <span>
-                  验价→下单 <strong style={{ color: "#f59e0b" }}>{overall.confirm_to_book}%</strong>
-                </span>
-                <span>
-                  平均响应 <strong>{overall.avg_response_ms}ms</strong>
-                </span>
+              <div style={{ display: "flex", gap: 20, fontSize: 13, flexWrap: "wrap" as const }}>
+                <span>有价率 <strong style={{ color: "#4f5fb8" }}>{overall.result_rate}%</strong></span>
+                <span>查价→验价 <strong style={{ color: "#12b981" }}>{overall.search_to_confirm}%</strong></span>
+                <span>准确验价率 <strong style={{ color: "#34d399" }}>{overall.accurate_rate}%</strong></span>
+                <span>验价→下单 <strong style={{ color: "#f59e0b" }}>{overall.confirm_to_book}%</strong></span>
+                <span>平均响应 <strong>{overall.avg_response_ms}ms</strong></span>
               </div>
             </div>
             <BaseChart className="tall" option={funnelOpt(overall)} />
@@ -177,7 +172,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
           <Card className="insight-card">
             <h3><Target className="icon" /> 优化验价→下单转化 <span className="priority medium">中优先级</span></h3>
             <p className="tiny">
-              验价成功率 {overall.confirm_success_rate}%，
+              准确验价率 {overall.accurate_rate}%，
               价格变动是主要流失原因，可通过缓存锁价减少变动。
             </p>
             <p className="delta tiny">约增加订单量 5-8%</p>
