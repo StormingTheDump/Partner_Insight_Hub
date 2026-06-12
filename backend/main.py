@@ -836,3 +836,50 @@ def get_channel_config(client_id: Optional[str] = None):
         ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+# ── 订单日志 ──────────────────────────────────────────────────────────
+
+@app.get("/api/order-logs")
+def get_order_logs(order_no: Optional[str] = None):
+    conn = get_connection()
+    if order_no and order_no.strip():
+        rows = conn.execute(
+            """SELECT order_no, client_id, order_status,
+                      GROUP_CONCAT(log_type, '|') AS log_types,
+                      MAX(updated_at) AS updated_at
+               FROM order_logs
+               WHERE order_no LIKE ?
+               GROUP BY order_no, client_id, order_status
+               ORDER BY MAX(updated_at) DESC""",
+            (f"%{order_no.strip()}%",),
+        ).fetchall()
+    else:
+        rows = conn.execute(
+            """SELECT order_no, client_id, order_status,
+                      GROUP_CONCAT(log_type, '|') AS log_types,
+                      MAX(updated_at) AS updated_at
+               FROM order_logs
+               GROUP BY order_no, client_id, order_status
+               ORDER BY MAX(updated_at) DESC
+               LIMIT 50"""
+        ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+@app.get("/api/order-logs/{order_no}/detail")
+def get_order_log_detail(order_no: str):
+    import json as _json
+    conn = get_connection()
+    rows = conn.execute(
+        """SELECT log_type, log_detail, updated_at
+           FROM order_logs WHERE order_no = ? ORDER BY id""",
+        (order_no,),
+    ).fetchall()
+    conn.close()
+    if not rows:
+        raise HTTPException(status_code=404, detail="订单不存在")
+    return [{"log_type": r["log_type"],
+             "log_detail": _json.loads(r["log_detail"]),
+             "updated_at": r["updated_at"]} for r in rows]
