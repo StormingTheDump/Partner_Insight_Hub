@@ -63,9 +63,23 @@ def init_tables():
         )
     """)
 
+    # ── 渠道匹配表 ────────────────────────────────────────────────
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS channel_mappings (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            dida_hotel_id   INTEGER NOT NULL,
+            client_id       TEXT    NOT NULL,
+            client_hotel_id TEXT    NOT NULL,
+            updated_at      TEXT    NOT NULL DEFAULT (datetime('now')),
+            UNIQUE(dida_hotel_id, client_id),
+            UNIQUE(client_id, client_hotel_id)
+        )
+    """)
+
     conn.commit()
     _seed_dida_contacts(conn)
     _seed_my_contacts(conn)
+    _seed_channel_mappings(conn)
     conn.close()
 
 
@@ -95,6 +109,37 @@ def _seed_dida_contacts(conn):
                 "INSERT INTO dida_contact_fields (contact_id, label, value, sort_order) VALUES (?,?,?,?)",
                 (cid, label, value, i),
             )
+    conn.commit()
+
+
+def _seed_channel_mappings(conn):
+    count = conn.execute("SELECT COUNT(*) FROM channel_mappings").fetchone()[0]
+    if count > 0:
+        return
+
+    import random, datetime
+    rng = random.Random(42)  # deterministic seed
+
+    client_ids = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"]
+    prefixes   = ["Grand", "Royal", "Plaza", "Palace", "Hilton", "Marriott", "Hyatt",
+                  "Sheraton", "Westin", "InterContinental", "Radisson", "Holiday",
+                  "Novotel", "Ibis", "Mercure", "Sofitel", "Pullman", "Crowne"]
+    start_date = datetime.date(2024, 1, 1)
+
+    rows = []
+    for i in range(1000):
+        dida_id         = 10000 + i * 3 + (i % 3)
+        client_id       = client_ids[i % len(client_ids)]
+        prefix          = prefixes[i % len(prefixes)]
+        client_hotel_id = f"{prefix[0]}{str(i + 1).zfill(5)}"
+        days            = int(rng.random() * 900)
+        updated_at      = (start_date + datetime.timedelta(days=days)).strftime("%Y-%m-%d %H:%M:%S")
+        rows.append((dida_id, client_id, client_hotel_id, updated_at))
+
+    conn.executemany(
+        "INSERT OR IGNORE INTO channel_mappings (dida_hotel_id, client_id, client_hotel_id, updated_at) VALUES (?,?,?,?)",
+        rows,
+    )
     conn.commit()
 
 

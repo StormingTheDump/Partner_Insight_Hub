@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -314,3 +314,121 @@ def delete_my_contact(contact_id: int):
     conn.commit()
     conn.close()
 
+
+
+# ── 渠道匹配 ─────────────────────────────────────────────────────
+
+@app.get("/api/channel-mapping")
+def get_channel_mapping(
+    dida_hotel_id: str = "",
+    client_id: str = "",
+    client_hotel_id: str = "",
+):
+    conn = get_connection()
+    query = "SELECT * FROM channel_mappings WHERE 1=1"
+    params: list = []
+    if dida_hotel_id.strip():
+        query += " AND CAST(dida_hotel_id AS TEXT) LIKE ?"
+        params.append(f"%{dida_hotel_id.strip()}%")
+    if client_id.strip():
+        query += " AND client_id = ?"
+        params.append(client_id.strip())
+    if client_hotel_id.strip():
+        query += " AND client_hotel_id LIKE ?"
+        params.append(f"%{client_hotel_id.strip()}%")
+    query += " ORDER BY id"
+    rows = conn.execute(query, params).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+@app.post("/api/channel-mapping/upload")
+async def upload_channel_mapping(file: UploadFile = File(...)):
+    import openpyxl, io
+
+    if not file.filename.endswith((".xlsx", ".xls")):
+        raise HTTPException(status_code=400, detail="请上传 Excel 文件（.xlsx 或 .xls）")
+
+    content = await file.read()
+    try:
+        wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Excel 文件解析失败，请检查文件格式")
+
+    ws = wb.active
+    upload_rows: list[tuple[int, str, str]] = []
+    parse_errors: list[str] = []
+
+    for i, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        if not any(c for c in row[:3] if c is not None):
+            continue
+        try:
+            dida_id         = int(row[0])
+            client_id_val   = str(row[1]).strip()
+            client_hotel_val = str(row[2]).strip()
+            if not client_id_val or not client_hotel_val:
+                raise ValueError
+            upload_rows.append((dida_id, client_id_val, client_hotel_val))
+        except (TypeError, ValueError, IndexError):
+            parse_errors.append(f"第 {i} 行数据格式错误（需要：DidaHotelID / 客户ID / 客户HotelID）")
+
+    if parse_errors:
+        raise HTTPException(status_code=400, detail="；".join(parse_errors[:5]))
+
+    # 校验上传文件内部是否满足一一对应
+    seen_dida_client: dict[tuple, str] = {}
+    seen_client_hotel: dict[tuple, int] = {}
+    internal_errors: list[str] = []
+    for dida_id, cid, chid in upload_rows:
+        k1 = (dida_id, cid)
+        if k1 in seen_dida_client and seen_dida_client[k1] != chid:
+            internal_errors.append(f"Dida Hotel ID {dida_id}（{cid}）在文件中存在多个不同映射")
+        seen_dida_client[k1] = chid
+        k2 = (cid, chid)
+        if k2 in seen_client_hotel and seen_client_hotel[k2] != dida_id:
+            internal_errors.append(f"客户 Hotel ID {chid}（{cid}）在文件中映射了多个不同 Dida Hotel ID")
+        seen_client_hotel[k2] = dida_id
+
+    if internal_errors:
+        raise HTTPException(status_code=400, detail="文件中存在非一一对应关系：" + "；".join(internal_errors[:5]))
+
+    # 逐行写入数据库
+    conn = get_connection()
+    added = 0
+    conflict_errors: list[str] = []
+
+    for dida_id, cid, chid in upload_rows:
+        # 已存在完全相同的记录 → 跳过
+        existing = conn.execute(
+            "SELECT client_hotel_id FROM channel_mappings WHERE dida_hotel_id=? AND client_id=?",
+            (dida_id, cid),
+        ).fetchone()
+        if existing:
+            if existing["client_hotel_id"] == chid:
+                continue  # 完全一致，跳过
+            else:
+                conflict_errors.append(
+                    f"Dida Hotel ID {dida_id}（{cid}）已匹配 {existing['client_hotel_id']}，与上传的 {chid} 冲突"
+                )
+                continue
+
+        # 反向：客户 Hotel ID 是否已映射到别的 Dida Hotel ID
+        reverse = conn.execute(
+            "SELECT dida_hotel_id FROM channel_mappings WHERE client_id=? AND client_hotel_id=?",
+            (cid, chid),
+        ).fetchone()
+        if reverse:
+            conflict_errors.append(
+                f"客户 Hotel ID {chid}（{cid}）已映射到 Dida Hotel ID {reverse['dida_hotel_id']}，与上传的 {dida_id} 冲突"
+            )
+            continue
+
+        conn.execute(
+            "INSERT INTO channel_mappings (dida_hotel_id, client_id, client_hotel_id, updated_at) VALUES (?,?,?,datetime('now'))",
+            (dida_id, cid, chid),
+        )
+        added += 1
+
+    conn.commit()
+    conn.close()
+    return {"added": added, "conflicts": conflict_errors}
