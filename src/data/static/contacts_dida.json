@@ -1,0 +1,130 @@
+[
+  {
+    "id": 1,
+    "category": "dida",
+    "title": "客户经理",
+    "subtitle": "专属合作伙伴支持",
+    "icon_key": "MessageCircle",
+    "color": "#4f5fb8",
+    "bg_color": "#eef1ff",
+    "sort_order": 1,
+    "fields": [
+      {
+        "label": "团队",
+        "value": "Dida 客户成功团队"
+      },
+      {
+        "label": "邮箱",
+        "value": "partner-success@dida.travel"
+      },
+      {
+        "label": "响应时间",
+        "value": "工作日 24 小时内"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "category": "dida",
+    "title": "技术支持",
+    "subtitle": "API 集成与技术问题",
+    "icon_key": "Phone",
+    "color": "#ea0345",
+    "bg_color": "#fff0f5",
+    "sort_order": 2,
+    "fields": [
+      {
+        "label": "邮箱",
+        "value": "techsupport@dida.com"
+      },
+      {
+        "label": "紧急热线",
+        "value": "+86 400-119-9777"
+      },
+      {
+        "label": "服务时间",
+        "value": "7×24 小时"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "category": "dida",
+    "title": "商务合作",
+    "subtitle": "渠道拓展与合作意向",
+    "icon_key": "Mail",
+    "color": "#16a34a",
+    "bg_color": "#f0fff4",
+    "sort_order": 3,
+    "fields": [
+      {
+        "label": "邮箱",
+        "value": "bd@dida.travel"
+      },
+      {
+        "label": "响应时间",
+        "value": "工作日 48 小时内"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "category": "dida",
+    "title": "财务结算",
+    "subtitle": "账单与信用额度",
+    "icon_key": "Users",
+    "color": "#d97706",
+    "bg_color": "#fffbeb",
+    "sort_order": 4,
+    "fields": [
+      {
+        "label": "邮箱",
+        "value": "finance@dida.travel"
+      },
+      {
+        "label": "响应时间",
+        "value": "工作日 48 小时内"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "category": "dida",
+    "title": "客户服务热线",
+    "subtitle": "日常咨询与服务支持",
+    "icon_key": "Headphones",
+    "color": "#0891b2",
+    "bg_color": "#ecfeff",
+    "sort_order": 5,
+    "fields": [
+      {
+        "label": "电话",
+        "value": "+86 400-900-8811"
+      },
+      {
+        "label": "邮箱",
+        "value": "service@dida.travel"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "category": "dida",
+    "title": "紧急联系",
+    "subtitle": "7×24 小时紧急响应",
+    "icon_key": "Siren",
+    "color": "#dc2626",
+    "bg_color": "#fef2f2",
+    "sort_order": 6,
+    "fields": [
+      {
+        "label": "紧急电话",
+        "value": "+86 400-119-9777"
+      },
+      {
+        "label": "邮箱",
+        "value": "emergency@dida.travel"
+      }
+    ]
+  }
+]

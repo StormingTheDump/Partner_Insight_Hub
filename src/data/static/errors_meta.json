@@ -1,0 +1,41 @@
+{
+  "prebook": {
+    "channels": [
+      "Agoda",
+      "AgodaEBK",
+      "AgodaUK",
+      "Lvzan",
+      "DidaOpaq",
+      "Barli2b"
+    ],
+    "error_types": [
+      "No Available Room",
+      "Check Availability Timeout",
+      "No Hotel Found",
+      "Limited Call (Exceed QPS)",
+      "Hotel Stop Sell",
+      "Currency Not Supported",
+      "Incorrect Date",
+      "No RatePlan Found"
+    ]
+  },
+  "book": {
+    "channels": [
+      "Agoda",
+      "AgodaEBK",
+      "AgodaUK",
+      "Lvzan",
+      "DidaOpaq",
+      "Barli2b"
+    ],
+    "error_types": [
+      "Incorrect Booking Information",
+      "Not Enough Credit",
+      "Availability Or Price Invalid",
+      "Booking Expired",
+      "Failed To Confirm Booking",
+      "Duplicate ClientReference",
+      "Incorrect ReferenceNo"
+    ]
+  }
+}

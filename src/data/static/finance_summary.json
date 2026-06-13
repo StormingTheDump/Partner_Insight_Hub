@@ -1,0 +1,84 @@
+{
+  "credits": [
+    {
+      "client_id": "Agoda",
+      "total_credit": 800000.0,
+      "avail_credit": 333000.0,
+      "consumed_credit": 467000.0,
+      "due_date": "2026-06-22"
+    },
+    {
+      "client_id": "AgodaUK",
+      "total_credit": 500000.0,
+      "avail_credit": 208000.0,
+      "consumed_credit": 292000.0,
+      "due_date": "2026-06-22"
+    },
+    {
+      "client_id": "AgodaEBK",
+      "total_credit": 400000.0,
+      "avail_credit": 165420.0,
+      "consumed_credit": 234580.0,
+      "due_date": "2026-06-22"
+    },
+    {
+      "client_id": "Barli2b",
+      "total_credit": 300000.0,
+      "avail_credit": 125000.0,
+      "consumed_credit": 175000.0,
+      "due_date": "2026-06-22"
+    },
+    {
+      "client_id": "Lvzan",
+      "total_credit": 250000.0,
+      "avail_credit": 104000.0,
+      "consumed_credit": 146000.0,
+      "due_date": "2026-06-22"
+    },
+    {
+      "client_id": "DidaOpaq",
+      "total_credit": 250000.0,
+      "avail_credit": 105000.0,
+      "consumed_credit": 145000.0,
+      "due_date": "2026-06-22"
+    }
+  ],
+  "progress": [
+    {
+      "client_id": "Agoda",
+      "total_bill_amount": 720000.0,
+      "settled_amount": 653827.0,
+      "pending_amount": 66173.0
+    },
+    {
+      "client_id": "AgodaUK",
+      "total_bill_amount": 450000.0,
+      "settled_amount": 408484.17,
+      "pending_amount": 41515.83
+    },
+    {
+      "client_id": "AgodaEBK",
+      "total_bill_amount": 350000.0,
+      "settled_amount": 317769.0,
+      "pending_amount": 32231.0
+    },
+    {
+      "client_id": "Barli2b",
+      "total_bill_amount": 280000.0,
+      "settled_amount": 254249.0,
+      "pending_amount": 25751.0
+    },
+    {
+      "client_id": "Lvzan",
+      "total_bill_amount": 230000.0,
+      "settled_amount": 208847.0,
+      "pending_amount": 21153.0
+    },
+    {
+      "client_id": "DidaOpaq",
+      "total_bill_amount": 218310.39,
+      "settled_amount": 197518.0,
+      "pending_amount": 20792.39
+    }
+  ]
+}

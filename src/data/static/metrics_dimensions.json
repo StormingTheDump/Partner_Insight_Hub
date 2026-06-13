@@ -1,0 +1,164 @@
+{
+  "lt": [
+    {
+      "lt_bucket": "0-3天",
+      "bookings": 1044,
+      "ttv": 441460.47,
+      "room_nights": 2165,
+      "pct": 9.8
+    },
+    {
+      "lt_bucket": "4-7天",
+      "bookings": 2134,
+      "ttv": 753685.81,
+      "room_nights": 4505,
+      "pct": 20.1
+    },
+    {
+      "lt_bucket": "8-14天",
+      "bookings": 3258,
+      "ttv": 1099870.51,
+      "room_nights": 6791,
+      "pct": 30.7
+    },
+    {
+      "lt_bucket": "15-30天",
+      "bookings": 2753,
+      "ttv": 864429.83,
+      "room_nights": 5772,
+      "pct": 25.9
+    },
+    {
+      "lt_bucket": "31+天",
+      "bookings": 1420,
+      "ttv": 401198.18,
+      "room_nights": 3031,
+      "pct": 13.4
+    }
+  ],
+  "chain": [
+    {
+      "chain_type": "连锁酒店",
+      "bookings": 5744,
+      "ttv": 2315575.93,
+      "room_nights": 11961,
+      "pct": 54.1
+    },
+    {
+      "chain_type": "独立酒店",
+      "bookings": 4865,
+      "ttv": 1392027.33,
+      "room_nights": 10324,
+      "pct": 45.9
+    }
+  ],
+  "country": [
+    {
+      "country": "泰国",
+      "bookings": 2208,
+      "ttv": 763854.62,
+      "room_nights": 4624,
+      "pct": 20.8
+    },
+    {
+      "country": "日本",
+      "bookings": 1801,
+      "ttv": 609034.45,
+      "room_nights": 3839,
+      "pct": 17.0
+    },
+    {
+      "country": "印尼",
+      "bookings": 1407,
+      "ttv": 478719.24,
+      "room_nights": 2960,
+      "pct": 13.3
+    },
+    {
+      "country": "新加坡",
+      "bookings": 1278,
+      "ttv": 449832.59,
+      "room_nights": 2695,
+      "pct": 12.0
+    },
+    {
+      "country": "马来西亚",
+      "bookings": 1068,
+      "ttv": 364066.77,
+      "room_nights": 2275,
+      "pct": 10.1
+    },
+    {
+      "country": "越南",
+      "bookings": 972,
+      "ttv": 328258.88,
+      "room_nights": 2001,
+      "pct": 9.2
+    },
+    {
+      "country": "中国",
+      "bookings": 830,
+      "ttv": 273233.55,
+      "room_nights": 1741,
+      "pct": 7.8
+    },
+    {
+      "country": "韩国",
+      "bookings": 530,
+      "ttv": 175574.98,
+      "room_nights": 1097,
+      "pct": 5.0
+    },
+    {
+      "country": "其他",
+      "bookings": 515,
+      "ttv": 176588.87,
+      "room_nights": 1074,
+      "pct": 4.9
+    }
+  ],
+  "star": [
+    {
+      "star_rating": "0星",
+      "bookings": 212,
+      "ttv": 40138.95,
+      "room_nights": 446,
+      "pct": 2.0
+    },
+    {
+      "star_rating": "1星",
+      "bookings": 322,
+      "ttv": 67786.87,
+      "room_nights": 690,
+      "pct": 3.0
+    },
+    {
+      "star_rating": "2星",
+      "bookings": 870,
+      "ttv": 222227.72,
+      "room_nights": 1827,
+      "pct": 8.2
+    },
+    {
+      "star_rating": "3星",
+      "bookings": 2551,
+      "ttv": 810922.58,
+      "room_nights": 5318,
+      "pct": 24.0
+    },
+    {
+      "star_rating": "4星",
+      "bookings": 4320,
+      "ttv": 1658539.54,
+      "room_nights": 8887,
+      "pct": 40.7
+    },
+    {
+      "star_rating": "5星",
+      "bookings": 2334,
+      "ttv": 1302150.38,
+      "room_nights": 4838,
+      "pct": 22.0
+    }
+  ]
+}
