@@ -356,15 +356,13 @@ def metrics_dimensions(
     订单维度细分：LT（提前预订）/ Chain（酒店类型）/ Country（目的地国家）
     """
     conn = get_connection()
-    conditions = []
-    params: list = []
+    # dimension tables have client_id but no date column — filter by client_id only
+    dim_conds: list = []
+    dim_params: list = []
     if client_id:
-        conditions.append("client_id = ?")
-        params.append(client_id)
-    if start_date and end_date:
-        conditions.append("date BETWEEN ? AND ?")
-        params.extend([start_date, end_date])
-    where  = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+        dim_conds.append("client_id = ?")
+        dim_params.append(client_id)
+    where = ("WHERE " + " AND ".join(dim_conds)) if dim_conds else ""
 
     lt = conn.execute(f"""
         SELECT lt_bucket,
@@ -377,7 +375,7 @@ def metrics_dimensions(
             WHEN '0-3天'   THEN 1 WHEN '4-7天'   THEN 2
             WHEN '8-14天'  THEN 3 WHEN '15-30天'  THEN 4
             WHEN '31+天'   THEN 5 ELSE 9 END
-    """, params).fetchall()
+    """, dim_params).fetchall()
 
     chain = conn.execute(f"""
         SELECT chain_type,
@@ -387,7 +385,7 @@ def metrics_dimensions(
         FROM agoda_orders_by_chain {where}
         GROUP BY chain_type
         ORDER BY bookings DESC
-    """, params).fetchall()
+    """, dim_params).fetchall()
 
     country = conn.execute(f"""
         SELECT country,
@@ -397,7 +395,7 @@ def metrics_dimensions(
         FROM agoda_orders_by_country {where}
         GROUP BY country
         ORDER BY bookings DESC
-    """, params).fetchall()
+    """, dim_params).fetchall()
 
     star = conn.execute(f"""
         SELECT star_rating,
@@ -410,7 +408,7 @@ def metrics_dimensions(
             WHEN '0星' THEN 0 WHEN '1星' THEN 1 WHEN '2星' THEN 2
             WHEN '3星' THEN 3 WHEN '4星' THEN 4 WHEN '5星' THEN 5
             ELSE 9 END
-    """, params).fetchall()
+    """, dim_params).fetchall()
 
     conn.close()
 

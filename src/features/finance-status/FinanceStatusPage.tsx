@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { PageProps } from "@/dashboard/routes";
 import { useAppState } from "@/dashboard/app-state";
 import { Button } from "@/shared/components/Button";
 import { Drawer } from "@/shared/components/Drawer";
@@ -164,7 +165,7 @@ function StatRow({ label, value, bold }: { label: string; value: string; bold?: 
 
 // ─── main component ───────────────────────────────────────────────────────────
 
-export function FinanceStatusPage() {
+export function FinanceStatusPage(_: PageProps) {
   const { selectedFeed } = useAppState();
 
   const [credit, setCredit] = useState<CreditSummary | null>(null);

@@ -36,9 +36,20 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
 
   const fetchUsers = useCallback(async () => {
     setLoading(true);
-    const data: ManagedUser[] = await fetch(`${API}/api/admin/users`, { headers: authHeaders }).then(r => r.json());
-    setUsers(data);
-    setLoading(false);
+    setError(null);
+    try {
+      const res = await fetch(`${API}/api/admin/users`, { headers: authHeaders });
+      if (!res.ok) {
+        const msg = await res.json().then((d: { detail?: string }) => d.detail ?? res.statusText).catch(() => res.statusText);
+        setError(msg);
+        setUsers([]);
+      } else {
+        const data: ManagedUser[] = await res.json();
+        setUsers(Array.isArray(data) ? data : []);
+      }
+    } finally {
+      setLoading(false);
+    }
   }, [adminUser.token]);
 
   useEffect(() => {

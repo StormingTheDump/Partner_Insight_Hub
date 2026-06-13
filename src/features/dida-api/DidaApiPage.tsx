@@ -1,6 +1,6 @@
 import React from "react";
 import { BookOpen, CheckCircle2, Code2, ExternalLink, ShieldCheck, Zap, ArrowRight, AlertCircle } from "lucide-react";
-
+import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ApiChatBot } from "./ApiChatBot";
@@ -47,7 +47,7 @@ const goLiveSteps = [
   { n: 7, title: "上线", desc: "告知Dida团队正式上线" },
 ];
 
-export function DidaApiPage() {
+export function DidaApiPage(_: PageProps) {
   return (
     <>
       <PageHeader
