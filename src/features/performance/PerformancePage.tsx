@@ -7,10 +7,10 @@ import { metricsApi, type DimensionsData } from "@/lib/metricsApi";
 import { useAppState } from "@/dashboard/app-state";
 import type { EChartsOption } from "echarts";
 
-const LT_COLORS    = ["#ef4444", "#f97316", "#f59e0b", "#22c55e", "#3b82f6"];
+const LT_COLORS    = ["#bfdbfe", "#93c5fd", "#60a5fa", "#3b82f6", "#1d4ed8"];
 const CHAIN_COLORS  = ["#4f5fb8", "#12b981"];
-const STAR_COLORS   = ["#94a3b8", "#cbd5e1", "#fbbf24", "#f59e0b", "#3b82f6", "#8b5cf6"];
-const COUNTRY_COLORS = ["#3b82f6","#12b981","#f59e0b","#ef4444","#8b5cf6","#e54897","#06b6d4","#84cc16","#94a3b8"];
+const STAR_COLORS   = ["#94a3b8", "#cbd5e1", "#fbbf24", "#f59e0b", "#3b82f6", "#2563eb"];
+const COUNTRY_COLORS = ["#f87171","#fb923c","#fbbf24","#a3e635","#34d399","#22d3ee","#60a5fa","#a78bfa","#f472b6"];
 
 function hbarOpt(labels: string[], values: number[], colors: string[], unit = "订单"): EChartsOption {
   return {
@@ -164,8 +164,10 @@ export function PerformancePage(_: PageProps) {
         <Card>
           <SectionHeader title="目的地国家分布" subtitle="按订单量排序，反映渠道的热门目的地集中度。" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
-            <BaseChart style={{ height: 260 }} option={hbarOpt(countryLabels, countryValues, COUNTRY_COLORS)} />
-            <DimTable rows={data.country as unknown as Record<string, unknown>[]} dimKey="country" dimLabel="目的地" />
+            <BaseChart style={{ height: 320 }} option={hbarOpt(countryLabels, countryValues, COUNTRY_COLORS)} />
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              <DimTable rows={data.country as unknown as Record<string, unknown>[]} dimKey="country" dimLabel="目的地" />
+            </div>
           </div>
         </Card>
 

@@ -204,9 +204,7 @@ export function OrderLogsPage(_: PageProps) {
                       })}
                     </span>
                   </td>
-                  <td style={td}>
-                    <span className="status info">{order.client_id}</span>
-                  </td>
+                  <td style={td}>{order.client_id}</td>
                   <td style={{ ...td, fontSize: 12, color: "var(--muted)" }}>
                     {order.updated_at.split(" ")[0]}
                   </td>
