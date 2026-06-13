@@ -191,6 +191,98 @@ function handleMetricsOverview(p: Record<string, string>): Response {
   return ok({ summary, daily });
 }
 
+function handleMetricsFunnel(p: Record<string, string>): Response {
+  const d = metricsFunnel as {
+    overall:   Record<string, number>;
+    by_client: Array<Record<string, unknown>>;
+    daily?: {
+      labels: string[];
+      searches: number[];
+      results:  number[];
+      confirms: number[];
+      accurates:number[];
+      bookings: number[];
+    };
+  };
+  const s = p["start_date"], e = p["end_date"];
+  if ((!s && !e) || !d.daily) return ok(metricsFunnel as AnyData);
+
+  const idxs = d.daily.labels
+    .map((l, i) => ({ l, i }))
+    .filter(({ l }) => (!s || l >= s) && (!e || l <= e))
+    .map(({ i }) => i);
+
+  const sl = (arr: number[]) => idxs.map(i => arr[i]);
+  const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
+
+  const searches  = sum(sl(d.daily.searches));
+  const results   = sum(sl(d.daily.results));
+  const confirms  = sum(sl(d.daily.confirms));
+  const accurates = sum(sl(d.daily.accurates));
+  const bookings  = sum(sl(d.daily.bookings));
+
+  const overall: Record<string, number> = {
+    searches, results, confirms, accurates, bookings,
+    result_rate:       searches > 0  ? +(results   / searches  * 100).toFixed(1) : 0,
+    search_to_confirm: searches > 0  ? +(confirms  / searches  * 100).toFixed(1) : 0,
+    accurate_rate:     confirms > 0  ? +(accurates / confirms  * 100).toFixed(1) : 0,
+    confirm_to_book:   confirms > 0  ? +(bookings  / confirms  * 100).toFixed(1) : 0,
+    avg_response_ms:   d.overall["avg_response_ms"] ?? 435,
+  };
+
+  return ok({ overall, by_client: d.by_client });
+}
+
+function handleMetricsDimensions(p: Record<string, string>): Response {
+  const d = metricsDimensions as {
+    lt:       Array<Record<string, unknown>>;
+    chain:    Array<Record<string, unknown>>;
+    star:     Array<Record<string, unknown>>;
+    country:  Array<Record<string, unknown>>;
+    _by_client?: Record<string, {
+      lt:      Array<Record<string, unknown>>;
+      chain:   Array<Record<string, unknown>>;
+      star:    Array<Record<string, unknown>>;
+      country: Array<Record<string, unknown>>;
+    }>;
+  };
+
+  const clientId  = p["client_id"];
+  const startDate = p["start_date"];
+  const endDate   = p["end_date"];
+
+  // Pick base data: per-client if available, otherwise overall
+  let base = { lt: d.lt, chain: d.chain, star: d.star, country: d.country };
+  if (clientId && d._by_client?.[clientId]) {
+    base = d._by_client[clientId] as typeof base;
+  }
+
+  // Approximate date scaling: ratio of selected days to full 30-day dataset
+  let scale = 1;
+  if (startDate && endDate) {
+    const ms = new Date(endDate).getTime() - new Date(startDate).getTime();
+    const days = Math.max(1, ms / 86_400_000 + 1);
+    scale = Math.min(1, days / 30);
+  }
+
+  if (scale === 1) return ok(base as AnyData);
+
+  const scaleRows = (rows: Array<Record<string, unknown>>) =>
+    rows.map(r => {
+      const bk  = Math.max(1, Math.round((r["bookings"] as number) * scale));
+      const ttv = +(((r["ttv"] as number) * scale)).toFixed(2);
+      const rn  = Math.max(1, Math.round((r["room_nights"] as number) * scale));
+      return { ...r, bookings: bk, ttv, room_nights: rn };
+    });
+
+  return ok({
+    lt:      scaleRows(base.lt),
+    chain:   scaleRows(base.chain),
+    star:    scaleRows(base.star),
+    country: scaleRows(base.country),
+  } as AnyData);
+}
+
 function handleApiMetrics(p: Record<string, string>): Response {
   const d = apiMetrics as {
     summary: Record<string, number>;
@@ -362,8 +454,8 @@ function dispatch(url: URL, method: string, body?: Record<string, unknown>): Res
 
   // GET
   if (path.includes("/api/metrics/overview"))      return handleMetricsOverview(p);
-  if (path.includes("/api/metrics/funnel"))        return ok(metricsFunnel as AnyData);
-  if (path.includes("/api/metrics/dimensions"))    return ok(metricsDimensions as AnyData);
+  if (path.includes("/api/metrics/funnel"))        return handleMetricsFunnel(p);
+  if (path.includes("/api/metrics/dimensions"))    return handleMetricsDimensions(p);
   if (path.includes("/api/metrics/performance"))   return ok(metricsPerformance as AnyData);
   if (path.includes("/api/integration/api-metrics")) return handleApiMetrics(p);
   if (path.includes("/api/conversion/metrics"))   return handleConversionMetrics(p);

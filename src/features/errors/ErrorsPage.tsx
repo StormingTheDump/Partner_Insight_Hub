@@ -1,5 +1,5 @@
 import * as echarts from "echarts";
-import { Search, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { EChartsOption } from "echarts";
 import type { PageProps } from "@/dashboard/routes";
@@ -89,13 +89,110 @@ function DynChart({ data }: { data: ChartItem[] }) {
 }
 
 // ── JSON 弹窗 ────────────────────────────────────────────────────
+type LogObj = {
+  log_type: string;
+  log_time?: string;
+  log_detail: {
+    request:  Record<string, unknown>;
+    response: Record<string, unknown>;
+  };
+};
+
+function JsonBlock({ data }: { data: unknown }) {
+  return (
+    <pre style={{
+      margin: 0, fontSize: 10.5,
+      fontFamily: "var(--font-mono)",
+      background: "#0f172a", color: "#e2e8f0",
+      padding: "10px 12px", borderRadius: 6,
+      overflow: "auto", maxHeight: 260,
+      lineHeight: 1.6, whiteSpace: "pre",
+    }}>
+      {JSON.stringify(data, null, 2)}
+    </pre>
+  );
+}
+
+const toggleBtn: React.CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: 4,
+  background: "none", border: "none", cursor: "pointer",
+  padding: "0 0 6px", color: "#526078",
+};
+
+function LogPanel({ log }: { log: LogObj }) {
+  const [reqOpen, setReqOpen] = useState(true);
+  const [resOpen, setResOpen] = useState(true);
+
+  const resp    = log.log_detail.response;
+  const respKey = Object.keys(resp).find(k => k !== "Header") ?? "";
+  const respBody = (resp[respKey] ?? {}) as Record<string, unknown>;
+  const status   = String(respBody["Status"] ?? "");
+  const errCode  = String(respBody["ErrorCode"] ?? "");
+
+  return (
+    <div style={{ border: "1px solid #fda4af", borderRadius: 8, overflow: "hidden" }}>
+      {/* section header */}
+      <div style={{
+        background: "#fff1f2", borderBottom: "1px solid #fda4af",
+        padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{
+            padding: "2px 9px", borderRadius: 99, fontSize: 11, fontWeight: 800,
+            background: "#dc262620", color: "#dc2626",
+          }}>
+            验价报错
+          </span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#dc2626" }}>
+            {log.log_type === "price_check" ? "HotelPriceCheck" : log.log_type}
+          </span>
+        </div>
+        <span style={{ fontSize: 10, color: "#94a3b8" }}>{log.log_time ?? ""}</span>
+      </div>
+
+      <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: 10 }}>
+        {/* Request */}
+        <div>
+          <button type="button" onClick={() => setReqOpen(o => !o)} style={toggleBtn}>
+            {reqOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#526078", textTransform: "uppercase", letterSpacing: "0.5px" }}>REQUEST</span>
+          </button>
+          {reqOpen && <JsonBlock data={log.log_detail.request} />}
+        </div>
+
+        {/* Response */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+            <button type="button" onClick={() => setResOpen(o => !o)} style={toggleBtn}>
+              {resOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#526078", textTransform: "uppercase", letterSpacing: "0.5px" }}>RESPONSE</span>
+            </button>
+            {status === "Error" && (
+              <span className="status danger" style={{ fontSize: 11 }}>{errCode || "Error"}</span>
+            )}
+            {status === "Success" && (
+              <span className="status" style={{ fontSize: 11 }}>Success</span>
+            )}
+          </div>
+          {resOpen && <JsonBlock data={log.log_detail.response} />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
+  let logObj: LogObj | null = null;
   let pretty = raw;
   try {
-    const parsed: unknown = JSON.parse(raw);
-    pretty = JSON.stringify(parsed, null, 2);
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    if (parsed.log_type && parsed.log_detail) {
+      logObj = parsed as unknown as LogObj;
+    } else {
+      pretty = JSON.stringify(parsed, null, 2);
+    }
   } catch { /* keep as string */ }
 
   return (
@@ -112,21 +209,30 @@ function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
         maxHeight: "80vh", display: "flex", flexDirection: "column",
         boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
       }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #e8edf4" }}>
-          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>验价错误详情</span>
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "14px 20px", borderBottom: "1px solid #e8edf4",
+        }}>
+          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>验价错误日志明细</span>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex" }}>
             <X size={18} />
           </button>
         </div>
-        <pre style={{
-          margin: 0, padding: "16px 20px", overflowY: "auto", flex: 1,
-          fontSize: 12, lineHeight: 1.6, color: "#334155",
-          fontFamily: "var(--font-mono)",
-          background: "#f8fafc", borderRadius: "0 0 10px 10px",
-          whiteSpace: "pre-wrap", wordBreak: "break-all",
-        }}>
-          {pretty}
-        </pre>
+        <div style={{ overflowY: "auto", flex: 1, padding: logObj ? "14px 16px" : 0 }}>
+          {logObj ? (
+            <LogPanel log={logObj} />
+          ) : (
+            <pre style={{
+              margin: 0, padding: "16px 20px",
+              fontSize: 12, lineHeight: 1.6, color: "#334155",
+              fontFamily: "var(--font-mono)",
+              background: "#f8fafc", borderRadius: "0 0 10px 10px",
+              whiteSpace: "pre-wrap", wordBreak: "break-all",
+            }}>
+              {pretty}
+            </pre>
+          )}
+        </div>
       </div>
     </div>
   );
