@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "build:static": "tsc -b && VITE_STATIC_MODE=true vite build",
+    "predeploy": "npm run build:static",
     "deploy": "gh-pages -d dist --remote github"
   },
   "dependencies": {
@@ -24,7 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^24.12.3",
+    "@types/node": "^24.13.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",

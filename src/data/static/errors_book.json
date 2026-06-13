@@ -1,0 +1,1194 @@
+{
+  "chart": [
+    {
+      "error_type": "Incorrect Booking Information",
+      "count": 29
+    },
+    {
+      "error_type": "Duplicate ClientReference",
+      "count": 25
+    },
+    {
+      "error_type": "Failed To Confirm Booking",
+      "count": 23
+    },
+    {
+      "error_type": "Not Enough Credit",
+      "count": 22
+    },
+    {
+      "error_type": "Booking Expired",
+      "count": 19
+    },
+    {
+      "error_type": "Availability Or Price Invalid",
+      "count": 18
+    },
+    {
+      "error_type": "Incorrect ReferenceNo",
+      "count": 14
+    }
+  ],
+  "total": 150,
+  "page": 1,
+  "page_size": 15,
+  "rows": [
+    {
+      "channel_createtime": "2026-04-15 17:41:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00001",
+      "dida_hotel_id": 71112,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-02 16:56:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00002",
+      "dida_hotel_id": 57139,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-06 10:58:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00003",
+      "dida_hotel_id": 71537,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-28 01:36:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00004",
+      "dida_hotel_id": 64254,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-18 00:16:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00005",
+      "dida_hotel_id": 29126,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-08 09:09:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00006",
+      "dida_hotel_id": 64732,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-28 18:53:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00007",
+      "dida_hotel_id": 59786,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-29 21:21:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00008",
+      "dida_hotel_id": 95800,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-30 23:31:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00009",
+      "dida_hotel_id": 94108,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-05 05:08:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00010",
+      "dida_hotel_id": 56160,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-14 17:41:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00011",
+      "dida_hotel_id": 34123,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-23 21:03:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00012",
+      "dida_hotel_id": 19742,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-15 20:14:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00013",
+      "dida_hotel_id": 28021,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-24 06:32:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00014",
+      "dida_hotel_id": 11198,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-05 20:42:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00015",
+      "dida_hotel_id": 90980,
+      "error_type": "Incorrect Booking Information"
+    }
+  ],
+  "_all_rows": [
+    {
+      "channel_createtime": "2026-04-15 17:41:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00001",
+      "dida_hotel_id": 71112,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-02 16:56:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00002",
+      "dida_hotel_id": 57139,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-06 10:58:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00003",
+      "dida_hotel_id": 71537,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-28 01:36:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00004",
+      "dida_hotel_id": 64254,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-18 00:16:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00005",
+      "dida_hotel_id": 29126,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-08 09:09:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00006",
+      "dida_hotel_id": 64732,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-28 18:53:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00007",
+      "dida_hotel_id": 59786,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-29 21:21:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00008",
+      "dida_hotel_id": 95800,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-30 23:31:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00009",
+      "dida_hotel_id": 94108,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-05 05:08:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00010",
+      "dida_hotel_id": 56160,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-14 17:41:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00011",
+      "dida_hotel_id": 34123,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-23 21:03:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00012",
+      "dida_hotel_id": 19742,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-15 20:14:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00013",
+      "dida_hotel_id": 28021,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-24 06:32:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00014",
+      "dida_hotel_id": 11198,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-05 20:42:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00015",
+      "dida_hotel_id": 90980,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-20 15:01:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00016",
+      "dida_hotel_id": 96413,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-22 00:01:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00017",
+      "dida_hotel_id": 63914,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-07 09:01:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00018",
+      "dida_hotel_id": 80220,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-07 05:06:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00019",
+      "dida_hotel_id": 66436,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-20 07:12:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00020",
+      "dida_hotel_id": 29516,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-10 08:50:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00021",
+      "dida_hotel_id": 56457,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-03 14:36:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00022",
+      "dida_hotel_id": 63218,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-03-29 21:52:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00023",
+      "dida_hotel_id": 49318,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-18 01:05:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00024",
+      "dida_hotel_id": 95182,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-03 15:03:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00025",
+      "dida_hotel_id": 82443,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-11 02:31:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00026",
+      "dida_hotel_id": 32463,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-18 18:54:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00027",
+      "dida_hotel_id": 53420,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-03-25 06:57:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00028",
+      "dida_hotel_id": 40115,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-18 08:02:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00029",
+      "dida_hotel_id": 72324,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-20 17:36:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00030",
+      "dida_hotel_id": 46749,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-12 00:13:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00031",
+      "dida_hotel_id": 51220,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-09 02:19:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00032",
+      "dida_hotel_id": 62205,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-03-27 12:43:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00033",
+      "dida_hotel_id": 84277,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-19 23:08:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00034",
+      "dida_hotel_id": 60311,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-16 16:47:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00035",
+      "dida_hotel_id": 20279,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-02 07:53:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00036",
+      "dida_hotel_id": 67290,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-24 19:25:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00037",
+      "dida_hotel_id": 90460,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-15 08:50:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00038",
+      "dida_hotel_id": 93115,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-05 17:24:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00039",
+      "dida_hotel_id": 56636,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-04 21:24:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00040",
+      "dida_hotel_id": 86791,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-03-24 22:04:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00041",
+      "dida_hotel_id": 42302,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-03-24 22:50:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00042",
+      "dida_hotel_id": 59807,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-11 10:23:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00043",
+      "dida_hotel_id": 61068,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-03-25 14:23:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00044",
+      "dida_hotel_id": 50405,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-15 02:11:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00045",
+      "dida_hotel_id": 27367,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-04 16:26:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00046",
+      "dida_hotel_id": 82710,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-25 17:05:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00047",
+      "dida_hotel_id": 56388,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-10 12:00:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00048",
+      "dida_hotel_id": 52523,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-03-31 23:57:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00049",
+      "dida_hotel_id": 21101,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-08 05:43:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00050",
+      "dida_hotel_id": 78302,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-03 09:17:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00051",
+      "dida_hotel_id": 45247,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-06 13:17:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00052",
+      "dida_hotel_id": 31916,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-04 11:16:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00053",
+      "dida_hotel_id": 20082,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-29 19:39:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00054",
+      "dida_hotel_id": 74985,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-03-28 09:00:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00055",
+      "dida_hotel_id": 27758,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-03 12:51:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00056",
+      "dida_hotel_id": 91289,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-18 13:52:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00057",
+      "dida_hotel_id": 53874,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-17 09:20:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00058",
+      "dida_hotel_id": 27842,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-10 10:11:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00059",
+      "dida_hotel_id": 72784,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-03 15:36:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00060",
+      "dida_hotel_id": 92955,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-16 08:52:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00061",
+      "dida_hotel_id": 59290,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-16 18:12:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00062",
+      "dida_hotel_id": 24927,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-09 17:01:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00063",
+      "dida_hotel_id": 99353,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-14 14:51:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00064",
+      "dida_hotel_id": 37479,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-03-31 21:31:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00065",
+      "dida_hotel_id": 63627,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-26 08:42:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00066",
+      "dida_hotel_id": 41722,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-03-26 02:28:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00067",
+      "dida_hotel_id": 59412,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-10 17:32:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00068",
+      "dida_hotel_id": 62534,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-20 01:50:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00069",
+      "dida_hotel_id": 81256,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-02 19:40:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00070",
+      "dida_hotel_id": 80373,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-20 21:42:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00071",
+      "dida_hotel_id": 42536,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-02 01:36:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00072",
+      "dida_hotel_id": 90304,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-11 10:50:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00073",
+      "dida_hotel_id": 62378,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-04 08:14:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00074",
+      "dida_hotel_id": 22924,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-07 18:44:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00075",
+      "dida_hotel_id": 83137,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-09 12:29:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00076",
+      "dida_hotel_id": 59036,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-15 04:22:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00077",
+      "dida_hotel_id": 75597,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-22 13:58:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00078",
+      "dida_hotel_id": 48722,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-24 11:19:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00079",
+      "dida_hotel_id": 28569,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-01 16:30:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00080",
+      "dida_hotel_id": 37114,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-02 23:44:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00081",
+      "dida_hotel_id": 67431,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-05 01:51:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00082",
+      "dida_hotel_id": 49356,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-13 20:06:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00083",
+      "dida_hotel_id": 54967,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-12 16:11:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00084",
+      "dida_hotel_id": 41970,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-08 13:29:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00085",
+      "dida_hotel_id": 83380,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-03-29 05:40:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00086",
+      "dida_hotel_id": 34176,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-12 23:39:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00087",
+      "dida_hotel_id": 13826,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-19 13:24:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00088",
+      "dida_hotel_id": 87621,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-22 08:48:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00089",
+      "dida_hotel_id": 36972,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-13 17:11:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00090",
+      "dida_hotel_id": 23336,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-02 03:16:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00091",
+      "dida_hotel_id": 69972,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-12 10:38:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00092",
+      "dida_hotel_id": 93769,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-03 03:22:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00093",
+      "dida_hotel_id": 86939,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-02 21:45:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00094",
+      "dida_hotel_id": 32613,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-16 02:43:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00095",
+      "dida_hotel_id": 87354,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-26 09:07:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00096",
+      "dida_hotel_id": 41270,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-27 16:24:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00097",
+      "dida_hotel_id": 28528,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-04 12:27:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00098",
+      "dida_hotel_id": 85340,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-27 22:58:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00099",
+      "dida_hotel_id": 80435,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-11 15:18:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00100",
+      "dida_hotel_id": 31871,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-26 19:03:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00101",
+      "dida_hotel_id": 69113,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-18 04:12:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00102",
+      "dida_hotel_id": 73518,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-17 20:31:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00103",
+      "dida_hotel_id": 76248,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-04 22:53:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00104",
+      "dida_hotel_id": 64477,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-05 18:01:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00105",
+      "dida_hotel_id": 20835,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-16 08:14:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00106",
+      "dida_hotel_id": 14285,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-08 18:47:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00107",
+      "dida_hotel_id": 69942,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-15 03:36:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00108",
+      "dida_hotel_id": 76952,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-03-25 11:34:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00109",
+      "dida_hotel_id": 81186,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-17 17:13:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00110",
+      "dida_hotel_id": 67850,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-04 07:19:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00111",
+      "dida_hotel_id": 95678,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-18 11:55:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00112",
+      "dida_hotel_id": 44447,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-17 07:13:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00113",
+      "dida_hotel_id": 25386,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-04-16 22:39:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00114",
+      "dida_hotel_id": 55957,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-11 04:50:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00115",
+      "dida_hotel_id": 90760,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-28 18:22:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00116",
+      "dida_hotel_id": 17780,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-08 05:20:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00117",
+      "dida_hotel_id": 80617,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-13 08:54:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00118",
+      "dida_hotel_id": 85069,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-07 04:48:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00119",
+      "dida_hotel_id": 22481,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-16 20:08:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00120",
+      "dida_hotel_id": 46349,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-13 22:20:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00121",
+      "dida_hotel_id": 29168,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-17 12:31:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00122",
+      "dida_hotel_id": 98635,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-03-26 20:26:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00123",
+      "dida_hotel_id": 45221,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-03 02:25:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00124",
+      "dida_hotel_id": 93050,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-07 14:31:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00125",
+      "dida_hotel_id": 58374,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-01 23:29:00",
+      "client_id": "DidaOpaq",
+      "channel_bookingnumber": "BK-DID-00126",
+      "dida_hotel_id": 22208,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-11 02:50:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00127",
+      "dida_hotel_id": 56952,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-08 06:31:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00128",
+      "dida_hotel_id": 66314,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-30 10:35:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00129",
+      "dida_hotel_id": 47171,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-09 10:57:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00130",
+      "dida_hotel_id": 73614,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-12 20:50:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00131",
+      "dida_hotel_id": 23051,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-17 05:28:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00132",
+      "dida_hotel_id": 26284,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-05 22:58:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00133",
+      "dida_hotel_id": 36518,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-26 08:05:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00134",
+      "dida_hotel_id": 30837,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-11 11:42:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00135",
+      "dida_hotel_id": 20803,
+      "error_type": "Availability Or Price Invalid"
+    },
+    {
+      "channel_createtime": "2026-04-19 12:40:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00136",
+      "dida_hotel_id": 16787,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-31 13:41:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00137",
+      "dida_hotel_id": 40689,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-03-24 06:30:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00138",
+      "dida_hotel_id": 10142,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-03-24 16:43:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00139",
+      "dida_hotel_id": 39647,
+      "error_type": "Failed To Confirm Booking"
+    },
+    {
+      "channel_createtime": "2026-04-05 03:55:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00140",
+      "dida_hotel_id": 55032,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-04 02:14:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00141",
+      "dida_hotel_id": 72613,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-03 03:20:00",
+      "client_id": "Agoda",
+      "channel_bookingnumber": "BK-AGO-00142",
+      "dida_hotel_id": 23425,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-02 04:41:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00143",
+      "dida_hotel_id": 60164,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-04-12 18:00:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00144",
+      "dida_hotel_id": 79534,
+      "error_type": "Incorrect Booking Information"
+    },
+    {
+      "channel_createtime": "2026-04-10 11:46:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00145",
+      "dida_hotel_id": 67684,
+      "error_type": "Not Enough Credit"
+    },
+    {
+      "channel_createtime": "2026-03-28 13:39:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00146",
+      "dida_hotel_id": 29840,
+      "error_type": "Duplicate ClientReference"
+    },
+    {
+      "channel_createtime": "2026-04-12 02:57:00",
+      "client_id": "Lvzan",
+      "channel_bookingnumber": "BK-LVZ-00147",
+      "dida_hotel_id": 38474,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-03-25 18:46:00",
+      "client_id": "AgodaEBK",
+      "channel_bookingnumber": "BK-AGO-00148",
+      "dida_hotel_id": 26142,
+      "error_type": "Incorrect ReferenceNo"
+    },
+    {
+      "channel_createtime": "2026-04-03 04:15:00",
+      "client_id": "AgodaUK",
+      "channel_bookingnumber": "BK-AGO-00149",
+      "dida_hotel_id": 51222,
+      "error_type": "Booking Expired"
+    },
+    {
+      "channel_createtime": "2026-03-30 17:38:00",
+      "client_id": "Barli2b",
+      "channel_bookingnumber": "BK-BAR-00150",
+      "dida_hotel_id": 42527,
+      "error_type": "Incorrect Booking Information"
+    }
+  ]
+}

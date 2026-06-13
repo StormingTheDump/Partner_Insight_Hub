@@ -8,8 +8,16 @@ import App from './App.tsx'
 
 dayjs.locale('zh-cn')
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+async function boot() {
+  if (import.meta.env.VITE_STATIC_MODE === 'true') {
+    const { installStaticFetch } = await import('./lib/static-fetch')
+    installStaticFetch()
+  }
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  )
+}
+
+boot()

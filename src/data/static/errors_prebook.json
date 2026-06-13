@@ -1,0 +1,2563 @@
+{
+  "chart": [
+    {
+      "error_type": "Check Availability Timeout",
+      "count": 41
+    },
+    {
+      "error_type": "Incorrect Date",
+      "count": 39
+    },
+    {
+      "error_type": "No Hotel Found",
+      "count": 38
+    },
+    {
+      "error_type": "Hotel Stop Sell",
+      "count": 38
+    },
+    {
+      "error_type": "No RatePlan Found",
+      "count": 37
+    },
+    {
+      "error_type": "Limited Call (Exceed QPS)",
+      "count": 36
+    },
+    {
+      "error_type": "Currency Not Supported",
+      "count": 36
+    },
+    {
+      "error_type": "No Available Room",
+      "count": 35
+    }
+  ],
+  "total": 300,
+  "page": 1,
+  "page_size": 15,
+  "rows": [
+    {
+      "log_time": "2026-04-08 03:55:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-93606",
+      "dida_hotel_id": 93606,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-22 14:21:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-71524",
+      "dida_hotel_id": 71524,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-27 02:25:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-72616",
+      "dida_hotel_id": 72616,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-06 18:19:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-29887",
+      "dida_hotel_id": 29887,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-24 19:38:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-83147",
+      "dida_hotel_id": 83147,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-16 14:58:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-78494",
+      "dida_hotel_id": 78494,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-05 19:03:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-50026",
+      "dida_hotel_id": 50026,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-10 06:16:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-37235",
+      "dida_hotel_id": 37235,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-12 17:04:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-41439",
+      "dida_hotel_id": 41439,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-27 19:30:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-69048",
+      "dida_hotel_id": 69048,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-31 09:44:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-47762",
+      "dida_hotel_id": 47762,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-18 20:37:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-40595",
+      "dida_hotel_id": 40595,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-12 07:41:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-25043",
+      "dida_hotel_id": 25043,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-26 05:50:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-19359",
+      "dida_hotel_id": 19359,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-31 14:44:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-67560",
+      "dida_hotel_id": 67560,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    }
+  ],
+  "_all_rows": [
+    {
+      "log_time": "2026-04-08 03:55:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-93606",
+      "dida_hotel_id": 93606,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-22 14:21:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-71524",
+      "dida_hotel_id": 71524,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-27 02:25:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-72616",
+      "dida_hotel_id": 72616,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-06 18:19:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-29887",
+      "dida_hotel_id": 29887,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-24 19:38:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-83147",
+      "dida_hotel_id": 83147,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-16 14:58:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-78494",
+      "dida_hotel_id": 78494,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-05 19:03:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-50026",
+      "dida_hotel_id": 50026,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-10 06:16:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-37235",
+      "dida_hotel_id": 37235,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-12 17:04:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-41439",
+      "dida_hotel_id": 41439,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-27 19:30:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-69048",
+      "dida_hotel_id": 69048,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-31 09:44:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-47762",
+      "dida_hotel_id": 47762,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-18 20:37:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-40595",
+      "dida_hotel_id": 40595,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-12 07:41:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-25043",
+      "dida_hotel_id": 25043,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-26 05:50:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-19359",
+      "dida_hotel_id": 19359,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-31 14:44:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-67560",
+      "dida_hotel_id": 67560,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-31 17:31:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-45683",
+      "dida_hotel_id": 45683,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-05 10:38:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-66626",
+      "dida_hotel_id": 66626,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-30 18:37:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-40005",
+      "dida_hotel_id": 40005,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-22 05:30:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-85529",
+      "dida_hotel_id": 85529,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-07 18:27:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-46458",
+      "dida_hotel_id": 46458,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-11 13:21:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-71605",
+      "dida_hotel_id": 71605,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-01 13:44:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-31079",
+      "dida_hotel_id": 31079,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-06 14:05:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-82102",
+      "dida_hotel_id": 82102,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-01 16:52:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-25194",
+      "dida_hotel_id": 25194,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-22 06:33:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-64165",
+      "dida_hotel_id": 64165,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-02 01:13:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-91973",
+      "dida_hotel_id": 91973,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-30 22:31:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-47752",
+      "dida_hotel_id": 47752,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-25 17:00:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-30758",
+      "dida_hotel_id": 30758,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-08 14:07:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-39451",
+      "dida_hotel_id": 39451,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-11 22:17:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-48254",
+      "dida_hotel_id": 48254,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-04 17:09:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-41946",
+      "dida_hotel_id": 41946,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-03 13:21:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-19150",
+      "dida_hotel_id": 19150,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-20 23:19:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-10336",
+      "dida_hotel_id": 10336,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-17 17:30:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-29476",
+      "dida_hotel_id": 29476,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-02 06:44:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-69682",
+      "dida_hotel_id": 69682,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-29 01:20:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-40613",
+      "dida_hotel_id": 40613,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-14 20:09:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-60604",
+      "dida_hotel_id": 60604,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-06 10:55:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-75836",
+      "dida_hotel_id": 75836,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-25 00:46:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-78937",
+      "dida_hotel_id": 78937,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-26 08:21:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-19807",
+      "dida_hotel_id": 19807,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-10 10:54:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-95175",
+      "dida_hotel_id": 95175,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-12 22:56:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-51505",
+      "dida_hotel_id": 51505,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-15 07:40:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-90931",
+      "dida_hotel_id": 90931,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-12 03:48:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-21846",
+      "dida_hotel_id": 21846,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-11 22:19:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-68153",
+      "dida_hotel_id": 68153,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-19 09:22:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-52516",
+      "dida_hotel_id": 52516,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-02 13:36:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-42007",
+      "dida_hotel_id": 42007,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-12 19:55:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-32946",
+      "dida_hotel_id": 32946,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-03 04:14:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-75230",
+      "dida_hotel_id": 75230,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-05 21:00:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-70236",
+      "dida_hotel_id": 70236,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-19 05:04:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-98815",
+      "dida_hotel_id": 98815,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-05 22:16:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-93746",
+      "dida_hotel_id": 93746,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-05 03:15:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-60422",
+      "dida_hotel_id": 60422,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-03 22:18:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-85341",
+      "dida_hotel_id": 85341,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-22 18:55:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-45976",
+      "dida_hotel_id": 45976,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-12 15:53:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-89482",
+      "dida_hotel_id": 89482,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-19 07:40:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-89569",
+      "dida_hotel_id": 89569,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-28 21:43:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-98835",
+      "dida_hotel_id": 98835,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-17 01:19:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-92242",
+      "dida_hotel_id": 92242,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-16 23:08:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-85965",
+      "dida_hotel_id": 85965,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-24 06:08:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-64460",
+      "dida_hotel_id": 64460,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-16 08:53:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-79579",
+      "dida_hotel_id": 79579,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-27 10:51:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-48684",
+      "dida_hotel_id": 48684,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-25 21:46:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-28449",
+      "dida_hotel_id": 28449,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-12 00:16:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-21836",
+      "dida_hotel_id": 21836,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-08 23:43:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-58311",
+      "dida_hotel_id": 58311,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-30 03:43:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-93695",
+      "dida_hotel_id": 93695,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-29 10:58:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-91205",
+      "dida_hotel_id": 91205,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-10 22:19:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-93283",
+      "dida_hotel_id": 93283,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-11 01:19:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-28320",
+      "dida_hotel_id": 28320,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-06 04:24:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-40775",
+      "dida_hotel_id": 40775,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-05 23:09:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-86983",
+      "dida_hotel_id": 86983,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-19 13:17:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-74139",
+      "dida_hotel_id": 74139,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-23 14:15:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-38477",
+      "dida_hotel_id": 38477,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-18 17:57:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-99873",
+      "dida_hotel_id": 99873,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-11 06:07:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-62184",
+      "dida_hotel_id": 62184,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-18 20:40:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-96870",
+      "dida_hotel_id": 96870,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-10 04:50:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-53713",
+      "dida_hotel_id": 53713,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-09 18:13:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-82641",
+      "dida_hotel_id": 82641,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-17 00:17:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-29340",
+      "dida_hotel_id": 29340,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-18 05:07:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-80807",
+      "dida_hotel_id": 80807,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-12 07:37:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-11947",
+      "dida_hotel_id": 11947,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-01 04:47:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-44782",
+      "dida_hotel_id": 44782,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-04 14:49:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-18330",
+      "dida_hotel_id": 18330,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-02 07:39:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-69245",
+      "dida_hotel_id": 69245,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-23 00:03:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-70036",
+      "dida_hotel_id": 70036,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-06 15:45:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-99928",
+      "dida_hotel_id": 99928,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-20 19:09:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-20589",
+      "dida_hotel_id": 20589,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-24 18:35:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-91830",
+      "dida_hotel_id": 91830,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-13 09:29:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-88301",
+      "dida_hotel_id": 88301,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-07 03:54:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-22999",
+      "dida_hotel_id": 22999,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-11 07:26:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-66370",
+      "dida_hotel_id": 66370,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-01 03:20:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-64524",
+      "dida_hotel_id": 64524,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-04 21:59:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-59060",
+      "dida_hotel_id": 59060,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-06 13:06:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-21188",
+      "dida_hotel_id": 21188,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-14 01:37:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-27054",
+      "dida_hotel_id": 27054,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-08 13:22:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-97819",
+      "dida_hotel_id": 97819,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-18 19:19:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-16743",
+      "dida_hotel_id": 16743,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-02 15:14:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-30280",
+      "dida_hotel_id": 30280,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-18 03:48:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-82910",
+      "dida_hotel_id": 82910,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-30 19:39:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-66244",
+      "dida_hotel_id": 66244,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-12 22:17:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-89822",
+      "dida_hotel_id": 89822,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-22 11:00:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-50499",
+      "dida_hotel_id": 50499,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-27 23:40:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-19120",
+      "dida_hotel_id": 19120,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-22 14:21:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-59308",
+      "dida_hotel_id": 59308,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-27 19:05:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-52517",
+      "dida_hotel_id": 52517,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-19 01:43:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-30632",
+      "dida_hotel_id": 30632,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-24 15:38:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-96761",
+      "dida_hotel_id": 96761,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-05 03:22:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-38255",
+      "dida_hotel_id": 38255,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-04 18:31:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-98895",
+      "dida_hotel_id": 98895,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-07 12:38:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-15952",
+      "dida_hotel_id": 15952,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-23 04:48:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-49507",
+      "dida_hotel_id": 49507,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-30 15:47:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-25726",
+      "dida_hotel_id": 25726,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-04 22:14:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-59834",
+      "dida_hotel_id": 59834,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-07 23:02:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-19447",
+      "dida_hotel_id": 19447,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-04 18:27:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-20205",
+      "dida_hotel_id": 20205,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-09 12:01:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-47947",
+      "dida_hotel_id": 47947,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-01 13:54:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-57428",
+      "dida_hotel_id": 57428,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-25 16:05:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-87184",
+      "dida_hotel_id": 87184,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-03 05:04:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-39041",
+      "dida_hotel_id": 39041,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-07 06:57:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-79547",
+      "dida_hotel_id": 79547,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-15 07:06:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-94599",
+      "dida_hotel_id": 94599,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-26 04:48:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-32740",
+      "dida_hotel_id": 32740,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-15 15:29:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-33218",
+      "dida_hotel_id": 33218,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-15 20:40:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-99277",
+      "dida_hotel_id": 99277,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-10 02:30:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-29786",
+      "dida_hotel_id": 29786,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-05 01:22:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-46002",
+      "dida_hotel_id": 46002,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-07 01:03:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-70521",
+      "dida_hotel_id": 70521,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-02 19:38:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-94497",
+      "dida_hotel_id": 94497,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-07 23:57:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-86064",
+      "dida_hotel_id": 86064,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-23 15:32:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-52143",
+      "dida_hotel_id": 52143,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-26 22:05:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-23566",
+      "dida_hotel_id": 23566,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-07 22:28:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-15130",
+      "dida_hotel_id": 15130,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-05 09:24:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-57696",
+      "dida_hotel_id": 57696,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-04 10:04:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-92691",
+      "dida_hotel_id": 92691,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-01 23:54:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-47243",
+      "dida_hotel_id": 47243,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-12 18:42:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-53694",
+      "dida_hotel_id": 53694,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-26 21:25:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-95990",
+      "dida_hotel_id": 95990,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-26 12:41:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-50577",
+      "dida_hotel_id": 50577,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-16 23:43:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-97833",
+      "dida_hotel_id": 97833,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-20 13:32:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-94675",
+      "dida_hotel_id": 94675,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-02 06:21:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-50483",
+      "dida_hotel_id": 50483,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-15 04:04:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-39693",
+      "dida_hotel_id": 39693,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-31 19:08:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-96760",
+      "dida_hotel_id": 96760,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-10 22:49:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-31266",
+      "dida_hotel_id": 31266,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-10 11:43:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-15726",
+      "dida_hotel_id": 15726,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-14 23:50:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-90031",
+      "dida_hotel_id": 90031,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-05 06:23:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-50562",
+      "dida_hotel_id": 50562,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-12 12:32:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-70513",
+      "dida_hotel_id": 70513,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-07 04:55:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-36174",
+      "dida_hotel_id": 36174,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-30 03:45:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-58655",
+      "dida_hotel_id": 58655,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-18 05:17:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-47363",
+      "dida_hotel_id": 47363,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-05 07:52:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-67340",
+      "dida_hotel_id": 67340,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-05 12:32:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-64381",
+      "dida_hotel_id": 64381,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-02 07:01:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-20696",
+      "dida_hotel_id": 20696,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-01 01:18:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-29142",
+      "dida_hotel_id": 29142,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-20 19:00:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-71487",
+      "dida_hotel_id": 71487,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-19 04:35:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-43544",
+      "dida_hotel_id": 43544,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-14 07:19:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-24573",
+      "dida_hotel_id": 24573,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-25 19:29:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-65027",
+      "dida_hotel_id": 65027,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-24 00:40:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-88215",
+      "dida_hotel_id": 88215,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-07 13:00:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-28818",
+      "dida_hotel_id": 28818,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-10 05:42:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-84798",
+      "dida_hotel_id": 84798,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-12 17:32:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-18870",
+      "dida_hotel_id": 18870,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-16 01:40:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-61177",
+      "dida_hotel_id": 61177,
+      "error_type": "No Available Room",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-03 02:22:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-12128",
+      "dida_hotel_id": 12128,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-29 10:08:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-86271",
+      "dida_hotel_id": 86271,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-23 21:29:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-94252",
+      "dida_hotel_id": 94252,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-13 22:49:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-27675",
+      "dida_hotel_id": 27675,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-05 06:56:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-36422",
+      "dida_hotel_id": 36422,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-23 17:30:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-77552",
+      "dida_hotel_id": 77552,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-30 01:55:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-47501",
+      "dida_hotel_id": 47501,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-11 13:56:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-26315",
+      "dida_hotel_id": 26315,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-03 05:31:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-60678",
+      "dida_hotel_id": 60678,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-13 02:46:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-78062",
+      "dida_hotel_id": 78062,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-04 17:18:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-88964",
+      "dida_hotel_id": 88964,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-01 09:19:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-52981",
+      "dida_hotel_id": 52981,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-05 14:22:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-31842",
+      "dida_hotel_id": 31842,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-05 08:40:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-90589",
+      "dida_hotel_id": 90589,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-16 12:23:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-97973",
+      "dida_hotel_id": 97973,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-07 19:43:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-14081",
+      "dida_hotel_id": 14081,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-16 07:49:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-26545",
+      "dida_hotel_id": 26545,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-11 01:38:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-60181",
+      "dida_hotel_id": 60181,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-26 14:48:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-58623",
+      "dida_hotel_id": 58623,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-24 12:20:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-79397",
+      "dida_hotel_id": 79397,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-11 23:11:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-24869",
+      "dida_hotel_id": 24869,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-06 08:49:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-83619",
+      "dida_hotel_id": 83619,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-30 09:44:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-38124",
+      "dida_hotel_id": 38124,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-20 02:28:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-26074",
+      "dida_hotel_id": 26074,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-27 10:42:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-21506",
+      "dida_hotel_id": 21506,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-02 09:57:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-82089",
+      "dida_hotel_id": 82089,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-31 07:07:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-57381",
+      "dida_hotel_id": 57381,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-28 11:35:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-74752",
+      "dida_hotel_id": 74752,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-09 19:56:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-82305",
+      "dida_hotel_id": 82305,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-24 23:30:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-62187",
+      "dida_hotel_id": 62187,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-07 04:20:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-85353",
+      "dida_hotel_id": 85353,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-11 16:22:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-71057",
+      "dida_hotel_id": 71057,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-26 16:58:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-26912",
+      "dida_hotel_id": 26912,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-18 09:10:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-77908",
+      "dida_hotel_id": 77908,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-27 09:54:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-55353",
+      "dida_hotel_id": 55353,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-24 08:08:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-93238",
+      "dida_hotel_id": 93238,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-11 05:37:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-75873",
+      "dida_hotel_id": 75873,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-09 23:57:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-96341",
+      "dida_hotel_id": 96341,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-10 01:41:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-13718",
+      "dida_hotel_id": 13718,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-15 18:26:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-95344",
+      "dida_hotel_id": 95344,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-10 17:18:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-75278",
+      "dida_hotel_id": 75278,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-11 12:19:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-42096",
+      "dida_hotel_id": 42096,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-05 13:30:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-30719",
+      "dida_hotel_id": 30719,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-05 10:55:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-89516",
+      "dida_hotel_id": 89516,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-13 11:32:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-62260",
+      "dida_hotel_id": 62260,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-08 03:17:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-41685",
+      "dida_hotel_id": 41685,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-05 09:24:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-22689",
+      "dida_hotel_id": 22689,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-18 10:59:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-42541",
+      "dida_hotel_id": 42541,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-09 15:32:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-34881",
+      "dida_hotel_id": 34881,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-05 02:25:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-75191",
+      "dida_hotel_id": 75191,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-07 11:03:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-38199",
+      "dida_hotel_id": 38199,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-23 21:30:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-88317",
+      "dida_hotel_id": 88317,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-31 04:56:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-24089",
+      "dida_hotel_id": 24089,
+      "error_type": "No Available Room",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-30 01:25:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-62855",
+      "dida_hotel_id": 62855,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-23 09:04:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-57516",
+      "dida_hotel_id": 57516,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-03 19:43:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-82070",
+      "dida_hotel_id": 82070,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-10 11:50:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-22672",
+      "dida_hotel_id": 22672,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-01 19:32:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-28909",
+      "dida_hotel_id": 28909,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-03 04:45:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-15938",
+      "dida_hotel_id": 15938,
+      "error_type": "No Available Room",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-01 16:08:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-29521",
+      "dida_hotel_id": 29521,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-01 19:47:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-31299",
+      "dida_hotel_id": 31299,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-17 17:31:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-76494",
+      "dida_hotel_id": 76494,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-13 11:21:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BRF-72245",
+      "dida_hotel_id": 72245,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-12 23:55:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-86507",
+      "dida_hotel_id": 86507,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-13 08:41:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-88238",
+      "dida_hotel_id": 88238,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-16 15:10:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-16731",
+      "dida_hotel_id": 16731,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-07 07:02:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-29369",
+      "dida_hotel_id": 29369,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-09 14:20:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-35006",
+      "dida_hotel_id": 35006,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-04 16:49:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-36724",
+      "dida_hotel_id": 36724,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-10 06:35:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-28098",
+      "dida_hotel_id": 28098,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-01 10:11:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-78875",
+      "dida_hotel_id": 78875,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-05 21:49:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-81601",
+      "dida_hotel_id": 81601,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-18 06:15:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-89963",
+      "dida_hotel_id": 89963,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-30 09:45:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-39473",
+      "dida_hotel_id": 39473,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-28 11:35:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-51555",
+      "dida_hotel_id": 51555,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-20 18:43:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-47721",
+      "dida_hotel_id": 47721,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-08 09:02:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-55237",
+      "dida_hotel_id": 55237,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-31 20:16:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-55398",
+      "dida_hotel_id": 55398,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-14 08:59:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BB-36485",
+      "dida_hotel_id": 36485,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-08 19:47:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-27992",
+      "dida_hotel_id": 27992,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-09 16:14:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-16653",
+      "dida_hotel_id": 16653,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-11 10:45:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-23133",
+      "dida_hotel_id": 23133,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-06 05:26:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-10679",
+      "dida_hotel_id": 10679,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-11 09:20:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-95267",
+      "dida_hotel_id": 95267,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-03-31 18:14:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-21725",
+      "dida_hotel_id": 21725,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-08 05:59:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-32946",
+      "dida_hotel_id": 32946,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-20 23:55:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-74930",
+      "dida_hotel_id": 74930,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-20 18:38:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-NRF-11214",
+      "dida_hotel_id": 11214,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-25 17:33:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-69552",
+      "dida_hotel_id": 69552,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-06 03:21:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-45761",
+      "dida_hotel_id": 45761,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-27 22:11:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-94972",
+      "dida_hotel_id": 94972,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-22 21:48:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-48669",
+      "dida_hotel_id": 48669,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-28 10:05:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-66059",
+      "dida_hotel_id": 66059,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-03 15:20:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-34219",
+      "dida_hotel_id": 34219,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-20 07:28:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-44181",
+      "dida_hotel_id": 44181,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-15 23:36:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-49576",
+      "dida_hotel_id": 49576,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-22 21:07:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-40972",
+      "dida_hotel_id": 40972,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-05 16:59:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-63138",
+      "dida_hotel_id": 63138,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-19 09:23:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-25389",
+      "dida_hotel_id": 25389,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-10 04:29:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-27507",
+      "dida_hotel_id": 27507,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-14 17:58:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-64505",
+      "dida_hotel_id": 64505,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-06 19:55:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-42435",
+      "dida_hotel_id": 42435,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-16 11:04:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-79228",
+      "dida_hotel_id": 79228,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-20 16:12:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-BB-18094",
+      "dida_hotel_id": 18094,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-09 16:28:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-31566",
+      "dida_hotel_id": 31566,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-25 02:57:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-86434",
+      "dida_hotel_id": 86434,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-07 16:26:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-69432",
+      "dida_hotel_id": 69432,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-05 21:51:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-83242",
+      "dida_hotel_id": 83242,
+      "error_type": "No Available Room",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-31 00:47:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-61897",
+      "dida_hotel_id": 61897,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-03-28 11:44:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-15936",
+      "dida_hotel_id": 15936,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-03-24 01:18:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-19046",
+      "dida_hotel_id": 19046,
+      "error_type": "No Available Room",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-04 20:26:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-94085",
+      "dida_hotel_id": 94085,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-02 02:43:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-NRF-59479",
+      "dida_hotel_id": 59479,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-12 03:11:00",
+      "client_id": "DidaOpaq",
+      "dida_rate_plan_id": "RP-NRF-95660",
+      "dida_hotel_id": 95660,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "DidaOpaq"
+    },
+    {
+      "log_time": "2026-04-08 00:19:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-39188",
+      "dida_hotel_id": 39188,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-05 07:15:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-79721",
+      "dida_hotel_id": 79721,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-05 23:48:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BRF-46129",
+      "dida_hotel_id": 46129,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-03-25 07:13:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BRF-90599",
+      "dida_hotel_id": 90599,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-03-24 21:45:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-68515",
+      "dida_hotel_id": 68515,
+      "error_type": "No Available Room",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-18 14:14:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-NRF-15798",
+      "dida_hotel_id": 15798,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-08 09:14:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-28367",
+      "dida_hotel_id": 28367,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-17 21:52:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BB-85690",
+      "dida_hotel_id": 85690,
+      "error_type": "Currency Not Supported",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-01 16:14:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-28777",
+      "dida_hotel_id": 28777,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-04 18:56:00",
+      "client_id": "AgodaUK",
+      "dida_rate_plan_id": "RP-BB-17989",
+      "dida_hotel_id": 17989,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaUK"
+    },
+    {
+      "log_time": "2026-04-14 01:22:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-82856",
+      "dida_hotel_id": 82856,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-11 22:26:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-78742",
+      "dida_hotel_id": 78742,
+      "error_type": "Incorrect Date",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-04 17:30:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BRF-59343",
+      "dida_hotel_id": 59343,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-29 01:35:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-28920",
+      "dida_hotel_id": 28920,
+      "error_type": "Hotel Stop Sell",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-04 08:13:00",
+      "client_id": "Lvzan",
+      "dida_rate_plan_id": "RP-BRF-60910",
+      "dida_hotel_id": 60910,
+      "error_type": "No Hotel Found",
+      "rate_record_channel": "Lvzan"
+    },
+    {
+      "log_time": "2026-04-01 02:34:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-NRF-68954",
+      "dida_hotel_id": 68954,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Barli2b"
+    },
+    {
+      "log_time": "2026-04-14 21:38:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-45187",
+      "dida_hotel_id": 45187,
+      "error_type": "No Available Room",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-04-10 23:42:00",
+      "client_id": "Agoda",
+      "dida_rate_plan_id": "RP-BB-34662",
+      "dida_hotel_id": 34662,
+      "error_type": "Check Availability Timeout",
+      "rate_record_channel": "Agoda"
+    },
+    {
+      "log_time": "2026-04-08 09:58:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-NRF-37379",
+      "dida_hotel_id": 37379,
+      "error_type": "No RatePlan Found",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-22 15:58:00",
+      "client_id": "AgodaEBK",
+      "dida_rate_plan_id": "RP-BB-25376",
+      "dida_hotel_id": 25376,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "AgodaEBK"
+    },
+    {
+      "log_time": "2026-03-29 17:20:00",
+      "client_id": "Barli2b",
+      "dida_rate_plan_id": "RP-BRF-61987",
+      "dida_hotel_id": 61987,
+      "error_type": "Limited Call (Exceed QPS)",
+      "rate_record_channel": "Barli2b"
+    }
+  ]
+}

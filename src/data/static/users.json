@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "email": "123@agoda.com",
+    "password": "Agoda123",
+    "channelName": "Agoda",
+    "contactName": "Admin",
+    "status": "active",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "email": "111@agoda.com",
+    "password": "Agoda123",
+    "channelName": "Agoda",
+    "contactName": "John Smith",
+    "status": "active",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "email": "222@agoda.com",
+    "password": "Agoda123",
+    "channelName": "Agoda",
+    "contactName": "Jane Doe",
+    "status": "disabled",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "email": "partner_a@example.com",
+    "password": "Pass1234!",
+    "channelName": "Booking Agency A",
+    "contactName": "Alice Chen",
+    "status": "active",
+    "role": "user"
+  },
+  {
+    "id": 5,
+    "email": "partner_b@example.com",
+    "password": "Pass5678!",
+    "channelName": "Travel Hub B",
+    "contactName": "Bob Wang",
+    "status": "active",
+    "role": "user"
+  }
+]
