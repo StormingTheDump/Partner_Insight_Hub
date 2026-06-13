@@ -347,13 +347,24 @@ def metrics_overview(
 
 
 @app.get("/api/metrics/dimensions")
-def metrics_dimensions(client_id: str = Query(default=None)):
+def metrics_dimensions(
+    client_id:  str = Query(default=None),
+    start_date: str = Query(default=None),
+    end_date:   str = Query(default=None),
+):
     """
     订单维度细分：LT（提前预订）/ Chain（酒店类型）/ Country（目的地国家）
     """
     conn = get_connection()
-    where  = "WHERE client_id = ?" if client_id else ""
-    params = (client_id,) if client_id else ()
+    conditions = []
+    params: list = []
+    if client_id:
+        conditions.append("client_id = ?")
+        params.append(client_id)
+    if start_date and end_date:
+        conditions.append("date BETWEEN ? AND ?")
+        params.extend([start_date, end_date])
+    where  = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
     lt = conn.execute(f"""
         SELECT lt_bucket,

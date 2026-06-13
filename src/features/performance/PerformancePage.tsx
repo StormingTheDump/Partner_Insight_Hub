@@ -79,7 +79,7 @@ function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[
 }
 
 export function PerformancePage(_: PageProps) {
-  const { selectedFeed } = useAppState();
+  const { selectedFeed, dateRange } = useAppState();
   const [data, setData]       = useState<DimensionsData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -88,10 +88,10 @@ export function PerformancePage(_: PageProps) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
-    metricsApi.dimensions(clientId)
+    metricsApi.dimensions(clientId, dateRange?.[0], dateRange?.[1])
       .then(setData)
       .finally(() => setLoading(false));
-  }, [clientId]);
+  }, [clientId, dateRange]);
 
   if (!data) {
     return (

@@ -106,8 +106,12 @@ export const metricsApi = {
     const qs = p.toString() ? `?${p}` : '';
     return get<PerformanceData>(`/api/metrics/performance${qs}`);
   },
-  dimensions: (clientId?: string) => {
-    const qs = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
+  dimensions: (clientId?: string, startDate?: string, endDate?: string) => {
+    const p = new URLSearchParams();
+    if (clientId)  p.set("client_id",  clientId);
+    if (startDate) p.set("start_date", startDate);
+    if (endDate)   p.set("end_date",   endDate);
+    const qs = p.toString() ? `?${p}` : '';
     return get<DimensionsData>(`/api/metrics/dimensions${qs}`);
   },
   funnel: (startDate?: string, endDate?: string) => {
