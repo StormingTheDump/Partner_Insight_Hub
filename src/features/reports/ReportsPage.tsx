@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { ReactElement } from "react";
 import { Download } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
@@ -13,7 +14,7 @@ const fmt  = (n: number) => n.toLocaleString();
 const fmtK = (n: number) => `$${(n / 1000).toFixed(0)}K`;
 const fmtP = (n: number) => `${n}%`;
 
-function rate(label: string, val: number, good = 80): JSX.Element {
+function rate(label: string, val: number, good = 80): ReactElement {
   const color = val >= good ? "#16a34a" : val >= good * 0.85 ? "#d97706" : "#dc2626";
   return <span style={{ color, fontWeight: 700 }}>{label} {fmtP(val)}</span>;
 }
@@ -41,7 +42,7 @@ function SectionTitle({ n, title }: { n: number; title: string }) {
   );
 }
 
-function KV({ label, value, sub }: { label: string; value: string | JSX.Element; sub?: string }) {
+function KV({ label, value, sub }: { label: string; value: string | ReactElement; sub?: string }) {
   return (
     <div style={{ padding: "12px 16px", background: "#f8fafc", borderRadius: 8, border: "1px solid #e8edf4" }}>
       <div style={{ fontSize: 11, color: "#8390ad", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.05em", marginBottom: 4 }}>{label}</div>
@@ -63,7 +64,8 @@ function miniBarOpt(labels: string[], values: number[], colors: string[]): EChar
     series: [{
       type: "bar", barMaxWidth: 32,
       data: values.map((v, i) => ({ value: v, itemStyle: { color: colors[i % colors.length] } })),
-      label: { show: true, position: "top" as const, fontSize: 10, color: "#526078", formatter: (p: { value: number }) => p.value.toLocaleString() },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      label: { show: true, position: "top" as const, fontSize: 10, color: "#526078", formatter: (p: any) => p.value.toLocaleString() },
     }],
   };
 }
@@ -118,7 +120,7 @@ export function ReportsPage(_: PageProps) {
   const accuGap         = (bestAccu.accurate_rate - worstAccu.accurate_rate).toFixed(1);
 
   // Risks
-  const risks: { title: string; desc: string; tone: "red" | "amber" | "green" }[] = [];
+  const risks: { title: string; desc: string; tone: "red" | "amber" | "green" | "blue" }[] = [];
   if (f.accurate_rate < 82)
     risks.push({ tone: "amber", title: "准确验价率偏低", desc: `当前 ${fmtP(f.accurate_rate)}，低于行业建议值 85%，价格变动导致的转化损失约 ${fmt(f.confirms - f.accurates)} 次/月，建议加强价格缓存一致性。` });
   if (avgResponseAll > 450)

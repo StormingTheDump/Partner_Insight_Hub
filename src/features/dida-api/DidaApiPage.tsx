@@ -1,5 +1,5 @@
 import { BookOpen, CheckCircle2, Code2, ExternalLink, ShieldCheck, Zap, ArrowRight, AlertCircle } from "lucide-react";
-import type { PageProps } from "@/dashboard/routes";
+
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ApiChatBot } from "./ApiChatBot";

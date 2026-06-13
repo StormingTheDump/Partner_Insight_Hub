@@ -55,6 +55,7 @@ export function HotSalesPage(_: PageProps) {
   }, [channelId, hotelId, country, city]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
     refreshStats();
   }, []);
@@ -127,7 +128,7 @@ export function HotSalesPage(_: PageProps) {
           title="覆盖国家 / 地区"
           value={String(stats.countries)}
           caption="热销酒店分布的国家与地区数"
-          tone="blue" as any
+          tone="blue"
         />
       </div>
 

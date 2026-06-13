@@ -284,7 +284,7 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
   const toggleSection = (title: string) => {
     setExpandedSections(prev => {
       const next = new Set(prev);
-      next.has(title) ? next.delete(title) : next.add(title);
+      if (next.has(title)) { next.delete(title); } else { next.add(title); }
       return next;
     });
   };

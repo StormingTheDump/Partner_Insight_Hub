@@ -4,7 +4,7 @@ import {
   BarChart3,
   CalendarDays,
   Code2,
-  FileText,
+  FileBarChart2,
   Flame,
   GitMerge,
   Home,
@@ -39,6 +39,7 @@ export const navSections: NavSection[] = [
     items: [
       { id: "overview",    label: "业务概览", icon: Home },
       { id: "performance", label: "业绩表现", icon: BarChart3 },
+      { id: "reports",     label: "业务报表", icon: FileBarChart2 },
     ],
   },
   {

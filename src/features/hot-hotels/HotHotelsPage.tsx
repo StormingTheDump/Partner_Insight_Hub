@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { HOT_HOTELS } from "@/data/hot-hotels";
-import type { HotHotel } from "@/data/hot-hotels";
 
 const PAGE_SIZE = 10;
 

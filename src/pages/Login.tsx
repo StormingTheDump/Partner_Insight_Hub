@@ -28,9 +28,11 @@ export default function Login({ onLogin }: Props) {
     const result = await authenticate(email, password);
     if (result.success && result.user) {
       const payload = { ...result.user, token: result.token };
-      remember
-        ? localStorage.setItem('pih_user', JSON.stringify(payload))
-        : sessionStorage.setItem('pih_user', JSON.stringify(payload));
+      if (remember) {
+        localStorage.setItem('pih_user', JSON.stringify(payload));
+      } else {
+        sessionStorage.setItem('pih_user', JSON.stringify(payload));
+      }
       onLogin(payload);
       navigate('/dashboard');
     } else {

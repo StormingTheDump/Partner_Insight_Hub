@@ -46,6 +46,7 @@ export function ChannelMappingPage(_: PageProps) {
 
   // 初始加载：同时拉全量总数
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
     fetch(`${API}/api/channel-mapping`)
       .then(r => r.json())
