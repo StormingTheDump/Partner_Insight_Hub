@@ -16,9 +16,6 @@ import { PerformancePage } from "@/features/performance/PerformancePage";
 import { ReportsPage } from "@/features/reports/ReportsPage";
 import { HotHotelsPage } from "@/features/hot-hotels/HotHotelsPage";
 import { DirectHotelsPage } from "@/features/direct-hotels/DirectHotelsPage";
-import { CostAnalysisPage } from "@/features/cost-analysis/CostAnalysisPage";
-import { InventoryPage } from "@/features/inventory/InventoryPage";
-import { MarketplaceAnalyticsPage } from "@/features/marketplace-analytics/MarketplaceAnalyticsPage";
 
 export type PageProps = {
   selectedFeed: string;
@@ -42,7 +39,4 @@ export const routes: Record<PageId, ComponentType<PageProps>> = {
   "dida-api": DidaApiPage,
   "hot-hotels": HotHotelsPage,
   "direct-hotels": DirectHotelsPage,
-  "cost-analysis": CostAnalysisPage,
-  inventory: InventoryPage,
-  "marketplace-analytics": MarketplaceAnalyticsPage,
 };
