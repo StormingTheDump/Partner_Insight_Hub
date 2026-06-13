@@ -230,7 +230,7 @@ function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }
           <table>
             <thead>
               <tr>
-                {["时间", "渠道", "错误类型", "Hotel ID", "Rate Plan ID", "操作"].map((h) => (
+                {["时间", "渠道", "错误类型", "Hotel ID", "Rate Plan ID", "日志明细"].map((h) => (
                   <th key={h} style={thStyle}>{h}</th>
                 ))}
               </tr>
@@ -248,14 +248,11 @@ function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }
                   <td style={tdStyle}>{r.dida_hotel_id}</td>
                   <td style={{ ...tdStyle, fontFamily: "var(--font-mono)", fontSize: 11 }}>{r.dida_rate_plan_id}</td>
                   <td style={tdStyle}>
-                    <button onClick={() => setModal(JSON.stringify({
-                      log_time: r.log_time,
-                      client_id: r.client_id,
-                      error_type: r.error_type,
-                      dida_hotel_id: r.dida_hotel_id,
-                      dida_rate_plan_id: r.dida_rate_plan_id,
-                      rate_record_channel: r.rate_record_channel ?? null,
-                    }, null, 2))} className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>
+                    <button onClick={() => {
+                      let rrc: unknown = r.rate_record_channel ?? null;
+                      try { rrc = JSON.parse(rrc as string); } catch { /* keep as string */ }
+                      setModal(JSON.stringify(rrc, null, 2));
+                    }} className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>
                   </td>
                 </tr>
               ))}
