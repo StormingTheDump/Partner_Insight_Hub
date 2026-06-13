@@ -48,6 +48,16 @@ function params(url: URL): Record<string, string> {
   return out;
 }
 
+const MONTH_MAP: Record<string, string> = {
+  Jan:"01", Feb:"02", Mar:"03", Apr:"04", May:"05", Jun:"06",
+  Jul:"07", Aug:"08", Sep:"09", Oct:"10", Nov:"11", Dec:"12",
+};
+
+function humanToISO(humanDate: string): string {
+  const [mon, day] = humanDate.split(" ");
+  return `2026-${MONTH_MAP[mon] ?? "01"}-${String(day).padStart(2, "0")}`;
+}
+
 // ── 路由处理 ──────────────────────────────────────────────────────────────
 
 function handleLogin(body: { email: string; password: string }): Response {
@@ -125,8 +135,15 @@ function handleOrders(p: Record<string, string>): Response {
       String(o["dida_hotel_id"] ?? "").toLowerCase().includes(q2)
     );
   }
+  // date range filtering on channel_create_time
+  if (p["start_date"]) {
+    data = data.filter(o => String(o["channel_create_time"] ?? "").substring(0, 10) >= p["start_date"]);
+  }
+  if (p["end_date"]) {
+    data = data.filter(o => String(o["channel_create_time"] ?? "").substring(0, 10) <= p["end_date"]);
+  }
   // default: cap unfiltered results to 100 for performance; search returns all matches
-  const isFiltered = p["refs"] || p["q"] || p["client_id"] || p["status"];
+  const isFiltered = p["refs"] || p["q"] || p["client_id"] || p["status"] || p["start_date"] || p["end_date"];
   const pool = isFiltered ? data : data.slice(0, 100);
   const total = pool.length;
   const pageSize = parseInt(p["page_size"] ?? "20");
@@ -134,6 +151,206 @@ function handleOrders(p: Record<string, string>): Response {
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const paged = pool.slice((page - 1) * pageSize, page * pageSize);
   return ok({ data: paged, pagination: { page, pageSize, total, totalPages } });
+}
+
+function handleMetricsOverview(p: Record<string, string>): Response {
+  const d = metricsOverview as {
+    summary: Record<string, number>;
+    daily: Record<string, unknown[]>;
+  };
+  const s = p["start_date"], e = p["end_date"];
+  if (!s && !e) return ok(metricsOverview as AnyData);
+
+  const labels = d.daily["labels"] as string[];
+  const idxs = labels
+    .map((l, i) => ({ l, i }))
+    .filter(({ l }) => (!s || l >= s) && (!e || l <= e))
+    .map(({ i }) => i);
+
+  const daily: Record<string, unknown[]> = {};
+  for (const [k, arr] of Object.entries(d.daily)) {
+    daily[k] = idxs.map(i => arr[i]);
+  }
+
+  const bookings  = daily["bookings"]  as number[];
+  const ttv       = daily["ttv"]       as number[];
+  const roomNights = daily["room_nights"] as number[];
+  const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
+  const avg = (arr: number[]) => arr.length ? sum(arr) / arr.length : 0;
+
+  const summary: Record<string, number> = {
+    total_bookings:      sum(bookings),
+    total_ttv:           sum(ttv),
+    avg_order_value:     sum(bookings) > 0 ? sum(ttv) / sum(bookings) : 0,
+    total_room_nights:   sum(roomNights),
+    avg_pre_error_rate:  avg(daily["pre_error_rate"]  as number[]),
+    avg_book_error_rate: avg(daily["book_error_rate"] as number[]),
+    avg_response_ms:     avg(daily["avg_response_ms"] as number[]),
+  };
+
+  return ok({ summary, daily });
+}
+
+function handleMetricsFunnel(p: Record<string, string>): Response {
+  const d = metricsFunnel as {
+    overall:   Record<string, number>;
+    by_client: Array<Record<string, unknown>>;
+    daily?: {
+      labels: string[];
+      searches: number[];
+      results:  number[];
+      confirms: number[];
+      accurates:number[];
+      bookings: number[];
+    };
+  };
+  const s = p["start_date"], e = p["end_date"];
+  if ((!s && !e) || !d.daily) return ok(metricsFunnel as AnyData);
+
+  const idxs = d.daily.labels
+    .map((l, i) => ({ l, i }))
+    .filter(({ l }) => (!s || l >= s) && (!e || l <= e))
+    .map(({ i }) => i);
+
+  const sl = (arr: number[]) => idxs.map(i => arr[i]);
+  const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
+
+  const searches  = sum(sl(d.daily.searches));
+  const results   = sum(sl(d.daily.results));
+  const confirms  = sum(sl(d.daily.confirms));
+  const accurates = sum(sl(d.daily.accurates));
+  const bookings  = sum(sl(d.daily.bookings));
+
+  const overall: Record<string, number> = {
+    searches, results, confirms, accurates, bookings,
+    result_rate:       searches > 0  ? +(results   / searches  * 100).toFixed(1) : 0,
+    search_to_confirm: searches > 0  ? +(confirms  / searches  * 100).toFixed(1) : 0,
+    accurate_rate:     confirms > 0  ? +(accurates / confirms  * 100).toFixed(1) : 0,
+    confirm_to_book:   confirms > 0  ? +(bookings  / confirms  * 100).toFixed(1) : 0,
+    avg_response_ms:   d.overall["avg_response_ms"] ?? 435,
+  };
+
+  return ok({ overall, by_client: d.by_client });
+}
+
+function handleMetricsDimensions(p: Record<string, string>): Response {
+  const d = metricsDimensions as {
+    lt:       Array<Record<string, unknown>>;
+    chain:    Array<Record<string, unknown>>;
+    star:     Array<Record<string, unknown>>;
+    country:  Array<Record<string, unknown>>;
+    _by_client?: Record<string, {
+      lt:      Array<Record<string, unknown>>;
+      chain:   Array<Record<string, unknown>>;
+      star:    Array<Record<string, unknown>>;
+      country: Array<Record<string, unknown>>;
+    }>;
+  };
+
+  const clientId  = p["client_id"];
+  const startDate = p["start_date"];
+  const endDate   = p["end_date"];
+
+  // Pick base data: per-client if available, otherwise overall
+  let base = { lt: d.lt, chain: d.chain, star: d.star, country: d.country };
+  if (clientId && d._by_client?.[clientId]) {
+    base = d._by_client[clientId] as typeof base;
+  }
+
+  // Approximate date scaling: ratio of selected days to full 30-day dataset
+  let scale = 1;
+  if (startDate && endDate) {
+    const ms = new Date(endDate).getTime() - new Date(startDate).getTime();
+    const days = Math.max(1, ms / 86_400_000 + 1);
+    scale = Math.min(1, days / 30);
+  }
+
+  if (scale === 1) return ok(base as AnyData);
+
+  const scaleRows = (rows: Array<Record<string, unknown>>) =>
+    rows.map(r => {
+      const bk  = Math.max(1, Math.round((r["bookings"] as number) * scale));
+      const ttv = +(((r["ttv"] as number) * scale)).toFixed(2);
+      const rn  = Math.max(1, Math.round((r["room_nights"] as number) * scale));
+      return { ...r, bookings: bk, ttv, room_nights: rn };
+    });
+
+  return ok({
+    lt:      scaleRows(base.lt),
+    chain:   scaleRows(base.chain),
+    star:    scaleRows(base.star),
+    country: scaleRows(base.country),
+  } as AnyData);
+}
+
+function handleApiMetrics(p: Record<string, string>): Response {
+  const d = apiMetrics as {
+    summary: Record<string, number>;
+    dates: string[];
+    accuracy_by_channel:    Record<string, number[]>;
+    book_error_by_channel:  Record<string, number[]>;
+    pre_error_trend:  number[];
+    book_error_trend: number[];
+  };
+  const s = p["start_date"], e = p["end_date"];
+  if (!s && !e) return ok(apiMetrics as AnyData);
+
+  const idxs = d.dates
+    .map((dt, i) => ({ iso: humanToISO(dt), i }))
+    .filter(({ iso }) => (!s || iso >= s) && (!e || iso <= e))
+    .map(({ i }) => i);
+
+  const sl = <T>(arr: T[]) => idxs.map(i => arr[i]);
+  const sliceMap = (map: Record<string, number[]>) => {
+    const out: Record<string, number[]> = {};
+    for (const [k, v] of Object.entries(map)) out[k] = sl(v);
+    return out;
+  };
+
+  return ok({
+    summary:              d.summary,
+    dates:                sl(d.dates),
+    accuracy_by_channel:  sliceMap(d.accuracy_by_channel),
+    book_error_by_channel: sliceMap(d.book_error_by_channel),
+    pre_error_trend:      sl(d.pre_error_trend),
+    book_error_trend:     sl(d.book_error_trend),
+  });
+}
+
+function handleConversionMetrics(p: Record<string, string>): Response {
+  const d = conversionMetrics as {
+    dates: string[];
+    summary: Record<string, number | null>;
+    trends:    Record<string, Record<string, (number | null)[]>>;
+    agg_trend: Record<string, (number | null)[]>;
+  };
+  const s = p["start_date"], e = p["end_date"];
+  if (!s && !e) return ok(conversionMetrics as AnyData);
+
+  const idxs = d.dates
+    .map((dt, i) => ({ iso: humanToISO(dt), i }))
+    .filter(({ iso }) => (!s || iso >= s) && (!e || iso <= e))
+    .map(({ i }) => i);
+
+  const sl = <T>(arr: T[]) => idxs.map(i => arr[i]);
+
+  const agg_trend: Record<string, (number | null)[]> = {};
+  for (const [k, v] of Object.entries(d.agg_trend)) agg_trend[k] = sl(v);
+
+  const trends: Record<string, Record<string, (number | null)[]>> = {};
+  for (const [ch, metrics] of Object.entries(d.trends)) {
+    trends[ch] = {};
+    for (const [k, v] of Object.entries(metrics)) trends[ch][k] = sl(v);
+  }
+
+  const validAvg = (arr: (number | null)[]) => {
+    const vals = arr.filter((v): v is number => v !== null);
+    return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
+  };
+  const summary: Record<string, number | null> = {};
+  for (const k of Object.keys(d.summary)) summary[k] = validAvg(agg_trend[k] ?? []);
+
+  return ok({ dates: sl(d.dates), summary, trends, agg_trend });
 }
 
 function handleOrderLogs(p: Record<string, string>): Response {
@@ -206,6 +423,12 @@ function handleBookErrors(p: Record<string, string>): Response {
   });
 }
 
+function handleChannelConfig(p: Record<string, string>): Response {
+  let data = [...(channelConfig as Array<Record<string, unknown>>)];
+  if (p["client_id"]) data = data.filter(r => r["client_id"] === p["client_id"]);
+  return ok(data as AnyData);
+}
+
 // ── 主分发逻辑 ──────────────────────────────────────────────────────────────
 
 function dispatch(url: URL, method: string, body?: Record<string, unknown>): Response | null {
@@ -236,18 +459,18 @@ function dispatch(url: URL, method: string, body?: Record<string, unknown>): Res
   }
 
   // GET
-  if (path.includes("/api/metrics/overview"))      return ok(metricsOverview as AnyData);
-  if (path.includes("/api/metrics/funnel"))        return ok(metricsFunnel as AnyData);
-  if (path.includes("/api/metrics/dimensions"))    return ok(metricsDimensions as AnyData);
+  if (path.includes("/api/metrics/overview"))      return handleMetricsOverview(p);
+  if (path.includes("/api/metrics/funnel"))        return handleMetricsFunnel(p);
+  if (path.includes("/api/metrics/dimensions"))    return handleMetricsDimensions(p);
   if (path.includes("/api/metrics/performance"))   return ok(metricsPerformance as AnyData);
-  if (path.includes("/api/integration/api-metrics")) return ok(apiMetrics as AnyData);
-  if (path.includes("/api/conversion/metrics"))   return ok(conversionMetrics as AnyData);
+  if (path.includes("/api/integration/api-metrics")) return handleApiMetrics(p);
+  if (path.includes("/api/conversion/metrics"))   return handleConversionMetrics(p);
   if (path.includes("/api/errors/meta"))          return ok(errorsMeta as AnyData);
   if (path.includes("/api/errors/prebook"))       return handlePrebookErrors(p);
   if (path.includes("/api/errors/book"))          return handleBookErrors(p);
   if (path.includes("/api/contacts/dida"))        return ok(contactsDida as AnyData);
   if (path.includes("/api/contacts/my"))          return ok(contactsMy as AnyData);
-  if (path.includes("/api/channel-config"))       return ok(channelConfig as AnyData);
+  if (path.includes("/api/channel-config"))       return handleChannelConfig(p);
   if (path.includes("/api/channel-mapping"))      return handleChannelMapping(p);
   if (path.includes("/api/hot-sales/stats"))      return ok(hotSalesStats as AnyData);
   if (path.includes("/api/hot-sales"))            return handleHotSales(p);
