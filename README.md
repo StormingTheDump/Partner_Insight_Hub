@@ -10,6 +10,7 @@ Partner Insight Hub 是面向 Dida 渠道合作伙伴的自助服务门户。渠
 - 样例数据：`data/`、`data-lea/`、`docs/*.xlsx` 和 SQLite 数据库文件。
 - 后端接口：FastAPI 指标/登录/AI/联系人/渠道接口，Node Express 订单/财务接口。
 - 产品文档：`docs/PRD_渠道开放平台.md`。
+- 项目目标说明：`docs/项目目标说明.md`。
 - 静态参考 Demo：`demo/index.html`。
 
 ## 功能模块
