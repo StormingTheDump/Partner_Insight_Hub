@@ -19,16 +19,6 @@ function rate(label: string, val: number, good = 80): ReactElement {
   return <span style={{ color, fontWeight: 700 }}>{label} {fmtP(val)}</span>;
 }
 
-function Tag({ label, tone }: { label: string; tone: "green" | "amber" | "red" | "blue" }) {
-  const bg: Record<string, string> = { green: "#dcfce7", amber: "#fef3c7", red: "#fee2e2", blue: "#dbeafe" };
-  const fg: Record<string, string> = { green: "#15803d", amber: "#92400e", red: "#b91c1c", blue: "#1d4ed8" };
-  return (
-    <span style={{ background: bg[tone], color: fg[tone], fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4, whiteSpace: "nowrap" as const }}>
-      {label}
-    </span>
-  );
-}
-
 function Divider() {
   return <hr style={{ border: "none", borderTop: "1px solid #e8edf4", margin: "28px 0" }} />;
 }
@@ -37,7 +27,7 @@ function SectionTitle({ n, title }: { n: number; title: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
       <span style={{ background: "#4f5fb8", color: "#fff", fontWeight: 800, fontSize: 12, width: 24, height: 24, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
-      <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "#17213f" }}>{title}</h2>
+      <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "var(--text)" }}>{title}</h2>
     </div>
   );
 }
@@ -45,9 +35,9 @@ function SectionTitle({ n, title }: { n: number; title: string }) {
 function KV({ label, value, sub }: { label: string; value: string | ReactElement; sub?: string }) {
   return (
     <div style={{ padding: "12px 16px", background: "#f8fafc", borderRadius: 8, border: "1px solid #e8edf4" }}>
-      <div style={{ fontSize: 11, color: "#8390ad", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.05em", marginBottom: 4 }}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 800, color: "#17213f", lineHeight: 1.1 }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: "#8390ad", marginTop: 4 }}>{sub}</div>}
+      <div style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.05em", marginBottom: 4 }}>{label}</div>
+      <div style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", lineHeight: 1.1 }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 4 }}>{sub}</div>}
     </div>
   );
 }
@@ -152,12 +142,12 @@ export function ReportsPage(_: PageProps) {
         <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #e0e6f0", padding: "32px 40px 24px", marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap" as const, gap: 12 }}>
             <div>
-              <div style={{ fontSize: 11, color: "#8390ad", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 6 }}>Dida Travel · 渠道业务分析报告</div>
-              <h1 style={{ margin: "0 0 6px", fontSize: 24, fontWeight: 900, color: "#17213f" }}>Agoda 合作渠道月度分析</h1>
-              <div style={{ fontSize: 13, color: "#8390ad" }}>报告周期：{period} &nbsp;·&nbsp; 渠道：Agoda（含 6 个 Client ID）</div>
+              <div style={{ fontSize: 11, color: "var(--muted)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 6 }}>Dida Travel · 渠道业务分析报告</div>
+              <h1 style={{ margin: "0 0 6px", fontSize: 24, fontWeight: 900, color: "var(--text)" }}>Agoda 合作渠道月度分析</h1>
+              <div style={{ fontSize: 13, color: "var(--muted)" }}>报告周期：{period} &nbsp;·&nbsp; 渠道：Agoda（含 6 个 Client ID）</div>
             </div>
             <div style={{ textAlign: "right" as const }}>
-              <Tag label="正式报告" tone="blue" />
+              <span className="status info">正式报告</span>
               <div style={{ fontSize: 12, color: "#aab2c8", marginTop: 6 }}>数据截至 {daily.labels[daily.labels.length - 1]}</div>
             </div>
           </div>
@@ -219,19 +209,19 @@ export function ReportsPage(_: PageProps) {
               {/* per-client confirm_to_book table */}
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12, marginTop: 8 }}>
                 <thead>
-                  <tr style={{ borderBottom: "1px solid #e8edf4" }}>
+                  <tr>
                     {["Client ID", "验价数", "准确验价率", "验价→下单"].map(h => (
-                      <th key={h} style={{ padding: "5px 8px", textAlign: h === "Client ID" ? "left" : "right", color: "#8390ad", fontWeight: 600 }}>{h}</th>
+                      <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {clients.map(c => (
-                    <tr key={c.client_id} style={{ borderBottom: "1px solid #f1f4f9" }}>
-                      <td style={{ padding: "5px 8px", fontWeight: 600, color: "#17213f" }}>{c.client_id}</td>
-                      <td style={{ padding: "5px 8px", textAlign: "right" }}>{fmt(c.confirms)}</td>
-                      <td style={{ padding: "5px 8px", textAlign: "right", color: c.accurate_rate >= 85 ? "#16a34a" : c.accurate_rate >= 78 ? "#d97706" : "#dc2626", fontWeight: 700 }}>{fmtP(c.accurate_rate)}</td>
-                      <td style={{ padding: "5px 8px", textAlign: "right" }}>{fmtP(c.confirm_to_book_rate)}</td>
+                    <tr key={c.client_id}>
+                      <td style={{ padding: "11px 13px", color: "var(--text)", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{c.client_id}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(c.confirms)}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", color: c.accurate_rate >= 85 ? "#16a34a" : c.accurate_rate >= 78 ? "#d97706" : "#dc2626", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.accurate_rate)}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.confirm_to_book_rate)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -271,29 +261,29 @@ export function ReportsPage(_: PageProps) {
             响应最快的渠道为 <strong>{fastClient.client_id}</strong>（{fastClient.avg_response_ms}ms），与最慢渠道 <strong>{slowClient.client_id}</strong>（{slowClient.avg_response_ms}ms）相差 {slowClient.avg_response_ms - fastClient.avg_response_ms}ms，
             建议对高延迟渠道进行专项优化。
           </P>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e8edf4", background: "#f8fafc" }}>
+              <tr>
                 {["Client ID", "订单数", "TTV ($)", "均价 ($)", "间夜数", "准确验价率", "验价→下单", "响应时长"].map(h => (
-                  <th key={h} style={{ padding: "8px 10px", textAlign: h === "Client ID" ? "left" : "right", color: "#526078", fontWeight: 700, fontSize: 11 }}>{h}</th>
+                  <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {pf.rows.map((r, i) => {
+              {pf.rows.map((r) => {
                 const fc = clients.find(c => c.client_id === r.client_id);
                 return (
-                  <tr key={r.client_id} style={{ borderBottom: "1px solid #f1f4f9", background: i % 2 === 0 ? "#fff" : "#fafbfd" }}>
-                    <td style={{ padding: "8px 10px", fontWeight: 700, color: "#17213f" }}>{r.client_id}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{fmt(r.bookings)}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{r.ttv.toLocaleString()}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>${fmt(r.avg_order_value)}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{fmt(r.room_nights)}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right", color: fc && fc.accurate_rate >= 85 ? "#16a34a" : fc && fc.accurate_rate >= 78 ? "#d97706" : "#dc2626", fontWeight: 700 }}>
+                  <tr key={r.client_id}>
+                    <td style={{ padding: "11px 13px", color: "var(--text)", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{r.client_id}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(r.bookings)}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{r.ttv.toLocaleString()}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>${fmt(r.avg_order_value)}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(r.room_nights)}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.accurate_rate >= 85 ? "#16a34a" : fc && fc.accurate_rate >= 78 ? "#d97706" : "#dc2626", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                       {fc ? fmtP(fc.accurate_rate) : "-"}
                     </td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{fc ? fmtP(fc.confirm_to_book_rate) : "-"}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right", color: fc && fc.avg_response_ms > 480 ? "#d97706" : "#334155" }}>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fc ? fmtP(fc.confirm_to_book_rate) : "-"}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.avg_response_ms > 480 ? "#d97706" : "#334155", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                       {fc ? `${fc.avg_response_ms}ms` : "-"}
                     </td>
                   </tr>
@@ -377,8 +367,10 @@ export function ReportsPage(_: PageProps) {
                 border: `1px solid ${r.tone === "green" ? "#bbf7d0" : r.tone === "amber" ? "#fde68a" : r.tone === "red" ? "#fecaca" : "#bfdbfe"}`,
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                  <Tag label={r.tone === "green" ? "✓ 正常" : r.tone === "amber" ? "⚠ 关注" : r.tone === "red" ? "● 风险" : "ℹ 提示"} tone={r.tone} />
-                  <span style={{ fontWeight: 700, fontSize: 13.5, color: "#17213f" }}>{r.title}</span>
+                  <span className={r.tone === "green" ? "status" : r.tone === "amber" ? "status warning" : r.tone === "red" ? "status danger" : "status info"}>
+                    {r.tone === "green" ? "✓ 正常" : r.tone === "amber" ? "⚠ 关注" : r.tone === "red" ? "● 风险" : "ℹ 提示"}
+                  </span>
+                  <span style={{ fontWeight: 700, fontSize: 13.5, color: "var(--text)" }}>{r.title}</span>
                 </div>
                 <p style={{ margin: 0, fontSize: 13, color: "#475569", lineHeight: 1.65 }}>{r.desc}</p>
               </div>

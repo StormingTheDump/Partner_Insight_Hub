@@ -113,7 +113,7 @@ function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
         boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
       }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #e8edf4" }}>
-          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>Rate Record Channel</span>
+          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>验价错误详情</span>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex" }}>
             <X size={18} />
           </button>
@@ -121,7 +121,7 @@ function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
         <pre style={{
           margin: 0, padding: "16px 20px", overflowY: "auto", flex: 1,
           fontSize: 12, lineHeight: 1.6, color: "#334155",
-          fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          fontFamily: "var(--font-mono)",
           background: "#f8fafc", borderRadius: "0 0 10px 10px",
           whiteSpace: "pre-wrap", wordBreak: "break-all",
         }}>
@@ -142,34 +142,23 @@ function Pagination({ page, total, pageSize, onChange }: { page: number; total: 
     else if (pages[pages.length - 1] !== "...") pages.push("...");
   }
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 16, justifyContent: "flex-end" }}>
-      <button onClick={() => onChange(page - 1)} disabled={page === 1} style={btnStyle(false)}>‹</button>
+    <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 16, justifyContent: "flex-end" }}>
+      <button onClick={() => onChange(page - 1)} disabled={page === 1} className="button">‹</button>
       {pages.map((p, i) =>
-        p === "..." ? <span key={i} style={{ color: "#94a3b8", padding: "0 4px" }}>…</span>
-          : <button key={p} onClick={() => onChange(p as number)} style={btnStyle(p === page)}>{p}</button>
+        p === "..." ? <span key={i} style={{ color: "var(--muted)", padding: "0 4px" }}>…</span>
+          : <button key={p} onClick={() => onChange(p as number)} className={`button${p === page ? " primary" : ""}`}>{p}</button>
       )}
-      <button onClick={() => onChange(page + 1)} disabled={page === totalPages} style={btnStyle(false)}>›</button>
-      <span style={{ fontSize: 12, color: "#94a3b8", marginLeft: 6 }}>共 {total} 条</span>
+      <button onClick={() => onChange(page + 1)} disabled={page === totalPages} className="button">›</button>
+      <span style={{ fontSize: 12, color: "var(--muted)", marginLeft: 6 }}>共 {total} 条</span>
     </div>
   );
 }
 
-function btnStyle(active: boolean): React.CSSProperties {
-  return {
-    minWidth: 30, height: 28, borderRadius: 6, border: "1px solid",
-    borderColor: active ? "#4c4597" : "#d4dbe6",
-    background: active ? "#4c4597" : "#fff",
-    color: active ? "#fff" : "#526078",
-    fontSize: 13, cursor: active ? "default" : "pointer", fontWeight: active ? 600 : 400,
-  };
-}
-
 // ── 验价报错 Tab ─────────────────────────────────────────────────
-function PrebookTab({ meta }: { meta: Meta }) {
-  const [channel,     setChannel]     = useState("");
+function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
   const [errorType,   setErrorType]   = useState("");
   const [ratePlanId,  setRatePlanId]  = useState("");
-  const [applied,     setApplied]     = useState({ channel: "", errorType: "", ratePlanId: "" });
+  const [applied,     setApplied]     = useState({ errorType: "", ratePlanId: "" });
   const [chart,       setChart]       = useState<ChartItem[]>([]);
   const [rows,        setRows]        = useState<PreRow[]>([]);
   const [total,       setTotal]       = useState(0);
@@ -177,10 +166,12 @@ function PrebookTab({ meta }: { meta: Meta }) {
   const [loading,     setLoading]     = useState(false);
   const [modal,       setModal]       = useState<string | null>(null);
 
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
+
   const fetch_ = (p: number, filters = applied) => {
     setLoading(true);
     const q = new URLSearchParams({
-      client_id:    filters.channel,
+      client_id:    clientId,
       error_type:   filters.errorType,
       rate_plan_id: filters.ratePlanId,
       page:         String(p),
@@ -196,10 +187,10 @@ function PrebookTab({ meta }: { meta: Meta }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch_(1);
-  }, []);
+  }, [clientId]);
 
   const search = () => {
-    const f = { channel, errorType, ratePlanId };
+    const f = { errorType, ratePlanId };
     setApplied(f);
     fetch_(1, f);
   };
@@ -207,33 +198,24 @@ function PrebookTab({ meta }: { meta: Meta }) {
   return (
     <>
       {/* 筛选器 */}
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 18 }}>
-        <label style={labelStyle}>
-          <span style={labelText}>渠道</span>
-          <select value={channel} onChange={(e) => setChannel(e.target.value)} style={selectStyle}>
-            <option value="">全部渠道</option>
-            {meta.channels.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
-        <label style={labelStyle}>
-          <span style={labelText}>错误类型</span>
-          <select value={errorType} onChange={(e) => setErrorType(e.target.value)} style={selectStyle}>
+      <div className="filter-row">
+        <label className="filter-control">
+          <select value={errorType} onChange={(e) => setErrorType(e.target.value)}>
             <option value="">全部类型</option>
             {meta.error_types.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
         </label>
-        <label style={labelStyle}>
-          <span style={labelText}>Rate Plan ID</span>
+        <label className="filter-control">
+          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
             value={ratePlanId}
             onChange={(e) => setRatePlanId(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && search()}
-            placeholder="输入 Rate Plan ID"
-            style={inputStyle}
+            placeholder="Rate Plan ID"
           />
         </label>
-        <button onClick={search} style={searchBtnStyle}>
-          <Search size={14} style={{ marginRight: 4 }} /> 搜索
+        <button onClick={search} className="button primary">
+          <Search size={14} /> 搜索
         </button>
       </div>
 
@@ -244,8 +226,8 @@ function PrebookTab({ meta }: { meta: Meta }) {
 
       {/* 表格 */}
       <div style={{ marginTop: 22 }}>
-        <div style={{ overflowX: "auto" }}>
-          <table style={tableStyle}>
+        <div className="table-wrap">
+          <table>
             <thead>
               <tr>
                 {["时间", "渠道", "错误类型", "Hotel ID", "Rate Plan ID", "操作"].map((h) => (
@@ -259,14 +241,21 @@ function PrebookTab({ meta }: { meta: Meta }) {
               ) : rows.length === 0 ? (
                 <tr><td colSpan={6} style={{ textAlign: "center", padding: 32, color: "#b0bac8" }}>无匹配记录</td></tr>
               ) : rows.map((r, i) => (
-                <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafbfc" }}>
+                <tr key={i}>
                   <td style={tdStyle}>{r.log_time?.replace("T", " ").substring(0, 19)}</td>
                   <td style={tdStyle}>{r.client_id}</td>
-                  <td style={tdStyle}><span style={errorBadge}>{r.error_type}</span></td>
+                  <td style={tdStyle}><span className="status danger">{r.error_type}</span></td>
                   <td style={tdStyle}>{r.dida_hotel_id}</td>
-                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: 11 }}>{r.dida_rate_plan_id}</td>
+                  <td style={{ ...tdStyle, fontFamily: "var(--font-mono)", fontSize: 11 }}>{r.dida_rate_plan_id}</td>
                   <td style={tdStyle}>
-                    <button onClick={() => setModal(r.rate_record_channel)} style={viewBtnStyle}>查看</button>
+                    <button onClick={() => setModal(JSON.stringify({
+                      log_time: r.log_time,
+                      client_id: r.client_id,
+                      error_type: r.error_type,
+                      dida_hotel_id: r.dida_hotel_id,
+                      dida_rate_plan_id: r.dida_rate_plan_id,
+                      rate_record_channel: r.rate_record_channel ?? null,
+                    }, null, 2))} className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>
                   </td>
                 </tr>
               ))}
@@ -282,21 +271,22 @@ function PrebookTab({ meta }: { meta: Meta }) {
 }
 
 // ── 下单报错 Tab ─────────────────────────────────────────────────
-function BookTab({ meta }: { meta: Meta }) {
-  const [channel,       setChannel]       = useState("");
+function BookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
   const [errorType,     setErrorType]     = useState("");
   const [bookingNumber, setBookingNumber] = useState("");
-  const [applied,       setApplied]       = useState({ channel: "", errorType: "", bookingNumber: "" });
+  const [applied,       setApplied]       = useState({ errorType: "", bookingNumber: "" });
   const [chart,         setChart]         = useState<ChartItem[]>([]);
   const [rows,          setRows]          = useState<BookRow[]>([]);
   const [total,         setTotal]         = useState(0);
   const [page,          setPage]          = useState(1);
   const [loading,       setLoading]       = useState(false);
 
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
+
   const fetch_ = (p: number, filters = applied) => {
     setLoading(true);
     const q = new URLSearchParams({
-      client_id:      filters.channel,
+      client_id:      clientId,
       error_type:     filters.errorType,
       booking_number: filters.bookingNumber,
       page:           String(p),
@@ -312,10 +302,10 @@ function BookTab({ meta }: { meta: Meta }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch_(1);
-  }, []);
+  }, [clientId]);
 
   const search = () => {
-    const f = { channel, errorType, bookingNumber };
+    const f = { errorType, bookingNumber };
     setApplied(f);
     fetch_(1, f);
   };
@@ -323,33 +313,24 @@ function BookTab({ meta }: { meta: Meta }) {
   return (
     <>
       {/* 筛选器 */}
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 18 }}>
-        <label style={labelStyle}>
-          <span style={labelText}>渠道</span>
-          <select value={channel} onChange={(e) => setChannel(e.target.value)} style={selectStyle}>
-            <option value="">全部渠道</option>
-            {meta.channels.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
-        <label style={labelStyle}>
-          <span style={labelText}>错误类型</span>
-          <select value={errorType} onChange={(e) => setErrorType(e.target.value)} style={selectStyle}>
+      <div className="filter-row">
+        <label className="filter-control">
+          <select value={errorType} onChange={(e) => setErrorType(e.target.value)}>
             <option value="">全部类型</option>
             {meta.error_types.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
         </label>
-        <label style={labelStyle}>
-          <span style={labelText}>Dida Booking Number</span>
+        <label className="filter-control">
+          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
             value={bookingNumber}
             onChange={(e) => setBookingNumber(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && search()}
-            placeholder="输入订单号"
-            style={inputStyle}
+            placeholder="Dida Booking Number"
           />
         </label>
-        <button onClick={search} style={searchBtnStyle}>
-          <Search size={14} style={{ marginRight: 4 }} /> 搜索
+        <button onClick={search} className="button primary">
+          <Search size={14} /> 搜索
         </button>
       </div>
 
@@ -360,8 +341,8 @@ function BookTab({ meta }: { meta: Meta }) {
 
       {/* 表格 */}
       <div style={{ marginTop: 22 }}>
-        <div style={{ overflowX: "auto" }}>
-          <table style={tableStyle}>
+        <div className="table-wrap">
+          <table>
             <thead>
               <tr>
                 {["时间", "渠道", "错误类型", "Hotel ID", "Dida Booking Number"].map((h) => (
@@ -375,12 +356,12 @@ function BookTab({ meta }: { meta: Meta }) {
               ) : rows.length === 0 ? (
                 <tr><td colSpan={5} style={{ textAlign: "center", padding: 32, color: "#b0bac8" }}>无匹配记录</td></tr>
               ) : rows.map((r, i) => (
-                <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafbfc" }}>
+                <tr key={i}>
                   <td style={tdStyle}>{r.channel_createtime?.substring(0, 19)}</td>
                   <td style={tdStyle}>{r.client_id}</td>
-                  <td style={tdStyle}><span style={errorBadge}>{r.error_type}</span></td>
+                  <td style={tdStyle}><span className="status danger">{r.error_type}</span></td>
                   <td style={tdStyle}>{r.dida_hotel_id}</td>
-                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: 12 }}>{r.channel_bookingnumber}</td>
+                  <td style={{ ...tdStyle, fontFamily: "var(--font-mono)", fontSize: 12 }}>{r.channel_bookingnumber}</td>
                 </tr>
               ))}
             </tbody>
@@ -393,7 +374,7 @@ function BookTab({ meta }: { meta: Meta }) {
 }
 
 // ── 主页面 ────────────────────────────────────────────────────────
-export function ErrorsPage(_: PageProps) {
+export function ErrorsPage({ selectedFeed }: PageProps) {
   const [tab,  setTab]  = useState<"prebook" | "book">("prebook");
   const [meta, setMeta] = useState<{ prebook: Meta; book: Meta } | null>(null);
 
@@ -408,11 +389,11 @@ export function ErrorsPage(_: PageProps) {
     <>
       <PageHeader
         title="错误日志"
-        description="过去 48 小时内验价及下单报错记录，支持渠道、错误类型筛选。"
+        description="过去 48 小时内验价及下单报错记录，支持错误类型筛选。"
       />
 
       {/* Tab 切换 */}
-      <div style={{ display: "flex", gap: 0, marginTop: 20, borderBottom: "2px solid #e8edf4" }}>
+      <div style={{ display: "flex", gap: 0, marginTop: 20, borderBottom: "2px solid var(--line-soft)" }}>
         {(["prebook", "book"] as const).map((t) => (
           <button
             key={t}
@@ -420,10 +401,10 @@ export function ErrorsPage(_: PageProps) {
             style={{
               padding: "8px 24px",
               border: "none",
-              borderBottom: tab === t ? "2px solid #4c4597" : "2px solid transparent",
+              borderBottom: tab === t ? "2px solid var(--dida-purple)" : "2px solid transparent",
               marginBottom: -2,
               background: "none",
-              color: tab === t ? "#4c4597" : "#7a8fa6",
+              color: tab === t ? "var(--dida-purple)" : "var(--muted)",
               fontWeight: tab === t ? 600 : 400,
               fontSize: 14,
               cursor: "pointer",
@@ -438,9 +419,9 @@ export function ErrorsPage(_: PageProps) {
         {!meta ? (
           <div style={{ textAlign: "center", padding: 48, color: "#b0bac8" }}>加载中…</div>
         ) : tab === "prebook" ? (
-          <PrebookTab meta={meta.prebook} />
+          <PrebookTab meta={meta.prebook} selectedFeed={selectedFeed} />
         ) : (
-          <BookTab meta={meta.book} />
+          <BookTab meta={meta.book} selectedFeed={selectedFeed} />
         )}
       </div>
     </>
@@ -448,39 +429,15 @@ export function ErrorsPage(_: PageProps) {
 }
 
 // ── 样式常量 ──────────────────────────────────────────────────────
-const labelStyle: React.CSSProperties = { display: "flex", flexDirection: "column", gap: 4 };
-const labelText:  React.CSSProperties = { fontSize: 11, color: "#7a8fa6", fontWeight: 500 };
-const selectStyle: React.CSSProperties = {
-  height: 34, borderRadius: 6, border: "1px solid #d4dbe6",
-  padding: "0 10px", fontSize: 13, color: "#2c3e50", background: "#fff", minWidth: 140,
-};
-const inputStyle: React.CSSProperties = {
-  height: 34, borderRadius: 6, border: "1px solid #d4dbe6",
-  padding: "0 10px", fontSize: 13, color: "#2c3e50", background: "#fff", minWidth: 180,
-};
-const searchBtnStyle: React.CSSProperties = {
-  height: 34, borderRadius: 6, border: "none",
-  background: "#4c4597", color: "#fff",
-  padding: "0 16px", fontSize: 13, cursor: "pointer",
-  display: "flex", alignItems: "center", alignSelf: "flex-end",
-};
-const tableStyle: React.CSSProperties = {
-  width: "100%", borderCollapse: "collapse",
-  fontSize: 13, border: "1px solid #e8edf4", borderRadius: 8, overflow: "hidden",
-};
 const thStyle: React.CSSProperties = {
-  padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 600,
-  color: "#526078", background: "#f4f6fa", borderBottom: "1px solid #e8edf4",
-  whiteSpace: "nowrap",
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const tdStyle: React.CSSProperties = {
-  padding: "9px 14px", color: "#334155", borderBottom: "1px solid #f0f3f8", whiteSpace: "nowrap",
-};
-const errorBadge: React.CSSProperties = {
-  display: "inline-block", padding: "2px 8px", borderRadius: 4,
-  background: "#fce8e6", color: "#c0392b", fontSize: 12, fontWeight: 500,
-};
-const viewBtnStyle: React.CSSProperties = {
-  padding: "3px 12px", borderRadius: 5, border: "1px solid #d4dbe6",
-  background: "#fff", color: "#4c4597", fontSize: 12, cursor: "pointer", fontWeight: 500,
+  padding: "11px 13px", borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };

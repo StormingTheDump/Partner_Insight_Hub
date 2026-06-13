@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Search, Upload, X } from "lucide-react";
+import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { MetricCard } from "@/shared/components/MetricCard";
+import { useAppState } from "@/dashboard/app-state";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 
 type MappingRow = {
   id: number;
@@ -19,17 +19,19 @@ type MappingRow = {
 type UploadResult = { added: number; conflicts: string[] } | null;
 
 export function ChannelMappingPage(_: PageProps) {
+  const { selectedFeed } = useAppState();
   const [rows, setRows]               = useState<MappingRow[]>([]);
-  const [total, setTotal]             = useState(0);   // 全量总数（不随筛选变化）
+  const [total, setTotal]             = useState(0);
   const [loading, setLoading]         = useState(true);
   const [didaQuery, setDidaQuery]     = useState("");
-  const [clientId, setClientId]       = useState("");
   const [clientQuery, setClientQuery] = useState("");
   const [page, setPage]               = useState(1);
   const [uploading, setUploading]     = useState(false);
   const [result, setResult]           = useState<UploadResult>(null);
   const [error, setError]             = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -44,21 +46,24 @@ export function ChannelMappingPage(_: PageProps) {
     setLoading(false);
   }, [didaQuery, clientId, clientQuery]);
 
-  // 初始加载：同时拉全量总数
+  // 全局总数只拉一次
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchData();
     fetch(`${API}/api/channel-mapping`)
       .then(r => r.json())
       .then((d: MappingRow[]) => setTotal(d.length));
   }, []);
 
+  // 筛选数据随 fetchData（包含 selectedFeed）更新
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData();
+  }, [fetchData]);
+
   const handleSearch = () => fetchData();
 
   const clearAll = () => {
-    setDidaQuery(""); setClientId(""); setClientQuery("");
+    setDidaQuery(""); setClientQuery("");
     setResult(null); setError("");
-    // 清空后立即重新拉全量
     setLoading(true);
     fetch(`${API}/api/channel-mapping`)
       .then(r => r.json())
@@ -81,7 +86,6 @@ export function ChannelMappingPage(_: PageProps) {
         const data: UploadResult = await res.json();
         setResult(data);
         fetchData();
-        // 上传后刷新总数
         fetch(`${API}/api/channel-mapping`).then(r => r.json()).then((d: MappingRow[]) => setTotal(d.length));
       }
     } catch {
@@ -104,78 +108,54 @@ export function ChannelMappingPage(_: PageProps) {
       />
 
       {/* 指标卡片 */}
-      <div className="kpi-row" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 20 }}>
-        <MetricCard
-          title="总数"
-          value={total.toLocaleString()}
-          caption="数据库中全部匹配记录"
-        />
-        <MetricCard
-          title="有价数"
-          value={Math.round(total * 0.8).toLocaleString()}
-          caption="当前可返回价格的酒店匹配数"
-          tone="green"
-        />
-        <MetricCard
-          title="有产酒店数"
-          value={Math.round(total * 0.2).toLocaleString()}
-          caption="当前有库存供应的酒店数"
-          tone="orange"
-        />
+      <div className="grid three-col">
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>总数</p>
+          <div className="metric-value">{total.toLocaleString()}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>有价数</p>
+          <div className="metric-value">{Math.round(total * 0.8).toLocaleString()}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>有产酒店数</p>
+          <div className="metric-value">{Math.round(total * 0.2).toLocaleString()}</div>
+        </div>
       </div>
 
       {/* 搜索栏 */}
-      <div style={searchBar}>
-        {/* Dida Hotel ID */}
-        <div style={inputWrap}>
+      <div className="filter-row">
+        <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
             value={didaQuery}
             onChange={e => setDidaQuery(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
             placeholder="Dida Hotel ID"
-            style={inputStyle}
           />
-        </div>
-
-        {/* 客户 ID 下拉 */}
-        <select
-          value={clientId}
-          onChange={e => setClientId(e.target.value)}
-          style={selectStyle}
-        >
-          <option value="">全部客户 ID</option>
-          {CLIENT_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+        </label>
 
         {/* 客户 Hotel ID */}
-        <div style={inputWrap}>
+        <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
             value={clientQuery}
             onChange={e => setClientQuery(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
             placeholder="客户 Hotel ID"
-            style={inputStyle}
           />
-        </div>
+        </label>
 
-        <button type="button" onClick={handleSearch} style={searchBtn}>搜索</button>
+        <button type="button" onClick={handleSearch} className="button primary">搜索</button>
 
-        {/* 上传按钮 */}
-        <button
-          type="button"
-          onClick={() => fileRef.current?.click()}
-          disabled={uploading}
-          style={uploadBtn}
-        >
+        <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="button">
           <Upload size={13} />
           {uploading ? "上传中…" : "上传 Excel"}
         </button>
         <input ref={fileRef} type="file" accept=".xlsx,.xls" style={{ display: "none" }} onChange={handleUpload} />
 
         {hasFilter && (
-          <button type="button" onClick={clearAll} style={clearBtn} title="清除筛选">
+          <button type="button" onClick={clearAll} className="button icon-only" title="清除筛选">
             <X size={14} />
           </button>
         )}
@@ -187,8 +167,8 @@ export function ChannelMappingPage(_: PageProps) {
 
       {/* 上传结果提示 */}
       {result && (
-        <div style={{ ...resultBanner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "#dfe5ef" }}>
-          <span style={{ color: result.added > 0 ? "#188038" : "#526078", fontWeight: 600 }}>
+        <div style={{ ...resultBanner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "var(--line)" }}>
+          <span style={{ color: result.added > 0 ? "var(--google-green)" : "var(--muted-strong)", fontWeight: 600 }}>
             ✓ 已新增 {result.added} 条匹配关系，数据库已更新
           </span>
           {result.conflicts.length > 0 && (
@@ -201,8 +181,8 @@ export function ChannelMappingPage(_: PageProps) {
         </div>
       )}
       {error && (
-        <div style={{ ...resultBanner, background: "#fce8e6", borderColor: "#f5c6c3", position: "relative" }}>
-          <span style={{ color: "#d93025", fontWeight: 600 }}>✕ {error}</span>
+        <div style={{ ...resultBanner, background: "#fce8e6", borderColor: "#f5c6c3" }}>
+          <span style={{ color: "var(--google-red)", fontWeight: 600 }}>✕ {error}</span>
           <button type="button" onClick={() => setError("")} style={{ position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "var(--muted)" }}><X size={14} /></button>
         </div>
       )}
@@ -219,8 +199,8 @@ export function ChannelMappingPage(_: PageProps) {
       </div>
 
       {/* 表格 */}
-      <div style={tableWrap}>
-        <table style={table}>
+      <div className="table-wrap">
+        <table>
           <thead>
             <tr>
               <th style={{ ...th, width: 56 }}>#</th>
@@ -237,11 +217,11 @@ export function ChannelMappingPage(_: PageProps) {
               <tr><td colSpan={5} style={emptyCell}>未找到匹配记录</td></tr>
             ) : (
               pageRows.map((r, i) => (
-                <tr key={r.id} style={{ background: i % 2 === 0 ? "#fff" : "#f8fafd" }}>
+                <tr key={r.id}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
-                  <td style={{ ...td, fontWeight: 600, fontFamily: "monospace" }}>{r.dida_hotel_id}</td>
-                  <td style={td}><span style={clientBadge}>{r.client_id}</span></td>
-                  <td style={{ ...td, fontFamily: "monospace" }}>{r.client_hotel_id}</td>
+                  <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.dida_hotel_id}</td>
+                  <td style={td}><span className="status info">{r.client_id}</span></td>
+                  <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.client_hotel_id}</td>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{r.updated_at}</td>
                 </tr>
               ))
@@ -252,14 +232,14 @@ export function ChannelMappingPage(_: PageProps) {
 
       {/* 分页 */}
       {totalPages > 1 && (
-        <div style={pagerBar}>
-          <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1} style={pageBtn}>上一页</button>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 16, flexWrap: "wrap" }}>
+          <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1} className="button">上一页</button>
           {pagerPages(safePage, totalPages).map((p, i) =>
             p === "…"
               ? <span key={`e${i}`} style={{ padding: "0 4px", color: "var(--muted)" }}>…</span>
-              : <button key={p} type="button" onClick={() => setPage(p as number)} style={{ ...pageBtn, ...(p === safePage ? pageBtnActive : {}) }}>{p}</button>
+              : <button key={p} type="button" onClick={() => setPage(p as number)} className={`button${p === safePage ? " primary" : ""}`}>{p}</button>
           )}
-          <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} style={pageBtn}>下一页</button>
+          <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} className="button">下一页</button>
           <span style={{ marginLeft: 8, fontSize: 12, color: "var(--muted)" }}>第 {safePage} / {totalPages} 页</span>
         </div>
       )}
@@ -278,24 +258,11 @@ function pagerPages(current: number, total: number): (number | "…")[] {
 }
 
 // ── styles ───────────────────────────────────────────────────────
-import type { CSSProperties } from "react";
+import type { } from "react";
 
-const searchBar: CSSProperties = { display: "flex", alignItems: "center", gap: 8, background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap" };
-const inputWrap: CSSProperties = { display: "flex", alignItems: "center", gap: 6, border: "1px solid #dfe5ef", borderRadius: 6, padding: "0 10px", height: 34, background: "#f8fafd" };
-const inputStyle: CSSProperties = { border: "none", outline: "none", background: "transparent", fontSize: 13, color: "#17213f", width: 148 };
-const selectStyle: CSSProperties = { height: 34, padding: "0 10px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#f8fafd", fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none" };
-const searchBtn: CSSProperties = { height: 34, padding: "0 16px", borderRadius: 7, background: "#1a73e8", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600 };
-const uploadBtn: CSSProperties = { display: "flex", alignItems: "center", gap: 5, height: 34, padding: "0 14px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#fff", color: "#17213f", cursor: "pointer", fontSize: 13, fontWeight: 600 };
-const clearBtn: CSSProperties = { height: 34, width: 34, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #dfe5ef", background: "#fff", cursor: "pointer", color: "#17213f" };
 const resultBanner: CSSProperties = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
-const hintBar: CSSProperties = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid #dfe5ef" };
-const code: CSSProperties = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11 };
-const tableWrap: CSSProperties = { background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, overflow: "hidden" };
-const table: CSSProperties = { width: "100%", borderCollapse: "collapse" };
-const th: CSSProperties = { padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700, color: "#526078", background: "#f8fafd", borderBottom: "1px solid #edf1f7", whiteSpace: "nowrap" };
-const td: CSSProperties = { padding: "9px 14px", fontSize: 13, color: "#17213f", borderBottom: "1px solid #edf1f7" };
-const emptyCell: CSSProperties = { textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13 };
-const clientBadge: CSSProperties = { display: "inline-block", padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700, background: "#e8f0fe", color: "#1a73e8" };
-const pagerBar: CSSProperties = { display: "flex", alignItems: "center", gap: 4, marginTop: 16, flexWrap: "wrap" };
-const pageBtn: CSSProperties = { height: 30, minWidth: 30, padding: "0 8px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#fff", cursor: "pointer", fontSize: 13, color: "#17213f" };
-const pageBtnActive: CSSProperties = { background: "#1a73e8", color: "#fff", border: "1px solid #1a73e8", fontWeight: 700 };
+const hintBar: CSSProperties = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid var(--line)" };
+const code: CSSProperties = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "var(--font-mono)", fontSize: 11 };
+const th: CSSProperties = { position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
+const td: CSSProperties = { padding: "11px 13px", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
+const emptyCell: CSSProperties = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };

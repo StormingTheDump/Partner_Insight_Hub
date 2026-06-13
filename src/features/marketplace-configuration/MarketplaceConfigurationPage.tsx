@@ -5,8 +5,7 @@ import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { useAppState } from "@/dashboard/app-state";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
+const API = import.meta.env.VITE_API_BASE ?? "";
 
 type ChannelConfig = {
   id: number;
@@ -27,10 +26,11 @@ type ChannelConfig = {
 };
 
 export function MarketplaceConfigurationPage(_: PageProps) {
-  const { setActivePage } = useAppState();
+  const { setActivePage, selectedFeed } = useAppState();
   const [configs, setConfigs]   = useState<ChannelConfig[]>([]);
   const [loading, setLoading]   = useState(true);
-  const [clientId, setClientId] = useState("");
+
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -55,8 +55,8 @@ export function MarketplaceConfigurationPage(_: PageProps) {
 
       {/* Notice */}
       <div style={noticeBanner}>
-        <Info size={15} style={{ color: "#1a73e8", flexShrink: 0, marginTop: 1 }} />
-        <span style={{ color: "#1a73e8", fontSize: 13, lineHeight: 1.5 }}>
+        <Info size={15} style={{ color: "var(--google-blue)", flexShrink: 0, marginTop: 1 }} />
+        <span style={{ color: "var(--google-blue)", fontSize: 13, lineHeight: 1.5 }}>
           以上配置均由 Dida 技术团队统一管理。如对任何配置参数有疑问或需要调整，请参阅{" "}
           <button type="button" onClick={() => setActivePage("contact")} style={linkBtn}>
             联系方式 <ArrowRight size={11} style={{ verticalAlign: "middle", marginLeft: 1 }} />
@@ -66,15 +66,7 @@ export function MarketplaceConfigurationPage(_: PageProps) {
       </div>
 
       {/* Search */}
-      <div style={searchBar}>
-        <select value={clientId} onChange={e => setClientId(e.target.value)} style={selectStyle}>
-          <option value="">全部客户 ID</option>
-          {CLIENT_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <button type="button" onClick={fetchData} style={searchBtn}>搜索</button>
-        {clientId && (
-          <button type="button" onClick={() => setClientId("")} style={clearBtn}>清除</button>
-        )}
+      <div className="filter-row">
         <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
           共 <strong>{configs.length}</strong> 个渠道账号
         </span>
@@ -97,16 +89,9 @@ export function MarketplaceConfigurationPage(_: PageProps) {
 // ── Sub-components ───────────────────────────────────────────────────
 
 function Bool({ value }: { value: number }) {
-  return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: 3,
-      padding: "2px 9px", borderRadius: 99, fontSize: 11, fontWeight: 700,
-      background: value ? "#e6f4ea" : "#f1f3f4",
-      color: value ? "#188038" : "#5f6368",
-    }}>
-      {value ? "✓ 是" : "✗ 否"}
-    </span>
-  );
+  return value
+    ? <span className="status">✓ 是</span>
+    : <span className="status neutral">✗ 否</span>;
 }
 
 const CURRENCY_COLORS = ["#4f5fb8", "#ea0345", "#16a34a", "#d97706", "#7c3aed", "#0891b2"];
@@ -132,8 +117,8 @@ function IpList({ value }: { value: string }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 3, alignItems: "flex-end" }}>
       {ips.map((ip, i) => (
         <code key={i} style={{
-          fontSize: 11, fontFamily: "monospace",
-          background: "#f1f5f9", padding: "2px 7px", borderRadius: 4, color: "#334155",
+          fontSize: 11, fontFamily: "var(--font-mono)",
+          background: "#f1f5f9", padding: "2px 7px", borderRadius: 4,
         }}>{ip}</code>
       ))}
     </div>
@@ -144,7 +129,7 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div style={{
       display: "flex", alignItems: "flex-start", justifyContent: "space-between",
-      gap: 12, padding: "6px 0", borderBottom: "1px solid #edf1f7",
+      gap: 12, padding: "6px 0", borderBottom: "1px solid var(--line)",
     }}>
       <span style={{ fontSize: 12, color: "var(--muted)", whiteSpace: "nowrap", paddingTop: 2 }}>{label}</span>
       <div>{children}</div>
@@ -167,7 +152,7 @@ function SecHead({ icon, title, color }: { icon: ReactNode; title: string; color
 
 function Num({ val, unit }: { val: number; unit?: string }) {
   return (
-    <span style={{ fontWeight: 700, fontSize: 13, color: "#000947" }}>
+    <span style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>
       {val}
       {unit && <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 2 }}>{unit}</span>}
     </span>
@@ -230,7 +215,7 @@ function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
 
         {/* 技术配置 */}
         <div style={sec}>
-          <SecHead icon={<Zap size={13} />} title="技术配置" color="#1a73e8" />
+          <SecHead icon={<Zap size={13} />} title="技术配置" color="var(--google-blue)" />
           <Row label="QPS（查价）"><Num val={cfg.qps} unit="/s" /></Row>
           <Row label="PPS（酒店）"><Num val={cfg.pps} unit="/s" /></Row>
           <Row label="查价超时"><Num val={cfg.search_timeout} unit="秒" /></Row>
@@ -254,31 +239,11 @@ const noticeBanner: CSSProperties = {
 };
 const linkBtn: CSSProperties = {
   background: "none", border: "none", cursor: "pointer",
-  color: "#1a73e8", fontWeight: 700, fontSize: 13, padding: "0 1px",
+  color: "var(--google-blue)", fontWeight: 700, fontSize: 13, padding: "0 1px",
   textDecoration: "underline", display: "inline",
 };
-const searchBar: CSSProperties = {
-  display: "flex", alignItems: "center", gap: 8,
-  background: "#fff", border: "1px solid #dfe5ef",
-  borderRadius: 8, padding: "12px 16px", marginBottom: 20, flexWrap: "wrap",
-};
-const selectStyle: CSSProperties = {
-  height: 34, padding: "0 10px", borderRadius: 6,
-  border: "1px solid #dfe5ef", background: "#f8fafd",
-  fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none",
-};
-const searchBtn: CSSProperties = {
-  height: 34, padding: "0 16px", borderRadius: 7,
-  background: "#1a73e8", color: "#fff", border: "none",
-  cursor: "pointer", fontSize: 13, fontWeight: 600,
-};
-const clearBtn: CSSProperties = {
-  height: 34, padding: "0 14px", borderRadius: 6,
-  border: "1px solid #dfe5ef", background: "#fff",
-  cursor: "pointer", fontSize: 13, color: "#17213f",
-};
 const cardWrap: CSSProperties = {
-  background: "#fff", border: "1px solid #dfe5ef",
+  background: "#fff", border: "1px solid var(--line)",
   borderRadius: 8, overflow: "hidden",
   boxShadow: "0 1px 2px rgba(0,9,71,0.06)",
 };
@@ -296,5 +261,5 @@ const cardBody: CSSProperties = {
 };
 const sec: CSSProperties = { minWidth: 0 };
 const vline: CSSProperties = {
-  width: 1, background: "#dfe5ef", margin: "0 22px",
+  width: 1, background: "var(--line)", margin: "0 22px",
 };

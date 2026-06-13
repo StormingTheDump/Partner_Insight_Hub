@@ -1,5 +1,6 @@
+import React from "react";
 import { BookOpen, CheckCircle2, Code2, ExternalLink, ShieldCheck, Zap, ArrowRight, AlertCircle } from "lucide-react";
-
+import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ApiChatBot } from "./ApiChatBot";
@@ -46,7 +47,7 @@ const goLiveSteps = [
   { n: 7, title: "上线", desc: "告知Dida团队正式上线" },
 ];
 
-export function DidaApiPage() {
+export function DidaApiPage(_: PageProps) {
   return (
     <>
       <PageHeader
@@ -54,15 +55,7 @@ export function DidaApiPage() {
         description="Dida Open API v2.0 — 酒店内容、价格搜索及预订全流程接入文档。"
         actions={
           <a href="https://apidoc.didatravel.com/" target="_blank" rel="noopener noreferrer"
-            style={{
-              display: "flex", alignItems: "center", gap: 7,
-              fontSize: 13, fontWeight: 700, textDecoration: "none",
-              color: "#0369a1",
-              background: "#e0f2fe",
-              border: "1px solid #7dd3fc",
-              borderRadius: 7,
-              padding: "6px 14px",
-            }}>
+            className="button">
             <ExternalLink size={14} /> DidaAPI 完整文档
           </a>
         }
@@ -207,32 +200,36 @@ export function DidaApiPage() {
       <div className="grid two-col" style={{ marginTop: 22 }}>
         <Card>
           <h3 style={{ marginBottom: 12 }}>价格搜索错误码（2xxx）</h3>
+          <div className="table-wrap">
           <table style={tableStyle}>
-            <thead><tr style={thRowStyle}><th style={thStyle}>错误码</th><th style={thStyle}>说明</th></tr></thead>
+            <thead><tr><th style={TH}>错误码</th><th style={TH}>说明</th></tr></thead>
             <tbody>
               {pricingErrors.map((e) => (
-                <tr key={e.code} style={{ borderBottom: "1px solid var(--line-soft)" }}>
-                  <td style={tdStyle}><code>{e.code}</code></td>
-                  <td style={tdStyle}>{e.desc}</td>
+                <tr key={e.code}>
+                  <td style={{ ...TD, fontFamily: "var(--font-mono)", fontSize: 12 }}><code>{e.code}</code></td>
+                  <td style={TD}>{e.desc}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         </Card>
 
         <Card>
           <h3 style={{ marginBottom: 12 }}>预订错误码（3xxx）</h3>
+          <div className="table-wrap">
           <table style={tableStyle}>
-            <thead><tr style={thRowStyle}><th style={thStyle}>错误码</th><th style={thStyle}>说明</th></tr></thead>
+            <thead><tr><th style={TH}>错误码</th><th style={TH}>说明</th></tr></thead>
             <tbody>
               {bookingErrors.map((e) => (
-                <tr key={e.code} style={{ borderBottom: "1px solid var(--line-soft)" }}>
-                  <td style={tdStyle}><code>{e.code}</code></td>
-                  <td style={tdStyle}>{e.desc}</td>
+                <tr key={e.code}>
+                  <td style={{ ...TD, fontFamily: "var(--font-mono)", fontSize: 12 }}><code>{e.code}</code></td>
+                  <td style={TD}>{e.desc}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
           <p className="tiny" style={{ marginTop: 10 }}>
             完整错误码列表见：<a href="https://apidoc.didatravel.com/information-hub/api-error-code.html" target="_blank" rel="noopener noreferrer" style={{ color: "var(--dida-navy)" }}>API Error Code</a>
           </p>
@@ -274,7 +271,19 @@ export function DidaApiPage() {
 
 const rowStyle: React.CSSProperties = { display: "flex", justifyContent: "space-between", gap: 8, padding: "5px 0", borderBottom: "1px solid var(--line-soft)", fontSize: 12 };
 const codeBlock: React.CSSProperties = { background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 6, padding: "10px 12px", fontSize: 11, marginTop: 10, lineHeight: 1.7, overflow: "auto" };
-const tableStyle: React.CSSProperties = { width: "100%", borderCollapse: "collapse", fontSize: 12 };
-const thRowStyle: React.CSSProperties = { borderBottom: "2px solid var(--line)" };
-const thStyle: React.CSSProperties = { textAlign: "left", padding: "6px 10px", color: "var(--muted-strong)", fontWeight: 600, fontSize: 11, textTransform: "uppercase" };
-const tdStyle: React.CSSProperties = { padding: "7px 10px", color: "var(--text)" };
+const tableStyle: React.CSSProperties = { width: "100%", borderCollapse: "collapse" };
+const TH: React.CSSProperties = {
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
+};
+const TD: React.CSSProperties = {
+  padding: "11px 13px",
+  borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle",
+  textAlign: "left",
+  whiteSpace: "nowrap",
+};

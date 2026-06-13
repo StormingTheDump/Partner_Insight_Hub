@@ -94,41 +94,52 @@ export function DirectHotelsPage(_: PageProps) {
         title="Dida 直采推荐"
         description="直采、Prebuy 及独家合作酒店资源，助力合作伙伴获取竞争优势"
         actions={
-          <button type="button" onClick={downloadCsv} style={exportBtn}>
+          <button type="button" onClick={downloadCsv} className="button">
             <Download size={14} /> 导出 CSV
           </button>
         }
       />
 
       {/* Stats row */}
-      <div style={statsRow}>
-        {[
-          { label: "全部酒店",  value: total,        color: "#000947", bg: "#eef1ff" },
-          { label: "直采",      value: cntDirect,    color: "#16a34a", bg: "#f0fff4" },
-          { label: "Prebuy",    value: cntPrebuy,    color: "#7c3aed", bg: "#f5f3ff" },
-          { label: "独家合作",  value: cntExclusive, color: "#dc2626", bg: "#fef2f2" },
-        ].map(s => (
-          <div key={s.label} style={{ ...statCard, background: s.bg }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: s.color }}>{s.value}</div>
-            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2 }}>{s.label}</div>
-          </div>
-        ))}
+      <div className="grid four-col">
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>全部酒店</p>
+          <div className="metric-value">{total}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>直采</p>
+          <div className="metric-value">{cntDirect}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>Prebuy</p>
+          <div className="metric-value">{cntPrebuy}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>独家合作</p>
+          <div className="metric-value">{cntExclusive}</div>
+        </div>
       </div>
 
       {/* Filters */}
-      <div style={filterBar}>
-        <select value={country} onChange={e => setCountry(e.target.value)} style={sel}>
-          <option value="">全部国家</option>
-          {ALL_COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <select value={city} onChange={e => setCity(e.target.value)} style={sel}>
-          <option value="">全部城市</option>
-          {ALL_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <select value={starRating} onChange={e => setStarRating(e.target.value)} style={sel}>
-          <option value="">全部星级</option>
-          {[5, 4, 3, 2, 1].map(n => <option key={n} value={n}>{n} 星</option>)}
-        </select>
+      <div className="filter-row">
+        <label className="filter-control">
+          <select value={country} onChange={e => setCountry(e.target.value)}>
+            <option value="">全部国家</option>
+            {ALL_COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <label className="filter-control">
+          <select value={city} onChange={e => setCity(e.target.value)}>
+            <option value="">全部城市</option>
+            {ALL_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <label className="filter-control">
+          <select value={starRating} onChange={e => setStarRating(e.target.value)}>
+            <option value="">全部星级</option>
+            {[5, 4, 3, 2, 1].map(n => <option key={n} value={n}>{n} 星</option>)}
+          </select>
+        </label>
 
         {/* Category toggles */}
         <div style={toggleGroup}>
@@ -143,9 +154,9 @@ export function DirectHotelsPage(_: PageProps) {
               onClick={() => { set(!state); setPage(1); }}
               style={{
                 ...togglePill,
-                background: state ? "#000947" : "var(--surface-soft)",
+                background: state ? "var(--dida-navy)" : "var(--surface-soft)",
                 color:      state ? "#fff"    : "var(--muted-strong)",
-                border:     state ? "1px solid #000947" : "1px solid var(--line)",
+                border:     state ? "1px solid var(--dida-navy)" : "1px solid var(--line)",
               }}
             >
               {label}
@@ -153,11 +164,11 @@ export function DirectHotelsPage(_: PageProps) {
           ))}
         </div>
 
-        <button type="button" onClick={() => setPage(1)} style={searchBtn}>
+        <button type="button" onClick={() => setPage(1)} className="button primary">
           <Search size={13} /> 搜索
         </button>
         {hasFilter && (
-          <button type="button" onClick={handleReset} style={resetBtn}>
+          <button type="button" onClick={handleReset} className="button">
             <X size={13} /> 重置
           </button>
         )}
@@ -167,8 +178,8 @@ export function DirectHotelsPage(_: PageProps) {
       </div>
 
       {/* Table */}
-      <div style={tableWrap}>
-        <table style={table}>
+      <div className="table-wrap">
+        <table>
           <thead>
             <tr>
               {["酒店 ID", "酒店名称", "国家", "城市", "地址", "星级", "合作类型"].map(h => (
@@ -179,12 +190,12 @@ export function DirectHotelsPage(_: PageProps) {
           <tbody>
             {pageRows.length === 0 ? (
               <tr><td colSpan={7} style={emptyCell}>未找到匹配酒店</td></tr>
-            ) : pageRows.map((h, i) => (
-              <tr key={h.hotel_id} style={{ background: i % 2 === 0 ? "#fff" : "var(--surface-soft)" }}>
-                <td style={{ ...td, fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: "#000947" }}>
+            ) : pageRows.map((h) => (
+              <tr key={h.hotel_id}>
+                <td style={{ ...td, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text)" }}>
                   {h.hotel_id}
                 </td>
-                <td style={{ ...td, fontWeight: 600, maxWidth: 220 }}>{h.hotel_name}</td>
+                <td style={{ ...td, maxWidth: 220 }}>{h.hotel_name}</td>
                 <td style={td}>{h.country}</td>
                 <td style={td}>{h.city}</td>
                 <td style={{ ...td, fontSize: 12, color: "var(--muted)", maxWidth: 200 }}>
@@ -208,12 +219,12 @@ export function DirectHotelsPage(_: PageProps) {
       {totalPages > 1 && (
         <div style={pager}>
           <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))}
-            disabled={safePage === 1} style={pageBtn}>上一页</button>
+            disabled={safePage === 1} className="button">上一页</button>
           <span style={{ fontSize: 12, color: "var(--muted)", padding: "0 8px" }}>
             第 {safePage} / {totalPages} 页
           </span>
           <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-            disabled={safePage === totalPages} style={pageBtn}>下一页</button>
+            disabled={safePage === totalPages} className="button">下一页</button>
         </div>
       )}
     </>
@@ -221,61 +232,23 @@ export function DirectHotelsPage(_: PageProps) {
 }
 
 // ── Styles ────────────────────────────────────────────────────────────
-const statsRow: CSSProperties = { display: "flex", gap: 12, marginBottom: 16 };
-const statCard: CSSProperties = {
-  flex: 1, borderRadius: 10, padding: "14px 18px",
-  border: "1px solid rgba(0,0,0,0.06)",
-};
-const filterBar: CSSProperties = {
-  display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap",
-  background: "#fff", border: "1px solid var(--line)", borderRadius: 8,
-  padding: "12px 16px", marginBottom: 12,
-};
-const sel: CSSProperties = {
-  height: 34, padding: "0 10px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  fontSize: 13, color: "var(--text)", cursor: "pointer", outline: "none",
-};
 const toggleGroup: CSSProperties = { display: "flex", gap: 6 };
 const togglePill: CSSProperties = {
   height: 34, padding: "0 12px", borderRadius: 6,
   cursor: "pointer", fontSize: 13, fontWeight: 600,
   transition: "all 0.15s",
 };
-const searchBtn: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 5,
-  height: 34, padding: "0 14px", borderRadius: 6,
-  background: "var(--dida-navy)", color: "#fff", border: "none",
-  cursor: "pointer", fontSize: 13, fontWeight: 600,
-};
-const resetBtn: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 5,
-  height: 34, padding: "0 12px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  cursor: "pointer", fontSize: 13, color: "var(--muted-strong)",
-};
-const exportBtn: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 6,
-  height: 34, padding: "0 14px", borderRadius: 6,
-  background: "#eff6ff", color: "#1d4ed8", border: "1px solid #bfdbfe",
-  cursor: "pointer", fontSize: 13, fontWeight: 600,
-};
-const tableWrap: CSSProperties = {
-  background: "#fff", border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden",
-};
-const table: CSSProperties = { width: "100%", borderCollapse: "collapse" };
 const th: CSSProperties = {
-  padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700,
-  color: "var(--muted-strong)", background: "var(--surface-soft)",
-  borderBottom: "1px solid var(--line)", whiteSpace: "nowrap",
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const td: CSSProperties = {
-  padding: "9px 14px", fontSize: 13, color: "var(--text)", borderBottom: "1px solid var(--line)",
+  padding: "11px 13px", borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };
 const emptyCell: CSSProperties = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };
 const pager: CSSProperties = { display: "flex", alignItems: "center", gap: 4, marginTop: 12 };
-const pageBtn: CSSProperties = {
-  height: 30, padding: "0 12px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "#fff",
-  cursor: "pointer", fontSize: 13, color: "var(--text)",
-};

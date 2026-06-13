@@ -3,7 +3,7 @@ import { Bot, Send, X, ChevronDown } from "lucide-react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 export function ApiChatBot() {
   const [open, setOpen] = useState(false);

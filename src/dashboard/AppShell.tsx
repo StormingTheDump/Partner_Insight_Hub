@@ -18,12 +18,10 @@ import { DatePicker } from "antd";
 import didaIcon from "@/assets/Icon-DIDA_red.svg";
 import didaLogo from "@/assets/logo-DIDA_positive.svg";
 import { useAppState, AppStateProvider } from "@/dashboard/app-state";
-import { navSections } from "@/dashboard/navigation";
+import { navSections, feedOptions } from "@/dashboard/navigation";
 import { routes } from "@/dashboard/routes";
 import type { User as AuthUser } from "@/data/users";
 import { AccountManagementModal } from "@/features/account-management/AccountManagementModal";
-
-const API = "";
 
 // ─── types ────────────────────────────────────────────────────────────────────
 
@@ -116,7 +114,7 @@ function NotifBell({ onGoFinance }: { onGoFinance: () => void }) {
                   }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                    <span style={{ fontFamily: "monospace", fontSize: 12, color: "var(--muted-strong)" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted-strong)" }}>
                       {b.bill_no}
                     </span>
                     <span style={{ fontSize: 12, fontWeight: 700, color: "#ea0345" }}>已逾期</span>
@@ -289,19 +287,6 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
     });
   };
 
-  const [clientIdOptions, setClientIdOptions] = useState<string[]>([]);
-
-  useEffect(() => {
-    fetch(`${API}/api/orders`)
-      .then((r) => r.json())
-      .then(({ data }: { data: Array<{ client_id: string }> }) => {
-        const ids = Array.from(new Set(data.map((r) => r.client_id))).sort() as string[];
-        setClientIdOptions(ids);
-      })
-      .catch(() => {});
-  }, []);
-
-  const feedChoices = ["全部渠道", ...clientIdOptions];
   const ActivePage = routes[activePage];
 
   return (
@@ -373,7 +358,7 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
                 onChange={(e) => setSelectedFeed(e.target.value)}
                 aria-label="渠道筛选"
               >
-                {feedChoices.map((feed) => (
+                {feedOptions.map((feed) => (
                   <option key={feed} value={feed}>{feed}</option>
                 ))}
               </select>
