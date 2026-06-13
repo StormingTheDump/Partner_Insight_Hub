@@ -125,11 +125,14 @@ function handleOrders(p: Record<string, string>): Response {
       String(o["dida_hotel_id"] ?? "").toLowerCase().includes(q2)
     );
   }
-  const total = data.length;
+  // default: cap unfiltered results to 100 for performance; search returns all matches
+  const isFiltered = p["refs"] || p["q"] || p["client_id"] || p["status"];
+  const pool = isFiltered ? data : data.slice(0, 100);
+  const total = pool.length;
   const pageSize = parseInt(p["page_size"] ?? "20");
   const page = parseInt(p["page"] ?? "1");
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
-  const paged = data.slice((page - 1) * pageSize, page * pageSize);
+  const paged = pool.slice((page - 1) * pageSize, page * pageSize);
   return ok({ data: paged, pagination: { page, pageSize, total, totalPages } });
 }
 

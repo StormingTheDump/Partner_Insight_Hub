@@ -184,7 +184,7 @@ export function BookingsPage(_: PageProps) {
 
   // Fetch from backend whenever effective page or filters change
   useEffect(() => {
-    const params = new URLSearchParams({ page: String(effectivePage), pageSize: "50" });
+    const params = new URLSearchParams({ page: String(effectivePage), pageSize: "20" });
     if (selectedFeed !== "全部渠道") params.set("client_id", selectedFeed);
     if (dateRange) { params.set("start_date", dateRange[0]); params.set("end_date", dateRange[1]); }
     const refs = parseBatch(committedQuery);
@@ -255,7 +255,7 @@ export function BookingsPage(_: PageProps) {
       <div className="filter-row" style={{ alignItems: "center" }}>
         <label
           className="filter-control"
-          style={{ flex: 1, maxWidth: 480 }}
+          style={{ flex: "0 0 auto", maxWidth: 160 }}
         >
           <svg
             className="icon"
