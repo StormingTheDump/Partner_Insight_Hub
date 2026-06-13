@@ -92,10 +92,9 @@ function DynChart({ data }: { data: ChartItem[] }) {
 function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  let parsed: unknown = raw;
   let pretty = raw;
   try {
-    parsed = JSON.parse(raw);
+    const parsed: unknown = JSON.parse(raw);
     pretty = JSON.stringify(parsed, null, 2);
   } catch { /* keep as string */ }
 
@@ -194,7 +193,10 @@ function PrebookTab({ meta }: { meta: Meta }) {
       .finally(() => setLoading(false));
   };
 
-  useEffect(() => { fetch_(1); }, []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetch_(1);
+  }, []);
 
   const search = () => {
     const f = { channel, errorType, ratePlanId };
@@ -307,7 +309,10 @@ function BookTab({ meta }: { meta: Meta }) {
       .finally(() => setLoading(false));
   };
 
-  useEffect(() => { fetch_(1); }, []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetch_(1);
+  }, []);
 
   const search = () => {
     const f = { channel, errorType, bookingNumber };

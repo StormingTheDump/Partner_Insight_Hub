@@ -61,7 +61,10 @@ export function OrderLogsPage(_: PageProps) {
     setLoading(false);
   }, []);
 
-  useEffect(() => { fetchOrders("", ""); }, [fetchOrders]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchOrders("", "");
+  }, [fetchOrders]);
 
   const handleSearch = () => fetchOrders(query, statusFilter);
   const handleClear  = () => { setQuery(""); setStatusFilter(""); fetchOrders("", ""); };

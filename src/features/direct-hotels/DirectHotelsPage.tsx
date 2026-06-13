@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { DIRECT_HOTELS } from "@/data/direct-hotels";
-import type { DirectHotel } from "@/data/direct-hotels";
 
 const PAGE_SIZE = 10;
 

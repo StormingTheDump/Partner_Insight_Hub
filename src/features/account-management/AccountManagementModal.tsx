@@ -42,6 +42,7 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
   }, [adminUser.token]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (open) fetchUsers();
   }, [open, fetchUsers]);
 
