@@ -18,6 +18,7 @@ import financeSummary from "@/data/static/finance_summary.json";
 import financeBills from "@/data/static/finance_bills.json";
 import metricsOverview from "@/data/static/metrics_overview.json";
 import metricsFunnel from "@/data/static/metrics_funnel.json";
+import metricsDimensions from "@/data/static/metrics_dimensions.json";
 import metricsPerformance from "@/data/static/metrics_performance.json";
 import apiMetrics from "@/data/static/api_metrics.json";
 import conversionMetrics from "@/data/static/conversion_metrics.json";
@@ -219,8 +220,8 @@ function dispatch(url: URL, method: string, body?: Record<string, unknown>): Res
   // GET
   if (path.includes("/api/metrics/overview"))      return ok(metricsOverview as AnyData);
   if (path.includes("/api/metrics/funnel"))        return ok(metricsFunnel as AnyData);
+  if (path.includes("/api/metrics/dimensions"))    return ok(metricsDimensions as AnyData);
   if (path.includes("/api/metrics/performance"))   return ok(metricsPerformance as AnyData);
-  if (path.includes("/api/metrics/dimensions"))    return ok({ lt: [], chain: [], country: [], star: [] });
   if (path.includes("/api/integration/api-metrics")) return ok(apiMetrics as AnyData);
   if (path.includes("/api/conversion/metrics"))   return ok(conversionMetrics as AnyData);
   if (path.includes("/api/errors/meta"))          return ok(errorsMeta as AnyData);
