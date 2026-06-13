@@ -5,7 +5,7 @@ import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Drawer } from "@/shared/components/Drawer";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
 
 type OrderSummary = {

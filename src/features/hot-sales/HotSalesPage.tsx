@@ -5,7 +5,7 @@ import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { MetricCard } from "@/shared/components/MetricCard";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
 const CHANNEL_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 const COUNTRIES = ["中国", "日本", "泰国", "新加坡", "韩国", "马来西亚", "印度尼西亚", "越南", "澳大利亚", "阿联酋"];

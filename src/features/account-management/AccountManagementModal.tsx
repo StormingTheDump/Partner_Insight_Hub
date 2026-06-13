@@ -4,7 +4,7 @@ import { AlertCircle, Plus, Trash2, UserCheck, UserX, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { User } from "@/data/users";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_BASE ?? "";
 
 type ManagedUser = {
   id: number;
