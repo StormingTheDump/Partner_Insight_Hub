@@ -94,25 +94,30 @@ export function DirectHotelsPage(_: PageProps) {
         title="Dida 直采推荐"
         description="直采、Prebuy 及独家合作酒店资源，助力合作伙伴获取竞争优势"
         actions={
-          <button type="button" onClick={downloadCsv} style={exportBtn}>
+          <button type="button" onClick={downloadCsv} className="button">
             <Download size={14} /> 导出 CSV
           </button>
         }
       />
 
       {/* Stats row */}
-      <div style={statsRow}>
-        {[
-          { label: "全部酒店",  value: total,        color: "#000947", bg: "#eef1ff" },
-          { label: "直采",      value: cntDirect,    color: "#16a34a", bg: "#f0fff4" },
-          { label: "Prebuy",    value: cntPrebuy,    color: "#7c3aed", bg: "#f5f3ff" },
-          { label: "独家合作",  value: cntExclusive, color: "#dc2626", bg: "#fef2f2" },
-        ].map(s => (
-          <div key={s.label} style={{ ...statCard, background: s.bg }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: s.color }}>{s.value}</div>
-            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2 }}>{s.label}</div>
-          </div>
-        ))}
+      <div className="grid four-col">
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>全部酒店</p>
+          <div className="metric-value">{total}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>直采</p>
+          <div className="metric-value">{cntDirect}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>Prebuy</p>
+          <div className="metric-value">{cntPrebuy}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>独家合作</p>
+          <div className="metric-value">{cntExclusive}</div>
+        </div>
       </div>
 
       {/* Filters */}
@@ -149,9 +154,9 @@ export function DirectHotelsPage(_: PageProps) {
               onClick={() => { set(!state); setPage(1); }}
               style={{
                 ...togglePill,
-                background: state ? "#000947" : "var(--surface-soft)",
+                background: state ? "var(--dida-navy)" : "var(--surface-soft)",
                 color:      state ? "#fff"    : "var(--muted-strong)",
-                border:     state ? "1px solid #000947" : "1px solid var(--line)",
+                border:     state ? "1px solid var(--dida-navy)" : "1px solid var(--line)",
               }}
             >
               {label}
@@ -187,7 +192,7 @@ export function DirectHotelsPage(_: PageProps) {
               <tr><td colSpan={7} style={emptyCell}>未找到匹配酒店</td></tr>
             ) : pageRows.map((h) => (
               <tr key={h.hotel_id}>
-                <td style={{ ...td, fontFamily: "monospace", fontSize: 12, color: "#000947" }}>
+                <td style={{ ...td, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text)" }}>
                   {h.hotel_id}
                 </td>
                 <td style={{ ...td, maxWidth: 220 }}>{h.hotel_name}</td>
@@ -227,22 +232,11 @@ export function DirectHotelsPage(_: PageProps) {
 }
 
 // ── Styles ────────────────────────────────────────────────────────────
-const statsRow: CSSProperties = { display: "flex", gap: 12, marginBottom: 16 };
-const statCard: CSSProperties = {
-  flex: 1, borderRadius: 10, padding: "14px 18px",
-  border: "1px solid rgba(0,0,0,0.06)",
-};
 const toggleGroup: CSSProperties = { display: "flex", gap: 6 };
 const togglePill: CSSProperties = {
   height: 34, padding: "0 12px", borderRadius: 6,
   cursor: "pointer", fontSize: 13, fontWeight: 600,
   transition: "all 0.15s",
-};
-const exportBtn: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 6,
-  height: 34, padding: "0 14px", borderRadius: 6,
-  background: "#eff6ff", color: "#1d4ed8", border: "1px solid #bfdbfe",
-  cursor: "pointer", fontSize: 13, fontWeight: 600,
 };
 const th: CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
@@ -253,7 +247,7 @@ const th: CSSProperties = {
   whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const td: CSSProperties = {
-  padding: "11px 13px", fontSize: 13, color: "var(--text)", borderBottom: "1px solid var(--line-soft)",
+  padding: "11px 13px", borderBottom: "1px solid var(--line-soft)",
   verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };
 const emptyCell: CSSProperties = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };

@@ -328,6 +328,7 @@ a {
   vertical-align: middle;
   text-align: left;
   white-space: nowrap;
+  color: var(--text);
 }
 
 .table-wrap th {

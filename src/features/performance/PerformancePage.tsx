@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
@@ -50,34 +50,51 @@ function donutOpt(data: { name: string; value: number; color: string }[]): EChar
 function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div style={{ marginBottom: 12 }}>
-      <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#17213f" }}>{title}</h3>
-      {subtitle && <p className="tiny" style={{ margin: "3px 0 0", color: "#8390ad" }}>{subtitle}</p>}
+      <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "var(--text)" }}>{title}</h3>
+      {subtitle && <p className="tiny" style={{ margin: "3px 0 0", color: "var(--muted)" }}>{subtitle}</p>}
     </div>
   );
 }
 
+const TH: React.CSSProperties = {
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
+};
+const TD: React.CSSProperties = {
+  padding: "11px 13px",
+  borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle",
+  whiteSpace: "nowrap",
+};
+
 function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[]; dimKey: string; dimLabel: string }) {
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-      <thead>
-        <tr>
-          {[dimLabel, "订单数", "占比", "TTV ($)", "间夜数"].map(h => (
-            <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === dimLabel ? "left" : "right" }}>{h}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((r, i) => (
-          <tr key={i}>
-            <td style={{ padding: "11px 13px", color: "#17213f", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" }}>{r[dimKey] as string}</td>
-            <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{(r.bookings as number).toLocaleString()}</td>
-            <td style={{ padding: "11px 13px", textAlign: "right", color: "#4f5fb8", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{r.pct as number}%</td>
-            <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{(r.ttv as number).toLocaleString()}</td>
-            <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{(r.room_nights as number).toLocaleString()}</td>
+    <div className="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            {[dimLabel, "订单数", "占比", "TTV ($)", "间夜数"].map(h => (
+              <th key={h} style={{ ...TH, textAlign: h === dimLabel ? "left" : "right" }}>{h}</th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i}>
+              <td style={TD}>{r[dimKey] as string}</td>
+              <td style={{ ...TD, textAlign: "right" }}>{(r.bookings as number).toLocaleString()}</td>
+              <td style={{ ...TD, textAlign: "right", color: "#4f5fb8" }}>{r.pct as number}%</td>
+              <td style={{ ...TD, textAlign: "right" }}>{(r.ttv as number).toLocaleString()}</td>
+              <td style={{ ...TD, textAlign: "right" }}>{(r.room_nights as number).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

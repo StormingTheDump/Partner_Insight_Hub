@@ -3,7 +3,6 @@ import { Search, Upload, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { MetricCard } from "@/shared/components/MetricCard";
 
 const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
@@ -102,10 +101,19 @@ export function ChannelMappingPage(_: PageProps) {
       />
 
       {/* 指标卡片 */}
-      <div className="kpi-row" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 20 }}>
-        <MetricCard title="总数" value={total.toLocaleString()} caption="数据库中全部匹配记录" />
-        <MetricCard title="有价数" value={Math.round(total * 0.8).toLocaleString()} caption="当前可返回价格的酒店匹配数" tone="green" />
-        <MetricCard title="有产酒店数" value={Math.round(total * 0.2).toLocaleString()} caption="当前有库存供应的酒店数" tone="orange" />
+      <div className="grid three-col">
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>总数</p>
+          <div className="metric-value">{total.toLocaleString()}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>有价数</p>
+          <div className="metric-value">{Math.round(total * 0.8).toLocaleString()}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>有产酒店数</p>
+          <div className="metric-value">{Math.round(total * 0.2).toLocaleString()}</div>
+        </div>
       </div>
 
       {/* 搜索栏 */}
@@ -158,8 +166,8 @@ export function ChannelMappingPage(_: PageProps) {
 
       {/* 上传结果提示 */}
       {result && (
-        <div style={{ ...resultBanner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "#dfe5ef" }}>
-          <span style={{ color: result.added > 0 ? "#188038" : "#526078", fontWeight: 600 }}>
+        <div style={{ ...resultBanner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "var(--line)" }}>
+          <span style={{ color: result.added > 0 ? "var(--google-green)" : "var(--muted-strong)", fontWeight: 600 }}>
             ✓ 已新增 {result.added} 条匹配关系，数据库已更新
           </span>
           {result.conflicts.length > 0 && (
@@ -173,7 +181,7 @@ export function ChannelMappingPage(_: PageProps) {
       )}
       {error && (
         <div style={{ ...resultBanner, background: "#fce8e6", borderColor: "#f5c6c3" }}>
-          <span style={{ color: "#d93025", fontWeight: 600 }}>✕ {error}</span>
+          <span style={{ color: "var(--google-red)", fontWeight: 600 }}>✕ {error}</span>
           <button type="button" onClick={() => setError("")} style={{ position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "var(--muted)" }}><X size={14} /></button>
         </div>
       )}
@@ -210,9 +218,9 @@ export function ChannelMappingPage(_: PageProps) {
               pageRows.map((r, i) => (
                 <tr key={r.id}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
-                  <td style={{ ...td, fontFamily: "monospace" }}>{r.dida_hotel_id}</td>
+                  <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.dida_hotel_id}</td>
                   <td style={td}><span className="status info">{r.client_id}</span></td>
-                  <td style={{ ...td, fontFamily: "monospace" }}>{r.client_hotel_id}</td>
+                  <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.client_hotel_id}</td>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{r.updated_at}</td>
                 </tr>
               ))
@@ -253,7 +261,7 @@ import type { } from "react";
 
 const resultBanner: CSSProperties = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
 const hintBar: CSSProperties = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid var(--line)" };
-const code: CSSProperties = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11 };
+const code: CSSProperties = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "var(--font-mono)", fontSize: 11 };
 const th: CSSProperties = { position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
-const td: CSSProperties = { padding: "11px 13px", fontSize: 13, color: "#17213f", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
+const td: CSSProperties = { padding: "11px 13px", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
 const emptyCell: CSSProperties = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };

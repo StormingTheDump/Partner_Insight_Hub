@@ -219,7 +219,7 @@ export function ConversionPage(_: PageProps) {
                 borderRadius: 4,
                 padding: "1px 6px",
                 marginLeft: 8,
-                fontFamily: "monospace",
+                fontFamily: "var(--font-mono)",
               }}
             >
               {m.formula}
@@ -232,22 +232,13 @@ export function ConversionPage(_: PageProps) {
       </div>
 
       {/* 渠道筛选 */}
-      <div style={{ display: "flex", gap: 6, marginTop: 20, flexWrap: "wrap" }}>
+      <div className="filter-row">
         {ALL_FEEDS.map((ch) => (
           <button
             key={ch}
+            type="button"
             onClick={() => setFeed(ch)}
-            style={{
-              padding: "4px 14px",
-              borderRadius: 20,
-              border: "1px solid",
-              borderColor: feed === ch ? "#7aa8d8" : "#d4dbe6",
-              background: feed === ch ? "#eaf2fb" : "#fff",
-              color: feed === ch ? "#3a7db5" : "#526078",
-              fontSize: 12,
-              cursor: "pointer",
-              fontWeight: feed === ch ? 600 : 400,
-            }}
+            className={feed === ch ? "button primary" : "button"}
           >
             {ch}
           </button>

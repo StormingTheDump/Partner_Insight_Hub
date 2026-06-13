@@ -139,7 +139,7 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
                     {deleteConfirm === u.id ? (
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                         <span style={{ fontSize: 11, color: "var(--muted-strong)", whiteSpace: "nowrap" }}>确认删除?</span>
-                        <button type="button" onClick={() => handleDelete(u.id)} className="button danger" style={{ height: 26, padding: "0 8px", fontSize: 11, background: "#dc2626", color: "#fff", borderColor: "#dc2626" }}>确认</button>
+                        <button type="button" onClick={() => handleDelete(u.id)} className="button danger" style={{ height: 26, padding: "0 8px", fontSize: 11 }}>确认</button>
                         <button type="button" onClick={() => setDeleteConfirm(null)} className="button" style={{ height: 26, padding: "0 8px", fontSize: 11 }}>取消</button>
                       </span>
                     ) : (
@@ -247,7 +247,7 @@ const thStyle: CSSProperties = {
   whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const tdStyle: CSSProperties = {
-  padding: "11px 13px", fontSize: 13, color: "var(--text)",
+  padding: "11px 13px",
   borderBottom: "1px solid var(--line-soft)",
   verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };

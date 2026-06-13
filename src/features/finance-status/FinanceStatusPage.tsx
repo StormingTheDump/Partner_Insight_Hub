@@ -151,27 +151,6 @@ function ProgressBar({ ratio, tone, showThresholds }: {
   );
 }
 
-function Pill({ children, tone }: { children: React.ReactNode; tone?: "safe" | "warning" | "danger" | "blue" | "default" }) {
-  const map: Record<string, { bg: string; color: string }> = {
-    safe:    { bg: "#e6f4ea", color: "#188038" },
-    warning: { bg: "#fff4db", color: "#935100" },
-    danger:  { bg: C.redLight, color: C.red },
-    blue:    { bg: "#e8f0fe", color: "#1a73e8" },
-    default: { bg: C.purpleLight, color: C.purple },
-  };
-  const { bg, color } = map[tone ?? "default"];
-  return (
-    <span style={{
-      display: "inline-flex", alignItems: "center",
-      borderRadius: 999, padding: "3px 10px",
-      fontSize: 12, fontWeight: 800,
-      background: bg, color,
-    }}>
-      {children}
-    </span>
-  );
-}
-
 function StatRow({ label, value, bold }: { label: string; value: string; bold?: boolean }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", gap: 8, fontSize: 13, marginTop: 8 }}>
@@ -265,9 +244,13 @@ export function FinanceStatusPage() {
               </p>
             </div>
             {credit && (
-              <Pill tone={creditTone === "default" ? "safe" : creditTone}>
+              <span className={
+                creditTone === "danger" ? "status danger" :
+                creditTone === "warning" ? "status warning" :
+                "status"
+              }>
                 {(creditRatio * 100).toFixed(1)}%
-              </Pill>
+              </span>
             )}
           </div>
           <ProgressBar ratio={creditRatio} tone={creditTone} showThresholds />
@@ -291,7 +274,7 @@ export function FinanceStatusPage() {
               </p>
             </div>
             {payment && (
-              <Pill tone="blue">{(payment.progress_ratio * 100).toFixed(1)}%</Pill>
+              <span className="status info">{(payment.progress_ratio * 100).toFixed(1)}%</span>
             )}
           </div>
           <ProgressBar ratio={payment?.progress_ratio ?? 0} tone="default" />
@@ -367,7 +350,7 @@ export function FinanceStatusPage() {
                 <tr><td colSpan={10} style={{ padding: "32px", textAlign: "center", color: "var(--muted)" }}>暂无账单数据</td></tr>
               ) : bills.map(bill => (
                 <tr key={bill.bill_no} style={{ background: bill.status === "已逾期" ? C.redLight : undefined }}>
-                  <td style={{ ...TD, fontFamily: "monospace", fontSize: 12 }}>{bill.bill_no}</td>
+                  <td style={{ ...TD, fontFamily: "var(--font-mono)", fontSize: 12 }}>{bill.bill_no}</td>
                   <td style={TD}>{bill.client_id}</td>
                   <td style={TD}>{fmtPeriod(bill.billing_period)}</td>
                   <td style={TD}>{fmtDate(bill.latest_collection_date)}</td>

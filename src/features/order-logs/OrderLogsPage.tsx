@@ -178,7 +178,7 @@ export function OrderLogsPage(_: PageProps) {
               const types = order.log_types.split("|");
               return (
               <tr key={order.order_no}>
-                  <td style={{ ...td, fontFamily: "monospace", fontSize: 12 }}>
+                  <td style={{ ...td, fontFamily: "var(--font-mono)", fontSize: 12 }}>
                     {order.order_no}
                   </td>
                   <td style={td}>
@@ -211,7 +211,7 @@ export function OrderLogsPage(_: PageProps) {
                       <button type="button" onClick={() => openDrawer(order)} className="button" style={{ height: 28, padding: "0 10px", fontSize: 12 }}>
                         <FileText size={12} /> 详细日志
                       </button>
-                      <button type="button" onClick={() => downloadCsv(order)} className="button" style={{ height: 28, padding: "0 10px", fontSize: 12, background: "#eff6ff", borderColor: "#bfdbfe", color: "#1d4ed8" }}>
+                      <button type="button" onClick={() => downloadCsv(order)} className="button" style={{ height: 28, padding: "0 10px", fontSize: 12 }}>
                         <Download size={12} /> 下载
                       </button>
                     </span>
@@ -277,10 +277,10 @@ function LogSection({ entry }: { entry: LogEntry }) {
   const status   = respBody["Status"];
 
   const statusBadge =
-    status === 2 ? { label: "Confirmed", color: "#188038", bg: "#e6f4ea" } :
-    status === 3 ? { label: "Canceled",  color: "#935100", bg: "#fff4db" } :
-    status === 4 ? { label: "Failed",    color: "#d93025", bg: "#fce8e6" } :
-    status === "Success" ? { label: "Success", color: "#188038", bg: "#e6f4ea" } : null;
+    status === 2 ? "Confirmed" :
+    status === 3 ? "Canceled" :
+    status === 4 ? "Failed" :
+    status === "Success" ? "Success" : null;
 
   return (
     <div style={{ border: `1px solid ${meta.border}`, borderRadius: 8, overflow: "hidden" }}>
@@ -317,9 +317,12 @@ function LogSection({ entry }: { entry: LogEntry }) {
                 textTransform: "uppercase", letterSpacing: "0.5px" }}>RESPONSE</span>
             </button>
             {statusBadge && (
-              <span style={{ fontSize: 11, fontWeight: 700, padding: "1px 8px", borderRadius: 99,
-                background: statusBadge.bg, color: statusBadge.color }}>
-                {statusBadge.label}
+              <span className={
+                statusBadge === "Confirmed" || statusBadge === "Success" ? "status" :
+                statusBadge === "Canceled" ? "status warning" :
+                "status danger"
+              } style={{ fontSize: 11 }}>
+                {statusBadge}
               </span>
             )}
           </div>
@@ -334,7 +337,7 @@ function JsonBlock({ data }: { data: unknown }) {
   return (
     <pre style={{
       margin: 0, fontSize: 10.5,
-      fontFamily: "'Courier New', Courier, monospace",
+      fontFamily: "var(--font-mono)",
       background: "#0f172a", color: "#e2e8f0",
       padding: "10px 12px", borderRadius: 6,
       overflow: "auto", maxHeight: 260,
@@ -356,11 +359,11 @@ const th: CSSProperties = {
   whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const td: CSSProperties = {
-  padding: "11px 13px", fontSize: 13, color: "#17213f", borderBottom: "1px solid var(--line-soft)",
+  padding: "11px 13px", borderBottom: "1px solid var(--line-soft)",
   verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };
 const emptyCell: CSSProperties = {
-  textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13,
+  textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13,
 };
 const toggleBtn: CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 4,

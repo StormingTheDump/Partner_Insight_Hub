@@ -3,7 +3,6 @@ import { Search, Upload, X, Globe, Flame } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { MetricCard } from "@/shared/components/MetricCard";
 
 const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
@@ -97,7 +96,6 @@ export function HotSalesPage(_: PageProps) {
     }
   };
 
-  const matchPct = stats.total > 0 ? ((stats.matched / stats.total) * 100).toFixed(1) : "0.0";
   const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   const safePage   = Math.min(page, totalPages);
   const pageRows   = rows.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
@@ -111,25 +109,19 @@ export function HotSalesPage(_: PageProps) {
       />
 
       {/* 指标卡片 */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, marginBottom: 20 }}>
-        <MetricCard
-          title="已上传热销酒店"
-          value={stats.total.toLocaleString()}
-          caption="数据库中全部热销记录"
-        />
-        <MetricCard
-          title="与 Dida 已匹配"
-          value={stats.matched.toLocaleString()}
-          caption={`匹配率 ${matchPct}%，其余待对照补全`}
-          tone="green"
-          delta={`${matchPct}%`}
-        />
-        <MetricCard
-          title="覆盖国家 / 地区"
-          value={String(stats.countries)}
-          caption="热销酒店分布的国家与地区数"
-          tone="blue"
-        />
+      <div className="grid three-col">
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>已上传热销酒店</p>
+          <div className="metric-value">{stats.total.toLocaleString()}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>与 Dida 已匹配</p>
+          <div className="metric-value">{stats.matched.toLocaleString()}</div>
+        </div>
+        <div className="card compact">
+          <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>覆盖国家 / 地区</p>
+          <div className="metric-value">{String(stats.countries)}</div>
+        </div>
       </div>
 
       {/* 搜索栏 */}
@@ -181,8 +173,8 @@ export function HotSalesPage(_: PageProps) {
 
       {/* 上传结果 */}
       {result && (
-        <div style={{ ...banner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "#dfe5ef" }}>
-          <span style={{ color: result.added > 0 ? "#188038" : "#526078", fontWeight: 600 }}>
+        <div style={{ ...banner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "var(--line)" }}>
+          <span style={{ color: result.added > 0 ? "var(--google-green)" : "var(--muted-strong)", fontWeight: 600 }}>
             ✓ 已新增 {result.added} 条热销记录，数据库已更新
             {result.skipped > 0 && `（跳过 ${result.skipped} 条已存在记录）`}
           </span>
@@ -191,7 +183,7 @@ export function HotSalesPage(_: PageProps) {
       )}
       {error && (
         <div style={{ ...banner, background: "#fce8e6", borderColor: "#f5c6c3" }}>
-          <span style={{ color: "#d93025", fontWeight: 600 }}>✕ {error}</span>
+          <span style={{ color: "var(--google-red)", fontWeight: 600 }}>✕ {error}</span>
           <button type="button" onClick={() => setError("")} style={bannerClose}><X size={14} /></button>
         </div>
       )}
@@ -231,7 +223,7 @@ export function HotSalesPage(_: PageProps) {
                 <tr key={r.id}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
                   <td style={td}><span className="status info">{r.channel_id}</span></td>
-                  <td style={{ ...td, fontFamily: "monospace" }}>{r.hotel_id}</td>
+                  <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.hotel_id}</td>
                   <td style={td}><span style={countryTag}><Flame size={10} style={{ display: "inline", marginRight: 3 }} />{r.country}</span></td>
                   <td style={td}>{r.city}</td>
                   <td style={{ ...td, fontSize: 12, color: "var(--muted-strong)" }}>{r.address}</td>
@@ -272,11 +264,11 @@ function pagerPages(current: number, total: number): (number | "…")[] {
 
 // ── styles ───────────────────────────────────────────────────────
 const banner: CSSProperties      = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
-const bannerClose: CSSProperties = { position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "#66728a" };
-const hintBar: CSSProperties     = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid #dfe5ef" };
-const codeStyle: CSSProperties   = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11, marginLeft: 3, marginRight: 3 };
+const bannerClose: CSSProperties = { position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "var(--muted)" };
+const hintBar: CSSProperties     = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid var(--line)" };
+const codeStyle: CSSProperties   = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "var(--font-mono)", fontSize: 11, marginLeft: 3, marginRight: 3 };
 const th: CSSProperties          = { position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
-const td: CSSProperties          = { padding: "11px 13px", fontSize: 13, color: "#17213f", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
-const emptyCell: CSSProperties   = { textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13 };
+const td: CSSProperties          = { padding: "11px 13px", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
+const emptyCell: CSSProperties   = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };
 const countryTag: CSSProperties   = { display: "inline-flex", alignItems: "center", padding: "2px 7px", borderRadius: 99, fontSize: 11, fontWeight: 600, background: "#fff4db", color: "#b06000" };
 const pagerBar: CSSProperties    = { display: "flex", alignItems: "center", gap: 4, marginTop: 16, flexWrap: "wrap" };

@@ -1,14 +1,6 @@
 import { useState } from 'react';
-import { Select, Input, Button, Table, Tag, Tooltip } from 'antd';
-import {
-  SearchOutlined,
-  ClockCircleOutlined,
-  EyeOutlined,
-  WarningOutlined,
-} from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-
-const { Option } = Select;
+import { Search, AlertTriangle, Clock } from "lucide-react";
+import { PageHeader } from "@/shared/components/PageHeader";
 
 interface LogEntry {
   key: string;
@@ -36,12 +28,37 @@ const MOCK_LOGS: LogEntry[] = [
   { key: '8', date: '2026-06-09', time: '14:10:52', source: 'Prebook', action: '验价', errorType: '验价错误', supplierMessage: 'No available room.', detail: 'sold out at given dates', errorCount: 9, leadTime: 21, hotelId: '4401', rateCode: '405-331107' },
 ];
 
-const ERROR_TYPE_COLORS: Record<string, string> = {
-  '验价错误': 'red',
-  '下单错误': 'orange',
-  '超时错误': 'volcano',
-  '价格变动': 'gold',
-  '取消错误': 'purple',
+const TH: React.CSSProperties = {
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
+};
+
+const TD: React.CSSProperties = {
+  padding: "11px 13px",
+  borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle",
+  textAlign: "left",
+  whiteSpace: "nowrap",
+};
+
+const actionBadgeClass = (action: string) => {
+  if (action === '验价') return 'status info';
+  if (action === '下单') return 'status';
+  if (action === '取消') return 'status warning';
+  return 'status neutral';
+};
+
+const errorTypeBadgeClass = (errorType: string) => {
+  if (errorType === '验价错误') return 'status danger';
+  if (errorType === '下单错误') return 'status warning';
+  if (errorType === '超时错误') return 'status warning';
+  if (errorType === '价格变动') return 'status warning';
+  if (errorType === '取消错误') return 'status neutral';
+  return 'status neutral';
 };
 
 export default function LogsPage() {
@@ -66,169 +83,68 @@ export default function LogsPage() {
 
   const totalLoss = filtered.reduce((s, r) => s + r.errorCount * 333, 0);
 
-  const columns: ColumnsType<LogEntry> = [
-    {
-      title: '时间',
-      key: 'time',
-      width: 130,
-      render: (_, r) => (
-        <div>
-          <div style={{ fontSize: 13, color: '#061035' }}>{r.date}</div>
-          <div style={{ fontSize: 12, color: '#66728a' }}>{r.time}</div>
-        </div>
-      ),
-    },
-    {
-      title: '来源',
-      dataIndex: 'source',
-      key: 'source',
-      width: 90,
-      render: (v) => <span style={{ fontWeight: 600, color: '#000947', fontSize: 13 }}>{v}</span>,
-    },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      key: 'action',
-      width: 80,
-      render: (v) => <Tag color="blue" style={{ borderRadius: 6, fontWeight: 600 }}>{v}</Tag>,
-    },
-    {
-      title: '错误类型',
-      dataIndex: 'errorType',
-      key: 'errorType',
-      width: 110,
-      render: (v) => (
-        <Tag color={ERROR_TYPE_COLORS[v] || 'default'} style={{ borderRadius: 6 }}>{v}</Tag>
-      ),
-    },
-    {
-      title: '供应商信息',
-      dataIndex: 'supplierMessage',
-      key: 'supplierMessage',
-      render: (v, r) => (
-        <div>
-          <div style={{ fontSize: 13, color: '#061035' }}>{v}</div>
-          <div style={{ fontSize: 12, color: '#66728a' }}>{r.detail}</div>
-        </div>
-      ),
-    },
-    {
-      title: '错误数',
-      dataIndex: 'errorCount',
-      key: 'errorCount',
-      width: 80,
-      align: 'right',
-      render: (v) => <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 600 }}>{v}</span>,
-    },
-    {
-      title: '提前天数',
-      dataIndex: 'leadTime',
-      key: 'leadTime',
-      width: 90,
-      align: 'right',
-    },
-    {
-      title: '酒店 ID',
-      dataIndex: 'hotelId',
-      key: 'hotelId',
-      width: 90,
-    },
-    {
-      title: '费率代码',
-      dataIndex: 'rateCode',
-      key: 'rateCode',
-      width: 130,
-      render: (v) => <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#526383' }}>{v}</span>,
-    },
-    {
-      title: '操作',
-      key: 'actions',
-      width: 80,
-      render: (_, r) => (
-        <Tooltip title={`查看请求 ${r.key} 详情`}>
-          <Button size="small" icon={<EyeOutlined />} style={{ borderRadius: 6 }}>
-            查看
-          </Button>
-        </Tooltip>
-      ),
-    },
-  ];
-
   return (
     <div>
-      {/* Page header */}
-      <div style={styles.pageHeader}>
-        <div>
-          <h1 style={styles.h1}>日志查询</h1>
-          <p style={styles.subText}>浏览系统捕获的验价和下单错误日志</p>
-        </div>
-      </div>
+      <PageHeader
+        title="日志查询"
+        description="浏览系统捕获的验价和下单错误日志"
+      />
 
       {/* Warning banner */}
-      <div style={styles.warnCard}>
-        <ClockCircleOutlined style={{ fontSize: 16 }} />
+      <div style={{
+        background: '#fff9e9',
+        border: '1px solid #ffcc53',
+        color: '#933e00',
+        padding: '10px 16px',
+        borderRadius: 8,
+        fontWeight: 600,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        fontSize: 13,
+        marginBottom: 24,
+      }}>
+        <Clock size={16} />
         <span>错误日志仅保留最近 <strong>48 小时</strong>。此页面不受顶部日期筛选器影响。</span>
       </div>
 
-      {/* Filters */}
-      <div style={styles.filters}>
-        <div style={styles.filterGroup}>
-          <label style={styles.filterLabel}>操作类型</label>
-          <Select
-            value={actionFilter}
-            onChange={setActionFilter}
-            style={{ width: 160 }}
-          >
-            <Option value="all">全部操作</Option>
-            <Option value="验价">验价</Option>
-            <Option value="下单">下单</Option>
-            <Option value="取消">取消</Option>
-          </Select>
-        </div>
-
-        <div style={styles.filterGroup}>
-          <label style={styles.filterLabel}>错误类型</label>
-          <Select
-            value={errorTypeFilter}
-            onChange={setErrorTypeFilter}
-            style={{ width: 160 }}
-          >
-            <Option value="all">全部类型</Option>
-            <Option value="验价错误">验价错误</Option>
-            <Option value="下单错误">下单错误</Option>
-            <Option value="超时错误">超时错误</Option>
-            <Option value="价格变动">价格变动</Option>
-            <Option value="取消错误">取消错误</Option>
-          </Select>
-        </div>
-
-        <div style={styles.filterGroup}>
-          <label style={styles.filterLabel}>搜索日志</label>
-          <Input
-            prefix={<SearchOutlined style={{ color: '#66728a' }} />}
-            placeholder="搜索错误信息、酒店ID、费率代码..."
+      {/* Filter bar */}
+      <div className="filter-row">
+        <label className="filter-control">
+          <select value={actionFilter} onChange={(e) => setActionFilter(e.target.value)}>
+            <option value="all">全部操作</option>
+            <option value="验价">验价</option>
+            <option value="下单">下单</option>
+            <option value="取消">取消</option>
+          </select>
+        </label>
+        <label className="filter-control">
+          <select value={errorTypeFilter} onChange={(e) => setErrorTypeFilter(e.target.value)}>
+            <option value="all">全部类型</option>
+            <option value="验价错误">验价错误</option>
+            <option value="下单错误">下单错误</option>
+            <option value="超时错误">超时错误</option>
+            <option value="价格变动">价格变动</option>
+            <option value="取消错误">取消错误</option>
+          </select>
+        </label>
+        <label className="filter-control">
+          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
+          <input
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            onPressEnter={handleSearch}
-            style={{ width: 280, borderRadius: 7 }}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            placeholder="搜索错误信息、酒店ID、费率代码..."
           />
-        </div>
-
-        <Button
-          type="primary"
-          icon={<SearchOutlined />}
-          onClick={handleSearch}
-          style={{ alignSelf: 'flex-end', borderRadius: 7, background: '#000947', borderColor: '#000947' }}
-        >
-          搜索日志
-        </Button>
+        </label>
+        <button className="button primary" onClick={handleSearch}><Search size={14} /> 搜索日志</button>
       </div>
 
       {/* Estimated TTV loss */}
-      <div style={styles.card}>
+      <div className="card">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-          <WarningOutlined style={{ color: '#ea0345', fontSize: 18 }} />
-          <h3 style={{ margin: 0, fontSize: 15, color: '#000947' }}>
+          <AlertTriangle size={18} style={{ color: "var(--dida-red)" }} />
+          <h3 style={{ margin: 0, fontSize: 15, color: "var(--text)" }}>
             预计损失 TTV：<span style={{ color: '#ea0345' }}>${totalLoss.toLocaleString()}</span>
           </h3>
         </div>
@@ -253,70 +169,59 @@ export default function LogsPage() {
 
       {/* Log table */}
       <div style={{ marginTop: 24 }}>
-        <Table
-          columns={columns}
-          dataSource={filtered}
-          size="middle"
-          pagination={{ pageSize: 10, showSizeChanger: false }}
-          scroll={{ x: 'max-content' }}
-          style={{ background: '#fff', borderRadius: 8, overflow: 'hidden' }}
-        />
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style={TH}>时间</th>
+                <th style={TH}>来源</th>
+                <th style={TH}>操作</th>
+                <th style={TH}>错误类型</th>
+                <th style={TH}>供应商信息</th>
+                <th style={{ ...TH, textAlign: "right" }}>错误数</th>
+                <th style={{ ...TH, textAlign: "right" }}>提前天数</th>
+                <th style={TH}>酒店 ID</th>
+                <th style={TH}>费率代码</th>
+                <th style={TH}>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((r) => (
+                <tr key={r.key}>
+                  <td style={TD}>
+                    <div>{r.date}</div>
+                    <div style={{ fontSize: 12, color: "var(--muted)" }}>{r.time}</div>
+                  </td>
+                  <td style={TD}>
+                    <span style={{ fontWeight: 600 }}>{r.source}</span>
+                  </td>
+                  <td style={TD}>
+                    <span className={actionBadgeClass(r.action)}>{r.action}</span>
+                  </td>
+                  <td style={TD}>
+                    <span className={errorTypeBadgeClass(r.errorType)}>{r.errorType}</span>
+                  </td>
+                  <td style={TD}>
+                    <div>{r.supplierMessage}</div>
+                    <div style={{ fontSize: 12, color: "var(--muted)" }}>{r.detail}</div>
+                  </td>
+                  <td style={{ ...TD, textAlign: "right" }}>
+                    <span style={{ fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>{r.errorCount}</span>
+                  </td>
+                  <td style={{ ...TD, textAlign: "right" }}>{r.leadTime}</td>
+                  <td style={TD}>{r.hotelId}</td>
+                  <td style={TD}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#526078" }}>{r.rateCode}</span>
+                  </td>
+                  <td style={TD}>
+                    <button className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  pageHeader: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 20,
-    marginBottom: 20,
-  },
-  h1: {
-    margin: '0 0 6px',
-    fontSize: 28,
-    fontWeight: 800,
-    color: '#000947',
-    lineHeight: 1.2,
-  },
-  subText: { margin: 0, color: '#66728a', fontSize: 14 },
-  warnCard: {
-    background: '#fff9e9',
-    border: '1px solid #ffcc53',
-    color: '#933e00',
-    padding: '10px 16px',
-    borderRadius: 8,
-    fontWeight: 600,
-    display: 'flex',
-    alignItems: 'center',
-    gap: 10,
-    fontSize: 13,
-    marginBottom: 24,
-  },
-  filters: {
-    display: 'flex',
-    gap: 16,
-    alignItems: 'flex-end',
-    flexWrap: 'wrap' as const,
-    marginBottom: 24,
-  },
-  filterGroup: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: 6,
-  },
-  filterLabel: {
-    fontSize: 13,
-    fontWeight: 600,
-    color: '#1c2442',
-  },
-  card: {
-    background: '#fff',
-    border: '1px solid #dfe5ef',
-    borderRadius: 8,
-    boxShadow: '0 1px 2px rgba(0,9,71,0.06)',
-    padding: 20,
-  },
-};

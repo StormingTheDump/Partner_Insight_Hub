@@ -113,7 +113,7 @@ function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
         boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
       }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #e8edf4" }}>
-          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>Rate Record Channel</span>
+          <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>验价错误详情</span>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex" }}>
             <X size={18} />
           </button>
@@ -121,7 +121,7 @@ function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
         <pre style={{
           margin: 0, padding: "16px 20px", overflowY: "auto", flex: 1,
           fontSize: 12, lineHeight: 1.6, color: "#334155",
-          fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          fontFamily: "var(--font-mono)",
           background: "#f8fafc", borderRadius: "0 0 10px 10px",
           whiteSpace: "pre-wrap", wordBreak: "break-all",
         }}>
@@ -251,9 +251,16 @@ function PrebookTab({ meta }: { meta: Meta }) {
                   <td style={tdStyle}>{r.client_id}</td>
                   <td style={tdStyle}><span className="status danger">{r.error_type}</span></td>
                   <td style={tdStyle}>{r.dida_hotel_id}</td>
-                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: 11 }}>{r.dida_rate_plan_id}</td>
+                  <td style={{ ...tdStyle, fontFamily: "var(--font-mono)", fontSize: 11 }}>{r.dida_rate_plan_id}</td>
                   <td style={tdStyle}>
-                    <button onClick={() => setModal(r.rate_record_channel)} className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>
+                    <button onClick={() => setModal(JSON.stringify({
+                      log_time: r.log_time,
+                      client_id: r.client_id,
+                      error_type: r.error_type,
+                      dida_hotel_id: r.dida_hotel_id,
+                      dida_rate_plan_id: r.dida_rate_plan_id,
+                      rate_record_channel: r.rate_record_channel ?? null,
+                    }, null, 2))} className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>
                   </td>
                 </tr>
               ))}
@@ -364,7 +371,7 @@ function BookTab({ meta }: { meta: Meta }) {
                   <td style={tdStyle}>{r.client_id}</td>
                   <td style={tdStyle}><span className="status danger">{r.error_type}</span></td>
                   <td style={tdStyle}>{r.dida_hotel_id}</td>
-                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: 12 }}>{r.channel_bookingnumber}</td>
+                  <td style={{ ...tdStyle, fontFamily: "var(--font-mono)", fontSize: 12 }}>{r.channel_bookingnumber}</td>
                 </tr>
               ))}
             </tbody>
@@ -396,7 +403,7 @@ export function ErrorsPage(_: PageProps) {
       />
 
       {/* Tab 切换 */}
-      <div style={{ display: "flex", gap: 0, marginTop: 20, borderBottom: "2px solid #e8edf4" }}>
+      <div style={{ display: "flex", gap: 0, marginTop: 20, borderBottom: "2px solid var(--line-soft)" }}>
         {(["prebook", "book"] as const).map((t) => (
           <button
             key={t}
@@ -404,10 +411,10 @@ export function ErrorsPage(_: PageProps) {
             style={{
               padding: "8px 24px",
               border: "none",
-              borderBottom: tab === t ? "2px solid #4c4597" : "2px solid transparent",
+              borderBottom: tab === t ? "2px solid var(--dida-purple)" : "2px solid transparent",
               marginBottom: -2,
               background: "none",
-              color: tab === t ? "#4c4597" : "#7a8fa6",
+              color: tab === t ? "var(--dida-purple)" : "var(--muted)",
               fontWeight: tab === t ? 600 : 400,
               fontSize: 14,
               cursor: "pointer",
@@ -441,6 +448,6 @@ const thStyle: React.CSSProperties = {
   whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const tdStyle: React.CSSProperties = {
-  padding: "11px 13px", color: "#17213f", borderBottom: "1px solid var(--line-soft)",
+  padding: "11px 13px", borderBottom: "1px solid var(--line-soft)",
   verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };

@@ -1,12 +1,6 @@
 import { useState } from 'react';
-import { Select, Input, Button, Table, Tag } from 'antd';
-import {
-  SearchOutlined,
-  DownloadOutlined,
-} from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
-
-const { Option } = Select;
+import { Download, Search } from "lucide-react";
+import { PageHeader } from "@/shared/components/PageHeader";
 
 interface Order {
   key: string;
@@ -51,6 +45,23 @@ const KPI_CARDS = [
   { label: '总收入 (TTV)', value: '$' + MOCK_ORDERS.reduce((s, o) => s + o.price, 0).toFixed(0), color: '#8b35ff' },
 ];
 
+const TH: React.CSSProperties = {
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
+};
+
+const TD: React.CSSProperties = {
+  padding: "11px 13px",
+  borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle",
+  textAlign: "left",
+  whiteSpace: "nowrap",
+};
+
 export default function OrderManagementPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [channelFilter, setChannelFilter] = useState<string>('all');
@@ -85,223 +96,113 @@ export default function OrderManagementPage() {
     URL.revokeObjectURL(url);
   };
 
-  const columns: ColumnsType<Order> = [
-    {
-      title: '订单 ID',
-      dataIndex: 'orderId',
-      key: 'orderId',
-      width: 120,
-      render: (v) => <span style={{ fontFamily: 'monospace', fontSize: 12 }}>{v}</span>,
-    },
-    {
-      title: '酒店 ID',
-      dataIndex: 'hotelId',
-      key: 'hotelId',
-      width: 90,
-    },
-    {
-      title: '酒店名称',
-      dataIndex: 'hotelName',
-      key: 'hotelName',
-      render: (v) => <span style={{ fontSize: 13, fontWeight: 500 }}>{v}</span>,
-    },
-    {
-      title: '渠道',
-      dataIndex: 'channel',
-      key: 'channel',
-      width: 180,
-      render: (v) => (
-        <Tag color="blue" style={{ borderRadius: 6, fontSize: 11 }}>{v}</Tag>
-      ),
-    },
-    {
-      title: '金额',
-      dataIndex: 'price',
-      key: 'price',
-      width: 100,
-      align: 'right',
-      render: (v) => (
-        <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 600 }}>
-          ${v.toFixed(2)}
-        </span>
-      ),
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      width: 100,
-      render: (v) => {
-        const s = STATUS_MAP[v] || { label: v, color: 'default' };
-        return <Tag color={s.color} style={{ borderRadius: 6, fontWeight: 600 }}>{s.label}</Tag>;
-      },
-    },
-    {
-      title: '入住日期',
-      dataIndex: 'checkIn',
-      key: 'checkIn',
-      width: 110,
-    },
-    {
-      title: '离店日期',
-      dataIndex: 'checkOut',
-      key: 'checkOut',
-      width: 110,
-    },
-    {
-      title: '下单日期',
-      dataIndex: 'bookingDate',
-      key: 'bookingDate',
-      width: 110,
-    },
-    {
-      title: '间夜数',
-      dataIndex: 'nights',
-      key: 'nights',
-      width: 80,
-      align: 'right',
-    },
-  ];
+  const statusBadgeClass = (status: string) => {
+    if (status === 'confirmed') return 'status';
+    if (status === 'pending') return 'status warning';
+    if (status === 'cancelled') return 'status danger';
+    return 'status neutral';
+  };
 
   return (
     <div>
-      {/* Page header */}
-      <div style={styles.pageHeader}>
-        <div>
-          <h1 style={styles.h1}>订单管理</h1>
-          <p style={styles.subText}>查看并导出您与 Dida 的订单记录</p>
-        </div>
-        <Button
-          icon={<DownloadOutlined />}
-          onClick={handleExport}
-          style={{ borderRadius: 7, fontWeight: 600, height: 36 }}
-        >
-          导出 CSV
-        </Button>
-      </div>
+      <PageHeader
+        title="订单管理"
+        description="查看并导出您与 Dida 的订单记录"
+        actions={
+          <button className="button" onClick={handleExport}>
+            <Download size={14} /> 导出 CSV
+          </button>
+        }
+      />
 
-      {/* KPI cards */}
-      <div style={styles.kpiGrid}>
+      {/* KPI grid */}
+      <div className="grid" style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 16, marginBottom: 24 }}>
         {KPI_CARDS.map((k) => (
-          <div key={k.label} style={styles.card}>
-            <p style={styles.cardLabel}>{k.label}</p>
-            <div style={{ ...styles.metricValue, color: k.color }}>{k.value}</div>
+          <div key={k.label} className="card compact">
+            <p style={{ margin: "0 0 4px", fontSize: 12, color: "var(--muted)" }}>{k.label}</p>
+            <div className="metric-value" style={{ color: k.color }}>{k.value}</div>
           </div>
         ))}
       </div>
 
-      {/* Filters */}
-      <div style={styles.filters}>
-        <div style={styles.filterGroup}>
-          <label style={styles.filterLabel}>订单状态</label>
-          <Select value={statusFilter} onChange={setStatusFilter} style={{ width: 140 }}>
-            <Option value="all">全部状态</Option>
-            <Option value="confirmed">已确认</Option>
-            <Option value="pending">待确认</Option>
-            <Option value="cancelled">已取消</Option>
-          </Select>
-        </div>
-
-        <div style={styles.filterGroup}>
-          <label style={styles.filterLabel}>渠道</label>
-          <Select value={channelFilter} onChange={setChannelFilter} style={{ width: 200 }}>
-            <Option value="all">全部渠道</Option>
-            {CHANNELS.map(c => <Option key={c} value={c}>{c}</Option>)}
-          </Select>
-        </div>
-
-        <div style={styles.filterGroup}>
-          <label style={styles.filterLabel}>搜索</label>
-          <Input
-            prefix={<SearchOutlined style={{ color: '#66728a' }} />}
-            placeholder="订单号 / 酒店ID / 酒店名称..."
+      {/* Filter bar */}
+      <div className="filter-row">
+        <label className="filter-control">
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="all">全部状态</option>
+            <option value="confirmed">已确认</option>
+            <option value="pending">待确认</option>
+            <option value="cancelled">已取消</option>
+          </select>
+        </label>
+        <label className="filter-control">
+          <select value={channelFilter} onChange={(e) => setChannelFilter(e.target.value)}>
+            <option value="all">全部渠道</option>
+            {CHANNELS.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <label className="filter-control">
+          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
+          <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            onPressEnter={handleSearch}
-            style={{ width: 260, borderRadius: 7 }}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            placeholder="订单号 / 酒店ID / 酒店名称..."
           />
-        </div>
-
-        <Button
-          type="primary"
-          icon={<SearchOutlined />}
-          onClick={handleSearch}
-          style={{ alignSelf: 'flex-end', borderRadius: 7, background: '#000947', borderColor: '#000947' }}
-        >
-          搜索
-        </Button>
+        </label>
+        <button className="button primary" onClick={handleSearch}><Search size={14} /> 搜索</button>
       </div>
 
       {/* Table */}
-      <Table
-        columns={columns}
-        dataSource={data}
-        size="middle"
-        pagination={{ pageSize: 10, showSizeChanger: false, showTotal: (t) => `共 ${t} 条` }}
-        scroll={{ x: 'max-content' }}
-        style={{ background: '#fff', borderRadius: 8, overflow: 'hidden' }}
-      />
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style={TH}>订单 ID</th>
+              <th style={TH}>酒店 ID</th>
+              <th style={TH}>酒店名称</th>
+              <th style={TH}>渠道</th>
+              <th style={{ ...TH, textAlign: "right" }}>金额</th>
+              <th style={TH}>状态</th>
+              <th style={TH}>入住日期</th>
+              <th style={TH}>离店日期</th>
+              <th style={TH}>下单日期</th>
+              <th style={{ ...TH, textAlign: "right" }}>间夜数</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((o) => {
+              const s = STATUS_MAP[o.status] || { label: o.status, color: 'default' };
+              return (
+                <tr key={o.key}>
+                  <td style={TD}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>{o.orderId}</span>
+                  </td>
+                  <td style={TD}>{o.hotelId}</td>
+                  <td style={TD}>
+                    <span style={{ fontSize: 13, fontWeight: 500 }}>{o.hotelName}</span>
+                  </td>
+                  <td style={TD}>
+                    <span className="status info">{o.channel}</span>
+                  </td>
+                  <td style={{ ...TD, textAlign: "right" }}>
+                    <span style={{ fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
+                      ${o.price.toFixed(2)}
+                    </span>
+                  </td>
+                  <td style={TD}>
+                    <span className={statusBadgeClass(o.status)}>{s.label}</span>
+                  </td>
+                  <td style={TD}>{o.checkIn}</td>
+                  <td style={TD}>{o.checkOut}</td>
+                  <td style={TD}>{o.bookingDate}</td>
+                  <td style={{ ...TD, textAlign: "right" }}>{o.nights}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  pageHeader: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 20,
-    marginBottom: 24,
-  },
-  h1: {
-    margin: '0 0 6px',
-    fontSize: 28,
-    fontWeight: 800,
-    color: '#000947',
-    lineHeight: 1.2,
-  },
-  subText: { margin: 0, color: '#66728a', fontSize: 14 },
-  kpiGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
-    gap: 16,
-    marginBottom: 24,
-  },
-  card: {
-    background: '#fff',
-    border: '1px solid #dfe5ef',
-    borderRadius: 8,
-    boxShadow: '0 1px 2px rgba(0,9,71,0.06)',
-    padding: 20,
-    minWidth: 0,
-  },
-  cardLabel: {
-    margin: '0 0 6px',
-    color: '#66728a',
-    fontSize: 13,
-  },
-  metricValue: {
-    fontSize: 22,
-    fontWeight: 800,
-    lineHeight: 1.1,
-    fontVariantNumeric: 'tabular-nums',
-    color: '#000',
-  },
-  filters: {
-    display: 'flex',
-    gap: 16,
-    alignItems: 'flex-end',
-    flexWrap: 'wrap' as const,
-    marginBottom: 24,
-  },
-  filterGroup: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: 6,
-  },
-  filterLabel: {
-    fontSize: 13,
-    fontWeight: 600,
-    color: '#1c2442',
-  },
-};

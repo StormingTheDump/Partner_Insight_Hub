@@ -34,6 +34,11 @@
   --topbar-height: 68px;
   --content-max: 1480px;
 
-  font-family: "Poppins", "Harmony Sans SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei",
+    system-ui, sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, "Courier New", monospace;
+
+  font-family: var(--font-sans);
 }
 
