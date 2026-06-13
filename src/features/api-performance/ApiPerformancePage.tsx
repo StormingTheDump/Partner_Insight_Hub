@@ -185,7 +185,7 @@ export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PagePro
             <p className="tiny">可用性、价格变动、超时及供应商确认错误造成的预估交易额损失。</p>
           </div>
           <div className="metric-value" style={{ marginLeft: "auto" }}>
-            {data ? `$${data.summary.estimated_ttv_loss.toLocaleString()}` : "—"}
+            {data ? `$${(data.summary.estimated_ttv_loss ?? 0).toLocaleString()}` : "—"}
           </div>
         </div>
       </Card>
