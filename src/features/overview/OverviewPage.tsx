@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { Bed, CircleAlert, DollarSign, Search, Target, TrendingUp } from "lucide-react";
+import { Bed, CircleAlert, DollarSign, Target, TrendingUp } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
 import { Card } from "@/shared/components/Card";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { SearchFilter } from "@/shared/components/FilterControl";
 import { metricsApi, type OverviewData, type FunnelData } from "@/lib/metricsApi";
+import { useAppState } from "@/dashboard/app-state";
 import type { EChartsOption } from "echarts";
 
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 const axisText = { color: "#526078", fontSize: 11 };
 
 function lineOpt(labels: string[], values: number[], name: string, suffix = "", previous = false): EChartsOption {
@@ -61,30 +60,29 @@ const metricIcons = [TrendingUp, Bed, CircleAlert, CircleAlert];
 const metricTones = ["purple", "orange", "red", "orange"] as const;
 
 export function OverviewPage({ showPreviousPeriod }: PageProps) {
+  const { selectedFeed, dateRange } = useAppState();
   const [data, setData]         = useState<OverviewData | null>(null);
   const [funnel, setFunnel]     = useState<FunnelData | null>(null);
   const [loading, setLoading]   = useState(true);
-  const [clientQuery, setClientQuery] = useState("");
 
-  // 精确匹配已知 client ID 时才作为筛选条件
-  const activeClient = CLIENT_IDS.find(c => c.toLowerCase() === clientQuery.trim().toLowerCase()) ?? null;
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : undefined;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     Promise.all([
-      metricsApi.overview(activeClient ?? undefined),
-      metricsApi.funnel(),
+      metricsApi.overview(clientId, dateRange?.[0], dateRange?.[1]),
+      metricsApi.funnel(dateRange?.[0], dateRange?.[1]),
     ])
       .then(([o, f]) => { setData(o); setFunnel(f); })
       .finally(() => setLoading(false));
-  }, [activeClient]);
+  }, [clientId, dateRange]);
 
   // 漏斗数据：有精确匹配时用 by_client，否则用 overall
   const funnelData: FunnelData["overall"] | null = funnel
-    ? activeClient
+    ? clientId
       ? (() => {
-          const c = funnel.by_client.find(r => r.client_id === activeClient);
+          const c = funnel.by_client.find(r => r.client_id === clientId);
           if (!c) return funnel.overall;
           return {
             searches: c.searches, results: c.results, confirms: c.confirms,
@@ -122,26 +120,6 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
         description="监控 Agoda 供应商交易额、订单量、转化漏斗及错误率指标。"
       />
 
-      {/* 页面级 Client ID 筛选器 */}
-      <div className="filter-row">
-        <SearchFilter
-          icon={<Search className="icon" />}
-          placeholder="搜索 Client ID（如 Agoda、AgodaUK…）"
-          value={clientQuery}
-          onChange={(e) => setClientQuery(e.target.value)}
-        />
-        {activeClient && (
-          <span style={{ fontSize: 12, color: "#4f5fb8", fontWeight: 600, padding: "4px 10px", background: "#eef1ff", borderRadius: 6 }}>
-            {activeClient}
-          </span>
-        )}
-        {clientQuery && !activeClient && (
-          <span style={{ fontSize: 12, color: "#94a3b8" }}>
-            输入完整 Client ID 以筛选
-          </span>
-        )}
-      </div>
-
       <div className="overview-grid">
         <div className="grid">
 
@@ -157,7 +135,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
                 <p className="tiny" style={{ margin: "0 0 6px", color: "#8390ad", fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: "0.05em" }}>{label}</p>
                 <div style={{ fontSize: 28, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
                 <p className="tiny" style={{ margin: "6px 0 0", color: "#aab2c8" }}>
-                  近30天 · {activeClient ?? "全渠道"}
+                  近30天 · {clientId ?? "全渠道"}
                 </p>
               </Card>
             ))}
@@ -168,7 +146,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
             <div className="card-header">
               <div>
                 <h3>下单转化漏斗</h3>
-                <p className="tiny">查价 → 有价 → 验价 → 准确验价 → 下单，近30天{activeClient ? ` · ${activeClient}` : ""}。</p>
+                <p className="tiny">查价 → 有价 → 验价 → 准确验价 → 下单，近30天{clientId ? ` · ${clientId}` : ""}。</p>
               </div>
               <div style={{ display: "flex", gap: 14, fontSize: 12, flexWrap: "wrap" as const }}>
                 <span>有价率 <strong style={{ color: "#4f5fb8" }}>{funnelData.result_rate}%</strong></span>
@@ -181,7 +159,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
           </Card>
 
           {/* 交易额趋势 */}
-          <ChartCard title="交易额趋势" metric={`$${(summary.total_ttv / 1000).toFixed(0)}K`} subtitle={`所选时间段内的总交易额${activeClient ? `（${activeClient}）` : ""}。`}>
+          <ChartCard title="交易额趋势" metric={`$${(summary.total_ttv / 1000).toFixed(0)}K`} subtitle={`所选时间段内的总交易额${clientId ? `（${clientId}）` : ""}。`}>
             <BaseChart className="tall" option={lineOpt(daily.labels, daily.ttv, "交易额", "K", showPreviousPeriod)} />
           </ChartCard>
 
@@ -219,7 +197,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
           <Card className="insight-card">
             <h3><DollarSign className="icon" /> 关键时期洞察</h3>
             <p className="tiny">
-              近30天{activeClient ? ` ${activeClient}` : " Agoda"} 总交易额 ${(summary.total_ttv / 1000).toFixed(0)}K，
+              近30天{clientId ? ` ${clientId}` : " Agoda"} 总交易额 ${(summary.total_ttv / 1000).toFixed(0)}K，
               订单量 {summary.total_bookings.toLocaleString()}，
               漏斗整体转化率 {((funnelData.bookings / funnelData.searches) * 100).toFixed(1)}%。
             </p>

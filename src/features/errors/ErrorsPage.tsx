@@ -165,11 +165,10 @@ function btnStyle(active: boolean): React.CSSProperties {
 }
 
 // ── 验价报错 Tab ─────────────────────────────────────────────────
-function PrebookTab({ meta }: { meta: Meta }) {
-  const [channel,     setChannel]     = useState("");
+function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
   const [errorType,   setErrorType]   = useState("");
   const [ratePlanId,  setRatePlanId]  = useState("");
-  const [applied,     setApplied]     = useState({ channel: "", errorType: "", ratePlanId: "" });
+  const [applied,     setApplied]     = useState({ errorType: "", ratePlanId: "" });
   const [chart,       setChart]       = useState<ChartItem[]>([]);
   const [rows,        setRows]        = useState<PreRow[]>([]);
   const [total,       setTotal]       = useState(0);
@@ -177,10 +176,12 @@ function PrebookTab({ meta }: { meta: Meta }) {
   const [loading,     setLoading]     = useState(false);
   const [modal,       setModal]       = useState<string | null>(null);
 
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
+
   const fetch_ = (p: number, filters = applied) => {
     setLoading(true);
     const q = new URLSearchParams({
-      client_id:    filters.channel,
+      client_id:    clientId,
       error_type:   filters.errorType,
       rate_plan_id: filters.ratePlanId,
       page:         String(p),
@@ -196,10 +197,10 @@ function PrebookTab({ meta }: { meta: Meta }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch_(1);
-  }, []);
+  }, [clientId]);
 
   const search = () => {
-    const f = { channel, errorType, ratePlanId };
+    const f = { errorType, ratePlanId };
     setApplied(f);
     fetch_(1, f);
   };
@@ -208,13 +209,6 @@ function PrebookTab({ meta }: { meta: Meta }) {
     <>
       {/* 筛选器 */}
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 18 }}>
-        <label style={labelStyle}>
-          <span style={labelText}>渠道</span>
-          <select value={channel} onChange={(e) => setChannel(e.target.value)} style={selectStyle}>
-            <option value="">全部渠道</option>
-            {meta.channels.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
         <label style={labelStyle}>
           <span style={labelText}>错误类型</span>
           <select value={errorType} onChange={(e) => setErrorType(e.target.value)} style={selectStyle}>
@@ -282,21 +276,22 @@ function PrebookTab({ meta }: { meta: Meta }) {
 }
 
 // ── 下单报错 Tab ─────────────────────────────────────────────────
-function BookTab({ meta }: { meta: Meta }) {
-  const [channel,       setChannel]       = useState("");
+function BookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
   const [errorType,     setErrorType]     = useState("");
   const [bookingNumber, setBookingNumber] = useState("");
-  const [applied,       setApplied]       = useState({ channel: "", errorType: "", bookingNumber: "" });
+  const [applied,       setApplied]       = useState({ errorType: "", bookingNumber: "" });
   const [chart,         setChart]         = useState<ChartItem[]>([]);
   const [rows,          setRows]          = useState<BookRow[]>([]);
   const [total,         setTotal]         = useState(0);
   const [page,          setPage]          = useState(1);
   const [loading,       setLoading]       = useState(false);
 
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
+
   const fetch_ = (p: number, filters = applied) => {
     setLoading(true);
     const q = new URLSearchParams({
-      client_id:      filters.channel,
+      client_id:      clientId,
       error_type:     filters.errorType,
       booking_number: filters.bookingNumber,
       page:           String(p),
@@ -312,10 +307,10 @@ function BookTab({ meta }: { meta: Meta }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch_(1);
-  }, []);
+  }, [clientId]);
 
   const search = () => {
-    const f = { channel, errorType, bookingNumber };
+    const f = { errorType, bookingNumber };
     setApplied(f);
     fetch_(1, f);
   };
@@ -324,13 +319,6 @@ function BookTab({ meta }: { meta: Meta }) {
     <>
       {/* 筛选器 */}
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 18 }}>
-        <label style={labelStyle}>
-          <span style={labelText}>渠道</span>
-          <select value={channel} onChange={(e) => setChannel(e.target.value)} style={selectStyle}>
-            <option value="">全部渠道</option>
-            {meta.channels.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
         <label style={labelStyle}>
           <span style={labelText}>错误类型</span>
           <select value={errorType} onChange={(e) => setErrorType(e.target.value)} style={selectStyle}>
@@ -393,7 +381,7 @@ function BookTab({ meta }: { meta: Meta }) {
 }
 
 // ── 主页面 ────────────────────────────────────────────────────────
-export function ErrorsPage(_: PageProps) {
+export function ErrorsPage({ selectedFeed }: PageProps) {
   const [tab,  setTab]  = useState<"prebook" | "book">("prebook");
   const [meta, setMeta] = useState<{ prebook: Meta; book: Meta } | null>(null);
 
@@ -408,7 +396,7 @@ export function ErrorsPage(_: PageProps) {
     <>
       <PageHeader
         title="错误日志"
-        description="过去 48 小时内验价及下单报错记录，支持渠道、错误类型筛选。"
+        description="过去 48 小时内验价及下单报错记录，支持错误类型筛选。"
       />
 
       {/* Tab 切换 */}
@@ -438,9 +426,9 @@ export function ErrorsPage(_: PageProps) {
         {!meta ? (
           <div style={{ textAlign: "center", padding: 48, color: "#b0bac8" }}>加载中…</div>
         ) : tab === "prebook" ? (
-          <PrebookTab meta={meta.prebook} />
+          <PrebookTab meta={meta.prebook} selectedFeed={selectedFeed} />
         ) : (
-          <BookTab meta={meta.book} />
+          <BookTab meta={meta.book} selectedFeed={selectedFeed} />
         )}
       </div>
     </>

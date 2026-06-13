@@ -4,10 +4,10 @@ import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { MetricCard } from "@/shared/components/MetricCard";
+import { useAppState } from "@/dashboard/app-state";
 
 const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
 const PAGE_SIZE = 20;
-const CHANNEL_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 const COUNTRIES = ["中国", "日本", "泰国", "新加坡", "韩国", "马来西亚", "印度尼西亚", "越南", "澳大利亚", "阿联酋"];
 
 type HotSaleRow = {
@@ -24,10 +24,10 @@ type Stats = { total: number; matched: number; countries: number };
 type UploadResult = { added: number; skipped: number } | null;
 
 export function HotSalesPage(_: PageProps) {
+  const { selectedFeed } = useAppState();
   const [rows, setRows]             = useState<HotSaleRow[]>([]);
   const [stats, setStats]           = useState<Stats>({ total: 0, matched: 0, countries: 0 });
   const [loading, setLoading]       = useState(true);
-  const [channelId, setChannelId]   = useState("");
   const [hotelId, setHotelId]       = useState("");
   const [country, setCountry]       = useState("");
   const [city, setCity]             = useState("");
@@ -36,6 +36,8 @@ export function HotSalesPage(_: PageProps) {
   const [result, setResult]         = useState<UploadResult>(null);
   const [error, setError]           = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const channelId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const refreshStats = useCallback(() => {
     fetch(`${API}/api/hot-sales/stats`).then(r => r.json()).then(setStats);
@@ -63,7 +65,7 @@ export function HotSalesPage(_: PageProps) {
   const handleSearch = () => fetchData();
 
   const clearAll = () => {
-    setChannelId(""); setHotelId(""); setCountry(""); setCity("");
+    setHotelId(""); setCountry(""); setCity("");
     setResult(null); setError("");
     setLoading(true);
     Promise.all([
@@ -97,7 +99,7 @@ export function HotSalesPage(_: PageProps) {
     }
   };
 
-  const matchPct = stats.total > 0 ? ((stats.matched / stats.total) * 100).toFixed(1) : "0.0";
+  const matchPct   = stats.total > 0 ? ((stats.matched / stats.total) * 100).toFixed(1) : "0.0";
   const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   const safePage   = Math.min(page, totalPages);
   const pageRows   = rows.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
@@ -134,12 +136,6 @@ export function HotSalesPage(_: PageProps) {
 
       {/* 搜索栏 */}
       <div style={searchBar}>
-        {/* 渠道 ID */}
-        <select value={channelId} onChange={e => setChannelId(e.target.value)} style={selectStyle}>
-          <option value="">全部渠道 ID</option>
-          {CHANNEL_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-
         {/* 酒店 ID */}
         <div style={inputWrap}>
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />

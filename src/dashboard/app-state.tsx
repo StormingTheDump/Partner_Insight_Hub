@@ -38,7 +38,13 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedFeed, setSelectedFeed] = useState("全部渠道");
   const [showPreviousPeriod, setShowPreviousPeriod] = useState(false);
-  const [dateRange, setDateRange] = useState<[string, string] | null>(null);
+  const [dateRange, setDateRange] = useState<[string, string] | null>(() => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 29);
+    const fmt = (d: Date) => d.toISOString().slice(0, 10);
+    return [fmt(start), fmt(end)];
+  });
 
   const value = useMemo<AppState>(
     () => ({

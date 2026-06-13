@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Drawer } from "@/shared/components/Drawer";
+import { useAppState } from "@/dashboard/app-state";
 
 const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
 const PAGE_SIZE = 20;
@@ -40,6 +41,7 @@ const LOG_ORDER: Array<"price_confirm" | "booking_confirm" | "cancel"> =
 // ── Main page ────────────────────────────────────────────────────────
 
 export function OrderLogsPage(_: PageProps) {
+  const { selectedFeed } = useAppState();
   const [orders, setOrders]               = useState<OrderSummary[]>([]);
   const [loading, setLoading]             = useState(true);
   const [query, setQuery]                 = useState("");
@@ -55,11 +57,13 @@ export function OrderLogsPage(_: PageProps) {
     const p = new URLSearchParams();
     if (q.trim()) p.set("order_no", q.trim());
     if (sf)       p.set("order_status", sf);
+    const feedId = selectedFeed !== "全部渠道" ? selectedFeed : "";
+    if (feedId)   p.set("client_id", feedId);
     const data: OrderSummary[] = await fetch(`${API}/api/order-logs?${p}`).then(r => r.json());
     setOrders(data);
     setPage(1);
     setLoading(false);
-  }, []);
+  }, [selectedFeed]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect

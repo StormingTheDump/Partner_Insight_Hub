@@ -6,7 +6,6 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { useAppState } from "@/dashboard/app-state";
 
 const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 
 type ChannelConfig = {
   id: number;
@@ -27,10 +26,11 @@ type ChannelConfig = {
 };
 
 export function MarketplaceConfigurationPage(_: PageProps) {
-  const { setActivePage } = useAppState();
+  const { setActivePage, selectedFeed } = useAppState();
   const [configs, setConfigs]   = useState<ChannelConfig[]>([]);
   const [loading, setLoading]   = useState(true);
-  const [clientId, setClientId] = useState("");
+
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -67,15 +67,7 @@ export function MarketplaceConfigurationPage(_: PageProps) {
 
       {/* Search */}
       <div style={searchBar}>
-        <select value={clientId} onChange={e => setClientId(e.target.value)} style={selectStyle}>
-          <option value="">全部客户 ID</option>
-          {CLIENT_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <button type="button" onClick={fetchData} style={searchBtn}>搜索</button>
-        {clientId && (
-          <button type="button" onClick={() => setClientId("")} style={clearBtn}>清除</button>
-        )}
-        <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
+        <span style={{ fontSize: 12, color: "var(--muted)" }}>
           共 <strong>{configs.length}</strong> 个渠道账号
         </span>
       </div>

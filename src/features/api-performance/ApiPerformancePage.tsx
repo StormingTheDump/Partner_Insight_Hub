@@ -7,6 +7,7 @@ import { Card } from "@/shared/components/Card";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { useAppState } from "@/dashboard/app-state";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
 
@@ -138,16 +139,22 @@ function getBookErrorTrend(data: ApiData, feed: string): number[] {
 }
 
 export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PageProps) {
+  const { dateRange } = useAppState();
   const [data, setData] = useState<ApiData | null>(null);
 
+  const feed = selectedFeed ?? "全部渠道";
+  const clientId = feed !== "全部渠道" ? feed : undefined;
+
   useEffect(() => {
-    fetch(`${API_BASE}/api/integration/api-metrics`)
+    const p = new URLSearchParams();
+    if (clientId)       p.set("client_id",  clientId);
+    if (dateRange?.[0]) p.set("start_date", dateRange[0]);
+    if (dateRange?.[1]) p.set("end_date",   dateRange[1]);
+    fetch(`${API_BASE}/api/integration/api-metrics?${p}`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});
-  }, []);
-
-  const feed = selectedFeed ?? "全部渠道";
+  }, [clientId, dateRange]);
 
   const preErrorTrend  = data ? getPreErrorTrend(data, feed)  : [];
   const bookErrorTrend = data ? getBookErrorTrend(data, feed) : [];

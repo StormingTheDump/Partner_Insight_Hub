@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { Search } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { SearchFilter } from "@/shared/components/FilterControl";
 import { metricsApi, type DimensionsData } from "@/lib/metricsApi";
+import { useAppState } from "@/dashboard/app-state";
 import type { EChartsOption } from "echarts";
-
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 
 const LT_COLORS    = ["#ef4444", "#f97316", "#f59e0b", "#22c55e", "#3b82f6"];
 const CHAIN_COLORS  = ["#4f5fb8", "#12b981"];
@@ -82,19 +79,19 @@ function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[
 }
 
 export function PerformancePage(_: PageProps) {
+  const { selectedFeed } = useAppState();
   const [data, setData]       = useState<DimensionsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [clientQuery, setClientQuery] = useState("");
 
-  const activeClient = CLIENT_IDS.find(c => c.toLowerCase() === clientQuery.trim().toLowerCase()) ?? null;
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : undefined;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
-    metricsApi.dimensions(activeClient ?? undefined)
+    metricsApi.dimensions(clientId)
       .then(setData)
       .finally(() => setLoading(false));
-  }, [activeClient]);
+  }, [clientId]);
 
   if (!data) {
     return (
@@ -115,24 +112,7 @@ export function PerformancePage(_: PageProps) {
 
   return (
     <>
-      <PageHeader title="订单分析" description={`按 LT / Chain / Country 细分近30天订单结构${activeClient ? `（${activeClient}）` : ""}。`} />
-
-      <div className="filter-row">
-        <SearchFilter
-          icon={<Search className="icon" />}
-          placeholder="搜索 Client ID（如 Agoda、AgodaUK…）"
-          value={clientQuery}
-          onChange={e => setClientQuery(e.target.value)}
-        />
-        {activeClient && (
-          <span style={{ fontSize: 12, color: "#4f5fb8", fontWeight: 600, padding: "4px 10px", background: "#eef1ff", borderRadius: 6 }}>
-            {activeClient}
-          </span>
-        )}
-        {clientQuery && !activeClient && (
-          <span style={{ fontSize: 12, color: "#94a3b8" }}>输入完整 Client ID 以筛选</span>
-        )}
-      </div>
+      <PageHeader title="订单分析" description={`按 LT / Chain / Country 细分订单结构${clientId ? `（${clientId}）` : ""}。`} />
 
       <div className="grid" style={{ gap: 20 }}>
 
