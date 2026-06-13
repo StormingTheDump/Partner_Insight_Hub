@@ -3,6 +3,7 @@ import {
   BarChart3,
   CalendarDays,
   Code2,
+  FileText,
   Flame,
   GitMerge,
   Home,
