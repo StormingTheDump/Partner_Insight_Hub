@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { PageProps } from "@/dashboard/routes";
 import { useAppState } from "@/dashboard/app-state";
 import { Button } from "@/shared/components/Button";
 import { Drawer } from "@/shared/components/Drawer";
@@ -73,10 +74,10 @@ function fmtPeriod(s: string) {
   return `${y}年${Number(m)}月`;
 }
 
-const STATUS_STYLE: Record<string, React.CSSProperties> = {
-  "已逾期": { background: C.redLight,    color: C.red },
-  "已结清": { background: "#e6f4ea",     color: "#188038" },
-  "待结账": { background: "#fff4db",     color: "#935100" },
+const STATUS_CLASS_MAP: Record<string, string> = {
+  "已逾期": "status danger",
+  "已结清": "status",
+  "待结账": "status warning",
 };
 
 // ─── sub-components ───────────────────────────────────────────────────────────
@@ -151,27 +152,6 @@ function ProgressBar({ ratio, tone, showThresholds }: {
   );
 }
 
-function Pill({ children, tone }: { children: React.ReactNode; tone?: "safe" | "warning" | "danger" | "blue" | "default" }) {
-  const map: Record<string, { bg: string; color: string }> = {
-    safe:    { bg: "#e6f4ea", color: "#188038" },
-    warning: { bg: "#fff4db", color: "#935100" },
-    danger:  { bg: C.redLight, color: C.red },
-    blue:    { bg: "#e8f0fe", color: "#1a73e8" },
-    default: { bg: C.purpleLight, color: C.purple },
-  };
-  const { bg, color } = map[tone ?? "default"];
-  return (
-    <span style={{
-      display: "inline-flex", alignItems: "center",
-      borderRadius: 999, padding: "3px 10px",
-      fontSize: 12, fontWeight: 800,
-      background: bg, color,
-    }}>
-      {children}
-    </span>
-  );
-}
-
 function StatRow({ label, value, bold }: { label: string; value: string; bold?: boolean }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", gap: 8, fontSize: 13, marginTop: 8 }}>
@@ -185,7 +165,7 @@ function StatRow({ label, value, bold }: { label: string; value: string; bold?: 
 
 // ─── main component ───────────────────────────────────────────────────────────
 
-export function FinanceStatusPage() {
+export function FinanceStatusPage(_: PageProps) {
   const { selectedFeed } = useAppState();
 
   const [credit, setCredit] = useState<CreditSummary | null>(null);
@@ -265,9 +245,13 @@ export function FinanceStatusPage() {
               </p>
             </div>
             {credit && (
-              <Pill tone={creditTone === "default" ? "safe" : creditTone}>
+              <span className={
+                creditTone === "danger" ? "status danger" :
+                creditTone === "warning" ? "status warning" :
+                "status"
+              }>
                 {(creditRatio * 100).toFixed(1)}%
-              </Pill>
+              </span>
             )}
           </div>
           <ProgressBar ratio={creditRatio} tone={creditTone} showThresholds />
@@ -291,7 +275,7 @@ export function FinanceStatusPage() {
               </p>
             </div>
             {payment && (
-              <Pill tone="blue">{(payment.progress_ratio * 100).toFixed(1)}%</Pill>
+              <span className="status info">{(payment.progress_ratio * 100).toFixed(1)}%</span>
             )}
           </div>
           <ProgressBar ratio={payment?.progress_ratio ?? 0} tone="default" />
@@ -350,7 +334,7 @@ export function FinanceStatusPage() {
                     position: "sticky", top: 0, zIndex: 2,
                     background: "#f8fafd", color: "var(--muted-strong)",
                     fontSize: 12, fontWeight: 800,
-                    padding: "10px 12px",
+                    padding: "11px 13px",
                     borderBottom: "2px solid var(--line)",
                     whiteSpace: "nowrap", verticalAlign: "middle",
                     textAlign: h === "金额（USD）" || h === "订单数" ? "right" : "left",
@@ -367,17 +351,12 @@ export function FinanceStatusPage() {
                 <tr><td colSpan={10} style={{ padding: "32px", textAlign: "center", color: "var(--muted)" }}>暂无账单数据</td></tr>
               ) : bills.map(bill => (
                 <tr key={bill.bill_no} style={{ background: bill.status === "已逾期" ? C.redLight : undefined }}>
-                  <td style={TD}>{bill.bill_no}</td>
+                  <td style={{ ...TD, fontFamily: "var(--font-mono)", fontSize: 12 }}>{bill.bill_no}</td>
                   <td style={TD}>{bill.client_id}</td>
                   <td style={TD}>{fmtPeriod(bill.billing_period)}</td>
                   <td style={TD}>{fmtDate(bill.latest_collection_date)}</td>
-                  <td style={{ ...TD, fontFamily: "inherit", fontSize: "inherit" }}>
-                    <span style={{
-                      display: "inline-flex", alignItems: "center",
-                      padding: "3px 9px", borderRadius: 999,
-                      fontSize: 12, fontWeight: 700,
-                      ...STATUS_STYLE[bill.status],
-                    }}>
+                  <td style={TD}>
+                    <span className={STATUS_CLASS_MAP[bill.status] ?? "status neutral"}>
                       {bill.status}
                     </span>
                   </td>
@@ -389,7 +368,7 @@ export function FinanceStatusPage() {
                   <td style={{ ...TD, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
                     ${fmtMoney(bill.amount)}
                   </td>
-                  <td style={{ ...TD, fontFamily: "inherit", fontSize: "inherit" }}>
+                  <td style={TD}>
                     <button
                       type="button"
                       className="button"
@@ -433,12 +412,7 @@ export function FinanceStatusPage() {
                 <span style={{ color: "var(--muted)", flexShrink: 0 }}>{label}</span>
                 <span style={{ fontWeight: 600, textAlign: "right" }}>
                   {label === "状态" ? (
-                    <span style={{
-                      display: "inline-flex", alignItems: "center",
-                      padding: "2px 9px", borderRadius: 999,
-                      fontSize: 12, fontWeight: 700,
-                      ...STATUS_STYLE[value],
-                    }}>
+                    <span className={STATUS_CLASS_MAP[value] ?? "status neutral"}>
                       {value}
                     </span>
                   ) : label === "Client ID" ? (
@@ -479,12 +453,10 @@ export function FinanceStatusPage() {
 
 // ─── shared td style ──────────────────────────────────────────────────────────
 const TD: React.CSSProperties = {
-  padding: "10px 12px",
+  padding: "11px 13px",
   borderBottom: "1px solid var(--line-soft)",
   verticalAlign: "middle",
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  fontFamily: "monospace",
-  fontSize: 12,
 };

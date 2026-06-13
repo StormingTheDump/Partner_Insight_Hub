@@ -114,7 +114,7 @@ function NotifBell({ onGoFinance }: { onGoFinance: () => void }) {
                   }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                    <span style={{ fontFamily: "monospace", fontSize: 12, color: "var(--muted-strong)" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted-strong)" }}>
                       {b.bill_no}
                     </span>
                     <span style={{ fontSize: 12, fontWeight: 700, color: "#ea0345" }}>已逾期</span>

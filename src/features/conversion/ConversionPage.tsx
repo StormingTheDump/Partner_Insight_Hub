@@ -226,7 +226,7 @@ export function ConversionPage(_: PageProps) {
                 borderRadius: 4,
                 padding: "1px 6px",
                 marginLeft: 8,
-                fontFamily: "monospace",
+                fontFamily: "var(--font-mono)",
               }}
             >
               {m.formula}
