@@ -41,7 +41,10 @@ export function MarketplaceConfigurationPage(_: PageProps) {
     setLoading(false);
   }, [clientId]);
 
-  useEffect(() => { fetchData(); }, [fetchData]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
@@ -52,8 +55,8 @@ export function MarketplaceConfigurationPage(_: PageProps) {
 
       {/* Notice */}
       <div style={noticeBanner}>
-        <Info size={15} style={{ color: "#4f5fb8", flexShrink: 0, marginTop: 1 }} />
-        <span style={{ color: "#3730a3", fontSize: 13, lineHeight: 1.5 }}>
+        <Info size={15} style={{ color: "#1a73e8", flexShrink: 0, marginTop: 1 }} />
+        <span style={{ color: "#1a73e8", fontSize: 13, lineHeight: 1.5 }}>
           以上配置均由 Dida 技术团队统一管理。如对任何配置参数有疑问或需要调整，请参阅{" "}
           <button type="button" onClick={() => setActivePage("contact")} style={linkBtn}>
             联系方式 <ArrowRight size={11} style={{ verticalAlign: "middle", marginLeft: 1 }} />
@@ -98,8 +101,8 @@ function Bool({ value }: { value: number }) {
     <span style={{
       display: "inline-flex", alignItems: "center", gap: 3,
       padding: "2px 9px", borderRadius: 99, fontSize: 11, fontWeight: 700,
-      background: value ? "#f0fff4" : "#f4f4f5",
-      color: value ? "#16a34a" : "#9ca3af",
+      background: value ? "#e6f4ea" : "#f1f3f4",
+      color: value ? "#188038" : "#5f6368",
     }}>
       {value ? "✓ 是" : "✗ 否"}
     </span>
@@ -141,7 +144,7 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div style={{
       display: "flex", alignItems: "flex-start", justifyContent: "space-between",
-      gap: 12, padding: "6px 0", borderBottom: "1px solid #f1f5f9",
+      gap: 12, padding: "6px 0", borderBottom: "1px solid #edf1f7",
     }}>
       <span style={{ fontSize: 12, color: "var(--muted)", whiteSpace: "nowrap", paddingTop: 2 }}>{label}</span>
       <div>{children}</div>
@@ -164,7 +167,7 @@ function SecHead({ icon, title, color }: { icon: ReactNode; title: string; color
 
 function Num({ val, unit }: { val: number; unit?: string }) {
   return (
-    <span style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>
+    <span style={{ fontWeight: 700, fontSize: 13, color: "#000947" }}>
       {val}
       {unit && <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 2 }}>{unit}</span>}
     </span>
@@ -217,7 +220,7 @@ function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
 
         {/* ARI 配置 */}
         <div style={sec}>
-          <SecHead icon={<BarChart2 size={13} />} title="ARI 配置" color="#7c3aed" />
+          <SecHead icon={<BarChart2 size={13} />} title="ARI 配置" color="#604696" />
           <Row label="允许币种"><CurrencyTags value={cfg.allowed_currencies} /></Row>
           <Row label="忽略中文报价"><Bool value={cfg.ignore_cn_price} /></Row>
           <Row label="最大房间数"><Num val={cfg.max_rooms} unit="间" /></Row>
@@ -227,7 +230,7 @@ function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
 
         {/* 技术配置 */}
         <div style={sec}>
-          <SecHead icon={<Zap size={13} />} title="技术配置" color="#0891b2" />
+          <SecHead icon={<Zap size={13} />} title="技术配置" color="#1a73e8" />
           <Row label="QPS（查价）"><Num val={cfg.qps} unit="/s" /></Row>
           <Row label="PPS（酒店）"><Num val={cfg.pps} unit="/s" /></Row>
           <Row label="查价超时"><Num val={cfg.search_timeout} unit="秒" /></Row>
@@ -246,38 +249,38 @@ function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
 
 const noticeBanner: CSSProperties = {
   display: "flex", alignItems: "flex-start", gap: 10,
-  background: "#eef1ff", border: "1px solid #c7d2fe",
+  background: "#e8f0fe", border: "1px solid #bfdbfe",
   borderRadius: 8, padding: "11px 16px", marginBottom: 16,
 };
 const linkBtn: CSSProperties = {
   background: "none", border: "none", cursor: "pointer",
-  color: "#4f5fb8", fontWeight: 700, fontSize: 13, padding: "0 1px",
+  color: "#1a73e8", fontWeight: 700, fontSize: 13, padding: "0 1px",
   textDecoration: "underline", display: "inline",
 };
 const searchBar: CSSProperties = {
   display: "flex", alignItems: "center", gap: 8,
-  background: "#fff", border: "1px solid var(--line)",
+  background: "#fff", border: "1px solid #dfe5ef",
   borderRadius: 8, padding: "12px 16px", marginBottom: 20, flexWrap: "wrap",
 };
 const selectStyle: CSSProperties = {
   height: 34, padding: "0 10px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  fontSize: 13, color: "var(--text)", cursor: "pointer", outline: "none",
+  border: "1px solid #dfe5ef", background: "#f8fafd",
+  fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none",
 };
 const searchBtn: CSSProperties = {
-  height: 34, padding: "0 16px", borderRadius: 6,
-  background: "var(--dida-navy)", color: "#fff", border: "none",
+  height: 34, padding: "0 16px", borderRadius: 7,
+  background: "#1a73e8", color: "#fff", border: "none",
   cursor: "pointer", fontSize: 13, fontWeight: 600,
 };
 const clearBtn: CSSProperties = {
   height: 34, padding: "0 14px", borderRadius: 6,
-  border: "1px solid var(--line)", background: "var(--surface-soft)",
-  cursor: "pointer", fontSize: 13, color: "var(--muted-strong)",
+  border: "1px solid #dfe5ef", background: "#fff",
+  cursor: "pointer", fontSize: 13, color: "#17213f",
 };
 const cardWrap: CSSProperties = {
-  background: "#fff", border: "1px solid var(--line)",
-  borderRadius: 12, overflow: "hidden",
-  boxShadow: "0 1px 4px rgba(0,9,71,0.06)",
+  background: "#fff", border: "1px solid #dfe5ef",
+  borderRadius: 8, overflow: "hidden",
+  boxShadow: "0 1px 2px rgba(0,9,71,0.06)",
 };
 const cardHead: CSSProperties = {
   display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -293,5 +296,5 @@ const cardBody: CSSProperties = {
 };
 const sec: CSSProperties = { minWidth: 0 };
 const vline: CSSProperties = {
-  width: 1, background: "var(--line)", margin: "0 22px",
+  width: 1, background: "#dfe5ef", margin: "0 22px",
 };

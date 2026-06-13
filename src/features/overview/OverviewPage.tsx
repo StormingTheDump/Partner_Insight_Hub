@@ -70,6 +70,7 @@ export function OverviewPage({ showPreviousPeriod }: PageProps) {
   const activeClient = CLIENT_IDS.find(c => c.toLowerCase() === clientQuery.trim().toLowerCase()) ?? null;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     Promise.all([
       metricsApi.overview(activeClient ?? undefined),

@@ -1,6 +1,7 @@
 import * as echarts from "echarts";
 import type { EChartsOption } from "echarts";
 import { useEffect, useMemo, useRef } from "react";
+import type { CSSProperties } from "react";
 import { withChartDefaults } from "@/shared/charts/chart-theme";
 
 type BaseChartProps = {
@@ -8,9 +9,10 @@ type BaseChartProps = {
   className?: "small" | "tall" | "spark";
   empty?: boolean;
   emptyLabel?: string;
+  style?: CSSProperties;
 };
 
-export function BaseChart({ option, className, empty = false, emptyLabel = "No data for the selected filters." }: BaseChartProps) {
+export function BaseChart({ option, className, empty = false, emptyLabel = "No data for the selected filters.", style }: BaseChartProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<echarts.ECharts | null>(null);
   const mergedOption = useMemo(() => withChartDefaults(option), [option]);
@@ -44,6 +46,6 @@ export function BaseChart({ option, className, empty = false, emptyLabel = "No d
     return <div className="empty-state">{emptyLabel}</div>;
   }
 
-  return <div ref={ref} className={["chart-frame", className].filter(Boolean).join(" ")} />;
+  return <div ref={ref} className={["chart-frame", className].filter(Boolean).join(" ")} style={style} />;
 }
 

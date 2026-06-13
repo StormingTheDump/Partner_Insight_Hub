@@ -1,15 +1,17 @@
 import {
   Activity,
+  Award,
   BarChart3,
   CalendarDays,
   Code2,
-  FileText,
+  FileBarChart2,
   Flame,
   GitMerge,
   Home,
   ListTree,
   MessageCircle,
   ScrollText,
+  Star,
   Store,
   TrendingUp,
   WalletCards,
@@ -37,7 +39,7 @@ export const navSections: NavSection[] = [
     items: [
       { id: "overview",    label: "业务概览", icon: Home },
       { id: "performance", label: "业绩表现", icon: BarChart3 },
-      { id: "reports",     label: "分析报告", icon: FileText },
+      { id: "reports",     label: "业务报表", icon: FileBarChart2 },
     ],
   },
   {
@@ -60,7 +62,14 @@ export const navSections: NavSection[] = [
     ],
   },
   {
-    title: "支持与资源",
+    title: "Dida 营销",
+    items: [
+      { id: "hot-hotels",    label: "热销酒店推荐", icon: Star  },
+      { id: "direct-hotels", label: "直采推荐",     icon: Award },
+    ],
+  },
+  {
+    title: "支持与帮助",
     items: [
       { id: "contact", label: "联系方式", icon: MessageCircle },
       { id: "dida-api", label: "Dida API", icon: Code2 },

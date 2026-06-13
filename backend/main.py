@@ -1,9 +1,9 @@
-from fastapi import FastAPI, File, HTTPException, Query, UploadFile
+from fastapi import FastAPI, File, Header, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from database import init_tables, get_connection
-from auth import login
+from auth import login, verify_token, hash_password
 import os
 from typing import Optional
 
@@ -33,6 +33,13 @@ def startup():
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+
+class CreateUserRequest(BaseModel):
+    email: str
+    password: str
+    channel_name: str
+    contact_name: str
 
 
 class ChatMessage(BaseModel):
@@ -963,6 +970,93 @@ def get_order_log_detail(order_no: str):
              "updated_at": r["updated_at"]} for r in rows]
 
 
+# ── Admin: Account Management ────────────────────────────────────────────────
+
+def _get_admin(authorization: Optional[str]) -> dict:
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Missing token")
+    token = authorization.split(" ", 1)[1]
+    try:
+        payload = verify_token(token)
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    conn = get_connection()
+    row = conn.execute("SELECT * FROM users WHERE email = ?", (payload["email"],)).fetchone()
+    conn.close()
+    if not row or row["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return {"email": payload["email"], "id": int(payload["sub"])}
+
+
+@app.get("/api/admin/users")
+def admin_list_users(authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    rows = conn.execute(
+        "SELECT id, email, channel_name, contact_name, status, created_at"
+        " FROM users WHERE created_by = ? ORDER BY id",
+        (admin["email"],),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+@app.post("/api/admin/users")
+def admin_create_user(body: CreateUserRequest, authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    try:
+        conn.execute(
+            "INSERT INTO users (email, password_hash, channel_name, contact_name, role, status, created_by)"
+            " VALUES (?,?,?,?,?,?,?)",
+            (body.email, hash_password(body.password), body.channel_name, body.contact_name,
+             "user", "active", admin["email"]),
+        )
+        conn.commit()
+    except Exception:
+        conn.close()
+        raise HTTPException(status_code=400, detail="邮箱已存在")
+    row = conn.execute(
+        "SELECT id, email, channel_name, contact_name, status FROM users WHERE email = ?",
+        (body.email,),
+    ).fetchone()
+    conn.close()
+    return {"success": True, "user": dict(row)}
+
+
+@app.patch("/api/admin/users/{user_id}/status")
+def admin_toggle_status(user_id: int, authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    row = conn.execute(
+        "SELECT * FROM users WHERE id = ? AND created_by = ?", (user_id, admin["email"])
+    ).fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="用户不存在")
+    new_status = "disabled" if row["status"] == "active" else "active"
+    conn.execute("UPDATE users SET status = ? WHERE id = ?", (new_status, user_id))
+    conn.commit()
+    conn.close()
+    return {"success": True, "status": new_status}
+
+
+@app.delete("/api/admin/users/{user_id}")
+def admin_delete_user(user_id: int, authorization: Optional[str] = Header(default=None)):
+    admin = _get_admin(authorization)
+    conn = get_connection()
+    row = conn.execute(
+        "SELECT * FROM users WHERE id = ? AND created_by = ?", (user_id, admin["email"])
+    ).fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="用户不存在")
+    conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+    return {"success": True}
+
+
 # ── 转化指标 ─────────────────────────────────────────────────────
 
 _CONV_CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
@@ -1158,3 +1252,199 @@ def errors_meta():
         "prebook": {"channels": pre_clients,  "error_types": pre_errors},
         "book":    {"channels": book_clients, "error_types": book_errors},
     }
+
+
+_CONV_CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
+
+
+@app.get("/api/conversion/metrics")
+def conversion_metrics():
+    from collections import defaultdict
+    from datetime import datetime
+
+    conn = get_connection()
+    rows = conn.execute(
+        """SELECT date, channel, look, property, avail_look, prebook, book
+           FROM conversion_daily_metrics
+           ORDER BY date, channel"""
+    ).fetchall()
+    conn.close()
+
+    date_data: dict = defaultdict(dict)
+    all_dates: list = []
+    for r in rows:
+        d = r["date"]
+        if d not in all_dates:
+            all_dates.append(d)
+        date_data[d][r["channel"]] = dict(r)
+
+    def fmt(d: str) -> str:
+        dt = datetime.strptime(d, "%Y-%m-%d")
+        return f"{dt.strftime('%b')} {dt.day}"
+
+    display_dates = [fmt(d) for d in all_dates]
+
+    # 每渠道每日趋势
+    trends: dict = {ch: {"l2b": [], "p2b": [], "l2c": [], "c2b": []} for ch in _CONV_CHANNELS}
+    for d in all_dates:
+        day = date_data[d]
+        for ch in _CONV_CHANNELS:
+            v = day.get(ch, {})
+            look  = v.get("look",       0)
+            prop  = v.get("property",   0)
+            avail = v.get("avail_look", 0)
+            pre   = v.get("prebook",    0)
+            book  = v.get("book",       0)
+            trends[ch]["l2b"].append(round(look  / book, 1) if book else None)
+            trends[ch]["p2b"].append(round(prop  / book, 1) if book else None)
+            trends[ch]["l2c"].append(round(avail / pre,  1) if pre  else None)
+            trends[ch]["c2b"].append(round(pre   / book, 1) if book else None)
+
+    # 全渠道汇总（sum/sum）
+    totals = {"look": 0, "property": 0, "avail_look": 0, "prebook": 0, "book": 0}
+    for r in rows:
+        for k in totals:
+            totals[k] += r[k]
+
+    def safe(a, b):
+        return round(a / b, 1) if b else None
+
+    summary = {
+        "l2b": safe(totals["look"],       totals["book"]),
+        "p2b": safe(totals["property"],   totals["book"]),
+        "l2c": safe(totals["avail_look"], totals["prebook"]),
+        "c2b": safe(totals["prebook"],    totals["book"]),
+    }
+
+    # 全渠道每日汇总趋势
+    agg_trend: dict = {"l2b": [], "p2b": [], "l2c": [], "c2b": []}
+    for d in all_dates:
+        day = date_data[d]
+        lk = sum(day.get(ch, {}).get("look",       0) for ch in _CONV_CHANNELS)
+        pp = sum(day.get(ch, {}).get("property",   0) for ch in _CONV_CHANNELS)
+        av = sum(day.get(ch, {}).get("avail_look", 0) for ch in _CONV_CHANNELS)
+        pb = sum(day.get(ch, {}).get("prebook",    0) for ch in _CONV_CHANNELS)
+        bk = sum(day.get(ch, {}).get("book",       0) for ch in _CONV_CHANNELS)
+        agg_trend["l2b"].append(round(lk / bk, 1) if bk else None)
+        agg_trend["p2b"].append(round(pp / bk, 1) if bk else None)
+        agg_trend["l2c"].append(round(av / pb, 1) if pb else None)
+        agg_trend["c2b"].append(round(pb / bk, 1) if bk else None)
+
+    return {
+        "dates":     display_dates,
+        "summary":   summary,
+        "trends":    trends,
+        "agg_trend": agg_trend,
+    }
+
+
+# ── 错误日志 ──────────────────────────────────────────────────────
+
+@app.get("/api/errors/prebook")
+def errors_prebook(
+    client_id:    str = Query(""),
+    error_type:   str = Query(""),
+    rate_plan_id: str = Query(""),
+    page:         int = Query(1, ge=1),
+    page_size:    int = Query(15, ge=1, le=100),
+):
+    conn = get_connection()
+
+    # 动态筛选条件
+    where, params = ["1=1"], []
+    if client_id:
+        where.append("client_id = ?");    params.append(client_id)
+    if error_type:
+        where.append("error_type = ?");   params.append(error_type)
+    if rate_plan_id:
+        where.append("dida_rate_plan_id LIKE ?"); params.append(f"%{rate_plan_id}%")
+
+    w = " AND ".join(where)
+
+    # 图表数据（筛选后按错误类型汇总）
+    chart_rows = conn.execute(
+        f"SELECT error_type, COUNT(*) AS cnt FROM prebook_error_logs WHERE {w} GROUP BY error_type ORDER BY cnt DESC",
+        params,
+    ).fetchall()
+    chart = [{"error_type": r["error_type"], "count": r["cnt"]} for r in chart_rows]
+
+    # 总数
+    total = conn.execute(f"SELECT COUNT(*) FROM prebook_error_logs WHERE {w}", params).fetchone()[0]
+
+    # 分页明细
+    offset = (page - 1) * page_size
+    rows = conn.execute(
+        f"SELECT log_time, client_id, dida_rate_plan_id, dida_hotel_id, error_type, rate_record_channel"
+        f" FROM prebook_error_logs WHERE {w} ORDER BY log_time DESC LIMIT ? OFFSET ?",
+        params + [page_size, offset],
+    ).fetchall()
+
+    conn.close()
+    return {
+        "chart": chart,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "rows": [dict(r) for r in rows],
+    }
+
+
+@app.get("/api/errors/book")
+def errors_book(
+    client_id:      str = Query(""),
+    error_type:     str = Query(""),
+    booking_number: str = Query(""),
+    page:           int = Query(1, ge=1),
+    page_size:      int = Query(15, ge=1, le=100),
+):
+    conn = get_connection()
+
+    where, params = ["1=1"], []
+    if client_id:
+        where.append("client_id = ?");        params.append(client_id)
+    if error_type:
+        where.append("error_type = ?");       params.append(error_type)
+    if booking_number:
+        where.append("channel_bookingnumber LIKE ?"); params.append(f"%{booking_number}%")
+
+    w = " AND ".join(where)
+
+    chart_rows = conn.execute(
+        f"SELECT error_type, COUNT(*) AS cnt FROM book_error_logs WHERE {w} GROUP BY error_type ORDER BY cnt DESC",
+        params,
+    ).fetchall()
+    chart = [{"error_type": r["error_type"], "count": r["cnt"]} for r in chart_rows]
+
+    total = conn.execute(f"SELECT COUNT(*) FROM book_error_logs WHERE {w}", params).fetchone()[0]
+
+    offset = (page - 1) * page_size
+    rows = conn.execute(
+        f"SELECT channel_createtime, client_id, channel_bookingnumber, dida_hotel_id, error_type"
+        f" FROM book_error_logs WHERE {w} ORDER BY channel_createtime DESC LIMIT ? OFFSET ?",
+        params + [page_size, offset],
+    ).fetchall()
+
+    conn.close()
+    return {
+        "chart": chart,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "rows": [dict(r) for r in rows],
+    }
+
+
+@app.get("/api/errors/meta")
+def errors_meta():
+    """返回下拉框所需的渠道和错误类型列表"""
+    conn = get_connection()
+    pre_clients  = [r[0] for r in conn.execute("SELECT DISTINCT client_id FROM prebook_error_logs ORDER BY client_id").fetchall()]
+    pre_errors   = [r[0] for r in conn.execute("SELECT DISTINCT error_type  FROM prebook_error_logs ORDER BY error_type").fetchall()]
+    book_clients = [r[0] for r in conn.execute("SELECT DISTINCT client_id FROM book_error_logs ORDER BY client_id").fetchall()]
+    book_errors  = [r[0] for r in conn.execute("SELECT DISTINCT error_type  FROM book_error_logs ORDER BY error_type").fetchall()]
+    conn.close()
+    return {
+        "prebook": {"channels": pre_clients,  "error_types": pre_errors},
+        "book":    {"channels": book_clients, "error_types": book_errors},
+    }
+

@@ -7,7 +7,7 @@ type MetricCardProps = {
   caption?: string;
   delta?: string;
   icon?: ComponentType<{ className?: string }>;
-  tone?: "default" | "green" | "red" | "orange" | "purple";
+  tone?: "default" | "green" | "red" | "orange" | "purple" | "blue";
   children?: ReactNode;
 };
 

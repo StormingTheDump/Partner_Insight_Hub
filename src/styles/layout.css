@@ -19,25 +19,37 @@
   border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 8px;
   z-index: 5;
   min-width: 0;
 }
 
 .brand {
-  height: 44px;
+  height: 52px;
   display: flex;
   align-items: center;
+  gap: 0;
   overflow: hidden;
 }
 
 .brand img {
-  width: 128px;
-  height: 46px;
-  object-fit: cover;
-  object-position: center;
-  transform: scale(1.62);
-  transform-origin: left center;
+  height: 88px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.platform-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(0, 9, 71, 0.45);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  line-height: 1.3;
+  border-left: 1.5px solid #ea0345;
+  padding-left: 8px;
+  align-self: flex-end;
+  margin-bottom: 15px;
+  margin-left: -14px;
 }
 
 .collapsed .brand {
@@ -45,10 +57,9 @@
 }
 
 .collapsed .brand img {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
-  transform: none;
 }
 
 .account {
@@ -75,8 +86,10 @@
 
 .collapsed .account span,
 .collapsed .section-title,
+.collapsed .section-chevron,
 .collapsed .nav-label,
-.collapsed .pill {
+.collapsed .pill,
+.collapsed .platform-tag {
   display: none;
 }
 
@@ -97,12 +110,41 @@
   padding-top: 0;
 }
 
+.section-header {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0 4px 0 8px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.12s;
+}
+
+.section-header:hover {
+  background: #fceef1;
+}
+
 .section-title {
-  margin: 0 0 8px 8px;
+  margin: 0;
   color: #8390ad;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.02em;
+  line-height: 28px;
+}
+
+.section-chevron {
+  color: #b0b8cc;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.section-chevron.open {
+  transform: rotate(180deg);
 }
 
 .nav-item {
@@ -121,12 +163,12 @@
 }
 
 .nav-item:hover {
-  background: #f4f6fb;
+  background: #fceef1;
 }
 
 .nav-item.active {
   background: var(--active-bg);
-  color: #3f4fb2;
+  color: #c4003c;
 }
 
 .nav-item .icon {
@@ -134,7 +176,7 @@
 }
 
 .nav-item.active .icon {
-  color: #4d5cbc;
+  color: #ea0345;
 }
 
 .collapsed .nav-item {

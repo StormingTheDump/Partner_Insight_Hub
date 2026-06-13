@@ -20,12 +20,14 @@ function hbarOpt(labels: string[], values: number[], colors: string[], unit = "�
     grid: { left: 72, right: 48, top: 8, bottom: 8, containLabel: false },
     xAxis: { type: "value", axisLabel: { color: "#526078", fontSize: 11 }, splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } } },
     yAxis: { type: "category", data: labels, inverse: true, axisLabel: { color: "#17213f", fontSize: 12 } },
-    tooltip: { formatter: (p: { name: string; value: number }) => `${p.name}：${p.value.toLocaleString()} ${unit}` },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    tooltip: { formatter: (p: any) => `${p.name}：${p.value.toLocaleString()} ${unit}` },
     series: [{
       type: "bar",
       data: values.map((v, i) => ({ value: v, itemStyle: { color: colors[i % colors.length] } })),
       barMaxWidth: 28,
-      label: { show: true, position: "right" as const, formatter: (p: { value: number }) => p.value.toLocaleString(), color: "#526078", fontSize: 11 },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      label: { show: true, position: "right" as const, formatter: (p: any) => p.value.toLocaleString(), color: "#526078", fontSize: 11 },
     }],
   };
 }
@@ -79,7 +81,7 @@ function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[
   );
 }
 
-export function PerformancePage({ }: PageProps) {
+export function PerformancePage(_: PageProps) {
   const [data, setData]       = useState<DimensionsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [clientQuery, setClientQuery] = useState("");
@@ -87,6 +89,7 @@ export function PerformancePage({ }: PageProps) {
   const activeClient = CLIENT_IDS.find(c => c.toLowerCase() === clientQuery.trim().toLowerCase()) ?? null;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     metricsApi.dimensions(activeClient ?? undefined)
       .then(setData)
