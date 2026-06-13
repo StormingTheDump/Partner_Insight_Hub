@@ -142,6 +142,7 @@ export default function Login({ onLogin }: Props) {
                   style={input}
                 />
               </div>
+              <span style={hintText}>可以用这个账号登陆 123@agoda.com</span>
             </div>
 
             {/* Password */}
@@ -166,6 +167,7 @@ export default function Login({ onLogin }: Props) {
                   {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
               </div>
+              <span style={hintText}>可以用这个密码登陆 Agoda123</span>
             </div>
 
             {/* Remember */}
@@ -315,27 +317,27 @@ const formSide: React.CSSProperties = {
 const formCard: React.CSSProperties = {
   background: '#fff',
   borderRadius: 16,
-  padding: '40px 40px 32px',
-  width: '100%', maxWidth: 420,
+  padding: '62px 62px 50px',
+  width: '100%', maxWidth: 655,
   boxShadow: '0 4px 32px rgba(0,9,71,0.08)',
   border: '1px solid rgba(0,9,71,0.07)',
 };
-const formTop: React.CSSProperties = { marginBottom: 28 };
+const formTop: React.CSSProperties = { marginBottom: 43 };
 const platformTag: React.CSSProperties = {
   display: 'inline-block',
-  fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
+  fontSize: 17, fontWeight: 700, letterSpacing: '0.06em',
   textTransform: 'uppercase',
   color: '#ea0345',
   background: 'rgba(234,3,69,0.08)',
   border: '1px solid rgba(234,3,69,0.2)',
-  borderRadius: 99, padding: '3px 10px', marginBottom: 14,
+  borderRadius: 99, padding: '5px 16px', marginBottom: 22,
 };
 const formTitle: React.CSSProperties = {
-  margin: '0 0 8px', fontSize: 24, fontWeight: 800,
+  margin: '0 0 12px', fontSize: 37, fontWeight: 800,
   color: '#000947', letterSpacing: '-0.02em',
 };
 const formSub: React.CSSProperties = {
-  margin: 0, fontSize: 13, color: '#6b7280', lineHeight: 1.5,
+  margin: 0, fontSize: 20, color: '#6b7280', lineHeight: 1.5,
 };
 
 const errorBox: React.CSSProperties = {
@@ -349,21 +351,21 @@ const errorDot: React.CSSProperties = {
   background: '#c0392b', flexShrink: 0,
 };
 
-const fieldGroup: React.CSSProperties = { marginBottom: 18 };
+const fieldGroup: React.CSSProperties = { marginBottom: 28 };
 const fieldLabel: React.CSSProperties = {
-  display: 'block', fontSize: 12, fontWeight: 600,
-  color: '#374151', marginBottom: 6,
+  display: 'block', fontSize: 18, fontWeight: 600,
+  color: '#374151', marginBottom: 10,
   letterSpacing: '0.02em',
 };
 const inputWrap: React.CSSProperties = {
   position: 'relative', display: 'flex', alignItems: 'center',
 };
 const inputIcon: React.CSSProperties = {
-  position: 'absolute', left: 13, color: '#9ca3af', pointerEvents: 'none',
+  position: 'absolute', left: 20, color: '#9ca3af', pointerEvents: 'none',
 };
 const input: React.CSSProperties = {
-  width: '100%', height: 44, paddingLeft: 40, paddingRight: 14,
-  fontSize: 14, color: '#111827',
+  width: '100%', height: 68, paddingLeft: 62, paddingRight: 22,
+  fontSize: 22, color: '#111827',
   background: '#f9fafb',
   border: '1.5px solid #e5e7eb',
   borderRadius: 8, outline: 'none',
@@ -371,23 +373,23 @@ const input: React.CSSProperties = {
   transition: 'border-color 0.15s',
 };
 const eyeBtn: React.CSSProperties = {
-  position: 'absolute', right: 13,
+  position: 'absolute', right: 20,
   background: 'none', border: 'none', cursor: 'pointer',
   color: '#9ca3af', display: 'flex', alignItems: 'center', padding: 0,
 };
-const rememberRow: React.CSSProperties = { marginBottom: 24, marginTop: 2 };
+const rememberRow: React.CSSProperties = { marginBottom: 37, marginTop: 2 };
 const checkLabel: React.CSSProperties = {
   display: 'flex', alignItems: 'center', gap: 8,
-  fontSize: 13, color: '#6b7280', cursor: 'pointer',
+  fontSize: 20, color: '#6b7280', cursor: 'pointer',
 };
 const checkbox: React.CSSProperties = {
-  accentColor: '#000947', width: 14, height: 14, cursor: 'pointer',
+  accentColor: '#000947', width: 22, height: 22, cursor: 'pointer',
 };
 const submitBtn: React.CSSProperties = {
-  width: '100%', height: 46,
+  width: '100%', height: 72,
   background: 'linear-gradient(135deg, #000947 0%, #0b1a6e 100%)',
   color: '#fff', border: 'none', borderRadius: 8,
-  fontSize: 15, fontWeight: 700, letterSpacing: '0.06em',
+  fontSize: 23, fontWeight: 700, letterSpacing: '0.06em',
   cursor: 'pointer',
   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
   transition: 'opacity 0.15s',
@@ -404,4 +406,8 @@ const spinner: React.CSSProperties = {
 const helpText: React.CSSProperties = {
   marginTop: 20, textAlign: 'center',
   fontSize: 12, color: '#9ca3af', lineHeight: 1.5,
+};
+const hintText: React.CSSProperties = {
+  display: 'block', marginTop: 6,
+  fontSize: 13, color: '#9ca3af',
 };

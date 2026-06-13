@@ -1,0 +1,94 @@
+{
+  "overall": {
+    "searches": 110750,
+    "results": 88488,
+    "confirms": 33179,
+    "accurates": 29146,
+    "bookings": 10609,
+    "result_rate": 79.9,
+    "search_to_confirm": 30.0,
+    "accurate_rate": 87.8,
+    "confirm_to_book": 32.0,
+    "avg_response_ms": 435.0
+  },
+  "by_client": [
+    {
+      "client_id": "Agoda",
+      "searches": 42048,
+      "results": 34498,
+      "confirms": 12574,
+      "accurates": 11192,
+      "bookings": 4028,
+      "result_rate": 82.0,
+      "search_to_confirm_rate": 29.9,
+      "accurate_rate": 89.0,
+      "confirm_to_book_rate": 32.0,
+      "avg_response_ms": 378.0
+    },
+    {
+      "client_id": "AgodaUK",
+      "searches": 26525,
+      "results": 22544,
+      "confirms": 7983,
+      "accurates": 7182,
+      "bookings": 2549,
+      "result_rate": 85.0,
+      "search_to_confirm_rate": 30.1,
+      "accurate_rate": 90.0,
+      "confirm_to_book_rate": 31.9,
+      "avg_response_ms": 421.0
+    },
+    {
+      "client_id": "AgodaEBK",
+      "searches": 17741,
+      "results": 13837,
+      "confirms": 5311,
+      "accurates": 4620,
+      "bookings": 1695,
+      "result_rate": 78.0,
+      "search_to_confirm_rate": 29.9,
+      "accurate_rate": 87.0,
+      "confirm_to_book_rate": 31.9,
+      "avg_response_ms": 349.0
+    },
+    {
+      "client_id": "Lvzan",
+      "searches": 12260,
+      "results": 9090,
+      "confirms": 3659,
+      "accurates": 3115,
+      "bookings": 1169,
+      "result_rate": 74.1,
+      "search_to_confirm_rate": 29.8,
+      "accurate_rate": 85.1,
+      "confirm_to_book_rate": 31.9,
+      "avg_response_ms": 462.0
+    },
+    {
+      "client_id": "Barli2b",
+      "searches": 7704,
+      "results": 5475,
+      "confirms": 2314,
+      "accurates": 1936,
+      "bookings": 741,
+      "result_rate": 71.1,
+      "search_to_confirm_rate": 30.0,
+      "accurate_rate": 83.7,
+      "confirm_to_book_rate": 32.0,
+      "avg_response_ms": 509.0
+    },
+    {
+      "client_id": "DidaOpaq",
+      "searches": 4472,
+      "results": 3044,
+      "confirms": 1338,
+      "accurates": 1101,
+      "bookings": 427,
+      "result_rate": 68.1,
+      "search_to_confirm_rate": 29.9,
+      "accurate_rate": 82.3,
+      "confirm_to_book_rate": 31.9,
+      "avg_response_ms": 489.0
+    }
+  ]
+}

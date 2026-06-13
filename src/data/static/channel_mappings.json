@@ -1,0 +1,7142 @@
+[
+  {
+    "id": 1,
+    "dida_hotel_id": 10000,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00001",
+    "updated_at": "2025-07-29 00:00:00"
+  },
+  {
+    "id": 2,
+    "dida_hotel_id": 10004,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00002",
+    "updated_at": "2024-01-23 00:00:00"
+  },
+  {
+    "id": 3,
+    "dida_hotel_id": 10008,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00003",
+    "updated_at": "2024-09-04 00:00:00"
+  },
+  {
+    "id": 4,
+    "dida_hotel_id": 10009,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00004",
+    "updated_at": "2024-07-19 00:00:00"
+  },
+  {
+    "id": 5,
+    "dida_hotel_id": 10013,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00005",
+    "updated_at": "2025-10-24 00:00:00"
+  },
+  {
+    "id": 6,
+    "dida_hotel_id": 10017,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00006",
+    "updated_at": "2025-09-01 00:00:00"
+  },
+  {
+    "id": 7,
+    "dida_hotel_id": 10018,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00007",
+    "updated_at": "2026-03-13 00:00:00"
+  },
+  {
+    "id": 8,
+    "dida_hotel_id": 10022,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00008",
+    "updated_at": "2024-03-19 00:00:00"
+  },
+  {
+    "id": 9,
+    "dida_hotel_id": 10026,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00009",
+    "updated_at": "2025-01-14 00:00:00"
+  },
+  {
+    "id": 10,
+    "dida_hotel_id": 10027,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00010",
+    "updated_at": "2024-01-27 00:00:00"
+  },
+  {
+    "id": 11,
+    "dida_hotel_id": 10031,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00011",
+    "updated_at": "2024-07-15 00:00:00"
+  },
+  {
+    "id": 12,
+    "dida_hotel_id": 10035,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00012",
+    "updated_at": "2025-03-30 00:00:00"
+  },
+  {
+    "id": 13,
+    "dida_hotel_id": 10036,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00013",
+    "updated_at": "2024-01-24 00:00:00"
+  },
+  {
+    "id": 14,
+    "dida_hotel_id": 10040,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00014",
+    "updated_at": "2024-06-27 00:00:00"
+  },
+  {
+    "id": 15,
+    "dida_hotel_id": 10044,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00015",
+    "updated_at": "2025-08-07 00:00:00"
+  },
+  {
+    "id": 16,
+    "dida_hotel_id": 10045,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00016",
+    "updated_at": "2025-05-05 00:00:00"
+  },
+  {
+    "id": 17,
+    "dida_hotel_id": 10049,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00017",
+    "updated_at": "2024-07-17 00:00:00"
+  },
+  {
+    "id": 18,
+    "dida_hotel_id": 10053,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00018",
+    "updated_at": "2025-06-14 00:00:00"
+  },
+  {
+    "id": 19,
+    "dida_hotel_id": 10054,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00019",
+    "updated_at": "2025-12-29 00:00:00"
+  },
+  {
+    "id": 20,
+    "dida_hotel_id": 10058,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00020",
+    "updated_at": "2024-01-06 00:00:00"
+  },
+  {
+    "id": 21,
+    "dida_hotel_id": 10062,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00021",
+    "updated_at": "2025-12-26 00:00:00"
+  },
+  {
+    "id": 22,
+    "dida_hotel_id": 10063,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00022",
+    "updated_at": "2025-09-20 00:00:00"
+  },
+  {
+    "id": 23,
+    "dida_hotel_id": 10067,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00023",
+    "updated_at": "2024-11-02 00:00:00"
+  },
+  {
+    "id": 24,
+    "dida_hotel_id": 10071,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00024",
+    "updated_at": "2024-05-19 00:00:00"
+  },
+  {
+    "id": 25,
+    "dida_hotel_id": 10072,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00025",
+    "updated_at": "2026-05-11 00:00:00"
+  },
+  {
+    "id": 26,
+    "dida_hotel_id": 10076,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00026",
+    "updated_at": "2024-10-29 00:00:00"
+  },
+  {
+    "id": 27,
+    "dida_hotel_id": 10080,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00027",
+    "updated_at": "2024-03-24 00:00:00"
+  },
+  {
+    "id": 28,
+    "dida_hotel_id": 10081,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00028",
+    "updated_at": "2024-03-28 00:00:00"
+  },
+  {
+    "id": 29,
+    "dida_hotel_id": 10085,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00029",
+    "updated_at": "2026-02-01 00:00:00"
+  },
+  {
+    "id": 30,
+    "dida_hotel_id": 10089,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00030",
+    "updated_at": "2025-06-27 00:00:00"
+  },
+  {
+    "id": 31,
+    "dida_hotel_id": 10090,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00031",
+    "updated_at": "2025-12-27 00:00:00"
+  },
+  {
+    "id": 32,
+    "dida_hotel_id": 10094,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00032",
+    "updated_at": "2025-10-18 00:00:00"
+  },
+  {
+    "id": 33,
+    "dida_hotel_id": 10098,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00033",
+    "updated_at": "2025-04-27 00:00:00"
+  },
+  {
+    "id": 34,
+    "dida_hotel_id": 10099,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00034",
+    "updated_at": "2026-05-25 00:00:00"
+  },
+  {
+    "id": 35,
+    "dida_hotel_id": 10103,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00035",
+    "updated_at": "2024-12-06 00:00:00"
+  },
+  {
+    "id": 36,
+    "dida_hotel_id": 10107,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00036",
+    "updated_at": "2025-05-11 00:00:00"
+  },
+  {
+    "id": 37,
+    "dida_hotel_id": 10108,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00037",
+    "updated_at": "2026-01-16 00:00:00"
+  },
+  {
+    "id": 38,
+    "dida_hotel_id": 10112,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00038",
+    "updated_at": "2025-07-10 00:00:00"
+  },
+  {
+    "id": 39,
+    "dida_hotel_id": 10116,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00039",
+    "updated_at": "2026-02-14 00:00:00"
+  },
+  {
+    "id": 40,
+    "dida_hotel_id": 10117,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00040",
+    "updated_at": "2025-06-03 00:00:00"
+  },
+  {
+    "id": 41,
+    "dida_hotel_id": 10121,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00041",
+    "updated_at": "2025-09-26 00:00:00"
+  },
+  {
+    "id": 42,
+    "dida_hotel_id": 10125,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00042",
+    "updated_at": "2024-02-11 00:00:00"
+  },
+  {
+    "id": 43,
+    "dida_hotel_id": 10126,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00043",
+    "updated_at": "2024-07-24 00:00:00"
+  },
+  {
+    "id": 44,
+    "dida_hotel_id": 10130,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00044",
+    "updated_at": "2024-09-17 00:00:00"
+  },
+  {
+    "id": 45,
+    "dida_hotel_id": 10134,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00045",
+    "updated_at": "2024-03-12 00:00:00"
+  },
+  {
+    "id": 46,
+    "dida_hotel_id": 10135,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00046",
+    "updated_at": "2024-07-28 00:00:00"
+  },
+  {
+    "id": 47,
+    "dida_hotel_id": 10139,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00047",
+    "updated_at": "2024-03-31 00:00:00"
+  },
+  {
+    "id": 48,
+    "dida_hotel_id": 10143,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00048",
+    "updated_at": "2024-09-07 00:00:00"
+  },
+  {
+    "id": 49,
+    "dida_hotel_id": 10144,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00049",
+    "updated_at": "2025-07-26 00:00:00"
+  },
+  {
+    "id": 50,
+    "dida_hotel_id": 10148,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00050",
+    "updated_at": "2024-11-24 00:00:00"
+  },
+  {
+    "id": 51,
+    "dida_hotel_id": 10152,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00051",
+    "updated_at": "2024-11-29 00:00:00"
+  },
+  {
+    "id": 52,
+    "dida_hotel_id": 10153,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00052",
+    "updated_at": "2024-07-07 00:00:00"
+  },
+  {
+    "id": 53,
+    "dida_hotel_id": 10157,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00053",
+    "updated_at": "2024-08-28 00:00:00"
+  },
+  {
+    "id": 54,
+    "dida_hotel_id": 10161,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00054",
+    "updated_at": "2026-04-22 00:00:00"
+  },
+  {
+    "id": 55,
+    "dida_hotel_id": 10162,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00055",
+    "updated_at": "2025-08-06 00:00:00"
+  },
+  {
+    "id": 56,
+    "dida_hotel_id": 10166,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00056",
+    "updated_at": "2025-07-02 00:00:00"
+  },
+  {
+    "id": 57,
+    "dida_hotel_id": 10170,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00057",
+    "updated_at": "2024-06-03 00:00:00"
+  },
+  {
+    "id": 58,
+    "dida_hotel_id": 10171,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00058",
+    "updated_at": "2025-10-18 00:00:00"
+  },
+  {
+    "id": 59,
+    "dida_hotel_id": 10175,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00059",
+    "updated_at": "2024-05-27 00:00:00"
+  },
+  {
+    "id": 60,
+    "dida_hotel_id": 10179,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00060",
+    "updated_at": "2024-12-07 00:00:00"
+  },
+  {
+    "id": 61,
+    "dida_hotel_id": 10180,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00061",
+    "updated_at": "2026-06-09 00:00:00"
+  },
+  {
+    "id": 62,
+    "dida_hotel_id": 10184,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00062",
+    "updated_at": "2025-07-29 00:00:00"
+  },
+  {
+    "id": 63,
+    "dida_hotel_id": 10188,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00063",
+    "updated_at": "2025-05-16 00:00:00"
+  },
+  {
+    "id": 64,
+    "dida_hotel_id": 10189,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00064",
+    "updated_at": "2025-09-08 00:00:00"
+  },
+  {
+    "id": 65,
+    "dida_hotel_id": 10193,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00065",
+    "updated_at": "2026-01-28 00:00:00"
+  },
+  {
+    "id": 66,
+    "dida_hotel_id": 10197,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00066",
+    "updated_at": "2025-11-29 00:00:00"
+  },
+  {
+    "id": 67,
+    "dida_hotel_id": 10198,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00067",
+    "updated_at": "2024-07-25 00:00:00"
+  },
+  {
+    "id": 68,
+    "dida_hotel_id": 10202,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00068",
+    "updated_at": "2024-01-29 00:00:00"
+  },
+  {
+    "id": 69,
+    "dida_hotel_id": 10206,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00069",
+    "updated_at": "2024-10-10 00:00:00"
+  },
+  {
+    "id": 70,
+    "dida_hotel_id": 10207,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00070",
+    "updated_at": "2024-08-28 00:00:00"
+  },
+  {
+    "id": 71,
+    "dida_hotel_id": 10211,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00071",
+    "updated_at": "2024-07-08 00:00:00"
+  },
+  {
+    "id": 72,
+    "dida_hotel_id": 10215,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00072",
+    "updated_at": "2026-04-28 00:00:00"
+  },
+  {
+    "id": 73,
+    "dida_hotel_id": 10216,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00073",
+    "updated_at": "2026-02-27 00:00:00"
+  },
+  {
+    "id": 74,
+    "dida_hotel_id": 10220,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00074",
+    "updated_at": "2024-10-10 00:00:00"
+  },
+  {
+    "id": 75,
+    "dida_hotel_id": 10224,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00075",
+    "updated_at": "2025-08-12 00:00:00"
+  },
+  {
+    "id": 76,
+    "dida_hotel_id": 10225,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00076",
+    "updated_at": "2024-12-22 00:00:00"
+  },
+  {
+    "id": 77,
+    "dida_hotel_id": 10229,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00077",
+    "updated_at": "2026-04-03 00:00:00"
+  },
+  {
+    "id": 78,
+    "dida_hotel_id": 10233,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00078",
+    "updated_at": "2025-02-16 00:00:00"
+  },
+  {
+    "id": 79,
+    "dida_hotel_id": 10234,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00079",
+    "updated_at": "2024-08-26 00:00:00"
+  },
+  {
+    "id": 80,
+    "dida_hotel_id": 10238,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00080",
+    "updated_at": "2024-08-09 00:00:00"
+  },
+  {
+    "id": 81,
+    "dida_hotel_id": 10242,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00081",
+    "updated_at": "2025-05-20 00:00:00"
+  },
+  {
+    "id": 82,
+    "dida_hotel_id": 10243,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00082",
+    "updated_at": "2024-08-24 00:00:00"
+  },
+  {
+    "id": 83,
+    "dida_hotel_id": 10247,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00083",
+    "updated_at": "2025-06-10 00:00:00"
+  },
+  {
+    "id": 84,
+    "dida_hotel_id": 10251,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00084",
+    "updated_at": "2026-03-19 00:00:00"
+  },
+  {
+    "id": 85,
+    "dida_hotel_id": 10252,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00085",
+    "updated_at": "2024-12-25 00:00:00"
+  },
+  {
+    "id": 86,
+    "dida_hotel_id": 10256,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00086",
+    "updated_at": "2024-07-16 00:00:00"
+  },
+  {
+    "id": 87,
+    "dida_hotel_id": 10260,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00087",
+    "updated_at": "2026-06-16 00:00:00"
+  },
+  {
+    "id": 88,
+    "dida_hotel_id": 10261,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00088",
+    "updated_at": "2025-04-03 00:00:00"
+  },
+  {
+    "id": 89,
+    "dida_hotel_id": 10265,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00089",
+    "updated_at": "2024-03-22 00:00:00"
+  },
+  {
+    "id": 90,
+    "dida_hotel_id": 10269,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00090",
+    "updated_at": "2024-02-12 00:00:00"
+  },
+  {
+    "id": 91,
+    "dida_hotel_id": 10270,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00091",
+    "updated_at": "2024-04-08 00:00:00"
+  },
+  {
+    "id": 92,
+    "dida_hotel_id": 10274,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00092",
+    "updated_at": "2025-07-18 00:00:00"
+  },
+  {
+    "id": 93,
+    "dida_hotel_id": 10278,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00093",
+    "updated_at": "2025-12-13 00:00:00"
+  },
+  {
+    "id": 94,
+    "dida_hotel_id": 10279,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00094",
+    "updated_at": "2025-01-14 00:00:00"
+  },
+  {
+    "id": 95,
+    "dida_hotel_id": 10283,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00095",
+    "updated_at": "2024-02-27 00:00:00"
+  },
+  {
+    "id": 96,
+    "dida_hotel_id": 10287,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00096",
+    "updated_at": "2024-12-09 00:00:00"
+  },
+  {
+    "id": 97,
+    "dida_hotel_id": 10288,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00097",
+    "updated_at": "2026-06-15 00:00:00"
+  },
+  {
+    "id": 98,
+    "dida_hotel_id": 10292,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00098",
+    "updated_at": "2025-04-21 00:00:00"
+  },
+  {
+    "id": 99,
+    "dida_hotel_id": 10296,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00099",
+    "updated_at": "2026-05-23 00:00:00"
+  },
+  {
+    "id": 100,
+    "dida_hotel_id": 10297,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00100",
+    "updated_at": "2026-02-13 00:00:00"
+  },
+  {
+    "id": 101,
+    "dida_hotel_id": 10301,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00101",
+    "updated_at": "2024-01-11 00:00:00"
+  },
+  {
+    "id": 102,
+    "dida_hotel_id": 10305,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00102",
+    "updated_at": "2025-10-10 00:00:00"
+  },
+  {
+    "id": 103,
+    "dida_hotel_id": 10306,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00103",
+    "updated_at": "2025-09-05 00:00:00"
+  },
+  {
+    "id": 104,
+    "dida_hotel_id": 10310,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00104",
+    "updated_at": "2025-04-28 00:00:00"
+  },
+  {
+    "id": 105,
+    "dida_hotel_id": 10314,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00105",
+    "updated_at": "2024-08-28 00:00:00"
+  },
+  {
+    "id": 106,
+    "dida_hotel_id": 10315,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00106",
+    "updated_at": "2025-07-30 00:00:00"
+  },
+  {
+    "id": 107,
+    "dida_hotel_id": 10319,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00107",
+    "updated_at": "2024-04-10 00:00:00"
+  },
+  {
+    "id": 108,
+    "dida_hotel_id": 10323,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00108",
+    "updated_at": "2025-01-26 00:00:00"
+  },
+  {
+    "id": 109,
+    "dida_hotel_id": 10324,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00109",
+    "updated_at": "2025-02-12 00:00:00"
+  },
+  {
+    "id": 110,
+    "dida_hotel_id": 10328,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00110",
+    "updated_at": "2026-05-08 00:00:00"
+  },
+  {
+    "id": 111,
+    "dida_hotel_id": 10332,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00111",
+    "updated_at": "2026-02-27 00:00:00"
+  },
+  {
+    "id": 112,
+    "dida_hotel_id": 10333,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00112",
+    "updated_at": "2024-08-25 00:00:00"
+  },
+  {
+    "id": 113,
+    "dida_hotel_id": 10337,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00113",
+    "updated_at": "2025-03-26 00:00:00"
+  },
+  {
+    "id": 114,
+    "dida_hotel_id": 10341,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00114",
+    "updated_at": "2024-06-09 00:00:00"
+  },
+  {
+    "id": 115,
+    "dida_hotel_id": 10342,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00115",
+    "updated_at": "2026-04-01 00:00:00"
+  },
+  {
+    "id": 116,
+    "dida_hotel_id": 10346,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00116",
+    "updated_at": "2026-02-22 00:00:00"
+  },
+  {
+    "id": 117,
+    "dida_hotel_id": 10350,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00117",
+    "updated_at": "2024-09-25 00:00:00"
+  },
+  {
+    "id": 118,
+    "dida_hotel_id": 10351,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00118",
+    "updated_at": "2025-07-29 00:00:00"
+  },
+  {
+    "id": 119,
+    "dida_hotel_id": 10355,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00119",
+    "updated_at": "2025-07-02 00:00:00"
+  },
+  {
+    "id": 120,
+    "dida_hotel_id": 10359,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00120",
+    "updated_at": "2024-05-17 00:00:00"
+  },
+  {
+    "id": 121,
+    "dida_hotel_id": 10360,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00121",
+    "updated_at": "2025-11-17 00:00:00"
+  },
+  {
+    "id": 122,
+    "dida_hotel_id": 10364,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00122",
+    "updated_at": "2025-04-30 00:00:00"
+  },
+  {
+    "id": 123,
+    "dida_hotel_id": 10368,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00123",
+    "updated_at": "2025-12-01 00:00:00"
+  },
+  {
+    "id": 124,
+    "dida_hotel_id": 10369,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00124",
+    "updated_at": "2025-04-22 00:00:00"
+  },
+  {
+    "id": 125,
+    "dida_hotel_id": 10373,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00125",
+    "updated_at": "2024-01-01 00:00:00"
+  },
+  {
+    "id": 126,
+    "dida_hotel_id": 10377,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00126",
+    "updated_at": "2024-10-18 00:00:00"
+  },
+  {
+    "id": 127,
+    "dida_hotel_id": 10378,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00127",
+    "updated_at": "2024-01-18 00:00:00"
+  },
+  {
+    "id": 128,
+    "dida_hotel_id": 10382,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00128",
+    "updated_at": "2026-04-16 00:00:00"
+  },
+  {
+    "id": 129,
+    "dida_hotel_id": 10386,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00129",
+    "updated_at": "2026-03-01 00:00:00"
+  },
+  {
+    "id": 130,
+    "dida_hotel_id": 10387,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00130",
+    "updated_at": "2026-01-18 00:00:00"
+  },
+  {
+    "id": 131,
+    "dida_hotel_id": 10391,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00131",
+    "updated_at": "2024-10-03 00:00:00"
+  },
+  {
+    "id": 132,
+    "dida_hotel_id": 10395,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00132",
+    "updated_at": "2024-02-22 00:00:00"
+  },
+  {
+    "id": 133,
+    "dida_hotel_id": 10396,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00133",
+    "updated_at": "2026-03-01 00:00:00"
+  },
+  {
+    "id": 134,
+    "dida_hotel_id": 10400,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00134",
+    "updated_at": "2026-05-02 00:00:00"
+  },
+  {
+    "id": 135,
+    "dida_hotel_id": 10404,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00135",
+    "updated_at": "2024-03-18 00:00:00"
+  },
+  {
+    "id": 136,
+    "dida_hotel_id": 10405,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00136",
+    "updated_at": "2025-03-13 00:00:00"
+  },
+  {
+    "id": 137,
+    "dida_hotel_id": 10409,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00137",
+    "updated_at": "2024-03-03 00:00:00"
+  },
+  {
+    "id": 138,
+    "dida_hotel_id": 10413,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00138",
+    "updated_at": "2025-11-15 00:00:00"
+  },
+  {
+    "id": 139,
+    "dida_hotel_id": 10414,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00139",
+    "updated_at": "2025-11-20 00:00:00"
+  },
+  {
+    "id": 140,
+    "dida_hotel_id": 10418,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00140",
+    "updated_at": "2024-04-25 00:00:00"
+  },
+  {
+    "id": 141,
+    "dida_hotel_id": 10422,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00141",
+    "updated_at": "2025-03-03 00:00:00"
+  },
+  {
+    "id": 142,
+    "dida_hotel_id": 10423,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00142",
+    "updated_at": "2025-05-09 00:00:00"
+  },
+  {
+    "id": 143,
+    "dida_hotel_id": 10427,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00143",
+    "updated_at": "2024-08-26 00:00:00"
+  },
+  {
+    "id": 144,
+    "dida_hotel_id": 10431,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00144",
+    "updated_at": "2026-02-24 00:00:00"
+  },
+  {
+    "id": 145,
+    "dida_hotel_id": 10432,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00145",
+    "updated_at": "2025-01-15 00:00:00"
+  },
+  {
+    "id": 146,
+    "dida_hotel_id": 10436,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00146",
+    "updated_at": "2024-07-09 00:00:00"
+  },
+  {
+    "id": 147,
+    "dida_hotel_id": 10440,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00147",
+    "updated_at": "2025-04-30 00:00:00"
+  },
+  {
+    "id": 148,
+    "dida_hotel_id": 10441,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00148",
+    "updated_at": "2025-10-18 00:00:00"
+  },
+  {
+    "id": 149,
+    "dida_hotel_id": 10445,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00149",
+    "updated_at": "2024-06-30 00:00:00"
+  },
+  {
+    "id": 150,
+    "dida_hotel_id": 10449,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00150",
+    "updated_at": "2024-10-07 00:00:00"
+  },
+  {
+    "id": 151,
+    "dida_hotel_id": 10450,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00151",
+    "updated_at": "2026-06-14 00:00:00"
+  },
+  {
+    "id": 152,
+    "dida_hotel_id": 10454,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00152",
+    "updated_at": "2025-08-07 00:00:00"
+  },
+  {
+    "id": 153,
+    "dida_hotel_id": 10458,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00153",
+    "updated_at": "2025-01-29 00:00:00"
+  },
+  {
+    "id": 154,
+    "dida_hotel_id": 10459,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00154",
+    "updated_at": "2025-04-10 00:00:00"
+  },
+  {
+    "id": 155,
+    "dida_hotel_id": 10463,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00155",
+    "updated_at": "2024-04-18 00:00:00"
+  },
+  {
+    "id": 156,
+    "dida_hotel_id": 10467,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00156",
+    "updated_at": "2024-07-21 00:00:00"
+  },
+  {
+    "id": 157,
+    "dida_hotel_id": 10468,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00157",
+    "updated_at": "2024-10-31 00:00:00"
+  },
+  {
+    "id": 158,
+    "dida_hotel_id": 10472,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00158",
+    "updated_at": "2025-06-13 00:00:00"
+  },
+  {
+    "id": 159,
+    "dida_hotel_id": 10476,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00159",
+    "updated_at": "2024-07-26 00:00:00"
+  },
+  {
+    "id": 160,
+    "dida_hotel_id": 10477,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00160",
+    "updated_at": "2024-07-17 00:00:00"
+  },
+  {
+    "id": 161,
+    "dida_hotel_id": 10481,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00161",
+    "updated_at": "2024-03-04 00:00:00"
+  },
+  {
+    "id": 162,
+    "dida_hotel_id": 10485,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00162",
+    "updated_at": "2025-07-21 00:00:00"
+  },
+  {
+    "id": 163,
+    "dida_hotel_id": 10486,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00163",
+    "updated_at": "2024-07-25 00:00:00"
+  },
+  {
+    "id": 164,
+    "dida_hotel_id": 10490,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00164",
+    "updated_at": "2026-03-25 00:00:00"
+  },
+  {
+    "id": 165,
+    "dida_hotel_id": 10494,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00165",
+    "updated_at": "2026-02-12 00:00:00"
+  },
+  {
+    "id": 166,
+    "dida_hotel_id": 10495,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00166",
+    "updated_at": "2024-03-04 00:00:00"
+  },
+  {
+    "id": 167,
+    "dida_hotel_id": 10499,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00167",
+    "updated_at": "2024-08-02 00:00:00"
+  },
+  {
+    "id": 168,
+    "dida_hotel_id": 10503,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00168",
+    "updated_at": "2025-08-25 00:00:00"
+  },
+  {
+    "id": 169,
+    "dida_hotel_id": 10504,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00169",
+    "updated_at": "2024-07-11 00:00:00"
+  },
+  {
+    "id": 170,
+    "dida_hotel_id": 10508,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00170",
+    "updated_at": "2024-04-29 00:00:00"
+  },
+  {
+    "id": 171,
+    "dida_hotel_id": 10512,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00171",
+    "updated_at": "2026-04-21 00:00:00"
+  },
+  {
+    "id": 172,
+    "dida_hotel_id": 10513,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00172",
+    "updated_at": "2025-05-28 00:00:00"
+  },
+  {
+    "id": 173,
+    "dida_hotel_id": 10517,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00173",
+    "updated_at": "2025-03-01 00:00:00"
+  },
+  {
+    "id": 174,
+    "dida_hotel_id": 10521,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00174",
+    "updated_at": "2025-12-07 00:00:00"
+  },
+  {
+    "id": 175,
+    "dida_hotel_id": 10522,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00175",
+    "updated_at": "2025-12-27 00:00:00"
+  },
+  {
+    "id": 176,
+    "dida_hotel_id": 10526,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00176",
+    "updated_at": "2024-06-20 00:00:00"
+  },
+  {
+    "id": 177,
+    "dida_hotel_id": 10530,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00177",
+    "updated_at": "2024-03-28 00:00:00"
+  },
+  {
+    "id": 178,
+    "dida_hotel_id": 10531,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00178",
+    "updated_at": "2025-01-22 00:00:00"
+  },
+  {
+    "id": 179,
+    "dida_hotel_id": 10535,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00179",
+    "updated_at": "2025-01-16 00:00:00"
+  },
+  {
+    "id": 180,
+    "dida_hotel_id": 10539,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00180",
+    "updated_at": "2025-02-24 00:00:00"
+  },
+  {
+    "id": 181,
+    "dida_hotel_id": 10540,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00181",
+    "updated_at": "2025-10-18 00:00:00"
+  },
+  {
+    "id": 182,
+    "dida_hotel_id": 10544,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00182",
+    "updated_at": "2025-08-29 00:00:00"
+  },
+  {
+    "id": 183,
+    "dida_hotel_id": 10548,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00183",
+    "updated_at": "2026-06-04 00:00:00"
+  },
+  {
+    "id": 184,
+    "dida_hotel_id": 10549,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00184",
+    "updated_at": "2024-03-29 00:00:00"
+  },
+  {
+    "id": 185,
+    "dida_hotel_id": 10553,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00185",
+    "updated_at": "2024-12-28 00:00:00"
+  },
+  {
+    "id": 186,
+    "dida_hotel_id": 10557,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00186",
+    "updated_at": "2024-11-01 00:00:00"
+  },
+  {
+    "id": 187,
+    "dida_hotel_id": 10558,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00187",
+    "updated_at": "2026-02-14 00:00:00"
+  },
+  {
+    "id": 188,
+    "dida_hotel_id": 10562,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00188",
+    "updated_at": "2024-08-11 00:00:00"
+  },
+  {
+    "id": 189,
+    "dida_hotel_id": 10566,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00189",
+    "updated_at": "2024-06-20 00:00:00"
+  },
+  {
+    "id": 190,
+    "dida_hotel_id": 10567,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00190",
+    "updated_at": "2025-02-07 00:00:00"
+  },
+  {
+    "id": 191,
+    "dida_hotel_id": 10571,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00191",
+    "updated_at": "2025-01-14 00:00:00"
+  },
+  {
+    "id": 192,
+    "dida_hotel_id": 10575,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00192",
+    "updated_at": "2024-09-07 00:00:00"
+  },
+  {
+    "id": 193,
+    "dida_hotel_id": 10576,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00193",
+    "updated_at": "2024-08-12 00:00:00"
+  },
+  {
+    "id": 194,
+    "dida_hotel_id": 10580,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00194",
+    "updated_at": "2026-04-10 00:00:00"
+  },
+  {
+    "id": 195,
+    "dida_hotel_id": 10584,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00195",
+    "updated_at": "2025-02-02 00:00:00"
+  },
+  {
+    "id": 196,
+    "dida_hotel_id": 10585,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00196",
+    "updated_at": "2026-02-14 00:00:00"
+  },
+  {
+    "id": 197,
+    "dida_hotel_id": 10589,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00197",
+    "updated_at": "2025-05-10 00:00:00"
+  },
+  {
+    "id": 198,
+    "dida_hotel_id": 10593,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00198",
+    "updated_at": "2024-02-15 00:00:00"
+  },
+  {
+    "id": 199,
+    "dida_hotel_id": 10594,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00199",
+    "updated_at": "2026-06-18 00:00:00"
+  },
+  {
+    "id": 200,
+    "dida_hotel_id": 10598,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00200",
+    "updated_at": "2026-01-22 00:00:00"
+  },
+  {
+    "id": 201,
+    "dida_hotel_id": 10602,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00201",
+    "updated_at": "2026-05-22 00:00:00"
+  },
+  {
+    "id": 202,
+    "dida_hotel_id": 10603,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00202",
+    "updated_at": "2026-04-13 00:00:00"
+  },
+  {
+    "id": 203,
+    "dida_hotel_id": 10607,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00203",
+    "updated_at": "2026-02-02 00:00:00"
+  },
+  {
+    "id": 204,
+    "dida_hotel_id": 10611,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00204",
+    "updated_at": "2024-05-29 00:00:00"
+  },
+  {
+    "id": 205,
+    "dida_hotel_id": 10612,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00205",
+    "updated_at": "2025-03-13 00:00:00"
+  },
+  {
+    "id": 206,
+    "dida_hotel_id": 10616,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00206",
+    "updated_at": "2024-07-11 00:00:00"
+  },
+  {
+    "id": 207,
+    "dida_hotel_id": 10620,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00207",
+    "updated_at": "2024-12-26 00:00:00"
+  },
+  {
+    "id": 208,
+    "dida_hotel_id": 10621,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00208",
+    "updated_at": "2024-02-22 00:00:00"
+  },
+  {
+    "id": 209,
+    "dida_hotel_id": 10625,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00209",
+    "updated_at": "2024-12-07 00:00:00"
+  },
+  {
+    "id": 210,
+    "dida_hotel_id": 10629,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00210",
+    "updated_at": "2026-06-05 00:00:00"
+  },
+  {
+    "id": 211,
+    "dida_hotel_id": 10630,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00211",
+    "updated_at": "2024-08-26 00:00:00"
+  },
+  {
+    "id": 212,
+    "dida_hotel_id": 10634,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00212",
+    "updated_at": "2025-12-06 00:00:00"
+  },
+  {
+    "id": 213,
+    "dida_hotel_id": 10638,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00213",
+    "updated_at": "2025-02-13 00:00:00"
+  },
+  {
+    "id": 214,
+    "dida_hotel_id": 10639,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00214",
+    "updated_at": "2025-01-15 00:00:00"
+  },
+  {
+    "id": 215,
+    "dida_hotel_id": 10643,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00215",
+    "updated_at": "2026-05-11 00:00:00"
+  },
+  {
+    "id": 216,
+    "dida_hotel_id": 10647,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00216",
+    "updated_at": "2026-06-14 00:00:00"
+  },
+  {
+    "id": 217,
+    "dida_hotel_id": 10648,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00217",
+    "updated_at": "2025-05-15 00:00:00"
+  },
+  {
+    "id": 218,
+    "dida_hotel_id": 10652,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00218",
+    "updated_at": "2025-10-08 00:00:00"
+  },
+  {
+    "id": 219,
+    "dida_hotel_id": 10656,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00219",
+    "updated_at": "2024-05-19 00:00:00"
+  },
+  {
+    "id": 220,
+    "dida_hotel_id": 10657,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00220",
+    "updated_at": "2024-09-24 00:00:00"
+  },
+  {
+    "id": 221,
+    "dida_hotel_id": 10661,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00221",
+    "updated_at": "2026-05-21 00:00:00"
+  },
+  {
+    "id": 222,
+    "dida_hotel_id": 10665,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00222",
+    "updated_at": "2025-06-05 00:00:00"
+  },
+  {
+    "id": 223,
+    "dida_hotel_id": 10666,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00223",
+    "updated_at": "2025-05-02 00:00:00"
+  },
+  {
+    "id": 224,
+    "dida_hotel_id": 10670,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00224",
+    "updated_at": "2025-11-04 00:00:00"
+  },
+  {
+    "id": 225,
+    "dida_hotel_id": 10674,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00225",
+    "updated_at": "2024-02-21 00:00:00"
+  },
+  {
+    "id": 226,
+    "dida_hotel_id": 10675,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00226",
+    "updated_at": "2025-06-09 00:00:00"
+  },
+  {
+    "id": 227,
+    "dida_hotel_id": 10679,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00227",
+    "updated_at": "2025-03-28 00:00:00"
+  },
+  {
+    "id": 228,
+    "dida_hotel_id": 10683,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00228",
+    "updated_at": "2026-02-06 00:00:00"
+  },
+  {
+    "id": 229,
+    "dida_hotel_id": 10684,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00229",
+    "updated_at": "2024-05-21 00:00:00"
+  },
+  {
+    "id": 230,
+    "dida_hotel_id": 10688,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00230",
+    "updated_at": "2026-05-14 00:00:00"
+  },
+  {
+    "id": 231,
+    "dida_hotel_id": 10692,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00231",
+    "updated_at": "2024-03-13 00:00:00"
+  },
+  {
+    "id": 232,
+    "dida_hotel_id": 10693,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00232",
+    "updated_at": "2024-06-16 00:00:00"
+  },
+  {
+    "id": 233,
+    "dida_hotel_id": 10697,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00233",
+    "updated_at": "2025-06-19 00:00:00"
+  },
+  {
+    "id": 234,
+    "dida_hotel_id": 10701,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00234",
+    "updated_at": "2025-08-30 00:00:00"
+  },
+  {
+    "id": 235,
+    "dida_hotel_id": 10702,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00235",
+    "updated_at": "2024-07-30 00:00:00"
+  },
+  {
+    "id": 236,
+    "dida_hotel_id": 10706,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00236",
+    "updated_at": "2024-04-17 00:00:00"
+  },
+  {
+    "id": 237,
+    "dida_hotel_id": 10710,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00237",
+    "updated_at": "2026-03-12 00:00:00"
+  },
+  {
+    "id": 238,
+    "dida_hotel_id": 10711,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00238",
+    "updated_at": "2024-08-09 00:00:00"
+  },
+  {
+    "id": 239,
+    "dida_hotel_id": 10715,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00239",
+    "updated_at": "2025-06-19 00:00:00"
+  },
+  {
+    "id": 240,
+    "dida_hotel_id": 10719,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00240",
+    "updated_at": "2025-07-11 00:00:00"
+  },
+  {
+    "id": 241,
+    "dida_hotel_id": 10720,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00241",
+    "updated_at": "2025-01-12 00:00:00"
+  },
+  {
+    "id": 242,
+    "dida_hotel_id": 10724,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00242",
+    "updated_at": "2025-06-09 00:00:00"
+  },
+  {
+    "id": 243,
+    "dida_hotel_id": 10728,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00243",
+    "updated_at": "2025-04-15 00:00:00"
+  },
+  {
+    "id": 244,
+    "dida_hotel_id": 10729,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00244",
+    "updated_at": "2026-04-21 00:00:00"
+  },
+  {
+    "id": 245,
+    "dida_hotel_id": 10733,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00245",
+    "updated_at": "2024-07-02 00:00:00"
+  },
+  {
+    "id": 246,
+    "dida_hotel_id": 10737,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00246",
+    "updated_at": "2025-10-06 00:00:00"
+  },
+  {
+    "id": 247,
+    "dida_hotel_id": 10738,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00247",
+    "updated_at": "2024-08-02 00:00:00"
+  },
+  {
+    "id": 248,
+    "dida_hotel_id": 10742,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00248",
+    "updated_at": "2024-12-22 00:00:00"
+  },
+  {
+    "id": 249,
+    "dida_hotel_id": 10746,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00249",
+    "updated_at": "2025-08-27 00:00:00"
+  },
+  {
+    "id": 250,
+    "dida_hotel_id": 10747,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00250",
+    "updated_at": "2024-09-26 00:00:00"
+  },
+  {
+    "id": 251,
+    "dida_hotel_id": 10751,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00251",
+    "updated_at": "2024-10-11 00:00:00"
+  },
+  {
+    "id": 252,
+    "dida_hotel_id": 10755,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00252",
+    "updated_at": "2025-11-07 00:00:00"
+  },
+  {
+    "id": 253,
+    "dida_hotel_id": 10756,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00253",
+    "updated_at": "2024-03-06 00:00:00"
+  },
+  {
+    "id": 254,
+    "dida_hotel_id": 10760,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00254",
+    "updated_at": "2025-02-16 00:00:00"
+  },
+  {
+    "id": 255,
+    "dida_hotel_id": 10764,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00255",
+    "updated_at": "2026-06-17 00:00:00"
+  },
+  {
+    "id": 256,
+    "dida_hotel_id": 10765,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00256",
+    "updated_at": "2026-06-15 00:00:00"
+  },
+  {
+    "id": 257,
+    "dida_hotel_id": 10769,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00257",
+    "updated_at": "2024-03-06 00:00:00"
+  },
+  {
+    "id": 258,
+    "dida_hotel_id": 10773,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00258",
+    "updated_at": "2024-07-10 00:00:00"
+  },
+  {
+    "id": 259,
+    "dida_hotel_id": 10774,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00259",
+    "updated_at": "2024-08-26 00:00:00"
+  },
+  {
+    "id": 260,
+    "dida_hotel_id": 10778,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00260",
+    "updated_at": "2026-04-19 00:00:00"
+  },
+  {
+    "id": 261,
+    "dida_hotel_id": 10782,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00261",
+    "updated_at": "2026-03-03 00:00:00"
+  },
+  {
+    "id": 262,
+    "dida_hotel_id": 10783,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00262",
+    "updated_at": "2026-03-02 00:00:00"
+  },
+  {
+    "id": 263,
+    "dida_hotel_id": 10787,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00263",
+    "updated_at": "2024-11-28 00:00:00"
+  },
+  {
+    "id": 264,
+    "dida_hotel_id": 10791,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00264",
+    "updated_at": "2024-05-21 00:00:00"
+  },
+  {
+    "id": 265,
+    "dida_hotel_id": 10792,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00265",
+    "updated_at": "2026-01-20 00:00:00"
+  },
+  {
+    "id": 266,
+    "dida_hotel_id": 10796,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00266",
+    "updated_at": "2025-09-25 00:00:00"
+  },
+  {
+    "id": 267,
+    "dida_hotel_id": 10800,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00267",
+    "updated_at": "2025-07-04 00:00:00"
+  },
+  {
+    "id": 268,
+    "dida_hotel_id": 10801,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00268",
+    "updated_at": "2026-06-07 00:00:00"
+  },
+  {
+    "id": 269,
+    "dida_hotel_id": 10805,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00269",
+    "updated_at": "2025-08-11 00:00:00"
+  },
+  {
+    "id": 270,
+    "dida_hotel_id": 10809,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00270",
+    "updated_at": "2024-01-08 00:00:00"
+  },
+  {
+    "id": 271,
+    "dida_hotel_id": 10810,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00271",
+    "updated_at": "2026-01-05 00:00:00"
+  },
+  {
+    "id": 272,
+    "dida_hotel_id": 10814,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00272",
+    "updated_at": "2024-09-26 00:00:00"
+  },
+  {
+    "id": 273,
+    "dida_hotel_id": 10818,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00273",
+    "updated_at": "2025-08-20 00:00:00"
+  },
+  {
+    "id": 274,
+    "dida_hotel_id": 10819,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00274",
+    "updated_at": "2026-04-25 00:00:00"
+  },
+  {
+    "id": 275,
+    "dida_hotel_id": 10823,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00275",
+    "updated_at": "2024-04-30 00:00:00"
+  },
+  {
+    "id": 276,
+    "dida_hotel_id": 10827,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00276",
+    "updated_at": "2024-04-13 00:00:00"
+  },
+  {
+    "id": 277,
+    "dida_hotel_id": 10828,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00277",
+    "updated_at": "2024-04-06 00:00:00"
+  },
+  {
+    "id": 278,
+    "dida_hotel_id": 10832,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00278",
+    "updated_at": "2025-05-12 00:00:00"
+  },
+  {
+    "id": 279,
+    "dida_hotel_id": 10836,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00279",
+    "updated_at": "2024-09-02 00:00:00"
+  },
+  {
+    "id": 280,
+    "dida_hotel_id": 10837,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00280",
+    "updated_at": "2025-06-28 00:00:00"
+  },
+  {
+    "id": 281,
+    "dida_hotel_id": 10841,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00281",
+    "updated_at": "2025-10-07 00:00:00"
+  },
+  {
+    "id": 282,
+    "dida_hotel_id": 10845,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00282",
+    "updated_at": "2024-07-02 00:00:00"
+  },
+  {
+    "id": 283,
+    "dida_hotel_id": 10846,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00283",
+    "updated_at": "2025-07-24 00:00:00"
+  },
+  {
+    "id": 284,
+    "dida_hotel_id": 10850,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00284",
+    "updated_at": "2024-08-25 00:00:00"
+  },
+  {
+    "id": 285,
+    "dida_hotel_id": 10854,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00285",
+    "updated_at": "2025-03-15 00:00:00"
+  },
+  {
+    "id": 286,
+    "dida_hotel_id": 10855,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00286",
+    "updated_at": "2026-03-25 00:00:00"
+  },
+  {
+    "id": 287,
+    "dida_hotel_id": 10859,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00287",
+    "updated_at": "2026-01-31 00:00:00"
+  },
+  {
+    "id": 288,
+    "dida_hotel_id": 10863,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00288",
+    "updated_at": "2024-03-24 00:00:00"
+  },
+  {
+    "id": 289,
+    "dida_hotel_id": 10864,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00289",
+    "updated_at": "2025-01-16 00:00:00"
+  },
+  {
+    "id": 290,
+    "dida_hotel_id": 10868,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00290",
+    "updated_at": "2024-09-06 00:00:00"
+  },
+  {
+    "id": 291,
+    "dida_hotel_id": 10872,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00291",
+    "updated_at": "2024-01-04 00:00:00"
+  },
+  {
+    "id": 292,
+    "dida_hotel_id": 10873,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00292",
+    "updated_at": "2025-11-25 00:00:00"
+  },
+  {
+    "id": 293,
+    "dida_hotel_id": 10877,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00293",
+    "updated_at": "2025-07-27 00:00:00"
+  },
+  {
+    "id": 294,
+    "dida_hotel_id": 10881,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00294",
+    "updated_at": "2024-08-23 00:00:00"
+  },
+  {
+    "id": 295,
+    "dida_hotel_id": 10882,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00295",
+    "updated_at": "2025-10-29 00:00:00"
+  },
+  {
+    "id": 296,
+    "dida_hotel_id": 10886,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00296",
+    "updated_at": "2025-05-11 00:00:00"
+  },
+  {
+    "id": 297,
+    "dida_hotel_id": 10890,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00297",
+    "updated_at": "2025-01-19 00:00:00"
+  },
+  {
+    "id": 298,
+    "dida_hotel_id": 10891,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00298",
+    "updated_at": "2024-01-09 00:00:00"
+  },
+  {
+    "id": 299,
+    "dida_hotel_id": 10895,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00299",
+    "updated_at": "2024-03-08 00:00:00"
+  },
+  {
+    "id": 300,
+    "dida_hotel_id": 10899,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00300",
+    "updated_at": "2026-03-05 00:00:00"
+  },
+  {
+    "id": 301,
+    "dida_hotel_id": 10900,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00301",
+    "updated_at": "2026-03-24 00:00:00"
+  },
+  {
+    "id": 302,
+    "dida_hotel_id": 10904,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00302",
+    "updated_at": "2025-05-06 00:00:00"
+  },
+  {
+    "id": 303,
+    "dida_hotel_id": 10908,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00303",
+    "updated_at": "2026-01-21 00:00:00"
+  },
+  {
+    "id": 304,
+    "dida_hotel_id": 10909,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00304",
+    "updated_at": "2025-06-08 00:00:00"
+  },
+  {
+    "id": 305,
+    "dida_hotel_id": 10913,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00305",
+    "updated_at": "2024-05-13 00:00:00"
+  },
+  {
+    "id": 306,
+    "dida_hotel_id": 10917,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00306",
+    "updated_at": "2024-04-24 00:00:00"
+  },
+  {
+    "id": 307,
+    "dida_hotel_id": 10918,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00307",
+    "updated_at": "2024-10-04 00:00:00"
+  },
+  {
+    "id": 308,
+    "dida_hotel_id": 10922,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00308",
+    "updated_at": "2026-03-20 00:00:00"
+  },
+  {
+    "id": 309,
+    "dida_hotel_id": 10926,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00309",
+    "updated_at": "2025-12-17 00:00:00"
+  },
+  {
+    "id": 310,
+    "dida_hotel_id": 10927,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00310",
+    "updated_at": "2026-02-13 00:00:00"
+  },
+  {
+    "id": 311,
+    "dida_hotel_id": 10931,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00311",
+    "updated_at": "2026-03-20 00:00:00"
+  },
+  {
+    "id": 312,
+    "dida_hotel_id": 10935,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00312",
+    "updated_at": "2024-07-08 00:00:00"
+  },
+  {
+    "id": 313,
+    "dida_hotel_id": 10936,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00313",
+    "updated_at": "2024-08-12 00:00:00"
+  },
+  {
+    "id": 314,
+    "dida_hotel_id": 10940,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00314",
+    "updated_at": "2024-04-02 00:00:00"
+  },
+  {
+    "id": 315,
+    "dida_hotel_id": 10944,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00315",
+    "updated_at": "2025-12-03 00:00:00"
+  },
+  {
+    "id": 316,
+    "dida_hotel_id": 10945,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00316",
+    "updated_at": "2026-03-06 00:00:00"
+  },
+  {
+    "id": 317,
+    "dida_hotel_id": 10949,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00317",
+    "updated_at": "2024-12-31 00:00:00"
+  },
+  {
+    "id": 318,
+    "dida_hotel_id": 10953,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00318",
+    "updated_at": "2025-07-12 00:00:00"
+  },
+  {
+    "id": 319,
+    "dida_hotel_id": 10954,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00319",
+    "updated_at": "2024-05-19 00:00:00"
+  },
+  {
+    "id": 320,
+    "dida_hotel_id": 10958,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00320",
+    "updated_at": "2026-04-16 00:00:00"
+  },
+  {
+    "id": 321,
+    "dida_hotel_id": 10962,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00321",
+    "updated_at": "2026-02-17 00:00:00"
+  },
+  {
+    "id": 322,
+    "dida_hotel_id": 10963,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00322",
+    "updated_at": "2026-05-28 00:00:00"
+  },
+  {
+    "id": 323,
+    "dida_hotel_id": 10967,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00323",
+    "updated_at": "2025-12-30 00:00:00"
+  },
+  {
+    "id": 324,
+    "dida_hotel_id": 10971,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00324",
+    "updated_at": "2026-03-04 00:00:00"
+  },
+  {
+    "id": 325,
+    "dida_hotel_id": 10972,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00325",
+    "updated_at": "2024-01-23 00:00:00"
+  },
+  {
+    "id": 326,
+    "dida_hotel_id": 10976,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00326",
+    "updated_at": "2025-10-24 00:00:00"
+  },
+  {
+    "id": 327,
+    "dida_hotel_id": 10980,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00327",
+    "updated_at": "2024-10-25 00:00:00"
+  },
+  {
+    "id": 328,
+    "dida_hotel_id": 10981,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00328",
+    "updated_at": "2026-04-17 00:00:00"
+  },
+  {
+    "id": 329,
+    "dida_hotel_id": 10985,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00329",
+    "updated_at": "2025-12-23 00:00:00"
+  },
+  {
+    "id": 330,
+    "dida_hotel_id": 10989,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00330",
+    "updated_at": "2026-02-16 00:00:00"
+  },
+  {
+    "id": 331,
+    "dida_hotel_id": 10990,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00331",
+    "updated_at": "2025-12-30 00:00:00"
+  },
+  {
+    "id": 332,
+    "dida_hotel_id": 10994,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00332",
+    "updated_at": "2024-08-28 00:00:00"
+  },
+  {
+    "id": 333,
+    "dida_hotel_id": 10998,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00333",
+    "updated_at": "2025-12-09 00:00:00"
+  },
+  {
+    "id": 334,
+    "dida_hotel_id": 10999,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00334",
+    "updated_at": "2024-04-07 00:00:00"
+  },
+  {
+    "id": 335,
+    "dida_hotel_id": 11003,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00335",
+    "updated_at": "2026-02-23 00:00:00"
+  },
+  {
+    "id": 336,
+    "dida_hotel_id": 11007,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00336",
+    "updated_at": "2026-02-11 00:00:00"
+  },
+  {
+    "id": 337,
+    "dida_hotel_id": 11008,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00337",
+    "updated_at": "2024-07-19 00:00:00"
+  },
+  {
+    "id": 338,
+    "dida_hotel_id": 11012,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00338",
+    "updated_at": "2026-01-04 00:00:00"
+  },
+  {
+    "id": 339,
+    "dida_hotel_id": 11016,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00339",
+    "updated_at": "2025-02-18 00:00:00"
+  },
+  {
+    "id": 340,
+    "dida_hotel_id": 11017,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00340",
+    "updated_at": "2024-10-01 00:00:00"
+  },
+  {
+    "id": 341,
+    "dida_hotel_id": 11021,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00341",
+    "updated_at": "2025-12-16 00:00:00"
+  },
+  {
+    "id": 342,
+    "dida_hotel_id": 11025,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00342",
+    "updated_at": "2024-07-23 00:00:00"
+  },
+  {
+    "id": 343,
+    "dida_hotel_id": 11026,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00343",
+    "updated_at": "2024-01-22 00:00:00"
+  },
+  {
+    "id": 344,
+    "dida_hotel_id": 11030,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00344",
+    "updated_at": "2024-06-22 00:00:00"
+  },
+  {
+    "id": 345,
+    "dida_hotel_id": 11034,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00345",
+    "updated_at": "2024-10-22 00:00:00"
+  },
+  {
+    "id": 346,
+    "dida_hotel_id": 11035,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00346",
+    "updated_at": "2026-02-16 00:00:00"
+  },
+  {
+    "id": 347,
+    "dida_hotel_id": 11039,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00347",
+    "updated_at": "2026-05-20 00:00:00"
+  },
+  {
+    "id": 348,
+    "dida_hotel_id": 11043,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00348",
+    "updated_at": "2024-09-08 00:00:00"
+  },
+  {
+    "id": 349,
+    "dida_hotel_id": 11044,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00349",
+    "updated_at": "2025-07-31 00:00:00"
+  },
+  {
+    "id": 350,
+    "dida_hotel_id": 11048,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00350",
+    "updated_at": "2024-12-25 00:00:00"
+  },
+  {
+    "id": 351,
+    "dida_hotel_id": 11052,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00351",
+    "updated_at": "2026-06-02 00:00:00"
+  },
+  {
+    "id": 352,
+    "dida_hotel_id": 11053,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00352",
+    "updated_at": "2025-04-27 00:00:00"
+  },
+  {
+    "id": 353,
+    "dida_hotel_id": 11057,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00353",
+    "updated_at": "2026-04-25 00:00:00"
+  },
+  {
+    "id": 354,
+    "dida_hotel_id": 11061,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00354",
+    "updated_at": "2024-04-13 00:00:00"
+  },
+  {
+    "id": 355,
+    "dida_hotel_id": 11062,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00355",
+    "updated_at": "2026-05-23 00:00:00"
+  },
+  {
+    "id": 356,
+    "dida_hotel_id": 11066,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00356",
+    "updated_at": "2024-06-09 00:00:00"
+  },
+  {
+    "id": 357,
+    "dida_hotel_id": 11070,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00357",
+    "updated_at": "2026-05-16 00:00:00"
+  },
+  {
+    "id": 358,
+    "dida_hotel_id": 11071,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00358",
+    "updated_at": "2024-08-26 00:00:00"
+  },
+  {
+    "id": 359,
+    "dida_hotel_id": 11075,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00359",
+    "updated_at": "2024-04-07 00:00:00"
+  },
+  {
+    "id": 360,
+    "dida_hotel_id": 11079,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00360",
+    "updated_at": "2025-01-26 00:00:00"
+  },
+  {
+    "id": 361,
+    "dida_hotel_id": 11080,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00361",
+    "updated_at": "2025-10-17 00:00:00"
+  },
+  {
+    "id": 362,
+    "dida_hotel_id": 11084,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00362",
+    "updated_at": "2024-10-09 00:00:00"
+  },
+  {
+    "id": 363,
+    "dida_hotel_id": 11088,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00363",
+    "updated_at": "2025-06-29 00:00:00"
+  },
+  {
+    "id": 364,
+    "dida_hotel_id": 11089,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00364",
+    "updated_at": "2025-04-05 00:00:00"
+  },
+  {
+    "id": 365,
+    "dida_hotel_id": 11093,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00365",
+    "updated_at": "2024-12-12 00:00:00"
+  },
+  {
+    "id": 366,
+    "dida_hotel_id": 11097,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00366",
+    "updated_at": "2025-06-02 00:00:00"
+  },
+  {
+    "id": 367,
+    "dida_hotel_id": 11098,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00367",
+    "updated_at": "2024-08-17 00:00:00"
+  },
+  {
+    "id": 368,
+    "dida_hotel_id": 11102,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00368",
+    "updated_at": "2025-09-29 00:00:00"
+  },
+  {
+    "id": 369,
+    "dida_hotel_id": 11106,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00369",
+    "updated_at": "2024-01-02 00:00:00"
+  },
+  {
+    "id": 370,
+    "dida_hotel_id": 11107,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00370",
+    "updated_at": "2026-04-13 00:00:00"
+  },
+  {
+    "id": 371,
+    "dida_hotel_id": 11111,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00371",
+    "updated_at": "2025-04-29 00:00:00"
+  },
+  {
+    "id": 372,
+    "dida_hotel_id": 11115,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00372",
+    "updated_at": "2025-10-09 00:00:00"
+  },
+  {
+    "id": 373,
+    "dida_hotel_id": 11116,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00373",
+    "updated_at": "2025-10-29 00:00:00"
+  },
+  {
+    "id": 374,
+    "dida_hotel_id": 11120,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00374",
+    "updated_at": "2025-08-26 00:00:00"
+  },
+  {
+    "id": 375,
+    "dida_hotel_id": 11124,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00375",
+    "updated_at": "2024-11-23 00:00:00"
+  },
+  {
+    "id": 376,
+    "dida_hotel_id": 11125,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00376",
+    "updated_at": "2024-03-03 00:00:00"
+  },
+  {
+    "id": 377,
+    "dida_hotel_id": 11129,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00377",
+    "updated_at": "2025-08-20 00:00:00"
+  },
+  {
+    "id": 378,
+    "dida_hotel_id": 11133,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00378",
+    "updated_at": "2024-10-24 00:00:00"
+  },
+  {
+    "id": 379,
+    "dida_hotel_id": 11134,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00379",
+    "updated_at": "2024-10-09 00:00:00"
+  },
+  {
+    "id": 380,
+    "dida_hotel_id": 11138,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00380",
+    "updated_at": "2026-02-02 00:00:00"
+  },
+  {
+    "id": 381,
+    "dida_hotel_id": 11142,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00381",
+    "updated_at": "2025-10-09 00:00:00"
+  },
+  {
+    "id": 382,
+    "dida_hotel_id": 11143,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00382",
+    "updated_at": "2024-09-27 00:00:00"
+  },
+  {
+    "id": 383,
+    "dida_hotel_id": 11147,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00383",
+    "updated_at": "2024-10-05 00:00:00"
+  },
+  {
+    "id": 384,
+    "dida_hotel_id": 11151,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00384",
+    "updated_at": "2025-01-02 00:00:00"
+  },
+  {
+    "id": 385,
+    "dida_hotel_id": 11152,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00385",
+    "updated_at": "2024-12-28 00:00:00"
+  },
+  {
+    "id": 386,
+    "dida_hotel_id": 11156,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00386",
+    "updated_at": "2024-09-23 00:00:00"
+  },
+  {
+    "id": 387,
+    "dida_hotel_id": 11160,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00387",
+    "updated_at": "2024-04-24 00:00:00"
+  },
+  {
+    "id": 388,
+    "dida_hotel_id": 11161,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00388",
+    "updated_at": "2025-01-13 00:00:00"
+  },
+  {
+    "id": 389,
+    "dida_hotel_id": 11165,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00389",
+    "updated_at": "2026-04-26 00:00:00"
+  },
+  {
+    "id": 390,
+    "dida_hotel_id": 11169,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00390",
+    "updated_at": "2025-09-01 00:00:00"
+  },
+  {
+    "id": 391,
+    "dida_hotel_id": 11170,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00391",
+    "updated_at": "2026-03-23 00:00:00"
+  },
+  {
+    "id": 392,
+    "dida_hotel_id": 11174,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00392",
+    "updated_at": "2025-07-07 00:00:00"
+  },
+  {
+    "id": 393,
+    "dida_hotel_id": 11178,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00393",
+    "updated_at": "2024-09-27 00:00:00"
+  },
+  {
+    "id": 394,
+    "dida_hotel_id": 11179,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00394",
+    "updated_at": "2025-05-08 00:00:00"
+  },
+  {
+    "id": 395,
+    "dida_hotel_id": 11183,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00395",
+    "updated_at": "2024-01-01 00:00:00"
+  },
+  {
+    "id": 396,
+    "dida_hotel_id": 11187,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00396",
+    "updated_at": "2024-09-15 00:00:00"
+  },
+  {
+    "id": 397,
+    "dida_hotel_id": 11188,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00397",
+    "updated_at": "2025-01-21 00:00:00"
+  },
+  {
+    "id": 398,
+    "dida_hotel_id": 11192,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00398",
+    "updated_at": "2025-06-05 00:00:00"
+  },
+  {
+    "id": 399,
+    "dida_hotel_id": 11196,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00399",
+    "updated_at": "2025-08-12 00:00:00"
+  },
+  {
+    "id": 400,
+    "dida_hotel_id": 11197,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00400",
+    "updated_at": "2025-02-22 00:00:00"
+  },
+  {
+    "id": 401,
+    "dida_hotel_id": 11201,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00401",
+    "updated_at": "2025-02-01 00:00:00"
+  },
+  {
+    "id": 402,
+    "dida_hotel_id": 11205,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00402",
+    "updated_at": "2024-07-11 00:00:00"
+  },
+  {
+    "id": 403,
+    "dida_hotel_id": 11206,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00403",
+    "updated_at": "2025-03-01 00:00:00"
+  },
+  {
+    "id": 404,
+    "dida_hotel_id": 11210,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00404",
+    "updated_at": "2026-03-22 00:00:00"
+  },
+  {
+    "id": 405,
+    "dida_hotel_id": 11214,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00405",
+    "updated_at": "2025-12-17 00:00:00"
+  },
+  {
+    "id": 406,
+    "dida_hotel_id": 11215,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00406",
+    "updated_at": "2024-06-01 00:00:00"
+  },
+  {
+    "id": 407,
+    "dida_hotel_id": 11219,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00407",
+    "updated_at": "2024-03-17 00:00:00"
+  },
+  {
+    "id": 408,
+    "dida_hotel_id": 11223,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00408",
+    "updated_at": "2025-04-08 00:00:00"
+  },
+  {
+    "id": 409,
+    "dida_hotel_id": 11224,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00409",
+    "updated_at": "2025-07-23 00:00:00"
+  },
+  {
+    "id": 410,
+    "dida_hotel_id": 11228,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00410",
+    "updated_at": "2024-10-28 00:00:00"
+  },
+  {
+    "id": 411,
+    "dida_hotel_id": 11232,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00411",
+    "updated_at": "2026-01-06 00:00:00"
+  },
+  {
+    "id": 412,
+    "dida_hotel_id": 11233,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00412",
+    "updated_at": "2025-11-07 00:00:00"
+  },
+  {
+    "id": 413,
+    "dida_hotel_id": 11237,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00413",
+    "updated_at": "2025-08-28 00:00:00"
+  },
+  {
+    "id": 414,
+    "dida_hotel_id": 11241,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00414",
+    "updated_at": "2024-07-21 00:00:00"
+  },
+  {
+    "id": 415,
+    "dida_hotel_id": 11242,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00415",
+    "updated_at": "2024-06-28 00:00:00"
+  },
+  {
+    "id": 416,
+    "dida_hotel_id": 11246,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00416",
+    "updated_at": "2024-01-22 00:00:00"
+  },
+  {
+    "id": 417,
+    "dida_hotel_id": 11250,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00417",
+    "updated_at": "2024-08-08 00:00:00"
+  },
+  {
+    "id": 418,
+    "dida_hotel_id": 11251,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00418",
+    "updated_at": "2025-03-03 00:00:00"
+  },
+  {
+    "id": 419,
+    "dida_hotel_id": 11255,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00419",
+    "updated_at": "2026-02-03 00:00:00"
+  },
+  {
+    "id": 420,
+    "dida_hotel_id": 11259,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00420",
+    "updated_at": "2024-03-06 00:00:00"
+  },
+  {
+    "id": 421,
+    "dida_hotel_id": 11260,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00421",
+    "updated_at": "2025-01-07 00:00:00"
+  },
+  {
+    "id": 422,
+    "dida_hotel_id": 11264,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00422",
+    "updated_at": "2025-07-20 00:00:00"
+  },
+  {
+    "id": 423,
+    "dida_hotel_id": 11268,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00423",
+    "updated_at": "2024-06-23 00:00:00"
+  },
+  {
+    "id": 424,
+    "dida_hotel_id": 11269,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00424",
+    "updated_at": "2025-09-18 00:00:00"
+  },
+  {
+    "id": 425,
+    "dida_hotel_id": 11273,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00425",
+    "updated_at": "2025-03-20 00:00:00"
+  },
+  {
+    "id": 426,
+    "dida_hotel_id": 11277,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00426",
+    "updated_at": "2024-08-07 00:00:00"
+  },
+  {
+    "id": 427,
+    "dida_hotel_id": 11278,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00427",
+    "updated_at": "2025-08-13 00:00:00"
+  },
+  {
+    "id": 428,
+    "dida_hotel_id": 11282,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00428",
+    "updated_at": "2024-01-05 00:00:00"
+  },
+  {
+    "id": 429,
+    "dida_hotel_id": 11286,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00429",
+    "updated_at": "2025-11-06 00:00:00"
+  },
+  {
+    "id": 430,
+    "dida_hotel_id": 11287,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00430",
+    "updated_at": "2025-11-24 00:00:00"
+  },
+  {
+    "id": 431,
+    "dida_hotel_id": 11291,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00431",
+    "updated_at": "2024-04-05 00:00:00"
+  },
+  {
+    "id": 432,
+    "dida_hotel_id": 11295,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00432",
+    "updated_at": "2025-01-17 00:00:00"
+  },
+  {
+    "id": 433,
+    "dida_hotel_id": 11296,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00433",
+    "updated_at": "2024-06-07 00:00:00"
+  },
+  {
+    "id": 434,
+    "dida_hotel_id": 11300,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00434",
+    "updated_at": "2026-05-12 00:00:00"
+  },
+  {
+    "id": 435,
+    "dida_hotel_id": 11304,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00435",
+    "updated_at": "2025-04-11 00:00:00"
+  },
+  {
+    "id": 436,
+    "dida_hotel_id": 11305,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00436",
+    "updated_at": "2024-02-15 00:00:00"
+  },
+  {
+    "id": 437,
+    "dida_hotel_id": 11309,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00437",
+    "updated_at": "2024-08-12 00:00:00"
+  },
+  {
+    "id": 438,
+    "dida_hotel_id": 11313,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00438",
+    "updated_at": "2026-02-02 00:00:00"
+  },
+  {
+    "id": 439,
+    "dida_hotel_id": 11314,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00439",
+    "updated_at": "2025-02-14 00:00:00"
+  },
+  {
+    "id": 440,
+    "dida_hotel_id": 11318,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00440",
+    "updated_at": "2025-12-22 00:00:00"
+  },
+  {
+    "id": 441,
+    "dida_hotel_id": 11322,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00441",
+    "updated_at": "2025-08-23 00:00:00"
+  },
+  {
+    "id": 442,
+    "dida_hotel_id": 11323,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00442",
+    "updated_at": "2026-06-08 00:00:00"
+  },
+  {
+    "id": 443,
+    "dida_hotel_id": 11327,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00443",
+    "updated_at": "2025-06-19 00:00:00"
+  },
+  {
+    "id": 444,
+    "dida_hotel_id": 11331,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00444",
+    "updated_at": "2026-05-05 00:00:00"
+  },
+  {
+    "id": 445,
+    "dida_hotel_id": 11332,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00445",
+    "updated_at": "2026-03-13 00:00:00"
+  },
+  {
+    "id": 446,
+    "dida_hotel_id": 11336,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00446",
+    "updated_at": "2025-07-05 00:00:00"
+  },
+  {
+    "id": 447,
+    "dida_hotel_id": 11340,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00447",
+    "updated_at": "2025-10-09 00:00:00"
+  },
+  {
+    "id": 448,
+    "dida_hotel_id": 11341,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00448",
+    "updated_at": "2025-03-30 00:00:00"
+  },
+  {
+    "id": 449,
+    "dida_hotel_id": 11345,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00449",
+    "updated_at": "2026-01-17 00:00:00"
+  },
+  {
+    "id": 450,
+    "dida_hotel_id": 11349,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00450",
+    "updated_at": "2025-05-08 00:00:00"
+  },
+  {
+    "id": 451,
+    "dida_hotel_id": 11350,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00451",
+    "updated_at": "2026-03-18 00:00:00"
+  },
+  {
+    "id": 452,
+    "dida_hotel_id": 11354,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00452",
+    "updated_at": "2025-10-31 00:00:00"
+  },
+  {
+    "id": 453,
+    "dida_hotel_id": 11358,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00453",
+    "updated_at": "2025-03-03 00:00:00"
+  },
+  {
+    "id": 454,
+    "dida_hotel_id": 11359,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00454",
+    "updated_at": "2024-08-21 00:00:00"
+  },
+  {
+    "id": 455,
+    "dida_hotel_id": 11363,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00455",
+    "updated_at": "2024-08-10 00:00:00"
+  },
+  {
+    "id": 456,
+    "dida_hotel_id": 11367,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00456",
+    "updated_at": "2025-07-27 00:00:00"
+  },
+  {
+    "id": 457,
+    "dida_hotel_id": 11368,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00457",
+    "updated_at": "2025-11-20 00:00:00"
+  },
+  {
+    "id": 458,
+    "dida_hotel_id": 11372,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00458",
+    "updated_at": "2025-04-14 00:00:00"
+  },
+  {
+    "id": 459,
+    "dida_hotel_id": 11376,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00459",
+    "updated_at": "2025-07-18 00:00:00"
+  },
+  {
+    "id": 460,
+    "dida_hotel_id": 11377,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00460",
+    "updated_at": "2024-09-04 00:00:00"
+  },
+  {
+    "id": 461,
+    "dida_hotel_id": 11381,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00461",
+    "updated_at": "2024-03-10 00:00:00"
+  },
+  {
+    "id": 462,
+    "dida_hotel_id": 11385,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00462",
+    "updated_at": "2024-09-14 00:00:00"
+  },
+  {
+    "id": 463,
+    "dida_hotel_id": 11386,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00463",
+    "updated_at": "2024-09-01 00:00:00"
+  },
+  {
+    "id": 464,
+    "dida_hotel_id": 11390,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00464",
+    "updated_at": "2024-10-14 00:00:00"
+  },
+  {
+    "id": 465,
+    "dida_hotel_id": 11394,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00465",
+    "updated_at": "2025-05-01 00:00:00"
+  },
+  {
+    "id": 466,
+    "dida_hotel_id": 11395,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00466",
+    "updated_at": "2024-05-04 00:00:00"
+  },
+  {
+    "id": 467,
+    "dida_hotel_id": 11399,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00467",
+    "updated_at": "2024-07-27 00:00:00"
+  },
+  {
+    "id": 468,
+    "dida_hotel_id": 11403,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00468",
+    "updated_at": "2025-09-16 00:00:00"
+  },
+  {
+    "id": 469,
+    "dida_hotel_id": 11404,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00469",
+    "updated_at": "2025-09-27 00:00:00"
+  },
+  {
+    "id": 470,
+    "dida_hotel_id": 11408,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00470",
+    "updated_at": "2024-02-27 00:00:00"
+  },
+  {
+    "id": 471,
+    "dida_hotel_id": 11412,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00471",
+    "updated_at": "2025-01-01 00:00:00"
+  },
+  {
+    "id": 472,
+    "dida_hotel_id": 11413,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00472",
+    "updated_at": "2025-05-03 00:00:00"
+  },
+  {
+    "id": 473,
+    "dida_hotel_id": 11417,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00473",
+    "updated_at": "2025-01-09 00:00:00"
+  },
+  {
+    "id": 474,
+    "dida_hotel_id": 11421,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00474",
+    "updated_at": "2024-07-05 00:00:00"
+  },
+  {
+    "id": 475,
+    "dida_hotel_id": 11422,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00475",
+    "updated_at": "2025-01-13 00:00:00"
+  },
+  {
+    "id": 476,
+    "dida_hotel_id": 11426,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00476",
+    "updated_at": "2026-03-25 00:00:00"
+  },
+  {
+    "id": 477,
+    "dida_hotel_id": 11430,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00477",
+    "updated_at": "2025-06-09 00:00:00"
+  },
+  {
+    "id": 478,
+    "dida_hotel_id": 11431,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00478",
+    "updated_at": "2025-09-17 00:00:00"
+  },
+  {
+    "id": 479,
+    "dida_hotel_id": 11435,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00479",
+    "updated_at": "2026-02-10 00:00:00"
+  },
+  {
+    "id": 480,
+    "dida_hotel_id": 11439,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00480",
+    "updated_at": "2025-11-20 00:00:00"
+  },
+  {
+    "id": 481,
+    "dida_hotel_id": 11440,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00481",
+    "updated_at": "2024-12-08 00:00:00"
+  },
+  {
+    "id": 482,
+    "dida_hotel_id": 11444,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00482",
+    "updated_at": "2024-01-06 00:00:00"
+  },
+  {
+    "id": 483,
+    "dida_hotel_id": 11448,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00483",
+    "updated_at": "2024-11-12 00:00:00"
+  },
+  {
+    "id": 484,
+    "dida_hotel_id": 11449,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00484",
+    "updated_at": "2025-11-09 00:00:00"
+  },
+  {
+    "id": 485,
+    "dida_hotel_id": 11453,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00485",
+    "updated_at": "2026-02-07 00:00:00"
+  },
+  {
+    "id": 486,
+    "dida_hotel_id": 11457,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00486",
+    "updated_at": "2026-05-08 00:00:00"
+  },
+  {
+    "id": 487,
+    "dida_hotel_id": 11458,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00487",
+    "updated_at": "2025-01-12 00:00:00"
+  },
+  {
+    "id": 488,
+    "dida_hotel_id": 11462,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00488",
+    "updated_at": "2025-11-03 00:00:00"
+  },
+  {
+    "id": 489,
+    "dida_hotel_id": 11466,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00489",
+    "updated_at": "2025-05-06 00:00:00"
+  },
+  {
+    "id": 490,
+    "dida_hotel_id": 11467,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00490",
+    "updated_at": "2025-06-26 00:00:00"
+  },
+  {
+    "id": 491,
+    "dida_hotel_id": 11471,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00491",
+    "updated_at": "2024-07-17 00:00:00"
+  },
+  {
+    "id": 492,
+    "dida_hotel_id": 11475,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00492",
+    "updated_at": "2024-07-16 00:00:00"
+  },
+  {
+    "id": 493,
+    "dida_hotel_id": 11476,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00493",
+    "updated_at": "2025-01-27 00:00:00"
+  },
+  {
+    "id": 494,
+    "dida_hotel_id": 11480,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00494",
+    "updated_at": "2024-01-27 00:00:00"
+  },
+  {
+    "id": 495,
+    "dida_hotel_id": 11484,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00495",
+    "updated_at": "2024-10-29 00:00:00"
+  },
+  {
+    "id": 496,
+    "dida_hotel_id": 11485,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00496",
+    "updated_at": "2025-09-03 00:00:00"
+  },
+  {
+    "id": 497,
+    "dida_hotel_id": 11489,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00497",
+    "updated_at": "2024-12-29 00:00:00"
+  },
+  {
+    "id": 498,
+    "dida_hotel_id": 11493,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00498",
+    "updated_at": "2024-05-28 00:00:00"
+  },
+  {
+    "id": 499,
+    "dida_hotel_id": 11494,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00499",
+    "updated_at": "2025-02-24 00:00:00"
+  },
+  {
+    "id": 500,
+    "dida_hotel_id": 11498,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00500",
+    "updated_at": "2024-04-24 00:00:00"
+  },
+  {
+    "id": 501,
+    "dida_hotel_id": 11502,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00501",
+    "updated_at": "2025-07-14 00:00:00"
+  },
+  {
+    "id": 502,
+    "dida_hotel_id": 11503,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00502",
+    "updated_at": "2024-01-25 00:00:00"
+  },
+  {
+    "id": 503,
+    "dida_hotel_id": 11507,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00503",
+    "updated_at": "2024-12-20 00:00:00"
+  },
+  {
+    "id": 504,
+    "dida_hotel_id": 11511,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00504",
+    "updated_at": "2025-05-22 00:00:00"
+  },
+  {
+    "id": 505,
+    "dida_hotel_id": 11512,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00505",
+    "updated_at": "2024-01-25 00:00:00"
+  },
+  {
+    "id": 506,
+    "dida_hotel_id": 11516,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00506",
+    "updated_at": "2025-08-01 00:00:00"
+  },
+  {
+    "id": 507,
+    "dida_hotel_id": 11520,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00507",
+    "updated_at": "2024-05-02 00:00:00"
+  },
+  {
+    "id": 508,
+    "dida_hotel_id": 11521,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00508",
+    "updated_at": "2025-02-19 00:00:00"
+  },
+  {
+    "id": 509,
+    "dida_hotel_id": 11525,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00509",
+    "updated_at": "2024-02-15 00:00:00"
+  },
+  {
+    "id": 510,
+    "dida_hotel_id": 11529,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00510",
+    "updated_at": "2024-12-07 00:00:00"
+  },
+  {
+    "id": 511,
+    "dida_hotel_id": 11530,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00511",
+    "updated_at": "2024-07-09 00:00:00"
+  },
+  {
+    "id": 512,
+    "dida_hotel_id": 11534,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00512",
+    "updated_at": "2024-10-21 00:00:00"
+  },
+  {
+    "id": 513,
+    "dida_hotel_id": 11538,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00513",
+    "updated_at": "2025-11-16 00:00:00"
+  },
+  {
+    "id": 514,
+    "dida_hotel_id": 11539,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00514",
+    "updated_at": "2024-12-07 00:00:00"
+  },
+  {
+    "id": 515,
+    "dida_hotel_id": 11543,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00515",
+    "updated_at": "2025-11-07 00:00:00"
+  },
+  {
+    "id": 516,
+    "dida_hotel_id": 11547,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00516",
+    "updated_at": "2026-01-18 00:00:00"
+  },
+  {
+    "id": 517,
+    "dida_hotel_id": 11548,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00517",
+    "updated_at": "2024-08-15 00:00:00"
+  },
+  {
+    "id": 518,
+    "dida_hotel_id": 11552,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00518",
+    "updated_at": "2024-03-14 00:00:00"
+  },
+  {
+    "id": 519,
+    "dida_hotel_id": 11556,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00519",
+    "updated_at": "2024-01-18 00:00:00"
+  },
+  {
+    "id": 520,
+    "dida_hotel_id": 11557,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00520",
+    "updated_at": "2025-04-30 00:00:00"
+  },
+  {
+    "id": 521,
+    "dida_hotel_id": 11561,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00521",
+    "updated_at": "2026-06-18 00:00:00"
+  },
+  {
+    "id": 522,
+    "dida_hotel_id": 11565,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00522",
+    "updated_at": "2024-11-10 00:00:00"
+  },
+  {
+    "id": 523,
+    "dida_hotel_id": 11566,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00523",
+    "updated_at": "2025-08-08 00:00:00"
+  },
+  {
+    "id": 524,
+    "dida_hotel_id": 11570,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00524",
+    "updated_at": "2025-12-04 00:00:00"
+  },
+  {
+    "id": 525,
+    "dida_hotel_id": 11574,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00525",
+    "updated_at": "2025-08-09 00:00:00"
+  },
+  {
+    "id": 526,
+    "dida_hotel_id": 11575,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00526",
+    "updated_at": "2025-11-09 00:00:00"
+  },
+  {
+    "id": 527,
+    "dida_hotel_id": 11579,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00527",
+    "updated_at": "2026-05-04 00:00:00"
+  },
+  {
+    "id": 528,
+    "dida_hotel_id": 11583,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00528",
+    "updated_at": "2024-06-28 00:00:00"
+  },
+  {
+    "id": 529,
+    "dida_hotel_id": 11584,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00529",
+    "updated_at": "2024-01-19 00:00:00"
+  },
+  {
+    "id": 530,
+    "dida_hotel_id": 11588,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00530",
+    "updated_at": "2024-05-17 00:00:00"
+  },
+  {
+    "id": 531,
+    "dida_hotel_id": 11592,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00531",
+    "updated_at": "2024-04-23 00:00:00"
+  },
+  {
+    "id": 532,
+    "dida_hotel_id": 11593,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00532",
+    "updated_at": "2025-08-25 00:00:00"
+  },
+  {
+    "id": 533,
+    "dida_hotel_id": 11597,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00533",
+    "updated_at": "2025-05-22 00:00:00"
+  },
+  {
+    "id": 534,
+    "dida_hotel_id": 11601,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00534",
+    "updated_at": "2024-07-15 00:00:00"
+  },
+  {
+    "id": 535,
+    "dida_hotel_id": 11602,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00535",
+    "updated_at": "2025-09-21 00:00:00"
+  },
+  {
+    "id": 536,
+    "dida_hotel_id": 11606,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00536",
+    "updated_at": "2025-11-21 00:00:00"
+  },
+  {
+    "id": 537,
+    "dida_hotel_id": 11610,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00537",
+    "updated_at": "2024-05-31 00:00:00"
+  },
+  {
+    "id": 538,
+    "dida_hotel_id": 11611,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00538",
+    "updated_at": "2025-06-30 00:00:00"
+  },
+  {
+    "id": 539,
+    "dida_hotel_id": 11615,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00539",
+    "updated_at": "2025-11-04 00:00:00"
+  },
+  {
+    "id": 540,
+    "dida_hotel_id": 11619,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00540",
+    "updated_at": "2024-04-13 00:00:00"
+  },
+  {
+    "id": 541,
+    "dida_hotel_id": 11620,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00541",
+    "updated_at": "2026-01-07 00:00:00"
+  },
+  {
+    "id": 542,
+    "dida_hotel_id": 11624,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00542",
+    "updated_at": "2026-05-18 00:00:00"
+  },
+  {
+    "id": 543,
+    "dida_hotel_id": 11628,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00543",
+    "updated_at": "2024-04-07 00:00:00"
+  },
+  {
+    "id": 544,
+    "dida_hotel_id": 11629,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00544",
+    "updated_at": "2024-01-24 00:00:00"
+  },
+  {
+    "id": 545,
+    "dida_hotel_id": 11633,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00545",
+    "updated_at": "2024-10-07 00:00:00"
+  },
+  {
+    "id": 546,
+    "dida_hotel_id": 11637,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00546",
+    "updated_at": "2025-09-01 00:00:00"
+  },
+  {
+    "id": 547,
+    "dida_hotel_id": 11638,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00547",
+    "updated_at": "2026-05-12 00:00:00"
+  },
+  {
+    "id": 548,
+    "dida_hotel_id": 11642,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00548",
+    "updated_at": "2024-12-22 00:00:00"
+  },
+  {
+    "id": 549,
+    "dida_hotel_id": 11646,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00549",
+    "updated_at": "2025-10-05 00:00:00"
+  },
+  {
+    "id": 550,
+    "dida_hotel_id": 11647,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00550",
+    "updated_at": "2024-03-09 00:00:00"
+  },
+  {
+    "id": 551,
+    "dida_hotel_id": 11651,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00551",
+    "updated_at": "2025-09-13 00:00:00"
+  },
+  {
+    "id": 552,
+    "dida_hotel_id": 11655,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00552",
+    "updated_at": "2025-07-18 00:00:00"
+  },
+  {
+    "id": 553,
+    "dida_hotel_id": 11656,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00553",
+    "updated_at": "2024-04-01 00:00:00"
+  },
+  {
+    "id": 554,
+    "dida_hotel_id": 11660,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00554",
+    "updated_at": "2025-11-26 00:00:00"
+  },
+  {
+    "id": 555,
+    "dida_hotel_id": 11664,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00555",
+    "updated_at": "2026-02-04 00:00:00"
+  },
+  {
+    "id": 556,
+    "dida_hotel_id": 11665,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00556",
+    "updated_at": "2025-06-24 00:00:00"
+  },
+  {
+    "id": 557,
+    "dida_hotel_id": 11669,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00557",
+    "updated_at": "2024-04-18 00:00:00"
+  },
+  {
+    "id": 558,
+    "dida_hotel_id": 11673,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00558",
+    "updated_at": "2026-06-04 00:00:00"
+  },
+  {
+    "id": 559,
+    "dida_hotel_id": 11674,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00559",
+    "updated_at": "2025-12-05 00:00:00"
+  },
+  {
+    "id": 560,
+    "dida_hotel_id": 11678,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00560",
+    "updated_at": "2024-11-08 00:00:00"
+  },
+  {
+    "id": 561,
+    "dida_hotel_id": 11682,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00561",
+    "updated_at": "2025-01-20 00:00:00"
+  },
+  {
+    "id": 562,
+    "dida_hotel_id": 11683,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00562",
+    "updated_at": "2024-11-29 00:00:00"
+  },
+  {
+    "id": 563,
+    "dida_hotel_id": 11687,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00563",
+    "updated_at": "2025-03-31 00:00:00"
+  },
+  {
+    "id": 564,
+    "dida_hotel_id": 11691,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00564",
+    "updated_at": "2024-11-03 00:00:00"
+  },
+  {
+    "id": 565,
+    "dida_hotel_id": 11692,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00565",
+    "updated_at": "2026-02-03 00:00:00"
+  },
+  {
+    "id": 566,
+    "dida_hotel_id": 11696,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00566",
+    "updated_at": "2026-01-10 00:00:00"
+  },
+  {
+    "id": 567,
+    "dida_hotel_id": 11700,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00567",
+    "updated_at": "2024-04-04 00:00:00"
+  },
+  {
+    "id": 568,
+    "dida_hotel_id": 11701,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00568",
+    "updated_at": "2026-05-14 00:00:00"
+  },
+  {
+    "id": 569,
+    "dida_hotel_id": 11705,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00569",
+    "updated_at": "2025-07-26 00:00:00"
+  },
+  {
+    "id": 570,
+    "dida_hotel_id": 11709,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00570",
+    "updated_at": "2026-01-15 00:00:00"
+  },
+  {
+    "id": 571,
+    "dida_hotel_id": 11710,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00571",
+    "updated_at": "2025-09-28 00:00:00"
+  },
+  {
+    "id": 572,
+    "dida_hotel_id": 11714,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00572",
+    "updated_at": "2025-01-26 00:00:00"
+  },
+  {
+    "id": 573,
+    "dida_hotel_id": 11718,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00573",
+    "updated_at": "2025-10-22 00:00:00"
+  },
+  {
+    "id": 574,
+    "dida_hotel_id": 11719,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00574",
+    "updated_at": "2026-05-18 00:00:00"
+  },
+  {
+    "id": 575,
+    "dida_hotel_id": 11723,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00575",
+    "updated_at": "2024-08-31 00:00:00"
+  },
+  {
+    "id": 576,
+    "dida_hotel_id": 11727,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00576",
+    "updated_at": "2025-12-28 00:00:00"
+  },
+  {
+    "id": 577,
+    "dida_hotel_id": 11728,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00577",
+    "updated_at": "2025-04-29 00:00:00"
+  },
+  {
+    "id": 578,
+    "dida_hotel_id": 11732,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00578",
+    "updated_at": "2025-03-11 00:00:00"
+  },
+  {
+    "id": 579,
+    "dida_hotel_id": 11736,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00579",
+    "updated_at": "2025-01-27 00:00:00"
+  },
+  {
+    "id": 580,
+    "dida_hotel_id": 11737,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00580",
+    "updated_at": "2025-10-19 00:00:00"
+  },
+  {
+    "id": 581,
+    "dida_hotel_id": 11741,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00581",
+    "updated_at": "2024-08-29 00:00:00"
+  },
+  {
+    "id": 582,
+    "dida_hotel_id": 11745,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00582",
+    "updated_at": "2026-02-05 00:00:00"
+  },
+  {
+    "id": 583,
+    "dida_hotel_id": 11746,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00583",
+    "updated_at": "2026-01-17 00:00:00"
+  },
+  {
+    "id": 584,
+    "dida_hotel_id": 11750,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00584",
+    "updated_at": "2024-03-18 00:00:00"
+  },
+  {
+    "id": 585,
+    "dida_hotel_id": 11754,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00585",
+    "updated_at": "2026-03-04 00:00:00"
+  },
+  {
+    "id": 586,
+    "dida_hotel_id": 11755,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00586",
+    "updated_at": "2024-08-07 00:00:00"
+  },
+  {
+    "id": 587,
+    "dida_hotel_id": 11759,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00587",
+    "updated_at": "2025-02-22 00:00:00"
+  },
+  {
+    "id": 588,
+    "dida_hotel_id": 11763,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00588",
+    "updated_at": "2025-07-03 00:00:00"
+  },
+  {
+    "id": 589,
+    "dida_hotel_id": 11764,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00589",
+    "updated_at": "2024-12-07 00:00:00"
+  },
+  {
+    "id": 590,
+    "dida_hotel_id": 11768,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00590",
+    "updated_at": "2024-01-26 00:00:00"
+  },
+  {
+    "id": 591,
+    "dida_hotel_id": 11772,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00591",
+    "updated_at": "2026-02-04 00:00:00"
+  },
+  {
+    "id": 592,
+    "dida_hotel_id": 11773,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00592",
+    "updated_at": "2024-06-12 00:00:00"
+  },
+  {
+    "id": 593,
+    "dida_hotel_id": 11777,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00593",
+    "updated_at": "2024-07-09 00:00:00"
+  },
+  {
+    "id": 594,
+    "dida_hotel_id": 11781,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00594",
+    "updated_at": "2025-12-19 00:00:00"
+  },
+  {
+    "id": 595,
+    "dida_hotel_id": 11782,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00595",
+    "updated_at": "2024-11-02 00:00:00"
+  },
+  {
+    "id": 596,
+    "dida_hotel_id": 11786,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00596",
+    "updated_at": "2026-03-03 00:00:00"
+  },
+  {
+    "id": 597,
+    "dida_hotel_id": 11790,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00597",
+    "updated_at": "2025-09-23 00:00:00"
+  },
+  {
+    "id": 598,
+    "dida_hotel_id": 11791,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00598",
+    "updated_at": "2024-09-05 00:00:00"
+  },
+  {
+    "id": 599,
+    "dida_hotel_id": 11795,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00599",
+    "updated_at": "2024-01-10 00:00:00"
+  },
+  {
+    "id": 600,
+    "dida_hotel_id": 11799,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00600",
+    "updated_at": "2026-05-03 00:00:00"
+  },
+  {
+    "id": 601,
+    "dida_hotel_id": 11800,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00601",
+    "updated_at": "2024-03-18 00:00:00"
+  },
+  {
+    "id": 602,
+    "dida_hotel_id": 11804,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00602",
+    "updated_at": "2025-10-10 00:00:00"
+  },
+  {
+    "id": 603,
+    "dida_hotel_id": 11808,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00603",
+    "updated_at": "2025-03-15 00:00:00"
+  },
+  {
+    "id": 604,
+    "dida_hotel_id": 11809,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00604",
+    "updated_at": "2025-11-13 00:00:00"
+  },
+  {
+    "id": 605,
+    "dida_hotel_id": 11813,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00605",
+    "updated_at": "2025-09-13 00:00:00"
+  },
+  {
+    "id": 606,
+    "dida_hotel_id": 11817,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00606",
+    "updated_at": "2025-08-04 00:00:00"
+  },
+  {
+    "id": 607,
+    "dida_hotel_id": 11818,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00607",
+    "updated_at": "2025-03-17 00:00:00"
+  },
+  {
+    "id": 608,
+    "dida_hotel_id": 11822,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00608",
+    "updated_at": "2025-12-14 00:00:00"
+  },
+  {
+    "id": 609,
+    "dida_hotel_id": 11826,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00609",
+    "updated_at": "2024-03-24 00:00:00"
+  },
+  {
+    "id": 610,
+    "dida_hotel_id": 11827,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00610",
+    "updated_at": "2024-07-18 00:00:00"
+  },
+  {
+    "id": 611,
+    "dida_hotel_id": 11831,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00611",
+    "updated_at": "2025-09-14 00:00:00"
+  },
+  {
+    "id": 612,
+    "dida_hotel_id": 11835,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00612",
+    "updated_at": "2024-10-02 00:00:00"
+  },
+  {
+    "id": 613,
+    "dida_hotel_id": 11836,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00613",
+    "updated_at": "2025-06-07 00:00:00"
+  },
+  {
+    "id": 614,
+    "dida_hotel_id": 11840,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00614",
+    "updated_at": "2025-03-01 00:00:00"
+  },
+  {
+    "id": 615,
+    "dida_hotel_id": 11844,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00615",
+    "updated_at": "2025-04-22 00:00:00"
+  },
+  {
+    "id": 616,
+    "dida_hotel_id": 11845,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00616",
+    "updated_at": "2025-01-17 00:00:00"
+  },
+  {
+    "id": 617,
+    "dida_hotel_id": 11849,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00617",
+    "updated_at": "2025-11-02 00:00:00"
+  },
+  {
+    "id": 618,
+    "dida_hotel_id": 11853,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00618",
+    "updated_at": "2024-10-24 00:00:00"
+  },
+  {
+    "id": 619,
+    "dida_hotel_id": 11854,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00619",
+    "updated_at": "2025-09-24 00:00:00"
+  },
+  {
+    "id": 620,
+    "dida_hotel_id": 11858,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00620",
+    "updated_at": "2024-08-31 00:00:00"
+  },
+  {
+    "id": 621,
+    "dida_hotel_id": 11862,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00621",
+    "updated_at": "2024-08-14 00:00:00"
+  },
+  {
+    "id": 622,
+    "dida_hotel_id": 11863,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00622",
+    "updated_at": "2024-04-18 00:00:00"
+  },
+  {
+    "id": 623,
+    "dida_hotel_id": 11867,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00623",
+    "updated_at": "2024-06-22 00:00:00"
+  },
+  {
+    "id": 624,
+    "dida_hotel_id": 11871,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00624",
+    "updated_at": "2024-04-17 00:00:00"
+  },
+  {
+    "id": 625,
+    "dida_hotel_id": 11872,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00625",
+    "updated_at": "2025-04-27 00:00:00"
+  },
+  {
+    "id": 626,
+    "dida_hotel_id": 11876,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00626",
+    "updated_at": "2025-11-16 00:00:00"
+  },
+  {
+    "id": 627,
+    "dida_hotel_id": 11880,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00627",
+    "updated_at": "2024-06-15 00:00:00"
+  },
+  {
+    "id": 628,
+    "dida_hotel_id": 11881,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00628",
+    "updated_at": "2024-07-13 00:00:00"
+  },
+  {
+    "id": 629,
+    "dida_hotel_id": 11885,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00629",
+    "updated_at": "2025-03-11 00:00:00"
+  },
+  {
+    "id": 630,
+    "dida_hotel_id": 11889,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00630",
+    "updated_at": "2025-10-14 00:00:00"
+  },
+  {
+    "id": 631,
+    "dida_hotel_id": 11890,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00631",
+    "updated_at": "2026-05-28 00:00:00"
+  },
+  {
+    "id": 632,
+    "dida_hotel_id": 11894,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00632",
+    "updated_at": "2025-04-17 00:00:00"
+  },
+  {
+    "id": 633,
+    "dida_hotel_id": 11898,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00633",
+    "updated_at": "2024-09-11 00:00:00"
+  },
+  {
+    "id": 634,
+    "dida_hotel_id": 11899,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00634",
+    "updated_at": "2024-03-31 00:00:00"
+  },
+  {
+    "id": 635,
+    "dida_hotel_id": 11903,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00635",
+    "updated_at": "2024-06-23 00:00:00"
+  },
+  {
+    "id": 636,
+    "dida_hotel_id": 11907,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00636",
+    "updated_at": "2024-07-23 00:00:00"
+  },
+  {
+    "id": 637,
+    "dida_hotel_id": 11908,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00637",
+    "updated_at": "2024-06-10 00:00:00"
+  },
+  {
+    "id": 638,
+    "dida_hotel_id": 11912,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00638",
+    "updated_at": "2024-01-13 00:00:00"
+  },
+  {
+    "id": 639,
+    "dida_hotel_id": 11916,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00639",
+    "updated_at": "2025-04-25 00:00:00"
+  },
+  {
+    "id": 640,
+    "dida_hotel_id": 11917,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00640",
+    "updated_at": "2024-09-03 00:00:00"
+  },
+  {
+    "id": 641,
+    "dida_hotel_id": 11921,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00641",
+    "updated_at": "2026-05-26 00:00:00"
+  },
+  {
+    "id": 642,
+    "dida_hotel_id": 11925,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00642",
+    "updated_at": "2025-05-13 00:00:00"
+  },
+  {
+    "id": 643,
+    "dida_hotel_id": 11926,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00643",
+    "updated_at": "2025-09-19 00:00:00"
+  },
+  {
+    "id": 644,
+    "dida_hotel_id": 11930,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00644",
+    "updated_at": "2024-04-23 00:00:00"
+  },
+  {
+    "id": 645,
+    "dida_hotel_id": 11934,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00645",
+    "updated_at": "2026-02-20 00:00:00"
+  },
+  {
+    "id": 646,
+    "dida_hotel_id": 11935,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00646",
+    "updated_at": "2025-03-17 00:00:00"
+  },
+  {
+    "id": 647,
+    "dida_hotel_id": 11939,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00647",
+    "updated_at": "2026-02-24 00:00:00"
+  },
+  {
+    "id": 648,
+    "dida_hotel_id": 11943,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00648",
+    "updated_at": "2025-05-31 00:00:00"
+  },
+  {
+    "id": 649,
+    "dida_hotel_id": 11944,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00649",
+    "updated_at": "2025-02-26 00:00:00"
+  },
+  {
+    "id": 650,
+    "dida_hotel_id": 11948,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00650",
+    "updated_at": "2025-01-31 00:00:00"
+  },
+  {
+    "id": 651,
+    "dida_hotel_id": 11952,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00651",
+    "updated_at": "2024-06-14 00:00:00"
+  },
+  {
+    "id": 652,
+    "dida_hotel_id": 11953,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00652",
+    "updated_at": "2024-02-16 00:00:00"
+  },
+  {
+    "id": 653,
+    "dida_hotel_id": 11957,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00653",
+    "updated_at": "2026-04-26 00:00:00"
+  },
+  {
+    "id": 654,
+    "dida_hotel_id": 11961,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00654",
+    "updated_at": "2025-03-05 00:00:00"
+  },
+  {
+    "id": 655,
+    "dida_hotel_id": 11962,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00655",
+    "updated_at": "2026-01-09 00:00:00"
+  },
+  {
+    "id": 656,
+    "dida_hotel_id": 11966,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00656",
+    "updated_at": "2024-12-26 00:00:00"
+  },
+  {
+    "id": 657,
+    "dida_hotel_id": 11970,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00657",
+    "updated_at": "2024-03-07 00:00:00"
+  },
+  {
+    "id": 658,
+    "dida_hotel_id": 11971,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00658",
+    "updated_at": "2025-07-20 00:00:00"
+  },
+  {
+    "id": 659,
+    "dida_hotel_id": 11975,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00659",
+    "updated_at": "2024-02-18 00:00:00"
+  },
+  {
+    "id": 660,
+    "dida_hotel_id": 11979,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00660",
+    "updated_at": "2024-05-14 00:00:00"
+  },
+  {
+    "id": 661,
+    "dida_hotel_id": 11980,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00661",
+    "updated_at": "2025-05-21 00:00:00"
+  },
+  {
+    "id": 662,
+    "dida_hotel_id": 11984,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00662",
+    "updated_at": "2024-09-30 00:00:00"
+  },
+  {
+    "id": 663,
+    "dida_hotel_id": 11988,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00663",
+    "updated_at": "2026-06-13 00:00:00"
+  },
+  {
+    "id": 664,
+    "dida_hotel_id": 11989,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00664",
+    "updated_at": "2024-04-16 00:00:00"
+  },
+  {
+    "id": 665,
+    "dida_hotel_id": 11993,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00665",
+    "updated_at": "2025-11-18 00:00:00"
+  },
+  {
+    "id": 666,
+    "dida_hotel_id": 11997,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00666",
+    "updated_at": "2025-06-29 00:00:00"
+  },
+  {
+    "id": 667,
+    "dida_hotel_id": 11998,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00667",
+    "updated_at": "2025-12-12 00:00:00"
+  },
+  {
+    "id": 668,
+    "dida_hotel_id": 12002,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00668",
+    "updated_at": "2024-07-22 00:00:00"
+  },
+  {
+    "id": 669,
+    "dida_hotel_id": 12006,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00669",
+    "updated_at": "2025-04-15 00:00:00"
+  },
+  {
+    "id": 670,
+    "dida_hotel_id": 12007,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00670",
+    "updated_at": "2025-02-09 00:00:00"
+  },
+  {
+    "id": 671,
+    "dida_hotel_id": 12011,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00671",
+    "updated_at": "2025-02-02 00:00:00"
+  },
+  {
+    "id": 672,
+    "dida_hotel_id": 12015,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00672",
+    "updated_at": "2026-02-13 00:00:00"
+  },
+  {
+    "id": 673,
+    "dida_hotel_id": 12016,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00673",
+    "updated_at": "2026-06-10 00:00:00"
+  },
+  {
+    "id": 674,
+    "dida_hotel_id": 12020,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00674",
+    "updated_at": "2024-10-01 00:00:00"
+  },
+  {
+    "id": 675,
+    "dida_hotel_id": 12024,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00675",
+    "updated_at": "2025-07-12 00:00:00"
+  },
+  {
+    "id": 676,
+    "dida_hotel_id": 12025,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00676",
+    "updated_at": "2025-07-02 00:00:00"
+  },
+  {
+    "id": 677,
+    "dida_hotel_id": 12029,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00677",
+    "updated_at": "2025-10-28 00:00:00"
+  },
+  {
+    "id": 678,
+    "dida_hotel_id": 12033,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00678",
+    "updated_at": "2026-05-02 00:00:00"
+  },
+  {
+    "id": 679,
+    "dida_hotel_id": 12034,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00679",
+    "updated_at": "2024-07-06 00:00:00"
+  },
+  {
+    "id": 680,
+    "dida_hotel_id": 12038,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00680",
+    "updated_at": "2024-07-08 00:00:00"
+  },
+  {
+    "id": 681,
+    "dida_hotel_id": 12042,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00681",
+    "updated_at": "2025-08-17 00:00:00"
+  },
+  {
+    "id": 682,
+    "dida_hotel_id": 12043,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00682",
+    "updated_at": "2024-05-21 00:00:00"
+  },
+  {
+    "id": 683,
+    "dida_hotel_id": 12047,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00683",
+    "updated_at": "2024-06-05 00:00:00"
+  },
+  {
+    "id": 684,
+    "dida_hotel_id": 12051,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00684",
+    "updated_at": "2024-03-08 00:00:00"
+  },
+  {
+    "id": 685,
+    "dida_hotel_id": 12052,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00685",
+    "updated_at": "2024-01-03 00:00:00"
+  },
+  {
+    "id": 686,
+    "dida_hotel_id": 12056,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00686",
+    "updated_at": "2025-02-09 00:00:00"
+  },
+  {
+    "id": 687,
+    "dida_hotel_id": 12060,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00687",
+    "updated_at": "2025-06-18 00:00:00"
+  },
+  {
+    "id": 688,
+    "dida_hotel_id": 12061,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00688",
+    "updated_at": "2024-09-19 00:00:00"
+  },
+  {
+    "id": 689,
+    "dida_hotel_id": 12065,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00689",
+    "updated_at": "2024-07-27 00:00:00"
+  },
+  {
+    "id": 690,
+    "dida_hotel_id": 12069,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00690",
+    "updated_at": "2025-09-28 00:00:00"
+  },
+  {
+    "id": 691,
+    "dida_hotel_id": 12070,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00691",
+    "updated_at": "2025-09-24 00:00:00"
+  },
+  {
+    "id": 692,
+    "dida_hotel_id": 12074,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00692",
+    "updated_at": "2025-02-12 00:00:00"
+  },
+  {
+    "id": 693,
+    "dida_hotel_id": 12078,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00693",
+    "updated_at": "2025-09-10 00:00:00"
+  },
+  {
+    "id": 694,
+    "dida_hotel_id": 12079,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00694",
+    "updated_at": "2026-04-11 00:00:00"
+  },
+  {
+    "id": 695,
+    "dida_hotel_id": 12083,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00695",
+    "updated_at": "2025-12-10 00:00:00"
+  },
+  {
+    "id": 696,
+    "dida_hotel_id": 12087,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00696",
+    "updated_at": "2025-07-16 00:00:00"
+  },
+  {
+    "id": 697,
+    "dida_hotel_id": 12088,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00697",
+    "updated_at": "2025-08-18 00:00:00"
+  },
+  {
+    "id": 698,
+    "dida_hotel_id": 12092,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00698",
+    "updated_at": "2026-04-20 00:00:00"
+  },
+  {
+    "id": 699,
+    "dida_hotel_id": 12096,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00699",
+    "updated_at": "2025-01-17 00:00:00"
+  },
+  {
+    "id": 700,
+    "dida_hotel_id": 12097,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00700",
+    "updated_at": "2025-05-05 00:00:00"
+  },
+  {
+    "id": 701,
+    "dida_hotel_id": 12101,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00701",
+    "updated_at": "2025-08-05 00:00:00"
+  },
+  {
+    "id": 702,
+    "dida_hotel_id": 12105,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00702",
+    "updated_at": "2026-03-28 00:00:00"
+  },
+  {
+    "id": 703,
+    "dida_hotel_id": 12106,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00703",
+    "updated_at": "2026-01-13 00:00:00"
+  },
+  {
+    "id": 704,
+    "dida_hotel_id": 12110,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00704",
+    "updated_at": "2024-03-05 00:00:00"
+  },
+  {
+    "id": 705,
+    "dida_hotel_id": 12114,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00705",
+    "updated_at": "2024-05-29 00:00:00"
+  },
+  {
+    "id": 706,
+    "dida_hotel_id": 12115,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00706",
+    "updated_at": "2024-10-03 00:00:00"
+  },
+  {
+    "id": 707,
+    "dida_hotel_id": 12119,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00707",
+    "updated_at": "2025-11-05 00:00:00"
+  },
+  {
+    "id": 708,
+    "dida_hotel_id": 12123,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00708",
+    "updated_at": "2025-05-27 00:00:00"
+  },
+  {
+    "id": 709,
+    "dida_hotel_id": 12124,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00709",
+    "updated_at": "2024-09-16 00:00:00"
+  },
+  {
+    "id": 710,
+    "dida_hotel_id": 12128,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00710",
+    "updated_at": "2024-04-21 00:00:00"
+  },
+  {
+    "id": 711,
+    "dida_hotel_id": 12132,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00711",
+    "updated_at": "2025-09-11 00:00:00"
+  },
+  {
+    "id": 712,
+    "dida_hotel_id": 12133,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00712",
+    "updated_at": "2025-09-21 00:00:00"
+  },
+  {
+    "id": 713,
+    "dida_hotel_id": 12137,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00713",
+    "updated_at": "2026-04-28 00:00:00"
+  },
+  {
+    "id": 714,
+    "dida_hotel_id": 12141,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00714",
+    "updated_at": "2025-03-26 00:00:00"
+  },
+  {
+    "id": 715,
+    "dida_hotel_id": 12142,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00715",
+    "updated_at": "2025-03-20 00:00:00"
+  },
+  {
+    "id": 716,
+    "dida_hotel_id": 12146,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00716",
+    "updated_at": "2024-03-13 00:00:00"
+  },
+  {
+    "id": 717,
+    "dida_hotel_id": 12150,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00717",
+    "updated_at": "2024-02-05 00:00:00"
+  },
+  {
+    "id": 718,
+    "dida_hotel_id": 12151,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00718",
+    "updated_at": "2025-01-23 00:00:00"
+  },
+  {
+    "id": 719,
+    "dida_hotel_id": 12155,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00719",
+    "updated_at": "2024-10-17 00:00:00"
+  },
+  {
+    "id": 720,
+    "dida_hotel_id": 12159,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00720",
+    "updated_at": "2024-08-13 00:00:00"
+  },
+  {
+    "id": 721,
+    "dida_hotel_id": 12160,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00721",
+    "updated_at": "2024-03-23 00:00:00"
+  },
+  {
+    "id": 722,
+    "dida_hotel_id": 12164,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00722",
+    "updated_at": "2026-05-15 00:00:00"
+  },
+  {
+    "id": 723,
+    "dida_hotel_id": 12168,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00723",
+    "updated_at": "2026-01-22 00:00:00"
+  },
+  {
+    "id": 724,
+    "dida_hotel_id": 12169,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00724",
+    "updated_at": "2025-06-01 00:00:00"
+  },
+  {
+    "id": 725,
+    "dida_hotel_id": 12173,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00725",
+    "updated_at": "2026-05-05 00:00:00"
+  },
+  {
+    "id": 726,
+    "dida_hotel_id": 12177,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00726",
+    "updated_at": "2026-06-18 00:00:00"
+  },
+  {
+    "id": 727,
+    "dida_hotel_id": 12178,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00727",
+    "updated_at": "2025-08-28 00:00:00"
+  },
+  {
+    "id": 728,
+    "dida_hotel_id": 12182,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00728",
+    "updated_at": "2024-08-30 00:00:00"
+  },
+  {
+    "id": 729,
+    "dida_hotel_id": 12186,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00729",
+    "updated_at": "2024-02-06 00:00:00"
+  },
+  {
+    "id": 730,
+    "dida_hotel_id": 12187,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00730",
+    "updated_at": "2025-11-11 00:00:00"
+  },
+  {
+    "id": 731,
+    "dida_hotel_id": 12191,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00731",
+    "updated_at": "2025-02-27 00:00:00"
+  },
+  {
+    "id": 732,
+    "dida_hotel_id": 12195,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00732",
+    "updated_at": "2025-08-09 00:00:00"
+  },
+  {
+    "id": 733,
+    "dida_hotel_id": 12196,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00733",
+    "updated_at": "2026-04-04 00:00:00"
+  },
+  {
+    "id": 734,
+    "dida_hotel_id": 12200,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00734",
+    "updated_at": "2024-06-12 00:00:00"
+  },
+  {
+    "id": 735,
+    "dida_hotel_id": 12204,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00735",
+    "updated_at": "2025-06-10 00:00:00"
+  },
+  {
+    "id": 736,
+    "dida_hotel_id": 12205,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00736",
+    "updated_at": "2025-07-25 00:00:00"
+  },
+  {
+    "id": 737,
+    "dida_hotel_id": 12209,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00737",
+    "updated_at": "2025-03-18 00:00:00"
+  },
+  {
+    "id": 738,
+    "dida_hotel_id": 12213,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00738",
+    "updated_at": "2024-03-23 00:00:00"
+  },
+  {
+    "id": 739,
+    "dida_hotel_id": 12214,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00739",
+    "updated_at": "2024-11-09 00:00:00"
+  },
+  {
+    "id": 740,
+    "dida_hotel_id": 12218,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00740",
+    "updated_at": "2024-10-26 00:00:00"
+  },
+  {
+    "id": 741,
+    "dida_hotel_id": 12222,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00741",
+    "updated_at": "2025-08-26 00:00:00"
+  },
+  {
+    "id": 742,
+    "dida_hotel_id": 12223,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00742",
+    "updated_at": "2026-02-10 00:00:00"
+  },
+  {
+    "id": 743,
+    "dida_hotel_id": 12227,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00743",
+    "updated_at": "2024-10-23 00:00:00"
+  },
+  {
+    "id": 744,
+    "dida_hotel_id": 12231,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00744",
+    "updated_at": "2025-09-16 00:00:00"
+  },
+  {
+    "id": 745,
+    "dida_hotel_id": 12232,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00745",
+    "updated_at": "2024-09-16 00:00:00"
+  },
+  {
+    "id": 746,
+    "dida_hotel_id": 12236,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00746",
+    "updated_at": "2026-04-30 00:00:00"
+  },
+  {
+    "id": 747,
+    "dida_hotel_id": 12240,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00747",
+    "updated_at": "2026-01-02 00:00:00"
+  },
+  {
+    "id": 748,
+    "dida_hotel_id": 12241,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00748",
+    "updated_at": "2025-05-10 00:00:00"
+  },
+  {
+    "id": 749,
+    "dida_hotel_id": 12245,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00749",
+    "updated_at": "2025-02-13 00:00:00"
+  },
+  {
+    "id": 750,
+    "dida_hotel_id": 12249,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00750",
+    "updated_at": "2024-10-10 00:00:00"
+  },
+  {
+    "id": 751,
+    "dida_hotel_id": 12250,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00751",
+    "updated_at": "2024-10-17 00:00:00"
+  },
+  {
+    "id": 752,
+    "dida_hotel_id": 12254,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00752",
+    "updated_at": "2026-05-23 00:00:00"
+  },
+  {
+    "id": 753,
+    "dida_hotel_id": 12258,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00753",
+    "updated_at": "2024-12-29 00:00:00"
+  },
+  {
+    "id": 754,
+    "dida_hotel_id": 12259,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00754",
+    "updated_at": "2025-04-08 00:00:00"
+  },
+  {
+    "id": 755,
+    "dida_hotel_id": 12263,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00755",
+    "updated_at": "2026-06-08 00:00:00"
+  },
+  {
+    "id": 756,
+    "dida_hotel_id": 12267,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00756",
+    "updated_at": "2025-08-14 00:00:00"
+  },
+  {
+    "id": 757,
+    "dida_hotel_id": 12268,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00757",
+    "updated_at": "2025-05-03 00:00:00"
+  },
+  {
+    "id": 758,
+    "dida_hotel_id": 12272,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00758",
+    "updated_at": "2025-01-06 00:00:00"
+  },
+  {
+    "id": 759,
+    "dida_hotel_id": 12276,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00759",
+    "updated_at": "2024-06-17 00:00:00"
+  },
+  {
+    "id": 760,
+    "dida_hotel_id": 12277,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00760",
+    "updated_at": "2024-11-21 00:00:00"
+  },
+  {
+    "id": 761,
+    "dida_hotel_id": 12281,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00761",
+    "updated_at": "2025-11-11 00:00:00"
+  },
+  {
+    "id": 762,
+    "dida_hotel_id": 12285,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00762",
+    "updated_at": "2025-07-16 00:00:00"
+  },
+  {
+    "id": 763,
+    "dida_hotel_id": 12286,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00763",
+    "updated_at": "2025-11-14 00:00:00"
+  },
+  {
+    "id": 764,
+    "dida_hotel_id": 12290,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00764",
+    "updated_at": "2024-07-02 00:00:00"
+  },
+  {
+    "id": 765,
+    "dida_hotel_id": 12294,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00765",
+    "updated_at": "2025-05-09 00:00:00"
+  },
+  {
+    "id": 766,
+    "dida_hotel_id": 12295,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00766",
+    "updated_at": "2026-04-14 00:00:00"
+  },
+  {
+    "id": 767,
+    "dida_hotel_id": 12299,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00767",
+    "updated_at": "2025-01-29 00:00:00"
+  },
+  {
+    "id": 768,
+    "dida_hotel_id": 12303,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00768",
+    "updated_at": "2025-09-20 00:00:00"
+  },
+  {
+    "id": 769,
+    "dida_hotel_id": 12304,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00769",
+    "updated_at": "2024-04-19 00:00:00"
+  },
+  {
+    "id": 770,
+    "dida_hotel_id": 12308,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00770",
+    "updated_at": "2026-05-25 00:00:00"
+  },
+  {
+    "id": 771,
+    "dida_hotel_id": 12312,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00771",
+    "updated_at": "2025-07-01 00:00:00"
+  },
+  {
+    "id": 772,
+    "dida_hotel_id": 12313,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00772",
+    "updated_at": "2024-08-03 00:00:00"
+  },
+  {
+    "id": 773,
+    "dida_hotel_id": 12317,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00773",
+    "updated_at": "2024-05-22 00:00:00"
+  },
+  {
+    "id": 774,
+    "dida_hotel_id": 12321,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00774",
+    "updated_at": "2025-05-10 00:00:00"
+  },
+  {
+    "id": 775,
+    "dida_hotel_id": 12322,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00775",
+    "updated_at": "2025-05-12 00:00:00"
+  },
+  {
+    "id": 776,
+    "dida_hotel_id": 12326,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00776",
+    "updated_at": "2024-03-24 00:00:00"
+  },
+  {
+    "id": 777,
+    "dida_hotel_id": 12330,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00777",
+    "updated_at": "2026-06-12 00:00:00"
+  },
+  {
+    "id": 778,
+    "dida_hotel_id": 12331,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00778",
+    "updated_at": "2026-04-01 00:00:00"
+  },
+  {
+    "id": 779,
+    "dida_hotel_id": 12335,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00779",
+    "updated_at": "2025-02-19 00:00:00"
+  },
+  {
+    "id": 780,
+    "dida_hotel_id": 12339,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00780",
+    "updated_at": "2024-04-15 00:00:00"
+  },
+  {
+    "id": 781,
+    "dida_hotel_id": 12340,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00781",
+    "updated_at": "2026-01-18 00:00:00"
+  },
+  {
+    "id": 782,
+    "dida_hotel_id": 12344,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00782",
+    "updated_at": "2025-03-24 00:00:00"
+  },
+  {
+    "id": 783,
+    "dida_hotel_id": 12348,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00783",
+    "updated_at": "2025-10-06 00:00:00"
+  },
+  {
+    "id": 784,
+    "dida_hotel_id": 12349,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00784",
+    "updated_at": "2025-04-02 00:00:00"
+  },
+  {
+    "id": 785,
+    "dida_hotel_id": 12353,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00785",
+    "updated_at": "2024-09-03 00:00:00"
+  },
+  {
+    "id": 786,
+    "dida_hotel_id": 12357,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00786",
+    "updated_at": "2026-01-21 00:00:00"
+  },
+  {
+    "id": 787,
+    "dida_hotel_id": 12358,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00787",
+    "updated_at": "2026-06-01 00:00:00"
+  },
+  {
+    "id": 788,
+    "dida_hotel_id": 12362,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00788",
+    "updated_at": "2024-08-07 00:00:00"
+  },
+  {
+    "id": 789,
+    "dida_hotel_id": 12366,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00789",
+    "updated_at": "2025-05-11 00:00:00"
+  },
+  {
+    "id": 790,
+    "dida_hotel_id": 12367,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00790",
+    "updated_at": "2024-12-11 00:00:00"
+  },
+  {
+    "id": 791,
+    "dida_hotel_id": 12371,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00791",
+    "updated_at": "2026-04-09 00:00:00"
+  },
+  {
+    "id": 792,
+    "dida_hotel_id": 12375,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00792",
+    "updated_at": "2025-04-02 00:00:00"
+  },
+  {
+    "id": 793,
+    "dida_hotel_id": 12376,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00793",
+    "updated_at": "2026-03-02 00:00:00"
+  },
+  {
+    "id": 794,
+    "dida_hotel_id": 12380,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00794",
+    "updated_at": "2026-02-16 00:00:00"
+  },
+  {
+    "id": 795,
+    "dida_hotel_id": 12384,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00795",
+    "updated_at": "2024-09-05 00:00:00"
+  },
+  {
+    "id": 796,
+    "dida_hotel_id": 12385,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00796",
+    "updated_at": "2025-12-12 00:00:00"
+  },
+  {
+    "id": 797,
+    "dida_hotel_id": 12389,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00797",
+    "updated_at": "2025-01-08 00:00:00"
+  },
+  {
+    "id": 798,
+    "dida_hotel_id": 12393,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00798",
+    "updated_at": "2026-04-20 00:00:00"
+  },
+  {
+    "id": 799,
+    "dida_hotel_id": 12394,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00799",
+    "updated_at": "2025-04-01 00:00:00"
+  },
+  {
+    "id": 800,
+    "dida_hotel_id": 12398,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00800",
+    "updated_at": "2026-01-08 00:00:00"
+  },
+  {
+    "id": 801,
+    "dida_hotel_id": 12402,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00801",
+    "updated_at": "2024-09-11 00:00:00"
+  },
+  {
+    "id": 802,
+    "dida_hotel_id": 12403,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00802",
+    "updated_at": "2024-09-25 00:00:00"
+  },
+  {
+    "id": 803,
+    "dida_hotel_id": 12407,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00803",
+    "updated_at": "2025-06-12 00:00:00"
+  },
+  {
+    "id": 804,
+    "dida_hotel_id": 12411,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00804",
+    "updated_at": "2026-06-18 00:00:00"
+  },
+  {
+    "id": 805,
+    "dida_hotel_id": 12412,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00805",
+    "updated_at": "2025-03-16 00:00:00"
+  },
+  {
+    "id": 806,
+    "dida_hotel_id": 12416,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00806",
+    "updated_at": "2024-05-13 00:00:00"
+  },
+  {
+    "id": 807,
+    "dida_hotel_id": 12420,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00807",
+    "updated_at": "2025-04-29 00:00:00"
+  },
+  {
+    "id": 808,
+    "dida_hotel_id": 12421,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00808",
+    "updated_at": "2024-11-06 00:00:00"
+  },
+  {
+    "id": 809,
+    "dida_hotel_id": 12425,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00809",
+    "updated_at": "2025-05-11 00:00:00"
+  },
+  {
+    "id": 810,
+    "dida_hotel_id": 12429,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00810",
+    "updated_at": "2025-05-04 00:00:00"
+  },
+  {
+    "id": 811,
+    "dida_hotel_id": 12430,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00811",
+    "updated_at": "2025-02-13 00:00:00"
+  },
+  {
+    "id": 812,
+    "dida_hotel_id": 12434,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00812",
+    "updated_at": "2024-10-16 00:00:00"
+  },
+  {
+    "id": 813,
+    "dida_hotel_id": 12438,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00813",
+    "updated_at": "2024-06-18 00:00:00"
+  },
+  {
+    "id": 814,
+    "dida_hotel_id": 12439,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00814",
+    "updated_at": "2025-09-19 00:00:00"
+  },
+  {
+    "id": 815,
+    "dida_hotel_id": 12443,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00815",
+    "updated_at": "2025-05-29 00:00:00"
+  },
+  {
+    "id": 816,
+    "dida_hotel_id": 12447,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00816",
+    "updated_at": "2024-07-29 00:00:00"
+  },
+  {
+    "id": 817,
+    "dida_hotel_id": 12448,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00817",
+    "updated_at": "2025-11-28 00:00:00"
+  },
+  {
+    "id": 818,
+    "dida_hotel_id": 12452,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00818",
+    "updated_at": "2024-02-09 00:00:00"
+  },
+  {
+    "id": 819,
+    "dida_hotel_id": 12456,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00819",
+    "updated_at": "2025-11-01 00:00:00"
+  },
+  {
+    "id": 820,
+    "dida_hotel_id": 12457,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00820",
+    "updated_at": "2025-09-26 00:00:00"
+  },
+  {
+    "id": 821,
+    "dida_hotel_id": 12461,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00821",
+    "updated_at": "2025-12-31 00:00:00"
+  },
+  {
+    "id": 822,
+    "dida_hotel_id": 12465,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00822",
+    "updated_at": "2024-12-13 00:00:00"
+  },
+  {
+    "id": 823,
+    "dida_hotel_id": 12466,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00823",
+    "updated_at": "2025-08-20 00:00:00"
+  },
+  {
+    "id": 824,
+    "dida_hotel_id": 12470,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00824",
+    "updated_at": "2026-01-08 00:00:00"
+  },
+  {
+    "id": 825,
+    "dida_hotel_id": 12474,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00825",
+    "updated_at": "2026-06-01 00:00:00"
+  },
+  {
+    "id": 826,
+    "dida_hotel_id": 12475,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00826",
+    "updated_at": "2025-03-21 00:00:00"
+  },
+  {
+    "id": 827,
+    "dida_hotel_id": 12479,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00827",
+    "updated_at": "2024-02-03 00:00:00"
+  },
+  {
+    "id": 828,
+    "dida_hotel_id": 12483,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00828",
+    "updated_at": "2025-03-28 00:00:00"
+  },
+  {
+    "id": 829,
+    "dida_hotel_id": 12484,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00829",
+    "updated_at": "2025-06-15 00:00:00"
+  },
+  {
+    "id": 830,
+    "dida_hotel_id": 12488,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00830",
+    "updated_at": "2026-02-21 00:00:00"
+  },
+  {
+    "id": 831,
+    "dida_hotel_id": 12492,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00831",
+    "updated_at": "2026-02-25 00:00:00"
+  },
+  {
+    "id": 832,
+    "dida_hotel_id": 12493,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00832",
+    "updated_at": "2025-01-31 00:00:00"
+  },
+  {
+    "id": 833,
+    "dida_hotel_id": 12497,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00833",
+    "updated_at": "2025-04-18 00:00:00"
+  },
+  {
+    "id": 834,
+    "dida_hotel_id": 12501,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00834",
+    "updated_at": "2025-02-15 00:00:00"
+  },
+  {
+    "id": 835,
+    "dida_hotel_id": 12502,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00835",
+    "updated_at": "2025-10-12 00:00:00"
+  },
+  {
+    "id": 836,
+    "dida_hotel_id": 12506,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00836",
+    "updated_at": "2025-01-03 00:00:00"
+  },
+  {
+    "id": 837,
+    "dida_hotel_id": 12510,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00837",
+    "updated_at": "2025-08-12 00:00:00"
+  },
+  {
+    "id": 838,
+    "dida_hotel_id": 12511,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00838",
+    "updated_at": "2024-05-18 00:00:00"
+  },
+  {
+    "id": 839,
+    "dida_hotel_id": 12515,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00839",
+    "updated_at": "2025-02-26 00:00:00"
+  },
+  {
+    "id": 840,
+    "dida_hotel_id": 12519,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00840",
+    "updated_at": "2026-05-22 00:00:00"
+  },
+  {
+    "id": 841,
+    "dida_hotel_id": 12520,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00841",
+    "updated_at": "2024-10-31 00:00:00"
+  },
+  {
+    "id": 842,
+    "dida_hotel_id": 12524,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00842",
+    "updated_at": "2025-09-15 00:00:00"
+  },
+  {
+    "id": 843,
+    "dida_hotel_id": 12528,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00843",
+    "updated_at": "2025-08-07 00:00:00"
+  },
+  {
+    "id": 844,
+    "dida_hotel_id": 12529,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00844",
+    "updated_at": "2026-02-05 00:00:00"
+  },
+  {
+    "id": 845,
+    "dida_hotel_id": 12533,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00845",
+    "updated_at": "2026-02-06 00:00:00"
+  },
+  {
+    "id": 846,
+    "dida_hotel_id": 12537,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00846",
+    "updated_at": "2026-02-12 00:00:00"
+  },
+  {
+    "id": 847,
+    "dida_hotel_id": 12538,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00847",
+    "updated_at": "2024-12-08 00:00:00"
+  },
+  {
+    "id": 848,
+    "dida_hotel_id": 12542,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00848",
+    "updated_at": "2024-10-11 00:00:00"
+  },
+  {
+    "id": 849,
+    "dida_hotel_id": 12546,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00849",
+    "updated_at": "2025-10-08 00:00:00"
+  },
+  {
+    "id": 850,
+    "dida_hotel_id": 12547,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00850",
+    "updated_at": "2025-11-14 00:00:00"
+  },
+  {
+    "id": 851,
+    "dida_hotel_id": 12551,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00851",
+    "updated_at": "2026-02-24 00:00:00"
+  },
+  {
+    "id": 852,
+    "dida_hotel_id": 12555,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00852",
+    "updated_at": "2024-02-02 00:00:00"
+  },
+  {
+    "id": 853,
+    "dida_hotel_id": 12556,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00853",
+    "updated_at": "2024-03-02 00:00:00"
+  },
+  {
+    "id": 854,
+    "dida_hotel_id": 12560,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00854",
+    "updated_at": "2025-07-22 00:00:00"
+  },
+  {
+    "id": 855,
+    "dida_hotel_id": 12564,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00855",
+    "updated_at": "2026-04-08 00:00:00"
+  },
+  {
+    "id": 856,
+    "dida_hotel_id": 12565,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00856",
+    "updated_at": "2026-06-16 00:00:00"
+  },
+  {
+    "id": 857,
+    "dida_hotel_id": 12569,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00857",
+    "updated_at": "2025-11-03 00:00:00"
+  },
+  {
+    "id": 858,
+    "dida_hotel_id": 12573,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00858",
+    "updated_at": "2025-01-25 00:00:00"
+  },
+  {
+    "id": 859,
+    "dida_hotel_id": 12574,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00859",
+    "updated_at": "2024-03-29 00:00:00"
+  },
+  {
+    "id": 860,
+    "dida_hotel_id": 12578,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00860",
+    "updated_at": "2025-07-24 00:00:00"
+  },
+  {
+    "id": 861,
+    "dida_hotel_id": 12582,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00861",
+    "updated_at": "2026-02-24 00:00:00"
+  },
+  {
+    "id": 862,
+    "dida_hotel_id": 12583,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00862",
+    "updated_at": "2025-02-03 00:00:00"
+  },
+  {
+    "id": 863,
+    "dida_hotel_id": 12587,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00863",
+    "updated_at": "2025-09-16 00:00:00"
+  },
+  {
+    "id": 864,
+    "dida_hotel_id": 12591,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00864",
+    "updated_at": "2026-03-24 00:00:00"
+  },
+  {
+    "id": 865,
+    "dida_hotel_id": 12592,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00865",
+    "updated_at": "2024-02-11 00:00:00"
+  },
+  {
+    "id": 866,
+    "dida_hotel_id": 12596,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00866",
+    "updated_at": "2025-12-17 00:00:00"
+  },
+  {
+    "id": 867,
+    "dida_hotel_id": 12600,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00867",
+    "updated_at": "2024-09-21 00:00:00"
+  },
+  {
+    "id": 868,
+    "dida_hotel_id": 12601,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00868",
+    "updated_at": "2024-12-03 00:00:00"
+  },
+  {
+    "id": 869,
+    "dida_hotel_id": 12605,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00869",
+    "updated_at": "2024-05-11 00:00:00"
+  },
+  {
+    "id": 870,
+    "dida_hotel_id": 12609,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00870",
+    "updated_at": "2025-04-23 00:00:00"
+  },
+  {
+    "id": 871,
+    "dida_hotel_id": 12610,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00871",
+    "updated_at": "2025-05-24 00:00:00"
+  },
+  {
+    "id": 872,
+    "dida_hotel_id": 12614,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00872",
+    "updated_at": "2025-12-14 00:00:00"
+  },
+  {
+    "id": 873,
+    "dida_hotel_id": 12618,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00873",
+    "updated_at": "2024-06-01 00:00:00"
+  },
+  {
+    "id": 874,
+    "dida_hotel_id": 12619,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00874",
+    "updated_at": "2024-03-12 00:00:00"
+  },
+  {
+    "id": 875,
+    "dida_hotel_id": 12623,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00875",
+    "updated_at": "2026-02-22 00:00:00"
+  },
+  {
+    "id": 876,
+    "dida_hotel_id": 12627,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00876",
+    "updated_at": "2025-07-11 00:00:00"
+  },
+  {
+    "id": 877,
+    "dida_hotel_id": 12628,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00877",
+    "updated_at": "2024-08-04 00:00:00"
+  },
+  {
+    "id": 878,
+    "dida_hotel_id": 12632,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00878",
+    "updated_at": "2026-04-01 00:00:00"
+  },
+  {
+    "id": 879,
+    "dida_hotel_id": 12636,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00879",
+    "updated_at": "2024-05-08 00:00:00"
+  },
+  {
+    "id": 880,
+    "dida_hotel_id": 12637,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00880",
+    "updated_at": "2025-02-19 00:00:00"
+  },
+  {
+    "id": 881,
+    "dida_hotel_id": 12641,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00881",
+    "updated_at": "2024-08-16 00:00:00"
+  },
+  {
+    "id": 882,
+    "dida_hotel_id": 12645,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00882",
+    "updated_at": "2024-08-17 00:00:00"
+  },
+  {
+    "id": 883,
+    "dida_hotel_id": 12646,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00883",
+    "updated_at": "2024-01-09 00:00:00"
+  },
+  {
+    "id": 884,
+    "dida_hotel_id": 12650,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00884",
+    "updated_at": "2025-12-25 00:00:00"
+  },
+  {
+    "id": 885,
+    "dida_hotel_id": 12654,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00885",
+    "updated_at": "2026-03-22 00:00:00"
+  },
+  {
+    "id": 886,
+    "dida_hotel_id": 12655,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00886",
+    "updated_at": "2025-09-01 00:00:00"
+  },
+  {
+    "id": 887,
+    "dida_hotel_id": 12659,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00887",
+    "updated_at": "2024-05-22 00:00:00"
+  },
+  {
+    "id": 888,
+    "dida_hotel_id": 12663,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00888",
+    "updated_at": "2025-02-01 00:00:00"
+  },
+  {
+    "id": 889,
+    "dida_hotel_id": 12664,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00889",
+    "updated_at": "2024-11-07 00:00:00"
+  },
+  {
+    "id": 890,
+    "dida_hotel_id": 12668,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00890",
+    "updated_at": "2025-06-12 00:00:00"
+  },
+  {
+    "id": 891,
+    "dida_hotel_id": 12672,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00891",
+    "updated_at": "2025-07-29 00:00:00"
+  },
+  {
+    "id": 892,
+    "dida_hotel_id": 12673,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00892",
+    "updated_at": "2025-01-16 00:00:00"
+  },
+  {
+    "id": 893,
+    "dida_hotel_id": 12677,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00893",
+    "updated_at": "2024-08-13 00:00:00"
+  },
+  {
+    "id": 894,
+    "dida_hotel_id": 12681,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00894",
+    "updated_at": "2026-01-30 00:00:00"
+  },
+  {
+    "id": 895,
+    "dida_hotel_id": 12682,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00895",
+    "updated_at": "2024-06-28 00:00:00"
+  },
+  {
+    "id": 896,
+    "dida_hotel_id": 12686,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00896",
+    "updated_at": "2024-12-12 00:00:00"
+  },
+  {
+    "id": 897,
+    "dida_hotel_id": 12690,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00897",
+    "updated_at": "2025-03-10 00:00:00"
+  },
+  {
+    "id": 898,
+    "dida_hotel_id": 12691,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00898",
+    "updated_at": "2024-08-01 00:00:00"
+  },
+  {
+    "id": 899,
+    "dida_hotel_id": 12695,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00899",
+    "updated_at": "2025-05-29 00:00:00"
+  },
+  {
+    "id": 900,
+    "dida_hotel_id": 12699,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00900",
+    "updated_at": "2025-06-01 00:00:00"
+  },
+  {
+    "id": 901,
+    "dida_hotel_id": 12700,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00901",
+    "updated_at": "2026-06-12 00:00:00"
+  },
+  {
+    "id": 902,
+    "dida_hotel_id": 12704,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00902",
+    "updated_at": "2024-09-22 00:00:00"
+  },
+  {
+    "id": 903,
+    "dida_hotel_id": 12708,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00903",
+    "updated_at": "2026-05-30 00:00:00"
+  },
+  {
+    "id": 904,
+    "dida_hotel_id": 12709,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00904",
+    "updated_at": "2025-08-15 00:00:00"
+  },
+  {
+    "id": 905,
+    "dida_hotel_id": 12713,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00905",
+    "updated_at": "2024-09-04 00:00:00"
+  },
+  {
+    "id": 906,
+    "dida_hotel_id": 12717,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00906",
+    "updated_at": "2025-05-24 00:00:00"
+  },
+  {
+    "id": 907,
+    "dida_hotel_id": 12718,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00907",
+    "updated_at": "2025-09-09 00:00:00"
+  },
+  {
+    "id": 908,
+    "dida_hotel_id": 12722,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00908",
+    "updated_at": "2025-11-01 00:00:00"
+  },
+  {
+    "id": 909,
+    "dida_hotel_id": 12726,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00909",
+    "updated_at": "2024-02-14 00:00:00"
+  },
+  {
+    "id": 910,
+    "dida_hotel_id": 12727,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00910",
+    "updated_at": "2025-06-29 00:00:00"
+  },
+  {
+    "id": 911,
+    "dida_hotel_id": 12731,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00911",
+    "updated_at": "2025-03-23 00:00:00"
+  },
+  {
+    "id": 912,
+    "dida_hotel_id": 12735,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00912",
+    "updated_at": "2026-03-24 00:00:00"
+  },
+  {
+    "id": 913,
+    "dida_hotel_id": 12736,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00913",
+    "updated_at": "2024-09-14 00:00:00"
+  },
+  {
+    "id": 914,
+    "dida_hotel_id": 12740,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00914",
+    "updated_at": "2025-12-19 00:00:00"
+  },
+  {
+    "id": 915,
+    "dida_hotel_id": 12744,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00915",
+    "updated_at": "2025-06-30 00:00:00"
+  },
+  {
+    "id": 916,
+    "dida_hotel_id": 12745,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00916",
+    "updated_at": "2024-11-13 00:00:00"
+  },
+  {
+    "id": 917,
+    "dida_hotel_id": 12749,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00917",
+    "updated_at": "2025-07-26 00:00:00"
+  },
+  {
+    "id": 918,
+    "dida_hotel_id": 12753,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00918",
+    "updated_at": "2025-07-12 00:00:00"
+  },
+  {
+    "id": 919,
+    "dida_hotel_id": 12754,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00919",
+    "updated_at": "2025-09-01 00:00:00"
+  },
+  {
+    "id": 920,
+    "dida_hotel_id": 12758,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00920",
+    "updated_at": "2025-10-10 00:00:00"
+  },
+  {
+    "id": 921,
+    "dida_hotel_id": 12762,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00921",
+    "updated_at": "2025-08-16 00:00:00"
+  },
+  {
+    "id": 922,
+    "dida_hotel_id": 12763,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00922",
+    "updated_at": "2026-01-24 00:00:00"
+  },
+  {
+    "id": 923,
+    "dida_hotel_id": 12767,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00923",
+    "updated_at": "2025-07-19 00:00:00"
+  },
+  {
+    "id": 924,
+    "dida_hotel_id": 12771,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00924",
+    "updated_at": "2026-03-24 00:00:00"
+  },
+  {
+    "id": 925,
+    "dida_hotel_id": 12772,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00925",
+    "updated_at": "2025-08-04 00:00:00"
+  },
+  {
+    "id": 926,
+    "dida_hotel_id": 12776,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00926",
+    "updated_at": "2024-10-05 00:00:00"
+  },
+  {
+    "id": 927,
+    "dida_hotel_id": 12780,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00927",
+    "updated_at": "2025-01-31 00:00:00"
+  },
+  {
+    "id": 928,
+    "dida_hotel_id": 12781,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00928",
+    "updated_at": "2025-06-05 00:00:00"
+  },
+  {
+    "id": 929,
+    "dida_hotel_id": 12785,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00929",
+    "updated_at": "2025-10-21 00:00:00"
+  },
+  {
+    "id": 930,
+    "dida_hotel_id": 12789,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00930",
+    "updated_at": "2024-03-22 00:00:00"
+  },
+  {
+    "id": 931,
+    "dida_hotel_id": 12790,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00931",
+    "updated_at": "2024-09-22 00:00:00"
+  },
+  {
+    "id": 932,
+    "dida_hotel_id": 12794,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00932",
+    "updated_at": "2025-11-03 00:00:00"
+  },
+  {
+    "id": 933,
+    "dida_hotel_id": 12798,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00933",
+    "updated_at": "2024-06-07 00:00:00"
+  },
+  {
+    "id": 934,
+    "dida_hotel_id": 12799,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00934",
+    "updated_at": "2024-04-28 00:00:00"
+  },
+  {
+    "id": 935,
+    "dida_hotel_id": 12803,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00935",
+    "updated_at": "2025-04-30 00:00:00"
+  },
+  {
+    "id": 936,
+    "dida_hotel_id": 12807,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00936",
+    "updated_at": "2026-05-24 00:00:00"
+  },
+  {
+    "id": 937,
+    "dida_hotel_id": 12808,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00937",
+    "updated_at": "2025-04-22 00:00:00"
+  },
+  {
+    "id": 938,
+    "dida_hotel_id": 12812,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00938",
+    "updated_at": "2026-04-02 00:00:00"
+  },
+  {
+    "id": 939,
+    "dida_hotel_id": 12816,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00939",
+    "updated_at": "2026-01-17 00:00:00"
+  },
+  {
+    "id": 940,
+    "dida_hotel_id": 12817,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00940",
+    "updated_at": "2024-08-19 00:00:00"
+  },
+  {
+    "id": 941,
+    "dida_hotel_id": 12821,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00941",
+    "updated_at": "2026-01-12 00:00:00"
+  },
+  {
+    "id": 942,
+    "dida_hotel_id": 12825,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00942",
+    "updated_at": "2025-03-09 00:00:00"
+  },
+  {
+    "id": 943,
+    "dida_hotel_id": 12826,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00943",
+    "updated_at": "2025-12-26 00:00:00"
+  },
+  {
+    "id": 944,
+    "dida_hotel_id": 12830,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00944",
+    "updated_at": "2025-11-02 00:00:00"
+  },
+  {
+    "id": 945,
+    "dida_hotel_id": 12834,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00945",
+    "updated_at": "2024-10-31 00:00:00"
+  },
+  {
+    "id": 946,
+    "dida_hotel_id": 12835,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00946",
+    "updated_at": "2024-04-13 00:00:00"
+  },
+  {
+    "id": 947,
+    "dida_hotel_id": 12839,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00947",
+    "updated_at": "2026-05-16 00:00:00"
+  },
+  {
+    "id": 948,
+    "dida_hotel_id": 12843,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00948",
+    "updated_at": "2024-05-06 00:00:00"
+  },
+  {
+    "id": 949,
+    "dida_hotel_id": 12844,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00949",
+    "updated_at": "2026-05-19 00:00:00"
+  },
+  {
+    "id": 950,
+    "dida_hotel_id": 12848,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00950",
+    "updated_at": "2026-02-13 00:00:00"
+  },
+  {
+    "id": 951,
+    "dida_hotel_id": 12852,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00951",
+    "updated_at": "2025-10-13 00:00:00"
+  },
+  {
+    "id": 952,
+    "dida_hotel_id": 12853,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00952",
+    "updated_at": "2026-05-31 00:00:00"
+  },
+  {
+    "id": 953,
+    "dida_hotel_id": 12857,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00953",
+    "updated_at": "2026-05-20 00:00:00"
+  },
+  {
+    "id": 954,
+    "dida_hotel_id": 12861,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00954",
+    "updated_at": "2025-12-25 00:00:00"
+  },
+  {
+    "id": 955,
+    "dida_hotel_id": 12862,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00955",
+    "updated_at": "2024-11-25 00:00:00"
+  },
+  {
+    "id": 956,
+    "dida_hotel_id": 12866,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00956",
+    "updated_at": "2025-12-12 00:00:00"
+  },
+  {
+    "id": 957,
+    "dida_hotel_id": 12870,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00957",
+    "updated_at": "2024-01-13 00:00:00"
+  },
+  {
+    "id": 958,
+    "dida_hotel_id": 12871,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00958",
+    "updated_at": "2025-04-27 00:00:00"
+  },
+  {
+    "id": 959,
+    "dida_hotel_id": 12875,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00959",
+    "updated_at": "2025-02-13 00:00:00"
+  },
+  {
+    "id": 960,
+    "dida_hotel_id": 12879,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00960",
+    "updated_at": "2025-08-28 00:00:00"
+  },
+  {
+    "id": 961,
+    "dida_hotel_id": 12880,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00961",
+    "updated_at": "2025-08-28 00:00:00"
+  },
+  {
+    "id": 962,
+    "dida_hotel_id": 12884,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00962",
+    "updated_at": "2025-06-10 00:00:00"
+  },
+  {
+    "id": 963,
+    "dida_hotel_id": 12888,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00963",
+    "updated_at": "2026-01-10 00:00:00"
+  },
+  {
+    "id": 964,
+    "dida_hotel_id": 12889,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00964",
+    "updated_at": "2026-04-26 00:00:00"
+  },
+  {
+    "id": 965,
+    "dida_hotel_id": 12893,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00965",
+    "updated_at": "2024-04-07 00:00:00"
+  },
+  {
+    "id": 966,
+    "dida_hotel_id": 12897,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00966",
+    "updated_at": "2024-07-29 00:00:00"
+  },
+  {
+    "id": 967,
+    "dida_hotel_id": 12898,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00967",
+    "updated_at": "2024-01-23 00:00:00"
+  },
+  {
+    "id": 968,
+    "dida_hotel_id": 12902,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00968",
+    "updated_at": "2026-03-06 00:00:00"
+  },
+  {
+    "id": 969,
+    "dida_hotel_id": 12906,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00969",
+    "updated_at": "2025-05-20 00:00:00"
+  },
+  {
+    "id": 970,
+    "dida_hotel_id": 12907,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00970",
+    "updated_at": "2026-04-03 00:00:00"
+  },
+  {
+    "id": 971,
+    "dida_hotel_id": 12911,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00971",
+    "updated_at": "2024-07-18 00:00:00"
+  },
+  {
+    "id": 972,
+    "dida_hotel_id": 12915,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00972",
+    "updated_at": "2024-02-26 00:00:00"
+  },
+  {
+    "id": 973,
+    "dida_hotel_id": 12916,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00973",
+    "updated_at": "2026-01-11 00:00:00"
+  },
+  {
+    "id": 974,
+    "dida_hotel_id": 12920,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00974",
+    "updated_at": "2026-03-29 00:00:00"
+  },
+  {
+    "id": 975,
+    "dida_hotel_id": 12924,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00975",
+    "updated_at": "2024-09-28 00:00:00"
+  },
+  {
+    "id": 976,
+    "dida_hotel_id": 12925,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00976",
+    "updated_at": "2025-01-02 00:00:00"
+  },
+  {
+    "id": 977,
+    "dida_hotel_id": 12929,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00977",
+    "updated_at": "2024-05-05 00:00:00"
+  },
+  {
+    "id": 978,
+    "dida_hotel_id": 12933,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00978",
+    "updated_at": "2026-05-01 00:00:00"
+  },
+  {
+    "id": 979,
+    "dida_hotel_id": 12934,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00979",
+    "updated_at": "2024-09-30 00:00:00"
+  },
+  {
+    "id": 980,
+    "dida_hotel_id": 12938,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00980",
+    "updated_at": "2025-03-19 00:00:00"
+  },
+  {
+    "id": 981,
+    "dida_hotel_id": 12942,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00981",
+    "updated_at": "2024-03-28 00:00:00"
+  },
+  {
+    "id": 982,
+    "dida_hotel_id": 12943,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I00982",
+    "updated_at": "2026-03-09 00:00:00"
+  },
+  {
+    "id": 983,
+    "dida_hotel_id": 12947,
+    "client_id": "Barli2b",
+    "client_hotel_id": "R00983",
+    "updated_at": "2024-05-02 00:00:00"
+  },
+  {
+    "id": 984,
+    "dida_hotel_id": 12951,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "H00984",
+    "updated_at": "2025-02-12 00:00:00"
+  },
+  {
+    "id": 985,
+    "dida_hotel_id": 12952,
+    "client_id": "Agoda",
+    "client_hotel_id": "N00985",
+    "updated_at": "2025-08-26 00:00:00"
+  },
+  {
+    "id": 986,
+    "dida_hotel_id": 12956,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "I00986",
+    "updated_at": "2025-10-30 00:00:00"
+  },
+  {
+    "id": 987,
+    "dida_hotel_id": 12960,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "M00987",
+    "updated_at": "2026-05-01 00:00:00"
+  },
+  {
+    "id": 988,
+    "dida_hotel_id": 12961,
+    "client_id": "Lvzan",
+    "client_hotel_id": "S00988",
+    "updated_at": "2025-01-12 00:00:00"
+  },
+  {
+    "id": 989,
+    "dida_hotel_id": 12965,
+    "client_id": "Barli2b",
+    "client_hotel_id": "P00989",
+    "updated_at": "2025-10-30 00:00:00"
+  },
+  {
+    "id": 990,
+    "dida_hotel_id": 12969,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "C00990",
+    "updated_at": "2024-05-19 00:00:00"
+  },
+  {
+    "id": 991,
+    "dida_hotel_id": 12970,
+    "client_id": "Agoda",
+    "client_hotel_id": "G00991",
+    "updated_at": "2025-01-08 00:00:00"
+  },
+  {
+    "id": 992,
+    "dida_hotel_id": 12974,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "R00992",
+    "updated_at": "2024-03-30 00:00:00"
+  },
+  {
+    "id": 993,
+    "dida_hotel_id": 12978,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "P00993",
+    "updated_at": "2025-03-16 00:00:00"
+  },
+  {
+    "id": 994,
+    "dida_hotel_id": 12979,
+    "client_id": "Lvzan",
+    "client_hotel_id": "P00994",
+    "updated_at": "2025-01-02 00:00:00"
+  },
+  {
+    "id": 995,
+    "dida_hotel_id": 12983,
+    "client_id": "Barli2b",
+    "client_hotel_id": "H00995",
+    "updated_at": "2026-05-06 00:00:00"
+  },
+  {
+    "id": 996,
+    "dida_hotel_id": 12987,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "M00996",
+    "updated_at": "2024-01-30 00:00:00"
+  },
+  {
+    "id": 997,
+    "dida_hotel_id": 12988,
+    "client_id": "Agoda",
+    "client_hotel_id": "H00997",
+    "updated_at": "2024-11-29 00:00:00"
+  },
+  {
+    "id": 998,
+    "dida_hotel_id": 12992,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "S00998",
+    "updated_at": "2025-02-03 00:00:00"
+  },
+  {
+    "id": 999,
+    "dida_hotel_id": 12996,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "W00999",
+    "updated_at": "2026-05-05 00:00:00"
+  },
+  {
+    "id": 1000,
+    "dida_hotel_id": 12997,
+    "client_id": "Lvzan",
+    "client_hotel_id": "I01000",
+    "updated_at": "2026-02-08 00:00:00"
+  },
+  {
+    "id": 1001,
+    "dida_hotel_id": 20001,
+    "client_id": "Agoda",
+    "client_hotel_id": "ANEW00001",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1002,
+    "dida_hotel_id": 20002,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "UKNEW0001",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1003,
+    "dida_hotel_id": 20003,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "EBKNEW001",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1004,
+    "dida_hotel_id": 20004,
+    "client_id": "Lvzan",
+    "client_hotel_id": "LVZNEW001",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1005,
+    "dida_hotel_id": 20005,
+    "client_id": "Barli2b",
+    "client_hotel_id": "BARNEW001",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1006,
+    "dida_hotel_id": 20006,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "OPQNEW001",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1007,
+    "dida_hotel_id": 20007,
+    "client_id": "Agoda",
+    "client_hotel_id": "ANEW00002",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1008,
+    "dida_hotel_id": 20008,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "UKNEW0002",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1009,
+    "dida_hotel_id": 20009,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "EBKNEW002",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1010,
+    "dida_hotel_id": 20010,
+    "client_id": "Lvzan",
+    "client_hotel_id": "LVZNEW002",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1011,
+    "dida_hotel_id": 20011,
+    "client_id": "Barli2b",
+    "client_hotel_id": "BARNEW002",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1012,
+    "dida_hotel_id": 20012,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "OPQNEW002",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1013,
+    "dida_hotel_id": 20013,
+    "client_id": "Agoda",
+    "client_hotel_id": "ANEW00003",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1014,
+    "dida_hotel_id": 20014,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "UKNEW0003",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1015,
+    "dida_hotel_id": 20015,
+    "client_id": "AgodaEBK",
+    "client_hotel_id": "EBKNEW003",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1016,
+    "dida_hotel_id": 20016,
+    "client_id": "Lvzan",
+    "client_hotel_id": "LVZNEW003",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1017,
+    "dida_hotel_id": 20017,
+    "client_id": "Barli2b",
+    "client_hotel_id": "BARNEW003",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1018,
+    "dida_hotel_id": 20018,
+    "client_id": "DidaOpaq",
+    "client_hotel_id": "OPQNEW003",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1019,
+    "dida_hotel_id": 20019,
+    "client_id": "Agoda",
+    "client_hotel_id": "ANEW00004",
+    "updated_at": "2026-06-12 07:39:53"
+  },
+  {
+    "id": 1020,
+    "dida_hotel_id": 20020,
+    "client_id": "AgodaUK",
+    "client_hotel_id": "UKNEW0004",
+    "updated_at": "2026-06-12 07:39:53"
+  }
+]
