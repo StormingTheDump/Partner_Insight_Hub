@@ -161,7 +161,7 @@ export function HotHotelsPage(_: PageProps) {
             {pageRows.length === 0 ? (
               <tr><td colSpan={7} style={emptyCell}>未找到匹配酒店</td></tr>
             ) : pageRows.map((h) => {
-              const hm = HOT_META[h.hot_level];
+              const hm = HOT_META[h.hot_level] ?? HOT_META[1];
               return (
               <tr key={h.hotel_id}>
                   <td style={{ ...td, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text)" }}>

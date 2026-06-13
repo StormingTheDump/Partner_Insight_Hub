@@ -16,7 +16,10 @@ export type PageId =
   | "contact"
   | "dida-api"
   | "hot-hotels"
-  | "direct-hotels";
+  | "direct-hotels"
+  | "cost-analysis"
+  | "inventory"
+  | "marketplace-analytics";
 
 type AppState = {
   activePage: PageId;

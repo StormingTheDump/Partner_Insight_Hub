@@ -117,16 +117,21 @@ export function ContactPage(_: PageProps) {
   const [didaList, setDidaList] = useState<DidaContact[]>([]);
   const [myList, setMyList] = useState<MyContact[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([
       fetch(`${API}/api/contacts/dida`).then(r => r.json()),
       fetch(`${API}/api/contacts/my`).then(r => r.json()),
-    ]).then(([dida, my]) => {
-      setDidaList(dida);
-      setMyList(my);
-      setLoading(false);
-    });
+    ])
+      .then(([dida, my]) => {
+        setDidaList(Array.isArray(dida) ? dida : []);
+        setMyList(Array.isArray(my) ? my : []);
+      })
+      .catch((err: unknown) => {
+        setLoadError(err instanceof Error ? err.message : "加载联系方式失败");
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const addContact = async (type: "ops" | "biz") => {
@@ -158,6 +163,7 @@ export function ContactPage(_: PageProps) {
   const biz = myList.filter(c => c.type === "biz");
 
   if (loading) return <div style={{ padding: 40, color: "var(--muted)" }}>加载中…</div>;
+  if (loadError) return <div style={{ padding: 40, color: "var(--dida-red)" }}>联系方式加载失败：{loadError}</div>;
 
   return (
     <>

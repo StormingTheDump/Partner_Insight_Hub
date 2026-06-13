@@ -8,8 +8,11 @@ import {
   Flame,
   GitMerge,
   Home,
+  Layers,
   ListTree,
   MessageCircle,
+  PackageSearch,
+  PieChart,
   ScrollText,
   Star,
   Store,
@@ -64,8 +67,11 @@ export const navSections: NavSection[] = [
   {
     title: "Dida 营销",
     items: [
-      { id: "hot-hotels",    label: "热销酒店推荐", icon: Star  },
-      { id: "direct-hotels", label: "直采推荐",     icon: Award },
+      { id: "hot-hotels",             label: "热销酒店推荐",   icon: Star  },
+      { id: "direct-hotels",          label: "直采推荐",       icon: Award },
+      { id: "marketplace-analytics",  label: "数据分析",       icon: PieChart },
+      { id: "cost-analysis",          label: "成本分析",       icon: PackageSearch },
+      { id: "inventory",              label: "库存分析",       icon: Layers },
     ],
   },
   {

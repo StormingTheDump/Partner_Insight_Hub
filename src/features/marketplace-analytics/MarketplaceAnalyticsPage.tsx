@@ -5,7 +5,9 @@ import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-export function MarketplaceAnalyticsPage() {
+import type { PageProps } from "@/dashboard/routes";
+
+export function MarketplaceAnalyticsPage(_: PageProps) {
   return (
     <>
       <PageHeader title="数据分析" description="衡量渠道市场增量订单、交易额、折扣及成本。" />
