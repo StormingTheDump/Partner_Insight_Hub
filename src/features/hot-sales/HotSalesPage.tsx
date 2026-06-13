@@ -60,7 +60,7 @@ export function HotSalesPage(_: PageProps) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
     refreshStats();
-  }, []);
+  }, [fetchData]);
 
   const handleSearch = () => fetchData();
 

@@ -46,14 +46,18 @@ export function ChannelMappingPage(_: PageProps) {
     setLoading(false);
   }, [didaQuery, clientId, clientQuery]);
 
-  // 初始加载：同时拉全量总数
+  // 全局总数只拉一次
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchData();
     fetch(`${API}/api/channel-mapping`)
       .then(r => r.json())
       .then((d: MappingRow[]) => setTotal(d.length));
   }, []);
+
+  // 筛选数据随 fetchData（包含 selectedFeed）更新
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData();
+  }, [fetchData]);
 
   const handleSearch = () => fetchData();
 
