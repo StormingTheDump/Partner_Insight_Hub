@@ -108,7 +108,16 @@ function handleOrders(p: Record<string, string>): Response {
   if (p["status"]) {
     data = data.filter(o => String(o["channel_status"]).toLowerCase() === p["status"].toLowerCase());
   }
-  if (p["q"]) {
+  // support both "refs" (batch order numbers) and "q" (general keyword)
+  if (p["refs"]) {
+    const refList = p["refs"].split(",").map(s => s.trim().toLowerCase()).filter(Boolean);
+    data = data.filter(o =>
+      refList.some(r =>
+        String(o["client_ref"] ?? "").toLowerCase().includes(r) ||
+        String(o["dida_ref"] ?? "").toLowerCase().includes(r)
+      )
+    );
+  } else if (p["q"]) {
     const q2 = p["q"].toLowerCase();
     data = data.filter(o =>
       String(o["client_ref"] ?? "").toLowerCase().includes(q2) ||

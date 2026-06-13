@@ -164,23 +164,21 @@ export function BookingsPage(_: PageProps) {
   const [firstLoad, setFirstLoad] = useState(true);
   const [page, setPage] = useState(1);
   const [orderQuery, setOrderQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [committedQuery, setCommittedQuery] = useState("");
 
   // Track last-fetched filter state to detect changes (for auto page-reset)
   const [lastFilters, setLastFilters] = useState<LastFilters | null>(null);
 
-  // Debounce the textarea input
-  useEffect(() => {
-    const t = setTimeout(() => setDebouncedQuery(orderQuery), 400);
-    return () => clearTimeout(t);
-  }, [orderQuery]);
+  function triggerSearch() {
+    setCommittedQuery(orderQuery.trim());
+  }
 
   // Derive effective page: reset to 1 when filters change without calling setState in effect
   const filtersChanged =
     lastFilters === null ||
     lastFilters.feed !== selectedFeed ||
     lastFilters.range !== dateRange ||
-    lastFilters.query !== debouncedQuery;
+    lastFilters.query !== committedQuery;
 
   const effectivePage = filtersChanged ? 1 : page;
 
@@ -189,7 +187,7 @@ export function BookingsPage(_: PageProps) {
     const params = new URLSearchParams({ page: String(effectivePage), pageSize: "50" });
     if (selectedFeed !== "全部渠道") params.set("client_id", selectedFeed);
     if (dateRange) { params.set("start_date", dateRange[0]); params.set("end_date", dateRange[1]); }
-    const refs = parseBatch(debouncedQuery);
+    const refs = parseBatch(committedQuery);
     if (refs.length > 0) params.set("refs", refs.join(","));
 
     fetch(`/api/orders?${params}`)
@@ -198,7 +196,7 @@ export function BookingsPage(_: PageProps) {
         setRows(data);
         setMeta(pagination);
         setPage(pagination.page);
-        setLastFilters({ feed: selectedFeed, range: dateRange, query: debouncedQuery });
+        setLastFilters({ feed: selectedFeed, range: dateRange, query: committedQuery });
         setFirstLoad(false);
       })
       .catch(() => {
@@ -206,7 +204,7 @@ export function BookingsPage(_: PageProps) {
         setMeta(null);
         setFirstLoad(false);
       });
-  }, [effectivePage, selectedFeed, dateRange, debouncedQuery]);
+  }, [effectivePage, selectedFeed, dateRange, committedQuery]);
 
   // CSV export for current page
   const csvColumns = columns.map(({ key, header, align }) => ({ key, header, align }));
@@ -254,14 +252,14 @@ export function BookingsPage(_: PageProps) {
       />
 
       {/* Order number batch filter */}
-      <div className="filter-row" style={{ alignItems: "flex-start" }}>
+      <div className="filter-row" style={{ alignItems: "center" }}>
         <label
           className="filter-control"
-          style={{ alignItems: "flex-start", paddingTop: 7, paddingBottom: 7 }}
+          style={{ flex: 1, maxWidth: 480 }}
         >
           <svg
             className="icon"
-            style={{ marginTop: 2, flexShrink: 0 }}
+            style={{ flexShrink: 0 }}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -272,25 +270,41 @@ export function BookingsPage(_: PageProps) {
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
-          <textarea
+          <input
             value={orderQuery}
             onChange={(e) => setOrderQuery(e.target.value)}
-            placeholder="支持任意订单号检索（逗号、空格或换行分隔批量查询）"
-            rows={3}
+            onKeyDown={(e) => e.key === "Enter" && triggerSearch()}
+            placeholder="输入订单号搜索（支持逗号/空格分隔批量查询）"
             style={{
               border: 0,
               outline: 0,
               background: "transparent",
-              resize: "vertical",
-              minWidth: 340,
+              width: "100%",
               padding: "3px 0",
               fontFamily: "inherit",
               fontSize: "inherit",
               color: "inherit",
-              lineHeight: 1.45,
             }}
           />
         </label>
+        <button
+          type="button"
+          className="button primary"
+          onClick={triggerSearch}
+          style={{ flexShrink: 0 }}
+        >
+          搜索
+        </button>
+        {committedQuery && (
+          <button
+            type="button"
+            className="button"
+            onClick={() => { setOrderQuery(""); setCommittedQuery(""); }}
+            style={{ flexShrink: 0 }}
+          >
+            清除
+          </button>
+        )}
       </div>
 
       {/* Table */}
