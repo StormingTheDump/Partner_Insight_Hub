@@ -546,6 +546,23 @@ def api_integration_metrics(
            ORDER BY date, channel""",
         params,
     ).fetchall()
+
+    # avg_order_value from agoda_daily_metrics (same date/channel filters)
+    agoda_cond: list = []
+    agoda_params: list = []
+    if start_date and end_date:
+        agoda_cond.append("date BETWEEN ? AND ?")
+        agoda_params.extend([start_date, end_date])
+    if client_id:
+        agoda_cond.append("client_id = ?")
+        agoda_params.append(client_id)
+    agoda_where = ("WHERE " + " AND ".join(agoda_cond)) if agoda_cond else ""
+    avg_row = conn.execute(
+        f"SELECT ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2) AS aov FROM agoda_daily_metrics {agoda_where}",
+        agoda_params,
+    ).fetchone()
+    avg_order_value = avg_row["aov"] or 0
+
     conn.close()
 
     active_channels = [client_id] if client_id else _CHANNELS
@@ -609,6 +626,7 @@ def api_integration_metrics(
             "book_error_rate": round(total_fo / total_to * 100, 2) if total_to else 0,
             "total_price_checks": total_tc,
             "total_orders": total_to,
+            "estimated_ttv_loss": round(total_fo * avg_order_value),
         },
         "dates": display_dates,
         "accuracy_by_channel": accuracy_by_channel,

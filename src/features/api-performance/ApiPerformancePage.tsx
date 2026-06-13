@@ -23,6 +23,7 @@ type ApiData = {
     book_error_rate: number;
     total_price_checks: number;
     total_orders: number;
+    estimated_ttv_loss: number;
   };
   dates: string[];
   accuracy_by_channel: Record<string, number[]>;
@@ -173,7 +174,7 @@ export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PagePro
 
   return (
     <>
-      <PageHeader title="API 性能" description="按渠道监控预订请求量、成功率及错误影响。" />
+      <PageHeader title="技术指标" description="按渠道监控预订请求量、成功率及错误影响。" />
       <Card>
         <div className="card-header" style={{ justifyContent: "flex-start" }}>
           <div className="icon-tile orange">
@@ -184,7 +185,7 @@ export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PagePro
             <p className="tiny">可用性、价格变动、超时及供应商确认错误造成的预估交易额损失。</p>
           </div>
           <div className="metric-value" style={{ marginLeft: "auto" }}>
-            $58,500
+            {data ? `$${data.summary.estimated_ttv_loss.toLocaleString()}` : "—"}
           </div>
         </div>
       </Card>
