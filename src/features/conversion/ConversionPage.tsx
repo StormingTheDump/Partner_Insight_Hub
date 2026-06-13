@@ -5,11 +5,11 @@ import { BaseChart } from "@/shared/charts/BaseChart";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { useAppState } from "@/dashboard/app-state";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"];
-const ALL_FEEDS = ["全部渠道", ...CHANNELS];
 
 // 柔和色系：去饱和度的蓝/绿/金/青/紫/橙
 const COLORS = ["#7aa8d8", "#5fad9a", "#c9a75c", "#5fa8c0", "#9b84cc", "#cc8f62"];
@@ -160,15 +160,22 @@ function getSummary(data: ConvData, feed: string): Record<MetricKey, number | nu
 }
 
 export function ConversionPage(_: PageProps) {
+  const { selectedFeed, dateRange } = useAppState();
   const [data, setData] = useState<ConvData | null>(null);
-  const [feed, setFeed] = useState("全部渠道");
+
+  const feed = selectedFeed;
+  const clientId = feed !== "全部渠道" ? feed : undefined;
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/conversion/metrics`)
+    const p = new URLSearchParams();
+    if (clientId)       p.set("client_id",  clientId);
+    if (dateRange?.[0]) p.set("start_date", dateRange[0]);
+    if (dateRange?.[1]) p.set("end_date",   dateRange[1]);
+    fetch(`${API_BASE}/api/conversion/metrics?${p}`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});
-  }, []);
+  }, [clientId, dateRange]);
 
   const summary = data ? getSummary(data, feed) : null;
 
@@ -228,20 +235,6 @@ export function ConversionPage(_: PageProps) {
               {m.meaning}
             </p>
           </div>
-        ))}
-      </div>
-
-      {/* 渠道筛选 */}
-      <div className="filter-row">
-        {ALL_FEEDS.map((ch) => (
-          <button
-            key={ch}
-            type="button"
-            onClick={() => setFeed(ch)}
-            className={feed === ch ? "button primary" : "button"}
-          >
-            {ch}
-          </button>
         ))}
       </div>
 

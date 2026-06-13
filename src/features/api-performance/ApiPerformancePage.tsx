@@ -7,6 +7,7 @@ import { Card } from "@/shared/components/Card";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { useAppState } from "@/dashboard/app-state";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
@@ -22,6 +23,7 @@ type ApiData = {
     book_error_rate: number;
     total_price_checks: number;
     total_orders: number;
+    estimated_ttv_loss: number;
   };
   dates: string[];
   accuracy_by_channel: Record<string, number[]>;
@@ -138,16 +140,22 @@ function getBookErrorTrend(data: ApiData, feed: string): number[] {
 }
 
 export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PageProps) {
+  const { dateRange } = useAppState();
   const [data, setData] = useState<ApiData | null>(null);
 
+  const feed = selectedFeed ?? "全部渠道";
+  const clientId = feed !== "全部渠道" ? feed : undefined;
+
   useEffect(() => {
-    fetch(`${API_BASE}/api/integration/api-metrics`)
+    const p = new URLSearchParams();
+    if (clientId)       p.set("client_id",  clientId);
+    if (dateRange?.[0]) p.set("start_date", dateRange[0]);
+    if (dateRange?.[1]) p.set("end_date",   dateRange[1]);
+    fetch(`${API_BASE}/api/integration/api-metrics?${p}`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});
-  }, []);
-
-  const feed = selectedFeed ?? "全部渠道";
+  }, [clientId, dateRange]);
 
   const preErrorTrend  = data ? getPreErrorTrend(data, feed)  : [];
   const bookErrorTrend = data ? getBookErrorTrend(data, feed) : [];
@@ -166,7 +174,7 @@ export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PagePro
 
   return (
     <>
-      <PageHeader title="API 性能" description="按渠道监控预订请求量、成功率及错误影响。" />
+      <PageHeader title="技术指标" description="按渠道监控预订请求量、成功率及错误影响。" />
       <Card>
         <div className="card-header" style={{ justifyContent: "flex-start" }}>
           <div className="icon-tile orange">
@@ -177,7 +185,7 @@ export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PagePro
             <p className="tiny">可用性、价格变动、超时及供应商确认错误造成的预估交易额损失。</p>
           </div>
           <div className="metric-value" style={{ marginLeft: "auto" }}>
-            $58,500
+            {data ? `$${data.summary.estimated_ttv_loss.toLocaleString()}` : "—"}
           </div>
         </div>
       </Card>

@@ -3,10 +3,10 @@ import { Search, Upload, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { useAppState } from "@/dashboard/app-state";
 
 const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 
 type MappingRow = {
   id: number;
@@ -19,17 +19,19 @@ type MappingRow = {
 type UploadResult = { added: number; conflicts: string[] } | null;
 
 export function ChannelMappingPage(_: PageProps) {
+  const { selectedFeed } = useAppState();
   const [rows, setRows]               = useState<MappingRow[]>([]);
   const [total, setTotal]             = useState(0);
   const [loading, setLoading]         = useState(true);
   const [didaQuery, setDidaQuery]     = useState("");
-  const [clientId, setClientId]       = useState("");
   const [clientQuery, setClientQuery] = useState("");
   const [page, setPage]               = useState(1);
   const [uploading, setUploading]     = useState(false);
   const [result, setResult]           = useState<UploadResult>(null);
   const [error, setError]             = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -44,18 +46,23 @@ export function ChannelMappingPage(_: PageProps) {
     setLoading(false);
   }, [didaQuery, clientId, clientQuery]);
 
+  // 全局总数只拉一次
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchData();
     fetch(`${API}/api/channel-mapping`)
       .then(r => r.json())
       .then((d: MappingRow[]) => setTotal(d.length));
   }, []);
 
+  // 筛选数据随 fetchData（包含 selectedFeed）更新
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData();
+  }, [fetchData]);
+
   const handleSearch = () => fetchData();
 
   const clearAll = () => {
-    setDidaQuery(""); setClientId(""); setClientQuery("");
+    setDidaQuery(""); setClientQuery("");
     setResult(null); setError("");
     setLoading(true);
     fetch(`${API}/api/channel-mapping`)
@@ -128,13 +135,7 @@ export function ChannelMappingPage(_: PageProps) {
           />
         </label>
 
-        <label className="filter-control">
-          <select value={clientId} onChange={e => setClientId(e.target.value)}>
-            <option value="">全部客户 ID</option>
-            {CLIENT_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
-
+        {/* 客户 Hotel ID */}
         <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
