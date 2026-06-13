@@ -128,7 +128,7 @@ export function HotSalesPage(_: PageProps) {
       </div>
 
       {/* 搜索栏 */}
-      <div className="filter-row">
+      <div className="filter-row" style={{ marginTop: 16 }}>
         <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input value={hotelId} onChange={e => setHotelId(e.target.value)}
@@ -218,7 +218,7 @@ export function HotSalesPage(_: PageProps) {
               pageRows.map((r, i) => (
                 <tr key={r.id}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
-                  <td style={td}><span className="status info">{r.channel_id}</span></td>
+                  <td style={td}>{r.channel_id}</td>
                   <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.hotel_id}</td>
                   <td style={td}><span style={countryTag}><Flame size={10} style={{ display: "inline", marginRight: 3 }} />{r.country}</span></td>
                   <td style={td}>{r.city}</td>

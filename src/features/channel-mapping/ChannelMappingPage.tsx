@@ -124,7 +124,7 @@ export function ChannelMappingPage(_: PageProps) {
       </div>
 
       {/* 搜索栏 */}
-      <div className="filter-row">
+      <div className="filter-row" style={{ marginTop: 16 }}>
         <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
@@ -220,7 +220,7 @@ export function ChannelMappingPage(_: PageProps) {
                 <tr key={r.id}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
                   <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.dida_hotel_id}</td>
-                  <td style={td}><span className="status info">{r.client_id}</span></td>
+                  <td style={td}>{r.client_id}</td>
                   <td style={{ ...td, fontFamily: "var(--font-mono)" }}>{r.client_hotel_id}</td>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{r.updated_at}</td>
                 </tr>

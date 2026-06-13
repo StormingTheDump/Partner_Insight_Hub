@@ -107,7 +107,7 @@ export function HotHotelsPage(_: PageProps) {
       </div>
 
       {/* Filters */}
-      <div className="filter-row">
+      <div className="filter-row" style={{ marginTop: 16 }}>
         <label className="filter-control">
           <select value={country} onChange={e => setCountry(e.target.value)}>
             <option value="">全部国家</option>
