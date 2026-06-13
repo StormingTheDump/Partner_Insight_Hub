@@ -105,8 +105,8 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
         </div>
 
         {/* Table */}
-        <div style={{ overflowX: "auto", flex: 1, overflowY: "auto" }}>
-          <table style={tableStyle}>
+        <div className="table-wrap" style={{ flex: 1, overflowY: "auto" }}>
+          <table>
             <thead>
               <tr>
                 <th style={thStyle}>邮箱</th>
@@ -125,18 +125,13 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
                 <tr>
                   <td colSpan={5} style={emptyCellStyle}>暂无账号，点击下方新增</td>
                 </tr>
-              ) : users.map((u, i) => (
-                <tr key={u.id} style={{ background: i % 2 === 0 ? "#fff" : "var(--surface-soft)" }}>
+              ) : users.map((u) => (
+                <tr key={u.id}>
                   <td style={tdStyle}>{u.email}</td>
                   <td style={tdStyle}>{u.contact_name}</td>
                   <td style={tdStyle}>{u.channel_name}</td>
                   <td style={tdStyle}>
-                    <span style={{
-                      padding: "2px 9px", borderRadius: 99, fontSize: 11, fontWeight: 700,
-                      background: u.status === "active" ? "#f0fff4" : "#f4f4f5",
-                      color: u.status === "active" ? "#16a34a" : "#6b7280",
-                      border: `1px solid ${u.status === "active" ? "#bbf7d0" : "#d1d5db"}`,
-                    }}>
+                    <span className={u.status === "active" ? "status" : "status neutral"}>
                       {u.status === "active" ? "激活" : "禁用"}
                     </span>
                   </td>
@@ -144,17 +139,17 @@ export function AccountManagementModal({ open, adminUser, onClose }: Props) {
                     {deleteConfirm === u.id ? (
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                         <span style={{ fontSize: 11, color: "var(--muted-strong)", whiteSpace: "nowrap" }}>确认删除?</span>
-                        <button type="button" onClick={() => handleDelete(u.id)} style={dangerConfirmBtn}>确认</button>
-                        <button type="button" onClick={() => setDeleteConfirm(null)} style={cancelSmBtn}>取消</button>
+                        <button type="button" onClick={() => handleDelete(u.id)} className="button danger" style={{ height: 26, padding: "0 8px", fontSize: 11, background: "#dc2626", color: "#fff", borderColor: "#dc2626" }}>确认</button>
+                        <button type="button" onClick={() => setDeleteConfirm(null)} className="button" style={{ height: 26, padding: "0 8px", fontSize: 11 }}>取消</button>
                       </span>
                     ) : (
                       <span style={{ display: "inline-flex", gap: 6 }}>
-                        <button type="button" onClick={() => handleToggle(u.id)} style={actionBtn}>
+                        <button type="button" onClick={() => handleToggle(u.id)} className="button" style={{ height: 26, padding: "0 8px", fontSize: 11 }}>
                           {u.status === "active"
                             ? <><UserX size={11} /> 禁用</>
                             : <><UserCheck size={11} /> 激活</>}
                         </button>
-                        <button type="button" onClick={() => setDeleteConfirm(u.id)} style={deleteBtn}>
+                        <button type="button" onClick={() => setDeleteConfirm(u.id)} className="button danger" style={{ height: 26, padding: "0 8px", fontSize: 11 }}>
                           <Trash2 size={11} /> 删除
                         </button>
                       </span>
@@ -243,35 +238,21 @@ const closeBtn: CSSProperties = {
   cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
   color: "var(--muted-strong)",
 };
-const tableStyle: CSSProperties = { width: "100%", borderCollapse: "collapse" };
 const thStyle: CSSProperties = {
-  padding: "9px 14px", textAlign: "left", fontSize: 11, fontWeight: 700,
-  color: "var(--muted-strong)", background: "var(--surface-soft)",
-  borderBottom: "1px solid var(--line)", whiteSpace: "nowrap",
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const tdStyle: CSSProperties = {
-  padding: "9px 14px", fontSize: 13, color: "var(--text)",
-  borderBottom: "1px solid var(--line)",
+  padding: "11px 13px", fontSize: 13, color: "var(--text)",
+  borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };
 const emptyCellStyle: CSSProperties = {
   textAlign: "center", padding: "32px 0", color: "var(--muted)", fontSize: 13,
-};
-const btnBase: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 4,
-  height: 26, padding: "0 9px", borderRadius: 5,
-  fontSize: 11, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap",
-};
-const actionBtn: CSSProperties = {
-  ...btnBase, border: "1px solid var(--line)", background: "var(--surface-soft)", color: "var(--text)",
-};
-const deleteBtn: CSSProperties = {
-  ...btnBase, border: "1px solid #fecaca", background: "#fff5f5", color: "#dc2626",
-};
-const dangerConfirmBtn: CSSProperties = {
-  ...btnBase, border: "none", background: "#dc2626", color: "#fff",
-};
-const cancelSmBtn: CSSProperties = {
-  ...btnBase, border: "1px solid var(--line)", background: "#fff", color: "var(--muted-strong)",
 };
 const addFormWrap: CSSProperties = {
   borderTop: "1px solid var(--line)", padding: "16px 20px", background: "var(--surface-soft)", flexShrink: 0,

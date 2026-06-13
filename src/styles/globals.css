@@ -335,6 +335,7 @@ a {
   background: #f8fafd;
   font-size: 12px;
   font-weight: 800;
+  border-bottom: 2px solid var(--line);
 }
 
 .table-wrap td.num,

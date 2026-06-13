@@ -133,45 +133,45 @@ export function HotSalesPage(_: PageProps) {
       </div>
 
       {/* 搜索栏 */}
-      <div style={searchBar}>
-        {/* 渠道 ID */}
-        <select value={channelId} onChange={e => setChannelId(e.target.value)} style={selectStyle}>
-          <option value="">全部渠道 ID</option>
-          {CHANNEL_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+      <div className="filter-row">
+        <label className="filter-control">
+          <select value={channelId} onChange={e => setChannelId(e.target.value)}>
+            <option value="">全部渠道 ID</option>
+            {CHANNEL_IDS.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
 
-        {/* 酒店 ID */}
-        <div style={inputWrap}>
+        <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input value={hotelId} onChange={e => setHotelId(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
-            placeholder="酒店 ID" style={inputStyle} />
-        </div>
+            placeholder="酒店 ID" />
+        </label>
 
-        {/* 国家 */}
-        <select value={country} onChange={e => setCountry(e.target.value)} style={selectStyle}>
-          <option value="">全部国家</option>
-          {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+        <label className="filter-control">
+          <select value={country} onChange={e => setCountry(e.target.value)}>
+            <option value="">全部国家</option>
+            {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
 
-        {/* 城市 */}
-        <div style={inputWrap}>
+        <label className="filter-control">
           <Globe size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input value={city} onChange={e => setCity(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
-            placeholder="城市" style={inputStyle} />
-        </div>
+            placeholder="城市" />
+        </label>
 
-        <button type="button" onClick={handleSearch} style={searchBtn}>搜索</button>
+        <button type="button" onClick={handleSearch} className="button primary">搜索</button>
 
-        <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} style={uploadBtn}>
+        <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="button">
           <Upload size={13} />
           {uploading ? "上传中…" : "上传 Excel"}
         </button>
         <input ref={fileRef} type="file" accept=".xlsx,.xls" style={{ display: "none" }} onChange={handleUpload} />
 
         {hasFilter && (
-          <button type="button" onClick={clearAll} style={clearBtn} title="清除筛选"><X size={14} /></button>
+          <button type="button" onClick={clearAll} className="button icon-only" title="清除筛选"><X size={14} /></button>
         )}
 
         <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
@@ -208,8 +208,8 @@ export function HotSalesPage(_: PageProps) {
       </div>
 
       {/* 表格 */}
-      <div style={tableWrap}>
-        <table style={table}>
+      <div className="table-wrap">
+        <table>
           <thead>
             <tr>
               <th style={{ ...th, width: 50 }}>#</th>
@@ -228,10 +228,10 @@ export function HotSalesPage(_: PageProps) {
               <tr><td colSpan={7} style={emptyCell}>未找到热销记录</td></tr>
             ) : (
               pageRows.map((r, i) => (
-                <tr key={r.id} style={{ background: i % 2 === 0 ? "#fff" : "#f8fafd" }}>
+                <tr key={r.id}>
                   <td style={{ ...td, color: "var(--muted)", fontSize: 12 }}>{(safePage - 1) * PAGE_SIZE + i + 1}</td>
-                  <td style={td}><span style={channelBadge}>{r.channel_id}</span></td>
-                  <td style={{ ...td, fontFamily: "monospace", fontWeight: 600 }}>{r.hotel_id}</td>
+                  <td style={td}><span className="status info">{r.channel_id}</span></td>
+                  <td style={{ ...td, fontFamily: "monospace" }}>{r.hotel_id}</td>
                   <td style={td}><span style={countryTag}><Flame size={10} style={{ display: "inline", marginRight: 3 }} />{r.country}</span></td>
                   <td style={td}>{r.city}</td>
                   <td style={{ ...td, fontSize: 12, color: "var(--muted-strong)" }}>{r.address}</td>
@@ -246,13 +246,13 @@ export function HotSalesPage(_: PageProps) {
       {/* 分页 */}
       {totalPages > 1 && (
         <div style={pagerBar}>
-          <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1} style={pageBtn}>上一页</button>
+          <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={safePage === 1} className="button">上一页</button>
           {pagerPages(safePage, totalPages).map((p, i) =>
             p === "…"
               ? <span key={`e${i}`} style={{ padding: "0 4px", color: "var(--muted)" }}>…</span>
-              : <button key={p} type="button" onClick={() => setPage(p as number)} style={{ ...pageBtn, ...(p === safePage ? pageBtnActive : {}) }}>{p}</button>
+              : <button key={p} type="button" onClick={() => setPage(p as number)} className={`button${p === safePage ? " primary" : ""}`}>{p}</button>
           )}
-          <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} style={pageBtn}>下一页</button>
+          <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} className="button">下一页</button>
           <span style={{ marginLeft: 8, fontSize: 12, color: "var(--muted)" }}>第 {safePage} / {totalPages} 页</span>
         </div>
       )}
@@ -271,24 +271,12 @@ function pagerPages(current: number, total: number): (number | "…")[] {
 }
 
 // ── styles ───────────────────────────────────────────────────────
-const searchBar: CSSProperties   = { display: "flex", alignItems: "center", gap: 8, background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap" };
-const inputWrap: CSSProperties   = { display: "flex", alignItems: "center", gap: 6, border: "1px solid #dfe5ef", borderRadius: 6, padding: "0 10px", height: 34, background: "#f8fafd" };
-const inputStyle: CSSProperties  = { border: "none", outline: "none", background: "transparent", fontSize: 13, color: "#17213f", width: 120 };
-const selectStyle: CSSProperties = { height: 34, padding: "0 10px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#f8fafd", fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none" };
-const searchBtn: CSSProperties   = { height: 34, padding: "0 16px", borderRadius: 7, background: "#1a73e8", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600 };
-const uploadBtn: CSSProperties   = { display: "flex", alignItems: "center", gap: 5, height: 34, padding: "0 14px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#fff", color: "#17213f", cursor: "pointer", fontSize: 13, fontWeight: 600 };
-const clearBtn: CSSProperties    = { height: 34, width: 34, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #dfe5ef", background: "#fff", cursor: "pointer", color: "#17213f" };
 const banner: CSSProperties      = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
 const bannerClose: CSSProperties = { position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "#66728a" };
 const hintBar: CSSProperties     = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid #dfe5ef" };
 const codeStyle: CSSProperties   = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "monospace", fontSize: 11, marginLeft: 3, marginRight: 3 };
-const tableWrap: CSSProperties   = { background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, overflow: "hidden" };
-const table: CSSProperties       = { width: "100%", borderCollapse: "collapse" };
-const th: CSSProperties          = { padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700, color: "#526078", background: "#f8fafd", borderBottom: "1px solid #edf1f7", whiteSpace: "nowrap" };
-const td: CSSProperties          = { padding: "9px 14px", fontSize: 13, color: "#17213f", borderBottom: "1px solid #edf1f7" };
+const th: CSSProperties          = { position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
+const td: CSSProperties          = { padding: "11px 13px", fontSize: 13, color: "#17213f", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
 const emptyCell: CSSProperties   = { textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13 };
-const channelBadge: CSSProperties = { display: "inline-block", padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700, background: "#e8f0fe", color: "#1a73e8" };
 const countryTag: CSSProperties   = { display: "inline-flex", alignItems: "center", padding: "2px 7px", borderRadius: 99, fontSize: 11, fontWeight: 600, background: "#fff4db", color: "#b06000" };
 const pagerBar: CSSProperties    = { display: "flex", alignItems: "center", gap: 4, marginTop: 16, flexWrap: "wrap" };
-const pageBtn: CSSProperties     = { height: 30, minWidth: 30, padding: "0 8px", borderRadius: 6, border: "1px solid #dfe5ef", background: "#fff", cursor: "pointer", fontSize: 13, color: "#17213f" };
-const pageBtnActive: CSSProperties = { background: "#1a73e8", color: "#fff", border: "1px solid #1a73e8", fontWeight: 700 };

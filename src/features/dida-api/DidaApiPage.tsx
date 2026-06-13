@@ -276,5 +276,5 @@ const rowStyle: React.CSSProperties = { display: "flex", justifyContent: "space-
 const codeBlock: React.CSSProperties = { background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 6, padding: "10px 12px", fontSize: 11, marginTop: 10, lineHeight: 1.7, overflow: "auto" };
 const tableStyle: React.CSSProperties = { width: "100%", borderCollapse: "collapse", fontSize: 12 };
 const thRowStyle: React.CSSProperties = { borderBottom: "2px solid var(--line)" };
-const thStyle: React.CSSProperties = { textAlign: "left", padding: "6px 10px", color: "var(--muted-strong)", fontWeight: 600, fontSize: 11, textTransform: "uppercase" };
-const tdStyle: React.CSSProperties = { padding: "7px 10px", color: "var(--text)" };
+const thStyle: React.CSSProperties = { position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
+const tdStyle: React.CSSProperties = { padding: "11px 13px", color: "var(--text)", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
