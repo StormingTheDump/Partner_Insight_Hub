@@ -3,7 +3,6 @@ import { Search, Upload, X, Globe, Flame } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
-import { MetricCard } from "@/shared/components/MetricCard";
 import { useAppState } from "@/dashboard/app-state";
 
 const API = import.meta.env.VITE_API_BASE ?? "";
@@ -99,7 +98,7 @@ export function HotSalesPage(_: PageProps) {
     }
   };
 
-  const matchPct   = stats.total > 0 ? ((stats.matched / stats.total) * 100).toFixed(1) : "0.0";
+
   const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   const safePage   = Math.min(page, totalPages);
   const pageRows   = rows.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
