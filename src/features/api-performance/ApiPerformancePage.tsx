@@ -8,7 +8,7 @@ import { ChartCard } from "@/shared/components/ChartCard";
 import { MetricCard } from "@/shared/components/MetricCard";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"];
 // 6 visually distinct colors: blue, emerald, amber, cyan, purple, orange

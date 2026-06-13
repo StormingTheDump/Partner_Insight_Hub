@@ -219,19 +219,19 @@ export function ReportsPage(_: PageProps) {
               {/* per-client confirm_to_book table */}
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12, marginTop: 8 }}>
                 <thead>
-                  <tr style={{ borderBottom: "1px solid #e8edf4" }}>
+                  <tr>
                     {["Client ID", "验价数", "准确验价率", "验价→下单"].map(h => (
-                      <th key={h} style={{ padding: "5px 8px", textAlign: h === "Client ID" ? "left" : "right", color: "#8390ad", fontWeight: 600 }}>{h}</th>
+                      <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {clients.map(c => (
-                    <tr key={c.client_id} style={{ borderBottom: "1px solid #f1f4f9" }}>
-                      <td style={{ padding: "5px 8px", fontWeight: 600, color: "#17213f" }}>{c.client_id}</td>
-                      <td style={{ padding: "5px 8px", textAlign: "right" }}>{fmt(c.confirms)}</td>
-                      <td style={{ padding: "5px 8px", textAlign: "right", color: c.accurate_rate >= 85 ? "#16a34a" : c.accurate_rate >= 78 ? "#d97706" : "#dc2626", fontWeight: 700 }}>{fmtP(c.accurate_rate)}</td>
-                      <td style={{ padding: "5px 8px", textAlign: "right" }}>{fmtP(c.confirm_to_book_rate)}</td>
+                    <tr key={c.client_id}>
+                      <td style={{ padding: "11px 13px", color: "#17213f", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{c.client_id}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(c.confirms)}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", color: c.accurate_rate >= 85 ? "#16a34a" : c.accurate_rate >= 78 ? "#d97706" : "#dc2626", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.accurate_rate)}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.confirm_to_book_rate)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -273,9 +273,9 @@ export function ReportsPage(_: PageProps) {
           </P>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #e8edf4", background: "#f8fafc" }}>
+              <tr>
                 {["Client ID", "订单数", "TTV ($)", "均价 ($)", "间夜数", "准确验价率", "验价→下单", "响应时长"].map(h => (
-                  <th key={h} style={{ padding: "8px 10px", textAlign: h === "Client ID" ? "left" : "right", color: "#526078", fontWeight: 700, fontSize: 11 }}>{h}</th>
+                  <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -283,17 +283,17 @@ export function ReportsPage(_: PageProps) {
               {pf.rows.map((r, i) => {
                 const fc = clients.find(c => c.client_id === r.client_id);
                 return (
-                  <tr key={r.client_id} style={{ borderBottom: "1px solid #f1f4f9", background: i % 2 === 0 ? "#fff" : "#fafbfd" }}>
-                    <td style={{ padding: "8px 10px", fontWeight: 700, color: "#17213f" }}>{r.client_id}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{fmt(r.bookings)}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{r.ttv.toLocaleString()}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>${fmt(r.avg_order_value)}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{fmt(r.room_nights)}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right", color: fc && fc.accurate_rate >= 85 ? "#16a34a" : fc && fc.accurate_rate >= 78 ? "#d97706" : "#dc2626", fontWeight: 700 }}>
+                  <tr key={r.client_id} style={{ background: i % 2 === 0 ? "#fff" : "#fafbfd" }}>
+                    <td style={{ padding: "11px 13px", color: "#17213f", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{r.client_id}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(r.bookings)}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{r.ttv.toLocaleString()}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>${fmt(r.avg_order_value)}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(r.room_nights)}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.accurate_rate >= 85 ? "#16a34a" : fc && fc.accurate_rate >= 78 ? "#d97706" : "#dc2626", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                       {fc ? fmtP(fc.accurate_rate) : "-"}
                     </td>
-                    <td style={{ padding: "8px 10px", textAlign: "right" }}>{fc ? fmtP(fc.confirm_to_book_rate) : "-"}</td>
-                    <td style={{ padding: "8px 10px", textAlign: "right", color: fc && fc.avg_response_ms > 480 ? "#d97706" : "#334155" }}>
+                    <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fc ? fmtP(fc.confirm_to_book_rate) : "-"}</td>
+                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.avg_response_ms > 480 ? "#d97706" : "#334155", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                       {fc ? `${fc.avg_response_ms}ms` : "-"}
                     </td>
                   </tr>

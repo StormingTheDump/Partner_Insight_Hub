@@ -5,7 +5,7 @@ import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Drawer } from "@/shared/components/Drawer";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 20;
 
 type OrderSummary = {
@@ -26,6 +26,12 @@ const STATUS_META: Record<string, { label: string; color: string; bg: string; bo
   confirmed: { label: "已确认", color: "#188038", bg: "#e6f4ea", border: "#c3e6cb" },
   cancelled: { label: "已取消", color: "#935100", bg: "#fff4db", border: "#fde08a" },
   failed:    { label: "失败",   color: "#d93025", bg: "#fce8e6", border: "#f5c6c3" },
+};
+
+const STATUS_CLASS: Record<string, string> = {
+  confirmed: "status",
+  cancelled: "status warning",
+  failed:    "status danger",
 };
 
 const LOG_META: Record<string, { label: string; apiName: string; color: string; bg: string; border: string }> = {
@@ -118,8 +124,8 @@ export function OrderLogsPage(_: PageProps) {
       />
 
       {/* Search */}
-      <div style={searchBar}>
-        <div style={inputWrap}>
+      <div className="filter-row">
+        <label className="filter-control">
           <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
           <input
             ref={inputRef}
@@ -127,22 +133,22 @@ export function OrderLogsPage(_: PageProps) {
             onChange={e => setQuery(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
             placeholder="输入订单号搜索，如 ORD202600001"
-            style={inputStyle}
           />
-        </div>
-        <select
-          value={statusFilter}
-          onChange={e => setStatusFilter(e.target.value)}
-          style={selectStyle}
-        >
-          <option value="">全部状态</option>
-          <option value="confirmed">已确认</option>
-          <option value="cancelled">已取消</option>
-          <option value="failed">失败</option>
-        </select>
-        <button type="button" onClick={handleSearch} style={searchBtn}>搜索</button>
+        </label>
+        <label className="filter-control">
+          <select
+            value={statusFilter}
+            onChange={e => setStatusFilter(e.target.value)}
+          >
+            <option value="">全部状态</option>
+            <option value="confirmed">已确认</option>
+            <option value="cancelled">已取消</option>
+            <option value="failed">失败</option>
+          </select>
+        </label>
+        <button type="button" onClick={handleSearch} className="button primary">搜索</button>
         {(query || statusFilter) && (
-          <button type="button" onClick={handleClear} style={clearBtn}>清除</button>
+          <button type="button" onClick={handleClear} className="button">清除</button>
         )}
         <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
           共 <strong>{orders.length}</strong> 条记录
@@ -150,8 +156,8 @@ export function OrderLogsPage(_: PageProps) {
       </div>
 
       {/* Table */}
-      <div style={tableWrap}>
-        <table style={table}>
+      <div className="table-wrap">
+        <table>
           <thead>
             <tr>
               <th style={th}>订单号</th>
@@ -167,17 +173,16 @@ export function OrderLogsPage(_: PageProps) {
               <tr><td colSpan={6} style={emptyCell}>加载中…</td></tr>
             ) : pageRows.length === 0 ? (
               <tr><td colSpan={6} style={emptyCell}>未找到订单记录</td></tr>
-            ) : pageRows.map((order, i) => {
+            ) : pageRows.map((order) => {
               const sm   = statusMeta(order.order_status);
               const types = order.log_types.split("|");
               return (
-                <tr key={order.order_no} style={{ background: i % 2 === 0 ? "#fff" : "#f8fafd" }}>
-                  <td style={{ ...td, fontFamily: "monospace", fontWeight: 700, fontSize: 12 }}>
+              <tr key={order.order_no}>
+                  <td style={{ ...td, fontFamily: "monospace", fontSize: 12 }}>
                     {order.order_no}
                   </td>
                   <td style={td}>
-                    <span style={{ padding: "2px 9px", borderRadius: 99, fontSize: 11, fontWeight: 700,
-                      background: sm.bg, color: sm.color, border: `1px solid ${sm.border}` }}>
+                    <span className={STATUS_CLASS[order.order_status] ?? "status neutral"}>
                       {sm.label}
                     </span>
                   </td>
@@ -196,20 +201,17 @@ export function OrderLogsPage(_: PageProps) {
                     </span>
                   </td>
                   <td style={td}>
-                    <span style={{ padding: "2px 8px", borderRadius: 99, fontSize: 11, fontWeight: 700,
-                      background: "#e8f0fe", color: "#1a73e8" }}>
-                      {order.client_id}
-                    </span>
+                    <span className="status info">{order.client_id}</span>
                   </td>
                   <td style={{ ...td, fontSize: 12, color: "var(--muted)" }}>
                     {order.updated_at.split(" ")[0]}
                   </td>
                   <td style={td}>
                     <span style={{ display: "inline-flex", gap: 6 }}>
-                      <button type="button" onClick={() => openDrawer(order)} style={logBtn}>
+                      <button type="button" onClick={() => openDrawer(order)} className="button" style={{ height: 28, padding: "0 10px", fontSize: 12 }}>
                         <FileText size={12} /> 详细日志
                       </button>
-                      <button type="button" onClick={() => downloadCsv(order)} style={dlBtn}>
+                      <button type="button" onClick={() => downloadCsv(order)} className="button" style={{ height: 28, padding: "0 10px", fontSize: 12, background: "#eff6ff", borderColor: "#bfdbfe", color: "#1d4ed8" }}>
                         <Download size={12} /> 下载
                       </button>
                     </span>
@@ -223,14 +225,14 @@ export function OrderLogsPage(_: PageProps) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div style={pagerBar}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 12 }}>
           <button type="button" onClick={() => setPage(p => Math.max(1, p - 1))}
-            disabled={safePage === 1} style={pageBtn}>上一页</button>
+            disabled={safePage === 1} className="button">上一页</button>
           <span style={{ fontSize: 12, color: "var(--muted)", padding: "0 8px" }}>
             第 {safePage} / {totalPages} 页
           </span>
           <button type="button" onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-            disabled={safePage === totalPages} style={pageBtn}>下一页</button>
+            disabled={safePage === totalPages} className="button">下一页</button>
         </div>
       )}
 
@@ -345,71 +347,20 @@ function JsonBlock({ data }: { data: unknown }) {
 
 // ── Styles ───────────────────────────────────────────────────────────
 
-const searchBar: CSSProperties = {
-  display: "flex", alignItems: "center", gap: 8,
-  background: "#fff", border: "1px solid #dfe5ef",
-  borderRadius: 8, padding: "12px 16px", marginBottom: 12, flexWrap: "wrap",
-};
-const inputWrap: CSSProperties = {
-  display: "flex", alignItems: "center", gap: 6,
-  border: "1px solid #dfe5ef", borderRadius: 6, padding: "0 10px",
-  height: 34, background: "#f8fafd", flex: "0 0 300px",
-};
-const inputStyle: CSSProperties = {
-  border: "none", outline: "none", background: "transparent",
-  fontSize: 13, color: "#17213f", width: "100%",
-};
-const selectStyle: CSSProperties = {
-  height: 34, padding: "0 10px", borderRadius: 6,
-  border: "1px solid #dfe5ef", background: "#f8fafd",
-  fontSize: 13, color: "#17213f", cursor: "pointer", outline: "none",
-};
-const searchBtn: CSSProperties = {
-  height: 34, padding: "0 16px", borderRadius: 7,
-  background: "#1a73e8", color: "#fff", border: "none",
-  cursor: "pointer", fontSize: 13, fontWeight: 600,
-};
-const clearBtn: CSSProperties = {
-  height: 34, padding: "0 14px", borderRadius: 6,
-  border: "1px solid #dfe5ef", background: "#fff",
-  cursor: "pointer", fontSize: 13, color: "#17213f",
-};
-const tableWrap: CSSProperties = {
-  background: "#fff", border: "1px solid #dfe5ef", borderRadius: 8, overflow: "hidden",
-};
-const table: CSSProperties = { width: "100%", borderCollapse: "collapse" };
 const th: CSSProperties = {
-  padding: "10px 14px", textAlign: "left", fontSize: 12, fontWeight: 700,
-  color: "#526078", background: "#f8fafd",
-  borderBottom: "1px solid #edf1f7", whiteSpace: "nowrap",
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
 };
 const td: CSSProperties = {
-  padding: "9px 14px", fontSize: 13, color: "#17213f", borderBottom: "1px solid #edf1f7",
+  padding: "11px 13px", fontSize: 13, color: "#17213f", borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap",
 };
 const emptyCell: CSSProperties = {
   textAlign: "center", padding: "40px 0", color: "#66728a", fontSize: 13,
-};
-const logBtn: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 5,
-  height: 28, padding: "0 10px", borderRadius: 6,
-  border: "1px solid #dfe5ef", background: "#fff",
-  cursor: "pointer", fontSize: 12, color: "#17213f", fontWeight: 600,
-  whiteSpace: "nowrap",
-};
-const dlBtn: CSSProperties = {
-  display: "inline-flex", alignItems: "center", gap: 5,
-  height: 28, padding: "0 10px", borderRadius: 6,
-  border: "1px solid #bfdbfe", background: "#eff6ff",
-  cursor: "pointer", fontSize: 12, color: "#1d4ed8", fontWeight: 600,
-  whiteSpace: "nowrap",
-};
-const pagerBar: CSSProperties = {
-  display: "flex", alignItems: "center", gap: 4, marginTop: 12,
-};
-const pageBtn: CSSProperties = {
-  height: 30, padding: "0 12px", borderRadius: 6,
-  border: "1px solid #dfe5ef", background: "#fff",
-  cursor: "pointer", fontSize: 13, color: "#17213f",
 };
 const toggleBtn: CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 4,
