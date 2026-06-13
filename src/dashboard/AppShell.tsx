@@ -277,7 +277,7 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
     setDateRange,
   } = useAppState();
 
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["业务指标"]));
 
   const toggleSection = (title: string) => {
     setExpandedSections(prev => {
