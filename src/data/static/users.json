@@ -4,9 +4,10 @@
     "email": "123@agoda.com",
     "password": "Agoda123",
     "channelName": "Agoda",
-    "contactName": "Admin",
+    "contactName": "Agoda",
     "status": "active",
-    "role": "admin"
+    "role": "admin",
+    "remark": "正常账号"
   },
   {
     "id": 2,
