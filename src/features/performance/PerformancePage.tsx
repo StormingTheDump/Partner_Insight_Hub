@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
 import { Card } from "@/shared/components/Card";
@@ -7,10 +7,10 @@ import { metricsApi, type DimensionsData } from "@/lib/metricsApi";
 import { useAppState } from "@/dashboard/app-state";
 import type { EChartsOption } from "echarts";
 
-const LT_COLORS    = ["#ef4444", "#f97316", "#f59e0b", "#22c55e", "#3b82f6"];
+const LT_COLORS    = ["#bfdbfe", "#93c5fd", "#60a5fa", "#3b82f6", "#1d4ed8"];
 const CHAIN_COLORS  = ["#4f5fb8", "#12b981"];
-const STAR_COLORS   = ["#94a3b8", "#cbd5e1", "#fbbf24", "#f59e0b", "#3b82f6", "#8b5cf6"];
-const COUNTRY_COLORS = ["#3b82f6","#12b981","#f59e0b","#ef4444","#8b5cf6","#e54897","#06b6d4","#84cc16","#94a3b8"];
+const STAR_COLORS   = ["#94a3b8", "#cbd5e1", "#fbbf24", "#f59e0b", "#3b82f6", "#2563eb"];
+const COUNTRY_COLORS = ["#f87171","#fb923c","#fbbf24","#a3e635","#34d399","#22d3ee","#60a5fa","#a78bfa","#f472b6"];
 
 function hbarOpt(labels: string[], values: number[], colors: string[], unit = "订单"): EChartsOption {
   return {
@@ -47,34 +47,51 @@ function donutOpt(data: { name: string; value: number; color: string }[]): EChar
 function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div style={{ marginBottom: 12 }}>
-      <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#17213f" }}>{title}</h3>
-      {subtitle && <p className="tiny" style={{ margin: "3px 0 0", color: "#8390ad" }}>{subtitle}</p>}
+      <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "var(--text)" }}>{title}</h3>
+      {subtitle && <p className="tiny" style={{ margin: "3px 0 0", color: "var(--muted)" }}>{subtitle}</p>}
     </div>
   );
 }
 
+const TH: React.CSSProperties = {
+  position: "sticky", top: 0, zIndex: 2,
+  background: "#f8fafd", color: "#526078",
+  fontSize: 12, fontWeight: 800,
+  padding: "11px 13px",
+  borderBottom: "2px solid var(--line)",
+  whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left",
+};
+const TD: React.CSSProperties = {
+  padding: "11px 13px",
+  borderBottom: "1px solid var(--line-soft)",
+  verticalAlign: "middle",
+  whiteSpace: "nowrap",
+};
+
 function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[]; dimKey: string; dimLabel: string }) {
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-      <thead>
-        <tr style={{ borderBottom: "1px solid #e8edf4" }}>
-          {[dimLabel, "订单数", "占比", "TTV ($)", "间夜数"].map(h => (
-            <th key={h} style={{ padding: "6px 10px", textAlign: h === dimLabel ? "left" : "right", color: "#8390ad", fontWeight: 600, fontSize: 12 }}>{h}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((r, i) => (
-          <tr key={i} style={{ borderBottom: "1px solid #f1f4f9" }}>
-            <td style={{ padding: "7px 10px", color: "#17213f", fontWeight: 500 }}>{r[dimKey] as string}</td>
-            <td style={{ padding: "7px 10px", textAlign: "right" }}>{(r.bookings as number).toLocaleString()}</td>
-            <td style={{ padding: "7px 10px", textAlign: "right", color: "#4f5fb8", fontWeight: 600 }}>{r.pct as number}%</td>
-            <td style={{ padding: "7px 10px", textAlign: "right" }}>{(r.ttv as number).toLocaleString()}</td>
-            <td style={{ padding: "7px 10px", textAlign: "right" }}>{(r.room_nights as number).toLocaleString()}</td>
+    <div className="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            {[dimLabel, "订单数", "占比", "TTV ($)", "间夜数"].map(h => (
+              <th key={h} style={{ ...TH, textAlign: h === dimLabel ? "left" : "right" }}>{h}</th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i}>
+              <td style={TD}>{r[dimKey] as string}</td>
+              <td style={{ ...TD, textAlign: "right" }}>{(r.bookings as number).toLocaleString()}</td>
+              <td style={{ ...TD, textAlign: "right", color: "#4f5fb8" }}>{r.pct as number}%</td>
+              <td style={{ ...TD, textAlign: "right" }}>{(r.ttv as number).toLocaleString()}</td>
+              <td style={{ ...TD, textAlign: "right" }}>{(r.room_nights as number).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -147,8 +164,10 @@ export function PerformancePage(_: PageProps) {
         <Card>
           <SectionHeader title="目的地国家分布" subtitle="按订单量排序，反映渠道的热门目的地集中度。" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
-            <BaseChart style={{ height: 260 }} option={hbarOpt(countryLabels, countryValues, COUNTRY_COLORS)} />
-            <DimTable rows={data.country as unknown as Record<string, unknown>[]} dimKey="country" dimLabel="目的地" />
+            <BaseChart style={{ height: 320 }} option={hbarOpt(countryLabels, countryValues, COUNTRY_COLORS)} />
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              <DimTable rows={data.country as unknown as Record<string, unknown>[]} dimKey="country" dimLabel="目的地" />
+            </div>
           </div>
         </Card>
 

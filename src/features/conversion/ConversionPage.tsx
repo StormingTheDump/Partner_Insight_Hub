@@ -11,8 +11,7 @@ const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"];
 
-// 柔和色系：去饱和度的蓝/绿/金/青/紫/橙
-const COLORS = ["#7aa8d8", "#5fad9a", "#c9a75c", "#5fa8c0", "#9b84cc", "#cc8f62"];
+const COLORS = ["#3b82f6", "#12b981", "#f59e0b", "#06b6d4", "#8b5cf6", "#f97316"];
 
 const THRESHOLDS = { l2b: 300_000, p2b: 1_500_000, l2c: 500, c2b: 500 };
 
@@ -226,7 +225,7 @@ export function ConversionPage(_: PageProps) {
                 borderRadius: 4,
                 padding: "1px 6px",
                 marginLeft: 8,
-                fontFamily: "monospace",
+                fontFamily: "var(--font-mono)",
               }}
             >
               {m.formula}

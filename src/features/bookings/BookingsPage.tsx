@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import type { PageProps } from "@/dashboard/routes";
 import { useAppState } from "@/dashboard/app-state";
 import { Button } from "@/shared/components/Button";
 import { PageHeader } from "@/shared/components/PageHeader";
@@ -155,7 +156,7 @@ const TD_STYLE: React.CSSProperties = {
 
 // ─── main component ───────────────────────────────────────────────────────────
 
-export function BookingsPage() {
+export function BookingsPage(_: PageProps) {
   const { selectedFeed, dateRange } = useAppState();
 
   const [rows, setRows] = useState<OrderRow[]>([]);

@@ -4,7 +4,7 @@ import type { PageProps } from "@/dashboard/routes";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 
-const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_BASE ?? "";
 
 // ── icon map ──────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.FC<{ size?: number; style?: CSSProperties }>> = {
