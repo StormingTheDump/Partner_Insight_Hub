@@ -142,6 +142,7 @@ export default function Login({ onLogin }: Props) {
                   style={input}
                 />
               </div>
+              <span style={hintText}>可以用这个账号登陆 123@agoda.com</span>
             </div>
 
             {/* Password */}
@@ -166,6 +167,7 @@ export default function Login({ onLogin }: Props) {
                   {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
               </div>
+              <span style={hintText}>可以用这个密码登陆 Agoda123</span>
             </div>
 
             {/* Remember */}
@@ -404,4 +406,8 @@ const spinner: React.CSSProperties = {
 const helpText: React.CSSProperties = {
   marginTop: 20, textAlign: 'center',
   fontSize: 12, color: '#9ca3af', lineHeight: 1.5,
+};
+const hintText: React.CSSProperties = {
+  display: 'block', marginTop: 6,
+  fontSize: 13, color: '#9ca3af',
 };
