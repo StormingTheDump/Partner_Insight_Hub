@@ -89,16 +89,25 @@ export function ReportsPage(_: PageProps) {
     );
   }
 
+  if (fn.by_client.length === 0) {
+    return (
+      <>
+        <PageHeader title="分析报告" description="Agoda 渠道业务综合分析报告。" />
+        <p className="tiny" style={{ padding: 32 }}>暂无渠道数据，报告将在有数据后自动生成。</p>
+      </>
+    );
+  }
+
   // ── derived insights ──────────────────────────────────────────────────────
   const { summary, daily } = ov;
   const f = fn.overall;
   const clients = fn.by_client;
 
-  const topClient  = [...clients].sort((a, b) => b.bookings - a.bookings)[0];
-  const bestAccu   = [...clients].sort((a, b) => b.accurate_rate - a.accurate_rate)[0];
-  const worstAccu  = [...clients].sort((a, b) => a.accurate_rate - b.accurate_rate)[0];
-  const fastClient = [...clients].sort((a, b) => a.avg_response_ms - b.avg_response_ms)[0];
-  const slowClient = [...clients].sort((a, b) => b.avg_response_ms - a.avg_response_ms)[0];
+  const topClient  = clients.length ? [...clients].sort((a, b) => b.bookings - a.bookings)[0] : null;
+  const bestAccu   = clients.length ? [...clients].sort((a, b) => b.accurate_rate - a.accurate_rate)[0] : null;
+  const worstAccu  = clients.length ? [...clients].sort((a, b) => a.accurate_rate - b.accurate_rate)[0] : null;
+  const fastClient = clients.length ? [...clients].sort((a, b) => a.avg_response_ms - b.avg_response_ms)[0] : null;
+  const slowClient = clients.length ? [...clients].sort((a, b) => b.avg_response_ms - a.avg_response_ms)[0] : null;
 
   const totalConvRate   = ((f.bookings / f.searches) * 100).toFixed(1);
   const shortLtPct      = dim.lt.filter(r => r.lt_bucket === "0-3天" || r.lt_bucket === "4-7天").reduce((s, r) => s + r.pct, 0).toFixed(1);
@@ -106,18 +115,18 @@ export function ReportsPage(_: PageProps) {
   const topCountry      = dim.country[0];
   const top3CountryPct  = dim.country.slice(0, 3).reduce((s, r) => s + r.pct, 0).toFixed(1);
   const chainPct        = dim.chain.find(r => r.chain_type === "连锁酒店")?.pct ?? 0;
-  const avgResponseAll  = Math.round(clients.reduce((s, c) => s + c.avg_response_ms, 0) / clients.length);
-  const accuGap         = (bestAccu.accurate_rate - worstAccu.accurate_rate).toFixed(1);
+  const avgResponseAll  = clients.length ? Math.round(clients.reduce((s, c) => s + c.avg_response_ms, 0) / clients.length) : 0;
+  const accuGap         = (bestAccu && worstAccu) ? (bestAccu.accurate_rate - worstAccu.accurate_rate).toFixed(1) : "0";
 
   // Risks
   const risks: { title: string; desc: string; tone: "red" | "amber" | "green" | "blue" }[] = [];
   if (f.accurate_rate < 82)
     risks.push({ tone: "amber", title: "准确验价率偏低", desc: `当前 ${fmtP(f.accurate_rate)}，低于行业建议值 85%，价格变动导致的转化损失约 ${fmt(f.confirms - f.accurates)} 次/月，建议加强价格缓存一致性。` });
-  if (avgResponseAll > 450)
+  if (avgResponseAll > 450 && slowClient)
     risks.push({ tone: "amber", title: "平均响应时长偏高", desc: `全渠道均值 ${avgResponseAll}ms，${slowClient.client_id} 达 ${slowClient.avg_response_ms}ms，超过 500ms 将显著影响渠道端用户体验，建议排查超时节点。` });
   if (Number(shortLtPct) > 35)
     risks.push({ tone: "blue", title: "短提前期占比较高", desc: `0–7天预订合计 ${shortLtPct}%，实时库存可用性要求高，需确保 last-minute 查价命中率稳定。` });
-  if (Number(accuGap) > 10)
+  if (Number(accuGap) > 10 && bestAccu && worstAccu)
     risks.push({ tone: "red", title: "渠道间准确验价率差距较大", desc: `${bestAccu.client_id}（${fmtP(bestAccu.accurate_rate)}）与 ${worstAccu.client_id}（${fmtP(worstAccu.accurate_rate)}）相差 ${accuGap}%，弱势渠道需单独复盘定价策略。` });
   if (risks.length === 0)
     risks.push({ tone: "green", title: "整体运营健康", desc: "各项核心指标均在正常区间，暂无高优先级风险项。" });
@@ -160,7 +169,7 @@ export function ReportsPage(_: PageProps) {
                 报告周期内 Agoda 渠道累计完成订单 <strong>{fmt(summary.total_bookings)}</strong> 笔，总交易额 <strong>{fmtK(summary.total_ttv)}</strong>，漏斗整体转化率 <strong>{totalConvRate}%</strong>（查价→下单）。
               </li>
               <li style={{ fontSize: 13, color: "#334155", lineHeight: 1.6 }}>
-                各渠道中 <strong>{topClient.client_id}</strong> 贡献订单量最高（{fmt(topClient.bookings)} 笔），<strong>{bestAccu.client_id}</strong> 准确验价率最优（{fmtP(bestAccu.accurate_rate)}）；<strong>{worstAccu.client_id}</strong> 验价准确率相对偏低（{fmtP(worstAccu.accurate_rate)}），是下阶段重点优化方向。
+                各渠道中 <strong>{topClient?.client_id}</strong> 贡献订单量最高（{fmt(topClient?.bookings ?? 0)} 笔），<strong>{bestAccu?.client_id}</strong> 准确验价率最优（{fmtP(bestAccu?.accurate_rate ?? 0)}）；<strong>{worstAccu?.client_id}</strong> 验价准确率相对偏低（{fmtP(worstAccu?.accurate_rate ?? 0)}），是下阶段重点优化方向。
               </li>
               <li style={{ fontSize: 13, color: "#334155", lineHeight: 1.6 }}>
                 订单结构上，{highStarPct}% 集中于 4–5 星酒店，{top3CountryPct}% 来自{dim.country.slice(0, 3).map(r => r.country).join("、")}三大目的地，{shortLtPct}% 为 0–7 天短提前期预订。
@@ -257,8 +266,8 @@ export function ReportsPage(_: PageProps) {
           <SectionTitle n={3} title="各 Client ID 渠道表现" />
           <P>
             Agoda 旗下 6 个 Client ID 在本周期内均有不同程度的活跃度。
-            订单量最高的 <strong>{topClient.client_id}</strong>（{fmt(topClient.bookings)} 笔），占全渠道总量约 {((topClient.bookings / summary.total_bookings) * 100).toFixed(0)}%；
-            响应最快的渠道为 <strong>{fastClient.client_id}</strong>（{fastClient.avg_response_ms}ms），与最慢渠道 <strong>{slowClient.client_id}</strong>（{slowClient.avg_response_ms}ms）相差 {slowClient.avg_response_ms - fastClient.avg_response_ms}ms，
+            订单量最高的 <strong>{topClient?.client_id}</strong>（{fmt(topClient?.bookings ?? 0)} 笔），占全渠道总量约 {(((topClient?.bookings ?? 0) / summary.total_bookings) * 100).toFixed(0)}%；
+            响应最快的渠道为 <strong>{fastClient?.client_id}</strong>（{fastClient?.avg_response_ms ?? 0}ms），与最慢渠道 <strong>{slowClient?.client_id}</strong>（{slowClient?.avg_response_ms ?? 0}ms）相差 {(slowClient?.avg_response_ms ?? 0) - (fastClient?.avg_response_ms ?? 0)}ms，
             建议对高延迟渠道进行专项优化。
           </P>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
@@ -346,9 +355,9 @@ export function ReportsPage(_: PageProps) {
             <KV label="预订错误率" value={fmtP(summary.avg_book_error_rate)} sub={summary.avg_book_error_rate > 2 ? "⚠ 需关注" : "✓ 正常"} />
           </div>
           <P>
-            {fastClient.client_id} 响应最快（{fastClient.avg_response_ms}ms），为用户端提供最佳查价体验；
-            {slowClient.client_id} 响应达 {slowClient.avg_response_ms}ms，
-            {slowClient.avg_response_ms > 500
+            {fastClient?.client_id} 响应最快（{fastClient?.avg_response_ms ?? 0}ms），为用户端提供最佳查价体验；
+            {slowClient?.client_id} 响应达 {slowClient?.avg_response_ms ?? 0}ms，
+            {(slowClient?.avg_response_ms ?? 0) > 500
               ? "已超过推荐阈值 500ms，需重点排查是否存在实时房态超时问题。"
               : "处于可接受范围，但仍有优化空间。"}
             预订前错误率 {fmtP(summary.avg_pre_error_rate)} 反映查价/验价阶段整体稳定性，

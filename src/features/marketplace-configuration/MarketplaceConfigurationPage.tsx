@@ -34,11 +34,17 @@ export function MarketplaceConfigurationPage(_: PageProps) {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const p = new URLSearchParams();
-    if (clientId) p.set("client_id", clientId);
-    const data = await fetch(`${API}/api/channel-config?${p}`).then(r => r.json());
-    setConfigs(data);
-    setLoading(false);
+    try {
+      const p = new URLSearchParams();
+      if (clientId) p.set("client_id", clientId);
+      const r = await fetch(`${API}/api/channel-config?${p}`);
+      const data = r.ok ? await r.json() : [];
+      setConfigs(Array.isArray(data) ? data : []);
+    } catch {
+      setConfigs([]);
+    } finally {
+      setLoading(false);
+    }
   }, [clientId]);
 
   useEffect(() => {
@@ -183,7 +189,7 @@ function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
         <div style={{ textAlign: "right", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>
           <div>最后更新</div>
           <div style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600, marginTop: 3 }}>
-            {cfg.updated_at.split(" ")[0]}
+            {cfg.updated_at?.split(" ")[0] ?? "—"}
           </div>
         </div>
       </div>
