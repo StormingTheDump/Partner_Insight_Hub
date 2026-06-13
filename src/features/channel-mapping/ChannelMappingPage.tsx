@@ -3,10 +3,10 @@ import { Search, Upload, X } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { MetricCard } from "@/shared/components/MetricCard";
+import { useAppState } from "@/dashboard/app-state";
 
 const API = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
 const PAGE_SIZE = 20;
-const CLIENT_IDS = ["Agoda", "AgodaUK", "AgodaEBK", "Lvzan", "Barli2b", "DidaOpaq"];
 
 type MappingRow = {
   id: number;
@@ -19,17 +19,19 @@ type MappingRow = {
 type UploadResult = { added: number; conflicts: string[] } | null;
 
 export function ChannelMappingPage(_: PageProps) {
+  const { selectedFeed } = useAppState();
   const [rows, setRows]               = useState<MappingRow[]>([]);
-  const [total, setTotal]             = useState(0);   // 全量总数（不随筛选变化）
+  const [total, setTotal]             = useState(0);
   const [loading, setLoading]         = useState(true);
   const [didaQuery, setDidaQuery]     = useState("");
-  const [clientId, setClientId]       = useState("");
   const [clientQuery, setClientQuery] = useState("");
   const [page, setPage]               = useState(1);
   const [uploading, setUploading]     = useState(false);
   const [result, setResult]           = useState<UploadResult>(null);
   const [error, setError]             = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -44,19 +46,23 @@ export function ChannelMappingPage(_: PageProps) {
     setLoading(false);
   }, [didaQuery, clientId, clientQuery]);
 
-  // 初始加载：同时拉全量总数
+  // 全局总数只拉一次
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchData();
     fetch(`${API}/api/channel-mapping`)
       .then(r => r.json())
       .then((d: MappingRow[]) => setTotal(d.length));
   }, []);
 
+  // 筛选数据随 fetchData（包含 selectedFeed）更新
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData();
+  }, [fetchData]);
+
   const handleSearch = () => fetchData();
 
   const clearAll = () => {
-    setDidaQuery(""); setClientId(""); setClientQuery("");
+    setDidaQuery(""); setClientQuery("");
     setResult(null); setError("");
     // 清空后立即重新拉全量
     setLoading(true);
@@ -137,16 +143,6 @@ export function ChannelMappingPage(_: PageProps) {
             style={inputStyle}
           />
         </div>
-
-        {/* 客户 ID 下拉 */}
-        <select
-          value={clientId}
-          onChange={e => setClientId(e.target.value)}
-          style={selectStyle}
-        >
-          <option value="">全部客户 ID</option>
-          {CLIENT_IDS.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
 
         {/* 客户 Hotel ID */}
         <div style={inputWrap}>

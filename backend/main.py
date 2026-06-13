@@ -198,24 +198,38 @@ Answer questions based on this documentation. If asked something outside this sc
 # ── Agoda Metrics API ─────────────────────────────────────────────────────────
 
 @app.get("/api/metrics/funnel")
-def metrics_funnel():
+def metrics_funnel(
+    start_date: Optional[str] = Query(default=None),
+    end_date:   Optional[str] = Query(default=None),
+):
     """
     5层转化漏斗：查价数 → 有价数 → 验价数 → 准确验价数 → 下单数
     """
     conn = get_connection()
 
-    overall = conn.execute("""
-        SELECT
-          (SELECT SUM(search_requests)  FROM agoda_price_search)  AS searches,
-          (SELECT SUM(result_count)     FROM agoda_price_search)  AS results,
-          (SELECT SUM(confirm_requests) FROM agoda_price_confirm) AS confirms,
-          (SELECT SUM(accurate_count)   FROM agoda_price_confirm) AS accurates,
-          (SELECT SUM(bookings)         FROM agoda_daily_metrics) AS bookings,
-          (SELECT ROUND(AVG(accurate_rate),1)  FROM agoda_price_confirm) AS confirm_accurate_rate,
-          (SELECT ROUND(AVG(avg_response_ms))  FROM agoda_price_search)  AS avg_response_ms
-    """).fetchone()
+    date_cond_s = ""
+    date_cond_c = ""
+    date_cond_m = ""
+    date_params: list = []
+    if start_date and end_date:
+        date_cond_s = "WHERE date BETWEEN ? AND ?"
+        date_cond_c = "WHERE date BETWEEN ? AND ?"
+        date_cond_m = "WHERE date BETWEEN ? AND ?"
+        date_params = [start_date, end_date]
 
-    by_client = conn.execute("""
+    overall = conn.execute(f"""
+        SELECT
+          (SELECT SUM(search_requests)  FROM agoda_price_search  {date_cond_s}) AS searches,
+          (SELECT SUM(result_count)     FROM agoda_price_search  {date_cond_s}) AS results,
+          (SELECT SUM(confirm_requests) FROM agoda_price_confirm {date_cond_c}) AS confirms,
+          (SELECT SUM(accurate_count)   FROM agoda_price_confirm {date_cond_c}) AS accurates,
+          (SELECT SUM(bookings)         FROM agoda_daily_metrics {date_cond_m}) AS bookings,
+          (SELECT ROUND(AVG(accurate_rate),1)  FROM agoda_price_confirm {date_cond_c}) AS confirm_accurate_rate,
+          (SELECT ROUND(AVG(avg_response_ms))  FROM agoda_price_search  {date_cond_s}) AS avg_response_ms
+    """, date_params * 7 if date_params else []).fetchone()
+
+    join_where = f"WHERE s.date BETWEEN ? AND ?" if (start_date and end_date) else ""
+    by_client = conn.execute(f"""
         SELECT
             s.client_id,
             SUM(s.search_requests)                                                  AS searches,
@@ -231,9 +245,10 @@ def metrics_funnel():
         FROM agoda_price_search  s
         JOIN agoda_price_confirm c ON s.date = c.date AND s.client_id = c.client_id
         JOIN agoda_daily_metrics m ON s.date = m.date AND s.client_id = m.client_id
+        {join_where}
         GROUP BY s.client_id
         ORDER BY searches DESC
-    """).fetchall()
+    """, ([start_date, end_date] if (start_date and end_date) else [])).fetchall()
 
     conn.close()
 
@@ -261,16 +276,24 @@ def metrics_funnel():
 
 
 @app.get("/api/metrics/overview")
-def metrics_overview(client_id: str = Query(default=None)):
+def metrics_overview(
+    client_id:  str = Query(default=None),
+    start_date: str = Query(default=None),
+    end_date:   str = Query(default=None),
+):
     """
     汇总卡片 + 30天日时序（供概览页折线图/sparkline使用）
-    可选 ?client_id=Agoda 按渠道筛选
     """
     conn = get_connection()
-    where  = "WHERE client_id = ?" if client_id else ""
-    params = (client_id,) if client_id else ()
-
-    where_m = f"WHERE m.client_id = ?" if client_id else ""
+    conditions = []
+    params: list = []
+    if client_id:
+        conditions.append("m.client_id = ?")
+        params.append(client_id)
+    if start_date and end_date:
+        conditions.append("m.date BETWEEN ? AND ?")
+        params.extend([start_date, end_date])
+    where_m = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
     # 汇总卡片
     summary = conn.execute(f"""
@@ -324,13 +347,24 @@ def metrics_overview(client_id: str = Query(default=None)):
 
 
 @app.get("/api/metrics/dimensions")
-def metrics_dimensions(client_id: str = Query(default=None)):
+def metrics_dimensions(
+    client_id:  str = Query(default=None),
+    start_date: str = Query(default=None),
+    end_date:   str = Query(default=None),
+):
     """
     订单维度细分：LT（提前预订）/ Chain（酒店类型）/ Country（目的地国家）
     """
     conn = get_connection()
-    where  = "WHERE client_id = ?" if client_id else ""
-    params = (client_id,) if client_id else ()
+    conditions = []
+    params: list = []
+    if client_id:
+        conditions.append("client_id = ?")
+        params.append(client_id)
+    if start_date and end_date:
+        conditions.append("date BETWEEN ? AND ?")
+        params.extend([start_date, end_date])
+    where  = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
     lt = conn.execute(f"""
         SELECT lt_bucket,
@@ -394,14 +428,22 @@ def metrics_dimensions(client_id: str = Query(default=None)):
 
 
 @app.get("/api/metrics/performance")
-def metrics_performance():
+def metrics_performance(
+    start_date: Optional[str] = Query(default=None),
+    end_date:   Optional[str] = Query(default=None),
+):
     """
     各 Client ID 的聚合业绩（业绩表现页表格 + 堆叠柱状图）
     """
     conn = get_connection()
+    date_cond = ""
+    date_params: list = []
+    if start_date and end_date:
+        date_cond = "WHERE date BETWEEN ? AND ?"
+        date_params = [start_date, end_date]
 
     # 每个 Client ID 汇总行
-    rows = conn.execute("""
+    rows = conn.execute(f"""
         SELECT
             client_id,
             SUM(wins)                                                    AS wins,
@@ -412,16 +454,18 @@ def metrics_performance():
             ROUND(SUM(ttv) / NULLIF(SUM(bookings), 0), 2)               AS avg_order_value,
             SUM(room_nights)                                             AS room_nights
         FROM agoda_daily_metrics
+        {date_cond}
         GROUP BY client_id
         ORDER BY ttv DESC
-    """).fetchall()
+    """, date_params).fetchall()
 
     # 按日 × Client ID（供堆叠柱状图）
-    daily_by_client = conn.execute("""
+    daily_by_client = conn.execute(f"""
         SELECT date, client_id, bookings
         FROM agoda_daily_metrics
+        {date_cond}
         ORDER BY date, client_id
-    """).fetchall()
+    """, date_params).fetchall()
 
     conn.close()
 
@@ -473,22 +517,38 @@ _CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
 
 
 @app.get("/api/integration/api-metrics")
-def api_integration_metrics():
+def api_integration_metrics(
+    start_date: Optional[str] = Query(default=None),
+    end_date:   Optional[str] = Query(default=None),
+    client_id:  Optional[str] = Query(default=None),
+):
     from database import get_connection
     from datetime import datetime
     from collections import defaultdict
 
     conn = get_connection()
+    conditions = []
+    params: list = []
+    if start_date and end_date:
+        conditions.append("date BETWEEN ? AND ?")
+        params.extend([start_date, end_date])
+    if client_id:
+        conditions.append("channel = ?")
+        params.append(client_id)
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
     rows = conn.execute(
-        """SELECT date, channel,
+        f"""SELECT date, channel,
                   total_orders, failed_orders,
                   total_price_checks, inaccurate_checks
            FROM api_daily_metrics
-           ORDER BY date, channel"""
+           {where}
+           ORDER BY date, channel""",
+        params,
     ).fetchall()
     conn.close()
 
-    # group by date
+    active_channels = [client_id] if client_id else _CHANNELS
     date_data: dict = defaultdict(dict)
     all_dates: list = []
     for row in rows:
@@ -509,30 +569,30 @@ def api_integration_metrics():
     display_dates = [fmt_date(d) for d in all_dates]
 
     # per-channel accuracy trend
-    accuracy_by_channel: dict = {ch: [] for ch in _CHANNELS}
+    accuracy_by_channel: dict = {ch: [] for ch in active_channels}
     pre_error_trend: list = []
     book_error_trend: list = []
 
     for d in all_dates:
         day = date_data[d]
-        day_tc = sum(day.get(ch, {}).get("tc", 0) for ch in _CHANNELS)
-        day_ic = sum(day.get(ch, {}).get("ic", 0) for ch in _CHANNELS)
-        day_to = sum(day.get(ch, {}).get("to", 0) for ch in _CHANNELS)
-        day_fo = sum(day.get(ch, {}).get("fo", 0) for ch in _CHANNELS)
+        day_tc = sum(day.get(ch, {}).get("tc", 0) for ch in active_channels)
+        day_ic = sum(day.get(ch, {}).get("ic", 0) for ch in active_channels)
+        day_to = sum(day.get(ch, {}).get("to", 0) for ch in active_channels)
+        day_fo = sum(day.get(ch, {}).get("fo", 0) for ch in active_channels)
 
         pre_error_trend.append(round(day_ic / day_tc * 100, 2) if day_tc else 0)
         book_error_trend.append(round(day_fo / day_to * 100, 2) if day_to else 0)
 
-        for ch in _CHANNELS:
+        for ch in active_channels:
             ch_d = day.get(ch, {})
             tc, ic = ch_d.get("tc", 0), ch_d.get("ic", 0)
             accuracy_by_channel[ch].append(round((tc - ic) / tc * 100, 1) if tc else 0)
 
     # per-channel book_error trend
-    book_error_by_channel: dict = {ch: [] for ch in _CHANNELS}
+    book_error_by_channel: dict = {ch: [] for ch in active_channels}
     for d in all_dates:
         day = date_data[d]
-        for ch in _CHANNELS:
+        for ch in active_channels:
             ch_d = day.get(ch, {})
             to_, fo = ch_d.get("to", 0), ch_d.get("fo", 0)
             book_error_by_channel[ch].append(round(fo / to_ * 100, 2) if to_ else 0)
@@ -927,7 +987,11 @@ def get_channel_config(client_id: Optional[str] = None):
 # ── 订单日志 ──────────────────────────────────────────────────────────
 
 @app.get("/api/order-logs")
-def get_order_logs(order_no: Optional[str] = None, order_status: Optional[str] = None):
+def get_order_logs(
+    order_no:     Optional[str] = None,
+    order_status: Optional[str] = None,
+    client_id:    Optional[str] = None,
+):
     conn = get_connection()
     conditions = []
     params: list = []
@@ -937,6 +1001,9 @@ def get_order_logs(order_no: Optional[str] = None, order_status: Optional[str] =
     if order_status and order_status.strip():
         conditions.append("order_status = ?")
         params.append(order_status.strip())
+    if client_id and client_id.strip():
+        conditions.append("client_id = ?")
+        params.append(client_id.strip())
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
     rows = conn.execute(
         f"""SELECT order_no, client_id, order_status,
@@ -1063,15 +1130,36 @@ _CONV_CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"
 
 
 @app.get("/api/conversion/metrics")
-def conversion_metrics():
+def conversion_metrics(
+    start_date: Optional[str] = Query(default=None),
+    end_date:   Optional[str] = Query(default=None),
+    client_id:  Optional[str] = Query(default=None),
+):
     from collections import defaultdict
     from datetime import datetime
 
+    active_channels = [client_id] if client_id else _CONV_CHANNELS
+
+    cond: list = []
+    params: list = []
+    if start_date:
+        cond.append("date >= ?")
+        params.append(start_date)
+    if end_date:
+        cond.append("date <= ?")
+        params.append(end_date)
+    if client_id:
+        cond.append("channel = ?")
+        params.append(client_id)
+    where = ("WHERE " + " AND ".join(cond)) if cond else ""
+
     conn = get_connection()
     rows = conn.execute(
-        """SELECT date, channel, look, property, avail_look, prebook, book
+        f"""SELECT date, channel, look, property, avail_look, prebook, book
            FROM conversion_daily_metrics
-           ORDER BY date, channel"""
+           {where}
+           ORDER BY date, channel""",
+        params,
     ).fetchall()
     conn.close()
 
@@ -1090,10 +1178,10 @@ def conversion_metrics():
     display_dates = [fmt(d) for d in all_dates]
 
     # 每渠道每日趋势
-    trends: dict = {ch: {"l2b": [], "p2b": [], "l2c": [], "c2b": []} for ch in _CONV_CHANNELS}
+    trends: dict = {ch: {"l2b": [], "p2b": [], "l2c": [], "c2b": []} for ch in active_channels}
     for d in all_dates:
         day = date_data[d]
-        for ch in _CONV_CHANNELS:
+        for ch in active_channels:
             v = day.get(ch, {})
             look  = v.get("look",       0)
             prop  = v.get("property",   0)
@@ -1125,11 +1213,11 @@ def conversion_metrics():
     agg_trend: dict = {"l2b": [], "p2b": [], "l2c": [], "c2b": []}
     for d in all_dates:
         day = date_data[d]
-        lk = sum(day.get(ch, {}).get("look",       0) for ch in _CONV_CHANNELS)
-        pp = sum(day.get(ch, {}).get("property",   0) for ch in _CONV_CHANNELS)
-        av = sum(day.get(ch, {}).get("avail_look", 0) for ch in _CONV_CHANNELS)
-        pb = sum(day.get(ch, {}).get("prebook",    0) for ch in _CONV_CHANNELS)
-        bk = sum(day.get(ch, {}).get("book",       0) for ch in _CONV_CHANNELS)
+        lk = sum(day.get(ch, {}).get("look",       0) for ch in active_channels)
+        pp = sum(day.get(ch, {}).get("property",   0) for ch in active_channels)
+        av = sum(day.get(ch, {}).get("avail_look", 0) for ch in active_channels)
+        pb = sum(day.get(ch, {}).get("prebook",    0) for ch in active_channels)
+        bk = sum(day.get(ch, {}).get("book",       0) for ch in active_channels)
         agg_trend["l2b"].append(round(lk / bk, 1) if bk else None)
         agg_trend["p2b"].append(round(pp / bk, 1) if bk else None)
         agg_trend["l2c"].append(round(av / pb, 1) if pb else None)
@@ -1252,199 +1340,3 @@ def errors_meta():
         "prebook": {"channels": pre_clients,  "error_types": pre_errors},
         "book":    {"channels": book_clients, "error_types": book_errors},
     }
-
-
-_CONV_CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"]
-
-
-@app.get("/api/conversion/metrics")
-def conversion_metrics():
-    from collections import defaultdict
-    from datetime import datetime
-
-    conn = get_connection()
-    rows = conn.execute(
-        """SELECT date, channel, look, property, avail_look, prebook, book
-           FROM conversion_daily_metrics
-           ORDER BY date, channel"""
-    ).fetchall()
-    conn.close()
-
-    date_data: dict = defaultdict(dict)
-    all_dates: list = []
-    for r in rows:
-        d = r["date"]
-        if d not in all_dates:
-            all_dates.append(d)
-        date_data[d][r["channel"]] = dict(r)
-
-    def fmt(d: str) -> str:
-        dt = datetime.strptime(d, "%Y-%m-%d")
-        return f"{dt.strftime('%b')} {dt.day}"
-
-    display_dates = [fmt(d) for d in all_dates]
-
-    # 每渠道每日趋势
-    trends: dict = {ch: {"l2b": [], "p2b": [], "l2c": [], "c2b": []} for ch in _CONV_CHANNELS}
-    for d in all_dates:
-        day = date_data[d]
-        for ch in _CONV_CHANNELS:
-            v = day.get(ch, {})
-            look  = v.get("look",       0)
-            prop  = v.get("property",   0)
-            avail = v.get("avail_look", 0)
-            pre   = v.get("prebook",    0)
-            book  = v.get("book",       0)
-            trends[ch]["l2b"].append(round(look  / book, 1) if book else None)
-            trends[ch]["p2b"].append(round(prop  / book, 1) if book else None)
-            trends[ch]["l2c"].append(round(avail / pre,  1) if pre  else None)
-            trends[ch]["c2b"].append(round(pre   / book, 1) if book else None)
-
-    # 全渠道汇总（sum/sum）
-    totals = {"look": 0, "property": 0, "avail_look": 0, "prebook": 0, "book": 0}
-    for r in rows:
-        for k in totals:
-            totals[k] += r[k]
-
-    def safe(a, b):
-        return round(a / b, 1) if b else None
-
-    summary = {
-        "l2b": safe(totals["look"],       totals["book"]),
-        "p2b": safe(totals["property"],   totals["book"]),
-        "l2c": safe(totals["avail_look"], totals["prebook"]),
-        "c2b": safe(totals["prebook"],    totals["book"]),
-    }
-
-    # 全渠道每日汇总趋势
-    agg_trend: dict = {"l2b": [], "p2b": [], "l2c": [], "c2b": []}
-    for d in all_dates:
-        day = date_data[d]
-        lk = sum(day.get(ch, {}).get("look",       0) for ch in _CONV_CHANNELS)
-        pp = sum(day.get(ch, {}).get("property",   0) for ch in _CONV_CHANNELS)
-        av = sum(day.get(ch, {}).get("avail_look", 0) for ch in _CONV_CHANNELS)
-        pb = sum(day.get(ch, {}).get("prebook",    0) for ch in _CONV_CHANNELS)
-        bk = sum(day.get(ch, {}).get("book",       0) for ch in _CONV_CHANNELS)
-        agg_trend["l2b"].append(round(lk / bk, 1) if bk else None)
-        agg_trend["p2b"].append(round(pp / bk, 1) if bk else None)
-        agg_trend["l2c"].append(round(av / pb, 1) if pb else None)
-        agg_trend["c2b"].append(round(pb / bk, 1) if bk else None)
-
-    return {
-        "dates":     display_dates,
-        "summary":   summary,
-        "trends":    trends,
-        "agg_trend": agg_trend,
-    }
-
-
-# ── 错误日志 ──────────────────────────────────────────────────────
-
-@app.get("/api/errors/prebook")
-def errors_prebook(
-    client_id:    str = Query(""),
-    error_type:   str = Query(""),
-    rate_plan_id: str = Query(""),
-    page:         int = Query(1, ge=1),
-    page_size:    int = Query(15, ge=1, le=100),
-):
-    conn = get_connection()
-
-    # 动态筛选条件
-    where, params = ["1=1"], []
-    if client_id:
-        where.append("client_id = ?");    params.append(client_id)
-    if error_type:
-        where.append("error_type = ?");   params.append(error_type)
-    if rate_plan_id:
-        where.append("dida_rate_plan_id LIKE ?"); params.append(f"%{rate_plan_id}%")
-
-    w = " AND ".join(where)
-
-    # 图表数据（筛选后按错误类型汇总）
-    chart_rows = conn.execute(
-        f"SELECT error_type, COUNT(*) AS cnt FROM prebook_error_logs WHERE {w} GROUP BY error_type ORDER BY cnt DESC",
-        params,
-    ).fetchall()
-    chart = [{"error_type": r["error_type"], "count": r["cnt"]} for r in chart_rows]
-
-    # 总数
-    total = conn.execute(f"SELECT COUNT(*) FROM prebook_error_logs WHERE {w}", params).fetchone()[0]
-
-    # 分页明细
-    offset = (page - 1) * page_size
-    rows = conn.execute(
-        f"SELECT log_time, client_id, dida_rate_plan_id, dida_hotel_id, error_type, rate_record_channel"
-        f" FROM prebook_error_logs WHERE {w} ORDER BY log_time DESC LIMIT ? OFFSET ?",
-        params + [page_size, offset],
-    ).fetchall()
-
-    conn.close()
-    return {
-        "chart": chart,
-        "total": total,
-        "page": page,
-        "page_size": page_size,
-        "rows": [dict(r) for r in rows],
-    }
-
-
-@app.get("/api/errors/book")
-def errors_book(
-    client_id:      str = Query(""),
-    error_type:     str = Query(""),
-    booking_number: str = Query(""),
-    page:           int = Query(1, ge=1),
-    page_size:      int = Query(15, ge=1, le=100),
-):
-    conn = get_connection()
-
-    where, params = ["1=1"], []
-    if client_id:
-        where.append("client_id = ?");        params.append(client_id)
-    if error_type:
-        where.append("error_type = ?");       params.append(error_type)
-    if booking_number:
-        where.append("channel_bookingnumber LIKE ?"); params.append(f"%{booking_number}%")
-
-    w = " AND ".join(where)
-
-    chart_rows = conn.execute(
-        f"SELECT error_type, COUNT(*) AS cnt FROM book_error_logs WHERE {w} GROUP BY error_type ORDER BY cnt DESC",
-        params,
-    ).fetchall()
-    chart = [{"error_type": r["error_type"], "count": r["cnt"]} for r in chart_rows]
-
-    total = conn.execute(f"SELECT COUNT(*) FROM book_error_logs WHERE {w}", params).fetchone()[0]
-
-    offset = (page - 1) * page_size
-    rows = conn.execute(
-        f"SELECT channel_createtime, client_id, channel_bookingnumber, dida_hotel_id, error_type"
-        f" FROM book_error_logs WHERE {w} ORDER BY channel_createtime DESC LIMIT ? OFFSET ?",
-        params + [page_size, offset],
-    ).fetchall()
-
-    conn.close()
-    return {
-        "chart": chart,
-        "total": total,
-        "page": page,
-        "page_size": page_size,
-        "rows": [dict(r) for r in rows],
-    }
-
-
-@app.get("/api/errors/meta")
-def errors_meta():
-    """返回下拉框所需的渠道和错误类型列表"""
-    conn = get_connection()
-    pre_clients  = [r[0] for r in conn.execute("SELECT DISTINCT client_id FROM prebook_error_logs ORDER BY client_id").fetchall()]
-    pre_errors   = [r[0] for r in conn.execute("SELECT DISTINCT error_type  FROM prebook_error_logs ORDER BY error_type").fetchall()]
-    book_clients = [r[0] for r in conn.execute("SELECT DISTINCT client_id FROM book_error_logs ORDER BY client_id").fetchall()]
-    book_errors  = [r[0] for r in conn.execute("SELECT DISTINCT error_type  FROM book_error_logs ORDER BY error_type").fetchall()]
-    conn.close()
-    return {
-        "prebook": {"channels": pre_clients,  "error_types": pre_errors},
-        "book":    {"channels": book_clients, "error_types": book_errors},
-    }
-

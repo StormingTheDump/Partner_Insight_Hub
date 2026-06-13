@@ -91,14 +91,34 @@ export interface DimensionsData {
 }
 
 export const metricsApi = {
-  overview:    (clientId?: string) => {
-    const qs = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
+  overview: (clientId?: string, startDate?: string, endDate?: string) => {
+    const p = new URLSearchParams();
+    if (clientId)  p.set("client_id",  clientId);
+    if (startDate) p.set("start_date", startDate);
+    if (endDate)   p.set("end_date",   endDate);
+    const qs = p.toString() ? `?${p}` : '';
     return get<OverviewData>(`/api/metrics/overview${qs}`);
   },
-  performance: () => get<PerformanceData>('/api/metrics/performance'),
-  dimensions:  (clientId?: string) => {
-    const qs = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
+  performance: (startDate?: string, endDate?: string) => {
+    const p = new URLSearchParams();
+    if (startDate) p.set("start_date", startDate);
+    if (endDate)   p.set("end_date",   endDate);
+    const qs = p.toString() ? `?${p}` : '';
+    return get<PerformanceData>(`/api/metrics/performance${qs}`);
+  },
+  dimensions: (clientId?: string, startDate?: string, endDate?: string) => {
+    const p = new URLSearchParams();
+    if (clientId)  p.set("client_id",  clientId);
+    if (startDate) p.set("start_date", startDate);
+    if (endDate)   p.set("end_date",   endDate);
+    const qs = p.toString() ? `?${p}` : '';
     return get<DimensionsData>(`/api/metrics/dimensions${qs}`);
   },
-  funnel:      () => get<FunnelData>('/api/metrics/funnel'),
+  funnel: (startDate?: string, endDate?: string) => {
+    const p = new URLSearchParams();
+    if (startDate) p.set("start_date", startDate);
+    if (endDate)   p.set("end_date",   endDate);
+    const qs = p.toString() ? `?${p}` : '';
+    return get<FunnelData>(`/api/metrics/funnel${qs}`);
+  },
 };
