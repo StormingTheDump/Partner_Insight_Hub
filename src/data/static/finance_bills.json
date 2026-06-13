@@ -1,102 +1,14 @@
 [
   {
-    "bill_no": "BILL-202604-001",
+    "bill_no": "BILL-202606-011",
     "client_id": "Agoda",
-    "billing_period": "2026-04",
-    "latest_collection_date": "2026-05-15",
-    "status": "已逾期",
-    "settlement_date": "2026-05-20",
-    "contact": "Jane",
-    "order_count": 286,
-    "amount": 245680.35
-  },
-  {
-    "bill_no": "BILL-202604-002",
-    "client_id": "AgodaUK",
-    "billing_period": "2026-04",
-    "latest_collection_date": "2026-05-15",
-    "status": "已逾期",
-    "settlement_date": "2026-05-22",
-    "contact": "Jane",
-    "order_count": 164,
-    "amount": 138450.0
-  },
-  {
-    "bill_no": "BILL-202604-003",
-    "client_id": "AgodaEBK",
-    "billing_period": "2026-04",
-    "latest_collection_date": "2026-05-15",
-    "status": "已结清",
-    "settlement_date": "2026-05-12",
-    "contact": "Jane",
-    "order_count": 98,
-    "amount": 87320.5
-  },
-  {
-    "bill_no": "BILL-202604-004",
-    "client_id": "Barli2b",
-    "billing_period": "2026-04",
-    "latest_collection_date": "2026-05-15",
+    "billing_period": "2026-06",
+    "latest_collection_date": "2026-07-15",
     "status": "待结账",
     "settlement_date": null,
     "contact": "Jane",
-    "order_count": 52,
-    "amount": 43800.0
-  },
-  {
-    "bill_no": "BILL-202605-005",
-    "client_id": "Lvzan",
-    "billing_period": "2026-05",
-    "latest_collection_date": "2026-06-15",
-    "status": "待结账",
-    "settlement_date": null,
-    "contact": "Jane",
-    "order_count": 120,
-    "amount": 98760.0
-  },
-  {
-    "bill_no": "BILL-202605-006",
-    "client_id": "DidaOpaq",
-    "billing_period": "2026-05",
-    "latest_collection_date": "2026-06-15",
-    "status": "已结清",
-    "settlement_date": "2026-06-10",
-    "contact": "Jane",
-    "order_count": 183,
-    "amount": 156320.75
-  },
-  {
-    "bill_no": "BILL-202605-007",
-    "client_id": "Agoda",
-    "billing_period": "2026-05",
-    "latest_collection_date": "2026-06-15",
-    "status": "已逾期",
-    "settlement_date": "2026-06-18",
-    "contact": "Jane",
-    "order_count": 312,
-    "amount": 287450.0
-  },
-  {
-    "bill_no": "BILL-202605-008",
-    "client_id": "AgodaUK",
-    "billing_period": "2026-05",
-    "latest_collection_date": "2026-06-15",
-    "status": "待结账",
-    "settlement_date": null,
-    "contact": "Jane",
-    "order_count": 148,
-    "amount": 123900.5
-  },
-  {
-    "bill_no": "BILL-202605-009",
-    "client_id": "AgodaEBK",
-    "billing_period": "2026-05",
-    "latest_collection_date": "2026-06-15",
-    "status": "已结清",
-    "settlement_date": "2026-06-08",
-    "contact": "Jane",
-    "order_count": 89,
-    "amount": 74580.0
+    "order_count": 245,
+    "amount": 198760.0
   },
   {
     "bill_no": "BILL-202606-010",
@@ -110,17 +22,6 @@
     "amount": 55430.0
   },
   {
-    "bill_no": "BILL-202606-011",
-    "client_id": "Agoda",
-    "billing_period": "2026-06",
-    "latest_collection_date": "2026-07-15",
-    "status": "待结账",
-    "settlement_date": null,
-    "contact": "Jane",
-    "order_count": 245,
-    "amount": 198760.0
-  },
-  {
     "bill_no": "BILL-202606-012",
     "client_id": "DidaOpaq",
     "billing_period": "2026-06",
@@ -130,5 +31,104 @@
     "contact": "Jane",
     "order_count": 156,
     "amount": 128940.0
+  },
+  {
+    "bill_no": "BILL-202605-007",
+    "client_id": "Agoda",
+    "billing_period": "2026-05",
+    "latest_collection_date": "2026-06-15",
+    "status": "已逾期",
+    "settlement_date": "2026-06-18",
+    "contact": "Jane",
+    "order_count": 312,
+    "amount": 287450.0
+  },
+  {
+    "bill_no": "BILL-202605-009",
+    "client_id": "AgodaEBK",
+    "billing_period": "2026-05",
+    "latest_collection_date": "2026-06-15",
+    "status": "已结清",
+    "settlement_date": "2026-06-08",
+    "contact": "Jane",
+    "order_count": 89,
+    "amount": 74580.0
+  },
+  {
+    "bill_no": "BILL-202605-008",
+    "client_id": "AgodaUK",
+    "billing_period": "2026-05",
+    "latest_collection_date": "2026-06-15",
+    "status": "待结账",
+    "settlement_date": null,
+    "contact": "Jane",
+    "order_count": 148,
+    "amount": 123900.5
+  },
+  {
+    "bill_no": "BILL-202605-006",
+    "client_id": "DidaOpaq",
+    "billing_period": "2026-05",
+    "latest_collection_date": "2026-06-15",
+    "status": "已结清",
+    "settlement_date": "2026-06-10",
+    "contact": "Jane",
+    "order_count": 183,
+    "amount": 156320.75
+  },
+  {
+    "bill_no": "BILL-202605-005",
+    "client_id": "Lvzan",
+    "billing_period": "2026-05",
+    "latest_collection_date": "2026-06-15",
+    "status": "待结账",
+    "settlement_date": null,
+    "contact": "Jane",
+    "order_count": 120,
+    "amount": 98760.0
+  },
+  {
+    "bill_no": "BILL-202604-001",
+    "client_id": "Agoda",
+    "billing_period": "2026-04",
+    "latest_collection_date": "2026-05-15",
+    "status": "已逾期",
+    "settlement_date": "2026-05-20",
+    "contact": "Jane",
+    "order_count": 286,
+    "amount": 245680.35
+  },
+  {
+    "bill_no": "BILL-202604-003",
+    "client_id": "AgodaEBK",
+    "billing_period": "2026-04",
+    "latest_collection_date": "2026-05-15",
+    "status": "已结清",
+    "settlement_date": "2026-05-12",
+    "contact": "Jane",
+    "order_count": 98,
+    "amount": 87320.5
+  },
+  {
+    "bill_no": "BILL-202604-002",
+    "client_id": "AgodaUK",
+    "billing_period": "2026-04",
+    "latest_collection_date": "2026-05-15",
+    "status": "已逾期",
+    "settlement_date": "2026-05-22",
+    "contact": "Jane",
+    "order_count": 164,
+    "amount": 138450.0
+  },
+  {
+    "bill_no": "BILL-202604-004",
+    "client_id": "Barli2b",
+    "billing_period": "2026-04",
+    "latest_collection_date": "2026-05-15",
+    "status": "待结账",
+    "settlement_date": null,
+    "contact": "Jane",
+    "order_count": 52,
+    "amount": 43800.0
   }
 ]

@@ -73,21 +73,22 @@ function handleFinanceSummary(p: Record<string, string>): Response {
     credits: Array<Record<string, unknown>>;
     progress: Array<Record<string, unknown>>;
   };
-  const cid = p["client_id"];
+  const cid = (p["client_id"] && p["client_id"] !== "all") ? p["client_id"] : null;
   const cr = cid ? credits.filter(c => c["client_id"] === cid) : credits;
   const pr = cid ? progress.filter(c => c["client_id"] === cid) : progress;
-  const first_cr = cr[0] ?? {};
-  const first_pr = pr[0] ?? {};
+
+  // aggregate when "all"
+  const total_credit    = (cr as Array<Record<string, number>>).reduce((s, r) => s + (r["total_credit"] ?? 0), 0);
+  const avail_credit    = (cr as Array<Record<string, number>>).reduce((s, r) => s + (r["avail_credit"] ?? 0), 0);
+  const consumed_credit = (cr as Array<Record<string, number>>).reduce((s, r) => s + (r["consumed_credit"] ?? 0), 0);
+  const due_date        = (cr[0] ?? {})["due_date"] ?? "";
+  const total_bill_amount = (pr as Array<Record<string, number>>).reduce((s, r) => s + (r["total_bill_amount"] ?? 0), 0);
+  const settled_amount    = (pr as Array<Record<string, number>>).reduce((s, r) => s + (r["settled_amount"] ?? 0), 0);
+  const pending_amount    = (pr as Array<Record<string, number>>).reduce((s, r) => s + (r["pending_amount"] ?? 0), 0);
+
   return ok({
-    data: {
-      total_credit:    first_cr["total_credit"] ?? 0,
-      avail_credit:    first_cr["avail_credit"] ?? 0,
-      consumed_credit: first_cr["consumed_credit"] ?? 0,
-      due_date:        first_cr["due_date"] ?? "",
-      total_bill_amount:  first_pr["total_bill_amount"] ?? 0,
-      settled_amount:     first_pr["settled_amount"] ?? 0,
-      pending_amount:     first_pr["pending_amount"] ?? 0,
-    }
+    credit: { total_credit, avail_credit, consumed_credit, due_date },
+    payment_progress: { total_bill_amount, settled_amount, pending_amount },
   });
 }
 
@@ -115,7 +116,12 @@ function handleOrders(p: Record<string, string>): Response {
       String(o["dida_hotel_id"] ?? "").toLowerCase().includes(q2)
     );
   }
-  return ok({ data });
+  const total = data.length;
+  const pageSize = parseInt(p["page_size"] ?? "20");
+  const page = parseInt(p["page"] ?? "1");
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const paged = data.slice((page - 1) * pageSize, page * pageSize);
+  return ok({ data: paged, pagination: { page, pageSize, total, totalPages } });
 }
 
 function handleOrderLogs(p: Record<string, string>): Response {
