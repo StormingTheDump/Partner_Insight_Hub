@@ -9,9 +9,9 @@ lerna-debug.log*
 
 node_modules
 
-# Database (generated locally)
-backend/pih.db
-backend/orders.db
+# Database — committed to repo so judges get pre-seeded data on clone
+# backend/pih.db
+# backend/orders.db
 backend/node_modules/
 
 # Python
