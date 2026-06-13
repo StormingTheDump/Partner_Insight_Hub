@@ -423,6 +423,12 @@ function handleBookErrors(p: Record<string, string>): Response {
   });
 }
 
+function handleChannelConfig(p: Record<string, string>): Response {
+  let data = [...(channelConfig as Array<Record<string, unknown>>)];
+  if (p["client_id"]) data = data.filter(r => r["client_id"] === p["client_id"]);
+  return ok(data as AnyData);
+}
+
 // ── 主分发逻辑 ──────────────────────────────────────────────────────────────
 
 function dispatch(url: URL, method: string, body?: Record<string, unknown>): Response | null {
@@ -464,7 +470,7 @@ function dispatch(url: URL, method: string, body?: Record<string, unknown>): Res
   if (path.includes("/api/errors/book"))          return handleBookErrors(p);
   if (path.includes("/api/contacts/dida"))        return ok(contactsDida as AnyData);
   if (path.includes("/api/contacts/my"))          return ok(contactsMy as AnyData);
-  if (path.includes("/api/channel-config"))       return ok(channelConfig as AnyData);
+  if (path.includes("/api/channel-config"))       return handleChannelConfig(p);
   if (path.includes("/api/channel-mapping"))      return handleChannelMapping(p);
   if (path.includes("/api/hot-sales/stats"))      return ok(hotSalesStats as AnyData);
   if (path.includes("/api/hot-sales"))            return handleHotSales(p);
