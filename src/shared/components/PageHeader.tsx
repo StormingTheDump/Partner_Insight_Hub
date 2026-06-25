@@ -6,12 +6,11 @@ type PageHeaderProps = {
   actions?: ReactNode;
 };
 
-export function PageHeader({ title, description, actions }: PageHeaderProps) {
+export function PageHeader({ title, actions }: PageHeaderProps) {
   return (
     <div className="page-title">
       <div>
         <h1>{title}</h1>
-        {description ? <p>{description}</p> : null}
       </div>
       {actions}
     </div>

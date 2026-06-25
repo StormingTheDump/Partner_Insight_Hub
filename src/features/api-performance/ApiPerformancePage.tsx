@@ -12,10 +12,10 @@ import { useAppState } from "@/dashboard/app-state";
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"];
-// 6 visually distinct colors: blue, emerald, amber, cyan, purple, orange
-const COLORS   = ["#3b82f6", "#12b981", "#f59e0b", "#06b6d4", "#8b5cf6", "#f97316"];
+const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899", "#06B6D4"];
+const QUALITY_BANDS = ["#DEF7E7", "#EDF8DC", "#FCF4DA", "#FDE3E3"];
 
-const axisText = { color: "#526078", fontSize: 11 };
+const axisText = { color: "#475569", fontSize: 11 };
 
 type ApiData = {
   summary: {
@@ -47,7 +47,7 @@ function accuracyOption(data: ApiData, feed: string): EChartsOption {
       min: 0,
       max: 100,
       axisLabel: axisText,
-      splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } },
+      splitLine: { lineStyle: { color: "#E5E7EB", type: "dashed" } },
     },
     series: active.map((ch, idx) => {
       const ci = CHANNELS.indexOf(ch);
@@ -63,10 +63,10 @@ function accuracyOption(data: ApiData, feed: string): EChartsOption {
           silent: true,
           itemStyle: { opacity: 0.4 },
           data: [
-            [{ yAxis: 90, itemStyle: { color: "#d8f7e5" } }, { yAxis: 100 }],
-            [{ yAxis: 70, itemStyle: { color: "#e8f7c8" } }, { yAxis: 90  }],
-            [{ yAxis: 50, itemStyle: { color: "#ffefbd" } }, { yAxis: 70  }],
-            [{ yAxis: 0,  itemStyle: { color: "#ffd9d9" } }, { yAxis: 50  }],
+            [{ yAxis: 90, itemStyle: { color: QUALITY_BANDS[0] } }, { yAxis: 100 }],
+            [{ yAxis: 70, itemStyle: { color: QUALITY_BANDS[1] } }, { yAxis: 90  }],
+            [{ yAxis: 50, itemStyle: { color: QUALITY_BANDS[2] } }, { yAxis: 70  }],
+            [{ yAxis: 0,  itemStyle: { color: QUALITY_BANDS[3] } }, { yAxis: 50  }],
           ],
         } : undefined,
       };
@@ -89,12 +89,12 @@ function trendOption(
       type: "category",
       data: dates,
       axisLabel: { ...axisText, interval: 4, hideOverlap: true },
-      axisLine: { lineStyle: { color: "#8b95a6" } },
+      axisLine: { lineStyle: { color: "#B4B8BF" } },
     },
     yAxis: {
       type: "value",
       axisLabel: { ...axisText, formatter: `{value}${suffix}` },
-      splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } },
+      splitLine: { lineStyle: { color: "#E5E7EB", type: "dashed" } },
     },
     series: [
       ...(showPrev
@@ -105,7 +105,7 @@ function trendOption(
               data: prevValues,
               smooth: true,
               showSymbol: false,
-              lineStyle: { color: "#94a3b8", type: "dashed" as const, width: 2 },
+              lineStyle: { color: "#64748B", type: "dashed" as const, width: 2 },
             },
           ]
         : []),
@@ -115,7 +115,8 @@ function trendOption(
         data: values,
         smooth: true,
         symbolSize: 5,
-        lineStyle: { width: 2.5 },
+        lineStyle: { color: "#4F5AAB", width: 2.5 },
+        itemStyle: { color: "#4F5AAB" },
       },
     ],
   };
@@ -194,7 +195,7 @@ export function ApiPerformancePage({ selectedFeed, showPreviousPeriod }: PagePro
           {data ? (
             <BaseChart className="tall" option={accuracyOption(data, feed)} />
           ) : (
-            <div className="tall" style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#94a3b8" }}>
+            <div className="tall" style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#94A3B8" }}>
               加载中…
             </div>
           )}

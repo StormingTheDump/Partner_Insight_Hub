@@ -215,7 +215,7 @@ const page: React.CSSProperties = {
 /* ── Brand panel ── */
 const brand: React.CSSProperties = {
   flex: '0 0 52%',
-  background: 'linear-gradient(150deg, #ffffff 0%, #fff7f9 35%, #ffecf0 65%, #ffd9e4 100%)',
+  background: 'linear-gradient(150deg, #ffffff 0%, #F8FAFC 38%, #F0F1FA 72%, #D4D7ED 100%)',
   position: 'relative',
   overflow: 'hidden',
   display: 'flex',
@@ -228,23 +228,23 @@ const brand: React.CSSProperties = {
 const deco1: React.CSSProperties = {
   position: 'absolute', top: -80, right: -80,
   width: 380, height: 380, borderRadius: '50%',
-  background: 'rgba(234,3,69,0.10)',
+  background: 'rgba(80, 90, 172, 0.10)',
   filter: 'blur(60px)',
 };
 const deco2: React.CSSProperties = {
   position: 'absolute', bottom: -100, left: -60,
   width: 280, height: 280, borderRadius: '50%',
-  background: 'rgba(234,3,69,0.04)',
-  border: '1px solid rgba(234,3,69,0.09)',
+  background: 'rgba(80, 90, 172, 0.04)',
+  border: '1px solid rgba(80, 90, 172, 0.09)',
 };
 const deco3: React.CSSProperties = {
   position: 'absolute', top: '38%', right: 60,
   width: 120, height: 120, borderRadius: '50%',
-  border: '1.5px solid rgba(234,3,69,0.16)',
+  border: '1.5px solid rgba(80, 90, 172, 0.16)',
 };
 const dotGrid: React.CSSProperties = {
   position: 'absolute', inset: 0,
-  backgroundImage: 'radial-gradient(circle, rgba(234,3,69,0.06) 1px, transparent 1px)',
+  backgroundImage: 'radial-gradient(circle, rgba(80, 90, 172, 0.06) 1px, transparent 1px)',
   backgroundSize: '28px 28px',
 };
 
@@ -259,16 +259,16 @@ const logo: React.CSSProperties = {
 
 const headline: React.CSSProperties = {
   fontSize: 54, fontWeight: 800, lineHeight: 1.25,
-  color: '#000947', letterSpacing: '-0.01em', marginBottom: 20,
+  color: 'var(--text)', letterSpacing: '-0.01em', marginBottom: 20,
 };
 
 const pills: React.CSSProperties = {
   display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24,
 };
 const pill: React.CSSProperties = {
-  fontSize: 13, fontWeight: 700, color: '#ea0345',
-  background: 'rgba(234,3,69,0.07)',
-  border: '1px solid rgba(234,3,69,0.18)',
+  fontSize: 13, fontWeight: 700, color: 'var(--pih-primary)',
+  background: 'rgba(80, 90, 172, 0.07)',
+  border: '1px solid rgba(80, 90, 172, 0.18)',
   borderRadius: 99, padding: '3px 12px',
 };
 const pipeSep: React.CSSProperties = {
@@ -288,14 +288,14 @@ const featureItem: React.CSSProperties = {
 };
 const featureIcon: React.CSSProperties = {
   fontSize: 22, width: 40, height: 40,
-  background: 'rgba(234,3,69,0.06)',
-  border: '1px solid rgba(234,3,69,0.13)',
+  background: 'rgba(80, 90, 172, 0.06)',
+  border: '1px solid rgba(80, 90, 172, 0.13)',
   borderRadius: 10,
   display: 'flex', alignItems: 'center', justifyContent: 'center',
   flexShrink: 0,
 };
 const featureLabel: React.CSSProperties = {
-  fontSize: 13, fontWeight: 700, color: '#000947', marginBottom: 2,
+  fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 2,
 };
 const featureSub: React.CSSProperties = {
   fontSize: 12, color: 'rgba(0,9,71,0.45)',
@@ -304,7 +304,7 @@ const featureSub: React.CSSProperties = {
 const brandFooter: React.CSSProperties = {
   position: 'relative', zIndex: 1,
   fontSize: 11, color: 'rgba(0,9,71,0.32)',
-  paddingTop: 24, borderTop: '1px solid rgba(234,3,69,0.10)',
+  paddingTop: 24, borderTop: '1px solid rgba(80, 90, 172, 0.10)',
 };
 
 /* ── Form panel ── */
@@ -327,14 +327,14 @@ const platformTag: React.CSSProperties = {
   display: 'inline-block',
   fontSize: 17, fontWeight: 700, letterSpacing: '0.06em',
   textTransform: 'uppercase',
-  color: '#ea0345',
-  background: 'rgba(234,3,69,0.08)',
-  border: '1px solid rgba(234,3,69,0.2)',
+  color: 'var(--pih-primary)',
+  background: 'rgba(80, 90, 172, 0.08)',
+  border: '1px solid rgba(80, 90, 172, 0.20)',
   borderRadius: 99, padding: '5px 16px', marginBottom: 22,
 };
 const formTitle: React.CSSProperties = {
   margin: '0 0 12px', fontSize: 37, fontWeight: 800,
-  color: '#000947', letterSpacing: '-0.02em',
+  color: 'var(--text)', letterSpacing: '-0.02em',
 };
 const formSub: React.CSSProperties = {
   margin: 0, fontSize: 20, color: '#6b7280', lineHeight: 1.5,
@@ -342,13 +342,13 @@ const formSub: React.CSSProperties = {
 
 const errorBox: React.CSSProperties = {
   display: 'flex', alignItems: 'center', gap: 8,
-  background: '#fff5f5', border: '1px solid #ffc5c5',
+  background: '#FDE3E3', border: '1px solid #FCA5A5',
   borderRadius: 8, padding: '10px 14px',
-  fontSize: 13, color: '#c0392b', marginBottom: 20,
+  fontSize: 13, color: '#EF4444', marginBottom: 20,
 };
 const errorDot: React.CSSProperties = {
   width: 6, height: 6, borderRadius: '50%',
-  background: '#c0392b', flexShrink: 0,
+  background: '#EF4444', flexShrink: 0,
 };
 
 const fieldGroup: React.CSSProperties = { marginBottom: 28 };
@@ -383,17 +383,17 @@ const checkLabel: React.CSSProperties = {
   fontSize: 20, color: '#6b7280', cursor: 'pointer',
 };
 const checkbox: React.CSSProperties = {
-  accentColor: '#000947', width: 22, height: 22, cursor: 'pointer',
+  accentColor: 'var(--pih-primary)', width: 22, height: 22, cursor: 'pointer',
 };
 const submitBtn: React.CSSProperties = {
   width: '100%', height: 72,
-  background: 'linear-gradient(135deg, #000947 0%, #0b1a6e 100%)',
+  background: 'linear-gradient(135deg, var(--pih-primary) 0%, var(--chart-primary) 100%)',
   color: '#fff', border: 'none', borderRadius: 8,
   fontSize: 23, fontWeight: 700, letterSpacing: '0.06em',
   cursor: 'pointer',
   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
   transition: 'opacity 0.15s',
-  boxShadow: '0 4px 16px rgba(0,9,71,0.28)',
+  boxShadow: '0 4px 16px rgba(80, 90, 172, 0.28)',
 };
 const spinner: React.CSSProperties = {
   width: 16, height: 16,

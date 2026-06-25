@@ -17,7 +17,7 @@ export default function App() {
   return (
     <ConfigProvider
       locale={zhCN}
-      theme={{ token: { colorPrimary: '#4f5fb8', borderRadius: 7 } }}
+      theme={{ token: { colorPrimary: '#505AAC', borderRadius: 7 } }}
     >
       <BrowserRouter basename="/Partner_Insight_Hub">
         <Routes>

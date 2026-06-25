@@ -9,7 +9,7 @@ interface PlaceholderProps {
   tags?: string[];
 }
 
-function PlaceholderPage({ icon, title, description, iconBg, iconColor, tags = [] }: PlaceholderProps) {
+function PlaceholderPage({ icon, title, iconBg, iconColor, tags = [] }: PlaceholderProps) {
   return (
     <div style={styles.wrapper}>
       <div style={styles.card}>
@@ -17,7 +17,6 @@ function PlaceholderPage({ icon, title, description, iconBg, iconColor, tags = [
           <span style={{ fontSize: 28 }}>{icon}</span>
         </div>
         <h2 style={styles.title}>{title}</h2>
-        <p style={styles.desc}>{description}</p>
         <div style={styles.tagRow}>
           <Tag color="processing" style={{ borderRadius: 6 }}>开发中</Tag>
           <Tag color="blue" style={{ borderRadius: 6 }}>M1 阶段</Tag>
@@ -34,8 +33,8 @@ export function MatchingPage() {
       icon="⇌"
       title="渠道匹配关系管理"
       description="上传宝米酒店匹配关系文件，查看历史匹配记录，展示匹配覆盖率与 OSS 数据对比。"
-      iconBg="#fff5e8"
-      iconColor="#f97316"
+      iconBg="#FCF4DA"
+      iconColor="#F59E0B"
     />
   );
 }
@@ -46,8 +45,8 @@ export function ContactPage() {
       icon="📞"
       title="联系方式"
       description="展示专属客户经理、BD 经理、CS、财务联系人信息，以及 7×24 小时客服电话与邮箱。"
-      iconBg="#fff0f5"
-      iconColor="#eb2f96"
+      iconBg="#FDE3E3"
+      iconColor="#EF4444"
     />
   );
 }
@@ -83,12 +82,6 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 22,
     fontWeight: 700,
     color: 'var(--text)',
-  },
-  desc: {
-    color: 'var(--muted)',
-    fontSize: 14,
-    lineHeight: 1.7,
-    margin: 0,
   },
   tagRow: {
     marginTop: 24,

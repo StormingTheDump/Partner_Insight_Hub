@@ -65,8 +65,8 @@ export function DidaApiPage(_: PageProps) {
       <div className="grid three-col">
         <Card>
           <div className="card-header" style={{ justifyContent: "flex-start", gap: 12 }}>
-            <div className="icon-tile" style={{ background: "#eef1ff" }}>
-              <Zap className="icon" style={{ color: "#4f5fb8" }} />
+            <div className="icon-tile" style={{ background: "var(--pih-primary-soft)" }}>
+              <Zap className="icon" style={{ color: "#505AAC" }} />
             </div>
             <div>
               <h3>API 版本</h3>
@@ -83,8 +83,8 @@ export function DidaApiPage(_: PageProps) {
 
         <Card>
           <div className="card-header" style={{ justifyContent: "flex-start", gap: 12 }}>
-            <div className="icon-tile" style={{ background: "#f0fff4" }}>
-              <ShieldCheck className="icon" style={{ color: "#16a34a" }} />
+            <div className="icon-tile" style={{ background: "#DEF7E7" }}>
+              <ShieldCheck className="icon" style={{ color: "#10B981" }} />
             </div>
             <div>
               <h3>鉴权方式</h3>
@@ -101,8 +101,8 @@ export function DidaApiPage(_: PageProps) {
 
         <Card>
           <div className="card-header" style={{ justifyContent: "flex-start", gap: 12 }}>
-            <div className="icon-tile" style={{ background: "#fff0f5" }}>
-              <Code2 className="icon" style={{ color: "#ea0345" }} />
+            <div className="icon-tile" style={{ background: "#FDE3E3" }}>
+              <Code2 className="icon" style={{ color: "#EF4444" }} />
             </div>
             <div>
               <h3>技术规格</h3>
@@ -127,7 +127,7 @@ export function DidaApiPage(_: PageProps) {
             {bookingFlow.map((s, i) => (
               <div key={s.step} style={{ display: "flex", alignItems: "center", flex: 1, minWidth: 160 }}>
                 <div style={{ flex: 1, textAlign: "center" }}>
-                  <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--dida-navy)", color: "#fff", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 8px" }}>{s.step}</div>
+                  <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--pih-primary)", color: "#fff", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 8px" }}>{s.step}</div>
                   <div style={{ fontWeight: 700, fontSize: 13 }}>{s.name}</div>
                   <div style={{ fontSize: 11, color: "var(--muted)", margin: "3px 0 6px" }}>{s.desc}</div>
                   <code style={{ fontSize: 10, background: "var(--surface-soft)", padding: "2px 6px", borderRadius: 4, display: "inline-block", wordBreak: "break-all" }}>{s.endpoint}</code>
@@ -141,7 +141,7 @@ export function DidaApiPage(_: PageProps) {
             <div style={{ display: "flex", alignItems: "center" }}>
               <ArrowRight size={18} style={{ color: "var(--muted)", flexShrink: 0, margin: "0 4px", opacity: 0.4 }} />
               <div style={{ textAlign: "center", opacity: 0.7 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--dida-red)", color: "#fff", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 8px" }}>✕</div>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--status-danger)", color: "#fff", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 8px" }}>✕</div>
                 <div style={{ fontWeight: 700, fontSize: 13 }}>取消订单</div>
                 <div style={{ fontSize: 11, color: "var(--muted)", margin: "3px 0 6px" }}>Pre-cancel + Cancel Confirm</div>
                 <code style={{ fontSize: 10, background: "var(--surface-soft)", padding: "2px 6px", borderRadius: 4 }}>/HotelBookingCancel</code>
@@ -179,17 +179,17 @@ export function DidaApiPage(_: PageProps) {
           <h3 style={{ marginBottom: 14 }}>订单状态码</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {bookingStatuses.map((s) => (
-              <div key={s.code} style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 10px", borderRadius: 6, background: s.success ? "#f0fff4" : s.danger ? "#fff5f5" : s.final ? "#fffbeb" : "var(--surface-soft)", border: `1px solid ${s.success ? "#bbf7d0" : s.danger ? "#ffc5c5" : s.final ? "#fde68a" : "var(--line)"}` }}>
-                <span style={{ width: 22, height: 22, borderRadius: "50%", background: s.success ? "#16a34a" : s.danger ? "#dc2626" : "var(--muted)", color: "#fff", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{s.code}</span>
+              <div key={s.code} style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 10px", borderRadius: 6, background: s.success ? "#DEF7E7" : s.danger ? "#FDE3E3" : s.final ? "#FCF4DA" : "var(--surface-soft)", border: `1px solid ${s.success ? "#A7F3D0" : s.danger ? "#FCA5A5" : s.final ? "#FDE68A" : "var(--line)"}` }}>
+                <span style={{ width: 22, height: 22, borderRadius: "50%", background: s.success ? "#10B981" : s.danger ? "#EF4444" : "var(--muted)", color: "#fff", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{s.code}</span>
                 <div>
                   <div style={{ fontSize: 12, fontWeight: 700 }}>{s.name}</div>
                   <div style={{ fontSize: 11, color: "var(--muted-strong)" }}>{s.desc}</div>
                 </div>
-                {s.final && <CheckCircle2 size={14} style={{ marginLeft: "auto", color: s.success ? "#16a34a" : s.danger ? "#dc2626" : "#d97706", flexShrink: 0 }} />}
+                {s.final && <CheckCircle2 size={14} style={{ marginLeft: "auto", color: s.success ? "#10B981" : s.danger ? "#EF4444" : "#F59E0B", flexShrink: 0 }} />}
               </div>
             ))}
           </div>
-          <p className="tiny" style={{ marginTop: 10, color: "#d97706" }}>
+          <p className="tiny" style={{ marginTop: 10, color: "#F59E0B" }}>
             <AlertCircle size={12} style={{ display: "inline", marginRight: 4 }} />
             仅 Status 2 / 3 / 4 为最终状态，其余不可作为最终判断依据。
           </p>
@@ -231,7 +231,7 @@ export function DidaApiPage(_: PageProps) {
           </table>
           </div>
           <p className="tiny" style={{ marginTop: 10 }}>
-            完整错误码列表见：<a href="https://apidoc.didatravel.com/information-hub/api-error-code.html" target="_blank" rel="noopener noreferrer" style={{ color: "var(--dida-navy)" }}>API Error Code</a>
+            完整错误码列表见：<a href="https://apidoc.didatravel.com/information-hub/api-error-code.html" target="_blank" rel="noopener noreferrer" style={{ color: "var(--pih-primary)" }}>API Error Code</a>
           </p>
         </Card>
       </div>
@@ -245,7 +245,7 @@ export function DidaApiPage(_: PageProps) {
               <p className="tiny">从签约到正式对接的7个步骤</p>
             </div>
             <a href="https://apidoc.didatravel.com/getting-started/go-live-process.html" target="_blank" rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "var(--dida-navy)", fontWeight: 600, textDecoration: "none" }}>
+              style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "var(--pih-primary)", fontWeight: 600, textDecoration: "none" }}>
               <BookOpen size={13} /> 查看完整说明
             </a>
           </div>
@@ -253,7 +253,7 @@ export function DidaApiPage(_: PageProps) {
             {goLiveSteps.map((s) => (
               <div key={s.n} style={{ flex: "1 1 200px", background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 8, padding: "12px 14px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                  <span style={{ width: 22, height: 22, borderRadius: "50%", background: "var(--dida-navy)", color: "#fff", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{s.n}</span>
+                  <span style={{ width: 22, height: 22, borderRadius: "50%", background: "var(--pih-primary)", color: "#fff", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{s.n}</span>
                   <strong style={{ fontSize: 13 }}>{s.title}</strong>
                 </div>
                 <p className="tiny">{s.desc}</p>
@@ -274,7 +274,7 @@ const codeBlock: React.CSSProperties = { background: "var(--surface-soft)", bord
 const tableStyle: React.CSSProperties = { width: "100%", borderCollapse: "collapse" };
 const TH: React.CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",

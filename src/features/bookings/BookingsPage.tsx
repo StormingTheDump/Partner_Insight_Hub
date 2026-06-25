@@ -135,8 +135,8 @@ const TH_STYLE: React.CSSProperties = {
   position: "sticky",
   top: 0,          // 0 = relative to .table-wrap scroll area (not viewport)
   zIndex: 2,
-  background: "#f8fafd",
-  color: "#526078",
+  background: "#F8FAFC",
+  color: "#475569",
   fontSize: 12,
   fontWeight: 800,
   padding: "11px 13px",

@@ -13,20 +13,22 @@ import type { EChartsOption } from "echarts";
 const fmt  = (n: number) => n.toLocaleString();
 const fmtK = (n: number) => `$${(n / 1000).toFixed(0)}K`;
 const fmtP = (n: number) => `${n}%`;
+const seriesPalette = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899", "#06B6D4"];
+const distributionPalette = ["#C3C6E2", "#B5BADC", "#A6ACD5", "#999FCE", "#8B92C8", "#7C84C1"];
 
 function rate(label: string, val: number, good = 80): ReactElement {
-  const color = val >= good ? "#16a34a" : val >= good * 0.85 ? "#d97706" : "#dc2626";
+  const color = val >= good ? "#10B981" : val >= good * 0.85 ? "#F59E0B" : "#EF4444";
   return <span style={{ color, fontWeight: 700 }}>{label} {fmtP(val)}</span>;
 }
 
 function Divider() {
-  return <hr style={{ border: "none", borderTop: "1px solid #e8edf4", margin: "28px 0" }} />;
+  return <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", margin: "28px 0" }} />;
 }
 
 function SectionTitle({ n, title }: { n: number; title: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-      <span style={{ background: "#4f5fb8", color: "#fff", fontWeight: 800, fontSize: 12, width: 24, height: 24, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
+      <span style={{ background: "#505AAC", color: "#fff", fontWeight: 800, fontSize: 12, width: 24, height: 24, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
       <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "var(--text)" }}>{title}</h2>
     </div>
   );
@@ -34,7 +36,7 @@ function SectionTitle({ n, title }: { n: number; title: string }) {
 
 function KV({ label, value, sub }: { label: string; value: string | ReactElement; sub?: string }) {
   return (
-    <div style={{ padding: "12px 16px", background: "#f8fafc", borderRadius: 8, border: "1px solid #e8edf4" }}>
+    <div style={{ padding: "12px 16px", background: "#f8fafc", borderRadius: 8, border: "1px solid #E5E7EB" }}>
       <div style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.05em", marginBottom: 4 }}>{label}</div>
       <div style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", lineHeight: 1.1 }}>{value}</div>
       {sub && <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 4 }}>{sub}</div>}
@@ -49,13 +51,13 @@ function P({ children }: { children: React.ReactNode }) {
 function miniBarOpt(labels: string[], values: number[], colors: string[]): EChartsOption {
   return {
     grid: { left: 8, right: 8, top: 8, bottom: 20, containLabel: true },
-    xAxis: { type: "category", data: labels, axisLabel: { fontSize: 11, color: "#526078" } },
+    xAxis: { type: "category", data: labels, axisLabel: { fontSize: 11, color: "#475569" } },
     yAxis: { type: "value", show: false },
     series: [{
       type: "bar", barMaxWidth: 32,
       data: values.map((v, i) => ({ value: v, itemStyle: { color: colors[i % colors.length] } })),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      label: { show: true, position: "top" as const, fontSize: 10, color: "#526078", formatter: (p: any) => p.value.toLocaleString() },
+      label: { show: true, position: "top" as const, fontSize: 10, color: "#475569", formatter: (p: any) => p.value.toLocaleString() },
     }],
   };
 }
@@ -148,7 +150,7 @@ export function ReportsPage(_: PageProps) {
       <div ref={reportRef} style={{ maxWidth: 900, margin: "0 auto" }}>
 
         {/* ── Report Header ── */}
-        <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #e0e6f0", padding: "32px 40px 24px", marginBottom: 16 }}>
+        <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #E5E7EB", padding: "32px 40px 24px", marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap" as const, gap: 12 }}>
             <div>
               <div style={{ fontSize: 11, color: "var(--muted)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 6 }}>Dida Travel · 渠道业务分析报告</div>
@@ -162,8 +164,8 @@ export function ReportsPage(_: PageProps) {
           </div>
 
           {/* Executive Summary */}
-          <div style={{ marginTop: 24, background: "#f0f4ff", borderRadius: 8, padding: "16px 20px", borderLeft: "4px solid #4f5fb8" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#4f5fb8", letterSpacing: "0.08em", marginBottom: 10 }}>执行摘要</div>
+          <div style={{ marginTop: 24, background: "var(--pih-primary-soft)", borderRadius: 8, padding: "16px 20px", borderLeft: "4px solid #505AAC" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#505AAC", letterSpacing: "0.08em", marginBottom: 10 }}>执行摘要</div>
             <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column" as const, gap: 6 }}>
               <li style={{ fontSize: 13, color: "#334155", lineHeight: 1.6 }}>
                 报告周期内 Agoda 渠道累计完成订单 <strong>{fmt(summary.total_bookings)}</strong> 笔，总交易额 <strong>{fmtK(summary.total_ttv)}</strong>，漏斗整体转化率 <strong>{totalConvRate}%</strong>（查价→下单）。
@@ -179,7 +181,7 @@ export function ReportsPage(_: PageProps) {
         </div>
 
         {/* ── Body ── */}
-        <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #e0e6f0", padding: "32px 40px" }}>
+        <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #E5E7EB", padding: "32px 40px" }}>
 
           {/* SECTION 1: 核心指标 */}
           <SectionTitle n={1} title="核心业务指标" />
@@ -220,7 +222,7 @@ export function ReportsPage(_: PageProps) {
                 <thead>
                   <tr>
                     {["Client ID", "验价数", "准确验价率", "验价→下单"].map(h => (
-                      <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
+                      <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#F8FAFC", color: "#475569", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -229,7 +231,7 @@ export function ReportsPage(_: PageProps) {
                     <tr key={c.client_id}>
                       <td style={{ padding: "11px 13px", color: "var(--text)", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{c.client_id}</td>
                       <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(c.confirms)}</td>
-                      <td style={{ padding: "11px 13px", textAlign: "right", color: c.accurate_rate >= 85 ? "#16a34a" : c.accurate_rate >= 78 ? "#d97706" : "#dc2626", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.accurate_rate)}</td>
+                      <td style={{ padding: "11px 13px", textAlign: "right", color: c.accurate_rate >= 85 ? "#10B981" : c.accurate_rate >= 78 ? "#F59E0B" : "#EF4444", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.accurate_rate)}</td>
                       <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmtP(c.confirm_to_book_rate)}</td>
                     </tr>
                   ))}
@@ -249,11 +251,11 @@ export function ReportsPage(_: PageProps) {
                     formatter: (p: { name: string; value: number }) => `${p.name} ${p.value.toLocaleString()}` },
                   itemStyle: { borderWidth: 0 },
                   data: [
-                    { value: f.searches,  name: "查价",    itemStyle: { color: "#4f5fb8" } },
-                    { value: f.results,   name: "有价",    itemStyle: { color: "#6b7fd4" } },
-                    { value: f.confirms,  name: "验价",    itemStyle: { color: "#12b981" } },
-                    { value: f.accurates, name: "准确验价", itemStyle: { color: "#34d399" } },
-                    { value: f.bookings,  name: "下单",    itemStyle: { color: "#f59e0b" } },
+                    { value: f.searches,  name: "查价",    itemStyle: { color: "#4F5AAB" } },
+                    { value: f.results,   name: "有价",    itemStyle: { color: "#8B92C8" } },
+                    { value: f.confirms,  name: "验价",    itemStyle: { color: "#10B981" } },
+                    { value: f.accurates, name: "准确验价", itemStyle: { color: "#10B981" } },
+                    { value: f.bookings,  name: "下单",    itemStyle: { color: "#F59E0B" } },
                   ],
                 }] as EChartsOption["series"],
               }} />
@@ -274,7 +276,7 @@ export function ReportsPage(_: PageProps) {
             <thead>
               <tr>
                 {["Client ID", "订单数", "TTV ($)", "均价 ($)", "间夜数", "准确验价率", "验价→下单", "响应时长"].map(h => (
-                  <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
+                  <th key={h} style={{ position: "sticky", top: 0, zIndex: 2, background: "#F8FAFC", color: "#475569", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: h === "Client ID" ? "left" : "right" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -288,11 +290,11 @@ export function ReportsPage(_: PageProps) {
                     <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{r.ttv.toLocaleString()}</td>
                     <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>${fmt(r.avg_order_value)}</td>
                     <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fmt(r.room_nights)}</td>
-                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.accurate_rate >= 85 ? "#16a34a" : fc && fc.accurate_rate >= 78 ? "#d97706" : "#dc2626", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
+                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.accurate_rate >= 85 ? "#10B981" : fc && fc.accurate_rate >= 78 ? "#F59E0B" : "#EF4444", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                       {fc ? fmtP(fc.accurate_rate) : "-"}
                     </td>
                     <td style={{ padding: "11px 13px", textAlign: "right", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>{fc ? fmtP(fc.confirm_to_book_rate) : "-"}</td>
-                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.avg_response_ms > 480 ? "#d97706" : "#334155", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
+                    <td style={{ padding: "11px 13px", textAlign: "right", color: fc && fc.avg_response_ms > 480 ? "#F59E0B" : "#334155", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                       {fc ? `${fc.avg_response_ms}ms` : "-"}
                     </td>
                   </tr>
@@ -307,11 +309,11 @@ export function ReportsPage(_: PageProps) {
           <SectionTitle n={4} title="订单结构分析" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 16 }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#526078", marginBottom: 8 }}>提前预订天数（LT）分布</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#475569", marginBottom: 8 }}>提前预订天数（LT）分布</div>
               <BaseChart style={{ height: 160 }} option={miniBarOpt(
                 dim.lt.map(r => r.lt_bucket),
                 dim.lt.map(r => r.bookings),
-                ["#ef4444","#f97316","#f59e0b","#22c55e","#3b82f6"]
+                distributionPalette.slice(0, dim.lt.length)
               )} />
               <P>
                 短提前期（0–7天）合计占比 <strong>{shortLtPct}%</strong>，8–14天为主力区间（{dim.lt.find(r => r.lt_bucket === "8-14天")?.pct ?? 0}%），
@@ -319,11 +321,11 @@ export function ReportsPage(_: PageProps) {
               </P>
             </div>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#526078", marginBottom: 8 }}>酒店星级分布（0–5星）</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#475569", marginBottom: 8 }}>酒店星级分布（0–5星）</div>
               <BaseChart style={{ height: 160 }} option={miniBarOpt(
                 dim.star.map(r => r.star_rating),
                 dim.star.map(r => r.bookings),
-                ["#94a3b8","#cbd5e1","#fbbf24","#f59e0b","#3b82f6","#8b5cf6"]
+                distributionPalette
               )} />
               <P>
                 4–5星酒店合计占比 <strong>{highStarPct}%</strong>，5星均价约为全渠道均值的 1.65 倍，
@@ -332,11 +334,11 @@ export function ReportsPage(_: PageProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#526078", marginBottom: 8 }}>目的地国家 Top 9</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#475569", marginBottom: 8 }}>目的地国家 Top 9</div>
             <BaseChart style={{ height: 140 }} option={miniBarOpt(
               dim.country.map(r => r.country),
               dim.country.map(r => r.bookings),
-              ["#3b82f6","#12b981","#f59e0b","#ef4444","#8b5cf6","#e54897","#06b6d4","#84cc16","#94a3b8"]
+              [...seriesPalette, "#94A3B8", "#64748B"]
             )} />
             <P>
               <strong>{topCountry.country}</strong> 为第一目的地（占比 {topCountry.pct}%），
@@ -372,8 +374,8 @@ export function ReportsPage(_: PageProps) {
             {risks.map((r, i) => (
               <div key={i} style={{
                 padding: "14px 18px", borderRadius: 8,
-                background: r.tone === "green" ? "#f0fdf4" : r.tone === "amber" ? "#fffbeb" : r.tone === "red" ? "#fef2f2" : "#eff6ff",
-                border: `1px solid ${r.tone === "green" ? "#bbf7d0" : r.tone === "amber" ? "#fde68a" : r.tone === "red" ? "#fecaca" : "#bfdbfe"}`,
+                background: r.tone === "green" ? "#DEF7E7" : r.tone === "amber" ? "#FCF4DA" : r.tone === "red" ? "#FDE3E3" : "#eff6ff",
+                border: `1px solid ${r.tone === "green" ? "#A7F3D0" : r.tone === "amber" ? "#FDE68A" : r.tone === "red" ? "#FCA5A5" : "#D4D7ED"}`,
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                   <span className={r.tone === "green" ? "status" : r.tone === "amber" ? "status warning" : r.tone === "red" ? "status danger" : "status info"}>
@@ -387,7 +389,7 @@ export function ReportsPage(_: PageProps) {
           </div>
 
           {/* Footer */}
-          <div style={{ marginTop: 32, paddingTop: 20, borderTop: "1px solid #e8edf4", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "#aab2c8" }}>
+          <div style={{ marginTop: 32, paddingTop: 20, borderTop: "1px solid #E5E7EB", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "#aab2c8" }}>
             <span>本报告由 Dida Partner Insight Hub 自动生成 · 数据周期 {period}</span>
             <span>仅供 Agoda 渠道对接方内部参考</span>
           </div>

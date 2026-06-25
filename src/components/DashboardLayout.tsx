@@ -100,7 +100,7 @@ export default function DashboardLayout({ user, onLogout }: Props) {
 
         {/* Account */}
         <div style={styles.account}>
-          <Avatar size={22} icon={<UserOutlined />} style={{ background: '#ea0345', flexShrink: 0 }} />
+          <Avatar size={22} icon={<UserOutlined />} style={{ background: 'var(--pih-primary)', flexShrink: 0 }} />
           {!collapsed && <span style={styles.accountName}>{user.channelName}</span>}
         </div>
 
@@ -164,13 +164,13 @@ export default function DashboardLayout({ user, onLogout }: Props) {
           <div style={styles.topbarRight}>
             <Dropdown menu={userMenu} placement="bottomRight">
               <div style={styles.userChip}>
-                <Avatar size={28} icon={<UserOutlined />} style={{ background: '#4f5fb8' }} />
+                <Avatar size={28} icon={<UserOutlined />} style={{ background: 'var(--pih-primary)' }} />
                 <span style={styles.userName}>{user.contactName}</span>
               </div>
             </Dropdown>
             <button style={styles.iconBtn} title="通知">
               <Badge count={1} size="small">
-                <BellOutlined style={{ fontSize: 16, color: '#778199' }} />
+                <BellOutlined style={{ fontSize: 16, color: '#64748B' }} />
               </Badge>
             </button>
           </div>
@@ -204,7 +204,7 @@ const styles: Record<string, React.CSSProperties> = {
     height: '100vh',
     padding: '18px 12px',
     background: '#fff',
-    borderRight: '1px solid #dfe5ef',
+    borderRight: '1px solid #E5E7EB',
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
@@ -223,7 +223,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: 34,
     height: 34,
     borderRadius: 8,
-    background: 'linear-gradient(135deg, #000947, #4f5fb8)',
+    background: 'linear-gradient(135deg, var(--pih-primary), var(--chart-primary))',
     color: '#fff',
     fontWeight: 800,
     fontSize: 16,
@@ -239,7 +239,7 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: 'hidden',
   },
   brandZh: {
-    color: '#000947',
+    color: 'var(--text)',
     fontWeight: 800,
     fontSize: 14,
     whiteSpace: 'nowrap',
@@ -248,7 +248,7 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: 1.3,
   },
   brandEn: {
-    color: '#8390ad',
+    color: '#64748B',
     fontWeight: 500,
     fontSize: 10,
     whiteSpace: 'nowrap',
@@ -261,8 +261,8 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     gap: 10,
-    border: '1px solid #dfe5ef',
-    background: '#f6f7fa',
+    border: '1px solid #E5E7EB',
+    background: '#F8FAFC',
     padding: '10px 12px',
     borderRadius: 8,
     overflow: 'hidden',
@@ -270,19 +270,19 @@ const styles: Record<string, React.CSSProperties> = {
   accountName: {
     fontWeight: 700,
     fontSize: 13,
-    color: '#000947',
+    color: 'var(--text)',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
   navSection: {
-    borderTop: '1px solid #dfe5ef',
+    borderTop: '1px solid #E5E7EB',
     paddingTop: 14,
     marginTop: 0,
   },
   sectionTitle: {
     margin: '0 0 8px 8px',
-    color: '#8390ad',
+    color: '#64748B',
     fontSize: 11,
     fontWeight: 800,
     letterSpacing: '0.06em',
@@ -292,7 +292,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: '100%',
     border: 0,
     background: 'transparent',
-    color: '#1e2b4d',
+    color: 'var(--text)',
     display: 'flex',
     alignItems: 'center',
     gap: 12,
@@ -306,18 +306,18 @@ const styles: Record<string, React.CSSProperties> = {
     whiteSpace: 'nowrap',
   },
   navItemActive: {
-    background: '#eef1ff',
-    color: '#3f4fb2',
+    background: 'var(--pih-primary-soft)',
+    color: 'var(--pih-primary)',
   },
   navIcon: {
     fontSize: 16,
-    color: '#9299a8',
+    color: '#94A3B8',
     flexShrink: 0,
     display: 'flex',
     alignItems: 'center',
   },
   navIconActive: {
-    color: '#4d5cbc',
+    color: 'var(--pih-primary)',
   },
   navLabel: {
     flex: 1,
@@ -330,13 +330,13 @@ const styles: Record<string, React.CSSProperties> = {
     padding: '2px 7px',
     fontSize: 10,
     fontWeight: 800,
-    background: '#e1e5ec',
-    color: '#5d6676',
+    background: '#E2E8F0',
+    color: '#64748B',
     flexShrink: 0,
   },
   pillActive: {
     color: '#fff',
-    background: '#12a052',
+    background: '#10B981',
   },
   collapseBtn: {
     marginTop: 'auto',
@@ -344,7 +344,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: 36,
     height: 36,
     borderRadius: '50%',
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     background: '#fff',
     color: '#71809b',
     display: 'flex',
@@ -363,7 +363,7 @@ const styles: Record<string, React.CSSProperties> = {
     height: 64,
     background: 'rgba(255,255,255,0.92)',
     backdropFilter: 'blur(14px)',
-    borderBottom: '1px solid #edf1f7',
+    borderBottom: '1px solid #E2E8F0',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -371,7 +371,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   topbarLeft: { display: 'flex', alignItems: 'center', gap: 14 },
   topbarRight: { display: 'flex', alignItems: 'center', gap: 10 },
-  pageTitle: { fontSize: 14, fontWeight: 600, color: '#17213f' },
+  pageTitle: { fontSize: 14, fontWeight: 600, color: 'var(--text)' },
   userChip: {
     display: 'flex',
     alignItems: 'center',
@@ -379,14 +379,14 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     padding: '4px 10px',
     borderRadius: 7,
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     background: '#fff',
   },
-  userName: { fontSize: 13, color: '#17213f', fontWeight: 600 },
+  userName: { fontSize: 13, color: 'var(--text)', fontWeight: 600 },
   iconBtn: {
     width: 34,
     height: 34,
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     borderRadius: 7,
     background: '#fff',
     display: 'flex',
@@ -399,7 +399,7 @@ const styles: Record<string, React.CSSProperties> = {
   content: {
     flex: 1,
     padding: '24px 32px 64px',
-    background: '#f8f9fc',
+    background: '#F8FAFC',
     minHeight: 'calc(100vh - 64px)',
   },
 
@@ -412,12 +412,12 @@ const styles: Record<string, React.CSSProperties> = {
     height: 44,
     borderRadius: '50%',
     border: 0,
-    background: '#4f5fb8',
+    background: '#505AAC',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    boxShadow: '0 8px 20px rgba(0,9,71,0.22)',
+    boxShadow: '0 8px 20px rgba(80,90,172,0.22)',
     zIndex: 4,
   },
 };

@@ -63,7 +63,7 @@ a {
 }
 
 .delta {
-  color: #15803d;
+  color: #10B981;
   font-size: 12px;
   font-weight: 800;
 }
@@ -95,7 +95,7 @@ a {
   background: var(--surface);
   border-radius: 7px;
   padding: 0 12px;
-  color: #17213f;
+  color: var(--text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -106,7 +106,7 @@ a {
 }
 
 .button:hover {
-  background: #f8fafd;
+  background: #F8FAFC;
   border-color: #cbd5e1;
 }
 
@@ -133,7 +133,7 @@ a {
 
 .button.danger {
   color: var(--google-red);
-  background: #fce8e6;
+  background: #FDE3E3;
   border-color: #fad2cf;
 }
 
@@ -148,7 +148,7 @@ a {
   border: 1px solid var(--line);
   border-radius: 7px;
   background: #fff;
-  color: #778199;
+  color: #64748B;
   display: grid;
   place-items: center;
   position: relative;
@@ -163,7 +163,7 @@ a {
   height: 16px;
   padding: 0 4px;
   border-radius: 99px;
-  background: #ea0345;
+  background: #EF4444;
   color: #fff;
   font-size: 10px;
   font-weight: 800;
@@ -240,23 +240,23 @@ a {
 }
 
 .icon-tile.red {
-  background: #fce8e6;
+  background: #FDE3E3;
   color: var(--google-red);
 }
 
 .icon-tile.green {
-  background: #e6f4ea;
+  background: #DEF7E7;
   color: var(--google-green);
 }
 
 .icon-tile.orange {
-  background: #fff4db;
+  background: #FCF4DA;
   color: #b06000;
 }
 
 .icon-tile.purple {
-  background: #f0e7ff;
-  color: var(--dida-purple);
+  background: var(--pih-primary-soft);
+  color: var(--pih-primary);
 }
 
 .status {
@@ -264,7 +264,7 @@ a {
   align-items: center;
   gap: 6px;
   border-radius: 999px;
-  background: #e6f4ea;
+  background: #DEF7E7;
   color: var(--google-green);
   padding: 3px 9px;
   font-size: 12px;
@@ -273,17 +273,17 @@ a {
 }
 
 .status.warning {
-  background: #fff4db;
+  background: #FCF4DA;
   color: #935100;
 }
 
 .status.danger {
-  background: #fce8e6;
+  background: #FDE3E3;
   color: var(--google-red);
 }
 
 .status.neutral {
-  background: #f1f3f4;
+  background: #F1F5F9;
   color: #5f6368;
 }
 
@@ -306,7 +306,7 @@ a {
   background: #fff;
   border-radius: 7px;
   padding: 0 11px;
-  color: #17213f;
+  color: var(--text);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -348,8 +348,8 @@ a {
 }
 
 .table-wrap th {
-  color: #526078;
-  background: #f8fafd;
+  color: #475569;
+  background: #F8FAFC;
   font-size: 12px;
   font-weight: 800;
 }
@@ -404,7 +404,7 @@ a {
 .progress-track {
   height: 10px;
   border-radius: 999px;
-  background: #e8edf4;
+  background: #E5E7EB;
   overflow: hidden;
 }
 

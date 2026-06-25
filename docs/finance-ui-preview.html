@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>财务信息模块 UI 预览</title>
+  <style>
+    :root {
+      --pih-primary: #505AAC;
+      --pih-primary-soft: #F0F1FA;
+      --pih-primary-muted: #D4D7ED;
+      --status-success: #10B981;
+      --status-success-soft: #DEF7E7;
+      --status-warning: #F59E0B;
+      --status-warning-soft: #FCF4DA;
+      --status-danger: #EF4444;
+      --status-danger-soft: #FDE3E3;
+      --bg: #F8FAFC;
+      --surface: #ffffff;
+      --surface-soft: #F1F5F9;
+      --line: #E5E7EB;
+      --line-soft: #E2E8F0;
+      --text: #000947;
+      --muted: #64748B;
+      --muted-strong: #475569;
+      --shadow-card: 0 1px 2px rgba(0, 9, 71, 0.06);
+      --radius: 8px;
+      font-family: "Noto Sans SC", "Microsoft YaHei UI", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .page {
+      margin: 0 auto;
+      max-width: 1480px;
+      padding: 30px 32px 56px;
+    }
+
+    .page-title {
+      align-items: flex-start;
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 26px;
+      line-height: 1.15;
+    }
+
+    .page-title p {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .button {
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      box-shadow: 0 1px 2px rgba(0, 9, 71, 0.04);
+      color: var(--text);
+      display: inline-flex;
+      font-weight: 800;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 12px;
+      white-space: nowrap;
+    }
+
+    .button.primary {
+      background: var(--pih-primary);
+      border-color: var(--pih-primary);
+      color: #fff;
+    }
+
+    .notice {
+      align-items: center;
+      background: linear-gradient(90deg, #fff 0%, #fff 42%, var(--status-danger-soft) 100%);
+      border: 1px solid #F6C9C9;
+      border-radius: var(--radius);
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding: 12px 16px;
+    }
+
+    .notice strong {
+      color: var(--status-danger);
+    }
+
+    .notice-copy {
+      align-items: center;
+      color: var(--muted-strong);
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .notice-icon {
+      align-items: center;
+      background: var(--status-danger-soft);
+      border-radius: 999px;
+      color: var(--status-danger);
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 13px;
+      height: 24px;
+      justify-content: center;
+      width: 24px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      min-width: 0;
+    }
+
+    .kpi-card {
+      min-height: 112px;
+      padding: 15px 16px;
+    }
+
+    .kpi-head {
+      align-items: center;
+      color: var(--muted);
+      display: flex;
+      font-size: 12px;
+      font-weight: 900;
+      justify-content: space-between;
+      letter-spacing: 0.01em;
+    }
+
+    .kpi-value {
+      color: var(--text);
+      font-size: 24px;
+      font-variant-numeric: tabular-nums;
+      font-weight: 900;
+      line-height: 1.12;
+      margin-top: 11px;
+    }
+
+    .kpi-sub {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .kpi-card.risk {
+      border-color: #F7BBBB;
+      position: relative;
+    }
+
+    .kpi-card.risk::before {
+      background: var(--status-danger);
+      border-radius: 8px 0 0 8px;
+      bottom: -1px;
+      content: "";
+      left: -1px;
+      position: absolute;
+      top: -1px;
+      width: 3px;
+    }
+
+    .status {
+      align-items: center;
+      background: var(--status-success-soft);
+      border-radius: 999px;
+      color: var(--status-success);
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 900;
+      gap: 6px;
+      padding: 3px 9px;
+      white-space: nowrap;
+    }
+
+    .status.warning {
+      background: var(--status-warning-soft);
+      color: #935100;
+    }
+
+    .status.danger {
+      background: var(--status-danger-soft);
+      color: var(--status-danger);
+    }
+
+    .status.info {
+      background: var(--pih-primary-soft);
+      color: var(--pih-primary);
+    }
+
+    .main-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .panel-header {
+      align-items: flex-start;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-tile {
+      align-items: center;
+      background: var(--pih-primary-soft);
+      border-radius: 8px;
+      color: var(--pih-primary);
+      display: inline-flex;
+      height: 36px;
+      justify-content: center;
+      width: 36px;
+    }
+
+    h2 {
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      margin-top: 3px;
+    }
+
+    .progress-wrap {
+      padding: 8px 0 2px;
+      position: relative;
+    }
+
+    .progress-track {
+      background: var(--line-soft);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: var(--pih-primary);
+      border-radius: inherit;
+      height: 100%;
+      width: 76%;
+    }
+
+    .progress-fill.danger {
+      background: var(--status-danger);
+      width: 86%;
+    }
+
+    .threshold {
+      bottom: -9px;
+      position: absolute;
+      top: 0;
+      width: 1px;
+    }
+
+    .threshold::before {
+      border-left: 2px dashed currentColor;
+      content: "";
+      display: block;
+      height: 24px;
+    }
+
+    .threshold span {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      position: absolute;
+      top: 25px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .threshold.warn {
+      color: var(--status-warning);
+      left: 70%;
+    }
+
+    .threshold.danger {
+      color: var(--status-danger);
+      left: 85%;
+    }
+
+    .stat-list {
+      display: grid;
+      gap: 0;
+      margin-top: 26px;
+    }
+
+    .stat-row {
+      align-items: center;
+      border-bottom: 1px solid var(--line-soft);
+      display: flex;
+      font-size: 13px;
+      justify-content: space-between;
+      min-height: 32px;
+    }
+
+    .stat-row:last-child {
+      border-bottom: 0;
+    }
+
+    .stat-row span:first-child {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .stat-row strong {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ledger-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .ledger-header {
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      padding: 16px 18px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--text);
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 800;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 10px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 1080px;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line-soft);
+      padding: 12px 14px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #F8FAFC;
+      color: var(--muted-strong);
+      font-size: 12px;
+      font-weight: 900;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    td.num,
+    th.num {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    tr.risk-row {
+      background: #FFF8F8;
+      box-shadow: inset 3px 0 0 var(--status-danger);
+    }
+
+    .mono {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .client-token {
+      background: var(--surface-soft);
+      border-radius: 6px;
+      color: var(--muted-strong);
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 2px 8px;
+    }
+
+    .drawer-preview {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) 360px;
+    }
+
+    .detail-card {
+      padding: 18px;
+    }
+
+    .detail-top {
+      border-bottom: 1px solid var(--line-soft);
+      display: grid;
+      gap: 5px;
+      padding-bottom: 14px;
+    }
+
+    .detail-amount {
+      font-size: 26px;
+      font-variant-numeric: tabular-nums;
+      font-weight: 900;
+    }
+
+    .contact-pill {
+      background: var(--pih-primary-soft);
+      border: 1px solid var(--pih-primary-muted);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 8px 10px;
+    }
+
+    @media (max-width: 1180px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .main-grid,
+      .drawer-preview {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-title">
+      <div>
+        <h1>财务信息</h1>
+        <p>监控信用额度、付款进度及未结账单风险。</p>
+      </div>
+      <button class="button primary" type="button">⬇ 导出 CSV</button>
+    </header>
+
+    <section class="notice" aria-label="财务风险提示">
+      <div class="notice-copy">
+        <span class="notice-icon">!</span>
+        <span>当前存在 <strong>3 条逾期账单</strong>，合计 <strong>$128,430.00</strong>，建议优先联系对应财务负责人。</span>
+      </div>
+      <button class="button" type="button">查看逾期</button>
+    </section>
+
+    <section class="kpi-grid" aria-label="财务关键指标">
+      <article class="card kpi-card">
+        <div class="kpi-head"><span>总信用额度</span><span class="status info">Credit</span></div>
+        <div class="kpi-value">$1,250,000</div>
+        <div class="kpi-sub">覆盖 Agoda 全部子渠道</div>
+      </article>
+      <article class="card kpi-card">
+        <div class="kpi-head"><span>可用额度</span><span class="status">健康</span></div>
+        <div class="kpi-value">$175,000</div>
+        <div class="kpi-sub">可支撑约 2.8 天交易</div>
+      </article>
+      <article class="card kpi-card">
+        <div class="kpi-head"><span>已用额度</span><span class="status warning">76.0%</span></div>
+        <div class="kpi-value">$950,000</div>
+        <div class="kpi-sub">超过 70% 预警线</div>
+      </article>
+      <article class="card kpi-card">
+        <div class="kpi-head"><span>额度到期</span><span class="status info">6 天</span></div>
+        <div class="kpi-value" style="font-size:20px">2026年6月23日</div>
+        <div class="kpi-sub">到期前建议完成续额确认</div>
+      </article>
+      <article class="card kpi-card risk">
+        <div class="kpi-head"><span>逾期账单</span><span class="status danger">需处理</span></div>
+        <div class="kpi-value" style="color:var(--status-danger)">3</div>
+        <div class="kpi-sub">最久逾期 9 天</div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="card panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span class="icon-tile">%</span>
+            <div>
+              <h2>信用使用情况</h2>
+              <p class="tiny">已使用 $950,000.00 / 总额度 $1,250,000.00</p>
+            </div>
+          </div>
+          <span class="status warning">76.0%</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill"></div></div>
+          <div class="threshold warn"><span>70%</span></div>
+          <div class="threshold danger"><span>85%</span></div>
+        </div>
+        <div class="stat-list">
+          <div class="stat-row"><span>总信用额度</span><strong>$1,250,000.00</strong></div>
+          <div class="stat-row"><span>可用信用</span><strong>$175,000.00</strong></div>
+          <div class="stat-row"><span>已用信用</span><strong style="color:var(--pih-primary)">$950,000.00</strong></div>
+        </div>
+      </article>
+
+      <article class="card panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span class="icon-tile">✓</span>
+            <div>
+              <h2>历史账单付款进度</h2>
+              <p class="tiny">已结账 $824,680.00，待结 $253,910.00</p>
+            </div>
+          </div>
+          <span class="status info">76.5%</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill" style="width:76.5%"></div></div>
+        </div>
+        <div class="stat-list">
+          <div class="stat-row"><span>总账单金额</span><strong>$1,078,590.00</strong></div>
+          <div class="stat-row"><span>已结金额</span><strong style="color:var(--status-success)">$824,680.00</strong></div>
+          <div class="stat-row"><span>待结金额</span><strong>$253,910.00</strong></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="drawer-preview">
+      <article class="card ledger-card">
+        <div class="ledger-header">
+          <div>
+            <h2>未结账单详情</h2>
+            <p class="tiny">共 8 条账单，按回款风险优先排序。</p>
+          </div>
+          <div class="filters">
+            <span class="filter-pill">状态：全部</span>
+            <span class="filter-pill">Client：Agoda</span>
+            <span class="filter-pill">账期：近 30 天</span>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>账单编号</th>
+                <th>Client ID</th>
+                <th>计费周期</th>
+                <th>最晚回款</th>
+                <th>状态</th>
+                <th class="num">订单数</th>
+                <th class="num">金额 (USD)</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="risk-row">
+                <td class="mono">BILL-2026-0531-001</td>
+                <td><span class="client-token">Agoda</span></td>
+                <td>2026年5月</td>
+                <td>2026年6月10日</td>
+                <td><span class="status danger">已逾期</span></td>
+                <td class="num">1,250</td>
+                <td class="num"><strong>$82,430.00</strong></td>
+                <td><button class="button" type="button">查看</button></td>
+              </tr>
+              <tr class="risk-row">
+                <td class="mono">BILL-2026-0531-009</td>
+                <td><span class="client-token">AgodaEBK</span></td>
+                <td>2026年5月</td>
+                <td>2026年6月08日</td>
+                <td><span class="status danger">已逾期</span></td>
+                <td class="num">416</td>
+                <td class="num"><strong>$46,000.00</strong></td>
+                <td><button class="button" type="button">查看</button></td>
+              </tr>
+              <tr>
+                <td class="mono">BILL-2026-0605-013</td>
+                <td><span class="client-token">Agoda</span></td>
+                <td>2026年6月</td>
+                <td>2026年6月20日</td>
+                <td><span class="status warning">待结账</span></td>
+                <td class="num">215</td>
+                <td class="num"><strong>$54,300.00</strong></td>
+                <td><button class="button" type="button">查看</button></td>
+              </tr>
+              <tr>
+                <td class="mono">BILL-2026-0610-022</td>
+                <td><span class="client-token">AgodaUK</span></td>
+                <td>2026年6月</td>
+                <td>2026年6月25日</td>
+                <td><span class="status warning">待结账</span></td>
+                <td class="num">127</td>
+                <td class="num"><strong>$32,100.00</strong></td>
+                <td><button class="button" type="button">查看</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <aside class="card detail-card">
+        <div class="detail-top">
+          <span class="status danger" style="width:max-content">账单详情 · 已逾期</span>
+          <h2 class="mono">BILL-2026-0531-001</h2>
+          <div class="detail-amount">$82,430.00</div>
+          <p class="tiny">Agoda · 2026年5月账期 · 逾期 7 天</p>
+        </div>
+        <div class="stat-list" style="margin-top:10px">
+          <div class="stat-row"><span>最晚回款时间</span><strong>2026年6月10日</strong></div>
+          <div class="stat-row"><span>结算日期</span><strong>-</strong></div>
+          <div class="stat-row"><span>订单数</span><strong>1,250</strong></div>
+          <div class="stat-row"><span>财务负责人</span><strong>Jason</strong></div>
+        </div>
+        <div style="display:grid;gap:8px;margin-top:18px">
+          <p class="tiny" style="font-weight:900;color:var(--muted-strong)">财务联系人</p>
+          <div class="contact-pill">jason@dida.com</div>
+          <div class="contact-pill">finance@dida.travel</div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>

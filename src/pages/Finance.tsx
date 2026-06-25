@@ -162,7 +162,7 @@ export default function FinancePage() {
       align: 'right',
       sorter: (a, b) => a.amount - b.amount,
       render: (v: number) => (
-        <span style={{ color: v < 0 ? '#f5222d' : '#17213f', fontWeight: 600 }}>
+        <span style={{ color: v < 0 ? '#EF4444' : 'var(--text)', fontWeight: 600 }}>
           {v < 0 ? '-' : ''}¥{Math.abs(v).toLocaleString()}
         </span>
       ),
@@ -184,8 +184,8 @@ export default function FinancePage() {
       sorter: (a, b) => a.agingDays - b.agingDays,
       render: (v: number) =>
         v > 0
-          ? <span style={{ color: '#f5222d', fontWeight: 700 }}>{v}天</span>
-          : <span style={{ color: '#aab2c8' }}>-</span>,
+          ? <span style={{ color: '#EF4444', fontWeight: 700 }}>{v}天</span>
+          : <span style={{ color: '#94A3B8' }}>-</span>,
     },
     {
       title: '负责人',
@@ -228,7 +228,7 @@ export default function FinancePage() {
           type="primary"
           icon={<FileExcelOutlined />}
           onClick={handleExport}
-          style={{ background: '#217346', borderColor: '#217346' }}
+          style={{ background: '#10B981', borderColor: '#10B981' }}
         >
           导出 Excel
         </Button>
@@ -238,7 +238,7 @@ export default function FinancePage() {
       <div style={styles.cards}>
         <div style={styles.card}>
           <div style={styles.cardLabel}>总金额</div>
-          <div style={{ ...styles.cardValue, color: '#4f5fb8' }}>
+          <div style={{ ...styles.cardValue, color: '#505AAC' }}>
             ¥{totalAmount.toLocaleString()}
           </div>
         </div>
@@ -246,9 +246,9 @@ export default function FinancePage() {
           <div style={styles.cardLabel}>账单总数</div>
           <div style={styles.cardValue}>{filtered.length}</div>
         </div>
-        <div style={{ ...styles.card, borderColor: overdueCount > 0 ? '#ffccc7' : '#dfe5ef' }}>
+        <div style={{ ...styles.card, borderColor: overdueCount > 0 ? '#ffccc7' : '#E5E7EB' }}>
           <div style={styles.cardLabel}>逾期账单</div>
-          <div style={{ ...styles.cardValue, color: overdueCount > 0 ? '#f5222d' : '#aab2c8' }}>
+          <div style={{ ...styles.cardValue, color: overdueCount > 0 ? '#EF4444' : '#94A3B8' }}>
             {overdueCount}
           </div>
         </div>
@@ -328,12 +328,12 @@ const styles: Record<string, React.CSSProperties> = {
   title: {
     fontSize: 20,
     fontWeight: 700,
-    color: '#000947',
+    color: 'var(--text)',
     lineHeight: 1.3,
   },
   subtitle: {
     fontSize: 13,
-    color: '#8390ad',
+    color: '#64748B',
     marginTop: 4,
   },
   cards: {
@@ -344,13 +344,13 @@ const styles: Record<string, React.CSSProperties> = {
   },
   card: {
     background: '#fff',
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     borderRadius: 10,
     padding: '14px 18px',
   },
   cardLabel: {
     fontSize: 12,
-    color: '#8390ad',
+    color: '#64748B',
     fontWeight: 600,
     marginBottom: 6,
     textTransform: 'uppercase' as const,
@@ -359,7 +359,7 @@ const styles: Record<string, React.CSSProperties> = {
   cardValue: {
     fontSize: 22,
     fontWeight: 800,
-    color: '#17213f',
+    color: 'var(--text)',
     lineHeight: 1,
   },
   filters: {
@@ -370,7 +370,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   tableWrap: {
     background: '#fff',
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     borderRadius: 10,
     overflow: 'hidden',
   },

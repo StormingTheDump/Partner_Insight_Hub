@@ -1,12 +1,17 @@
-import { Download } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  CreditCard,
+  Download,
+  WalletCards,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { useAppState } from "@/dashboard/app-state";
 import { Button } from "@/shared/components/Button";
 import { Drawer } from "@/shared/components/Drawer";
 import { PageHeader } from "@/shared/components/PageHeader";
-
-// ─── types ────────────────────────────────────────────────────────────────────
+import "./FinanceStatusPage.css";
 
 type CreditSummary = {
   total_credit: number;
@@ -19,15 +24,17 @@ type PaymentProgress = {
   total_bill_amount: number;
   settled_amount: number;
   pending_amount: number;
-  progress_ratio: number;
+  progress_ratio?: number;
 };
+
+type BillStatus = "已逾期" | "已结清" | "待结账";
 
 type Bill = {
   bill_no: string;
   client_id: string;
   billing_period: string;
   latest_collection_date: string;
-  status: "已逾期" | "已结清" | "待结账";
+  status: BillStatus;
   settlement_date: string | null;
   contact: string;
   order_count: number;
@@ -36,24 +43,8 @@ type Bill = {
 
 type BillDetail = Bill & { finance_contacts: string[] };
 
-// ─── design tokens (purple theme) ────────────────────────────────────────────
-
-const C = {
-  purple:      "#604696",
-  purpleLight: "#eef1ff",
-  purpleMid:   "#ede8f5",
-  purpleDim:   "#7c5caa",
-  navy:        "#000947",
-  red:         "#ea0345",
-  redLight:    "#fce8e6",
-  // threshold lines only – user-specified
-  warnLine:    "#f59e0b",
-  dangerLine:  "#ea0345",
-};
-
-// ─── helpers ──────────────────────────────────────────────────────────────────
-
 const FINANCE_CONTACTS = ["jason@dida.com", "lea@dida.com", "lumino@dida.com", "neo@dida.com"];
+const DEMO_TODAY = new Date("2026-06-17T00:00:00");
 
 function fmtMoney(n: number) {
   return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -64,7 +55,7 @@ function fmtInt(n: number) {
 }
 
 function fmtDate(s: string | null) {
-  if (!s) return "—";
+  if (!s) return "-";
   const [y, m, d] = s.split("-");
   return `${y}年${Number(m)}月${Number(d)}日`;
 }
@@ -74,100 +65,96 @@ function fmtPeriod(s: string) {
   return `${y}年${Number(m)}月`;
 }
 
-const STATUS_CLASS_MAP: Record<string, string> = {
-  "已逾期": "status danger",
-  "已结清": "status",
-  "待结账": "status warning",
-};
-
-// ─── sub-components ───────────────────────────────────────────────────────────
-
-function ThresholdLine({ left, color, label }: { left: string; color: string; label: string }) {
-  const [visible, setVisible] = useState(false);
-  return (
-    <div
-      style={{ position: "absolute", left, top: 0, bottom: 0, width: 20, marginLeft: -9, zIndex: 2, cursor: "default" }}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-    >
-      <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, borderLeft: `2px dashed ${color}` }} />
-      {visible && (
-        <div style={{
-          position: "absolute",
-          bottom: "calc(100% + 8px)",
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: C.navy,
-          color: "#fff",
-          padding: "5px 10px",
-          borderRadius: 6,
-          fontSize: 12,
-          fontWeight: 600,
-          whiteSpace: "nowrap",
-          pointerEvents: "none",
-          boxShadow: "0 3px 10px rgba(0,9,71,0.25)",
-        }}>
-          {label}
-          <div style={{
-            position: "absolute", top: "100%", left: "50%",
-            transform: "translateX(-50%)",
-            borderLeft: "5px solid transparent",
-            borderRight: "5px solid transparent",
-            borderTop: `5px solid ${C.navy}`,
-          }} />
-        </div>
-      )}
-    </div>
-  );
+function ratio(part: number, total: number) {
+  if (!Number.isFinite(part) || !Number.isFinite(total) || total <= 0) return 0;
+  return Math.min(1, Math.max(0, part / total));
 }
 
-function ProgressBar({ ratio, tone, showThresholds }: {
+function daysBetween(date: string | null, from = DEMO_TODAY) {
+  if (!date) return null;
+  const parsed = new Date(`${date}T00:00:00`);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return Math.ceil((parsed.getTime() - from.getTime()) / 86_400_000);
+}
+
+function isOverdue(status: string) {
+  return status === "已逾期";
+}
+
+function statusClass(status: string) {
+  if (status === "已逾期") return "status danger";
+  if (status === "待结账") return "status warning";
+  if (status === "已结清") return "status";
+  return "status neutral";
+}
+
+function creditTone(creditRatio: number) {
+  if (creditRatio >= 0.85) return "danger";
+  if (creditRatio >= 0.7) return "warning";
+  return "info";
+}
+
+function ProgressBar({
+  ratio: value,
+  tone = "info",
+  showThresholds = false,
+}: {
   ratio: number;
-  tone: "default" | "warning" | "danger";
+  tone?: "info" | "warning" | "danger" | "success";
   showThresholds?: boolean;
 }) {
-  const pct = Math.min(100, Math.max(0, ratio * 100));
-  // warning/danger tones only trigger above 70%/85% — fill stays purple otherwise
-  const fillColor =
-    tone === "danger"  ? C.red      :
-    tone === "warning" ? C.purpleDim :
-    C.purple;
+  const pct = Math.min(100, Math.max(0, value * 100));
+
   return (
-    <div style={{ position: "relative", padding: "6px 0" }}>
-      <div style={{ height: 10, borderRadius: 999, background: "var(--line-soft)", overflow: "hidden" }}>
-        <div style={{
-          height: "100%", borderRadius: "inherit",
-          background: fillColor,
-          width: `${pct.toFixed(1)}%`,
-          transition: "width 0.4s ease",
-        }} />
+    <div className="finance-progress-wrap">
+      <div className="finance-progress-track">
+        <div className={`finance-progress-fill ${tone}`} style={{ width: `${pct.toFixed(1)}%` }} />
       </div>
-      {showThresholds && (
+      {showThresholds ? (
         <>
-          <ThresholdLine left="70%" color={C.warnLine}   label="警告阈值 70%" />
-          <ThresholdLine left="85%" color={C.dangerLine} label="危险阈值 85%" />
+          <span className="finance-threshold warn"><span>70%</span></span>
+          <span className="finance-threshold danger"><span>85%</span></span>
         </>
-      )}
+      ) : null}
     </div>
   );
 }
 
-function StatRow({ label, value, bold }: { label: string; value: string; bold?: boolean }) {
+function StatRow({ label, value, tone }: { label: string; value: string; tone?: "primary" | "success" | "danger" }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", gap: 8, fontSize: 13, marginTop: 8 }}>
-      <span style={{ color: "var(--muted)" }}>{label}</span>
-      <span style={{ fontWeight: bold ? 700 : 400, fontVariantNumeric: "tabular-nums", color: bold ? C.purple : undefined }}>
-        {value}
-      </span>
+    <div className="finance-stat-row">
+      <span>{label}</span>
+      <strong className={tone ? `is-${tone}` : undefined}>{value}</strong>
     </div>
   );
 }
 
-// ─── main component ───────────────────────────────────────────────────────────
+function KpiCard({
+  label,
+  value,
+  badge,
+  tone,
+  risk = false,
+}: {
+  label: string;
+  value: string;
+  badge: string;
+  tone?: "info" | "warning" | "danger" | "success";
+  risk?: boolean;
+}) {
+  return (
+    <article className={risk ? "finance-kpi-card risk" : "finance-kpi-card"}>
+      <div className="finance-kpi-head">
+        <span>{label}</span>
+        <span className={`status ${tone ?? "info"}`}>{badge}</span>
+      </div>
+      <div className={risk ? "finance-kpi-value is-danger" : "finance-kpi-value"}>{value}</div>
+    </article>
+  );
+}
 
 export function FinanceStatusPage(_: PageProps) {
   const { selectedFeed } = useAppState();
-
   const [credit, setCredit] = useState<CreditSummary | null>(null);
   const [payment, setPayment] = useState<PaymentProgress | null>(null);
   const [bills, setBills] = useState<Bill[]>([]);
@@ -175,13 +162,14 @@ export function FinanceStatusPage(_: PageProps) {
   const [drawerBill, setDrawerBill] = useState<BillDetail | null>(null);
 
   const clientId = selectedFeed === "全部渠道" ? "all" : selectedFeed;
+  const clientLabel = clientId === "all" ? "全部渠道" : clientId;
   const loading = fetchedClientId !== clientId;
 
   useEffect(() => {
     const qs = `client_id=${encodeURIComponent(clientId)}`;
     Promise.all([
-      fetch(`/api/finance/summary?${qs}`).then(r => r.json()),
-      fetch(`/api/finance/unsettled-bills?${qs}`).then(r => r.json()),
+      fetch(`/api/finance/summary?${qs}`).then((r) => r.json()),
+      fetch(`/api/finance/unsettled-bills?${qs}`).then((r) => r.json()),
     ])
       .then(([summary, billsResp]) => {
         setCredit(summary.credit ?? null);
@@ -189,274 +177,240 @@ export function FinanceStatusPage(_: PageProps) {
         setBills(billsResp.data ?? []);
         setFetchedClientId(clientId);
       })
-      .catch(() => { setFetchedClientId(clientId); });
+      .catch(() => {
+        setFetchedClientId(clientId);
+      });
   }, [clientId]);
+
+  const creditRatio = credit ? ratio(credit.consumed_credit, credit.total_credit) : 0;
+  const paymentRatio = payment
+    ? payment.progress_ratio ?? ratio(payment.settled_amount, payment.total_bill_amount)
+    : 0;
+  const overdueBills = useMemo(() => bills.filter((bill) => isOverdue(bill.status)), [bills]);
+  const overdueAmount = overdueBills.reduce((sum, bill) => sum + bill.amount, 0);
+  const sortedBills = useMemo(
+    () =>
+      [...bills].sort((a, b) => {
+        if (isOverdue(a.status) !== isOverdue(b.status)) return isOverdue(a.status) ? -1 : 1;
+        return a.latest_collection_date.localeCompare(b.latest_collection_date);
+      }),
+    [bills],
+  );
+  const creditDueDays = daysBetween(credit?.due_date ?? null);
+  const tone = creditTone(creditRatio);
 
   function openDetail(bill: Bill) {
     setDrawerBill({ ...bill, finance_contacts: FINANCE_CONTACTS });
   }
 
-  const creditRatio = credit ? credit.consumed_credit / credit.total_credit : 0;
-  const creditTone: "default" | "warning" | "danger" =
-    creditRatio >= 0.85 ? "danger" : creditRatio >= 0.70 ? "warning" : "default";
+  function exportCsv() {
+    const csv = [
+      "账单编号,Client ID,计费周期,最晚回款时间,状态,结算日期,联系人,订单数,金额",
+      ...sortedBills.map((bill) =>
+        [
+          bill.bill_no,
+          bill.client_id,
+          fmtPeriod(bill.billing_period),
+          bill.latest_collection_date,
+          bill.status,
+          bill.settlement_date ?? "",
+          bill.contact,
+          bill.order_count,
+          bill.amount.toFixed(2),
+        ].join(","),
+      ),
+    ].join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    a.download = `finance-bills-${clientId}.csv`;
+    a.click();
+  }
 
   return (
-    <>
-      <PageHeader title="财务信息" description="监控信用敞口、付款进度及未结账单详情。" />
-
-      {/* ── 4 metric cards ─────────────────────────────────────────────────── */}
-      <div className="grid four-col">
-        <div className="card compact">
-          <p className="muted" style={{ marginBottom: 4 }}>信用额度</p>
-          <div className="metric-value">
-            {credit ? `$${fmtInt(credit.total_credit)}` : "—"}
-          </div>
-        </div>
-        <div className="card compact">
-          <p className="muted" style={{ marginBottom: 4 }}>可用额度</p>
-          <div className="metric-value">
-            {credit ? `$${fmtInt(credit.avail_credit)}` : "—"}
-          </div>
-        </div>
-        <div className="card compact">
-          <p className="muted" style={{ marginBottom: 4 }}>已用额度</p>
-          <div className="metric-value">
-            {credit ? `$${fmtInt(credit.consumed_credit)}` : "—"}
-          </div>
-        </div>
-        <div className="card compact">
-          <p className="muted" style={{ marginBottom: 4 }}>额度到期</p>
-          <div className="metric-value" style={{ fontSize: 18 }}>
-            {credit ? fmtDate(credit.due_date) : "—"}
-          </div>
-        </div>
-      </div>
-
-      {/* ── Two progress cards ──────────────────────────────────────────────── */}
-      <div className="grid two-col" style={{ marginTop: 22 }}>
-        <div className="card">
-          <div className="card-header">
-            <div>
-              <h3>信用使用情况</h3>
-              <p className="tiny">
-                {credit
-                  ? `已使用 $${fmtMoney(credit.total_credit)} 信用额度中的 $${fmtMoney(credit.consumed_credit)}`
-                  : "加载中…"}
-              </p>
-            </div>
-            {credit && (
-              <span className={
-                creditTone === "danger" ? "status danger" :
-                creditTone === "warning" ? "status warning" :
-                "status"
-              }>
-                {(creditRatio * 100).toFixed(1)}%
-              </span>
-            )}
-          </div>
-          <ProgressBar ratio={creditRatio} tone={creditTone} showThresholds />
-          {credit && (
-            <>
-              <StatRow label="总信用额度" value={`$${fmtMoney(credit.total_credit)}`} />
-              <StatRow label="可用信用"   value={`$${fmtMoney(credit.avail_credit)}`} />
-              <StatRow label="已用信用"   value={`$${fmtMoney(credit.consumed_credit)}`} bold />
-            </>
-          )}
-        </div>
-
-        <div className="card">
-          <div className="card-header">
-            <div>
-              <h3>历史账单付款进度</h3>
-              <p className="tiny">
-                {payment
-                  ? `已结账 $${fmtMoney(payment.settled_amount)}，待结 $${fmtMoney(payment.pending_amount)}`
-                  : "加载中…"}
-              </p>
-            </div>
-            {payment && (
-              <span className="status info">{(payment.progress_ratio * 100).toFixed(1)}%</span>
-            )}
-          </div>
-          <ProgressBar ratio={payment?.progress_ratio ?? 0} tone="default" />
-          {payment && (
-            <>
-              <StatRow label="总账单金额" value={`$${fmtMoney(payment.total_bill_amount)}`} />
-              <StatRow label="结账金额"   value={`$${fmtMoney(payment.settled_amount)}`} bold />
-              <StatRow label="待结金额"   value={`$${fmtMoney(payment.pending_amount)}`} />
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* ── Unsettled bills table ───────────────────────────────────────────── */}
-      <div style={{ marginTop: 22 }} className="card">
-        <div className="card-header">
-          <div>
-            <h3>未结账单详情</h3>
-            <p className="tiny">{loading ? "加载中…" : `共 ${bills.length} 条账单`}</p>
-          </div>
-          <Button
-            onClick={() => {
-              const csv = [
-                "账单编号,Client ID,计费周期,最晚回款时间,状态,结账日期,联系人,订单数,金额",
-                ...bills.map(b => [
-                  b.bill_no, b.client_id, fmtPeriod(b.billing_period),
-                  b.latest_collection_date, b.status,
-                  b.settlement_date ?? "", b.contact,
-                  b.order_count, b.amount.toFixed(2),
-                ].join(",")),
-              ].join("\n");
-              const a = document.createElement("a");
-              a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-              a.download = `finance-bills-${clientId}.csv`;
-              a.click();
-            }}
-            disabled={bills.length === 0}
-          >
+    <div className="finance-status-page">
+      <PageHeader
+        title="财务信息"
+        actions={
+          <Button variant="primary" onClick={exportCsv} disabled={bills.length === 0}>
             <Download className="icon" /> 导出 CSV
           </Button>
+        }
+      />
+
+      <section className={`finance-risk-notice${overdueBills.length === 0 ? " is-clear" : ""}`}>
+        <div className="finance-risk-copy">
+          <span className="finance-risk-icon">
+            {overdueBills.length > 0 ? <AlertTriangle className="icon" /> : <CheckCircle2 className="icon" />}
+          </span>
+          {loading ? (
+            <span>加载中</span>
+          ) : overdueBills.length > 0 ? (
+            <span>
+              逾期账单 <strong>{overdueBills.length}</strong> 条 · <strong>${fmtMoney(overdueAmount)}</strong>
+            </span>
+          ) : (
+            <span>无逾期账单</span>
+          )}
+        </div>
+        <Button onClick={() => overdueBills[0] && openDetail(overdueBills[0])} disabled={overdueBills.length === 0}>
+          查看逾期
+        </Button>
+      </section>
+
+      <section className="finance-kpi-grid" aria-label="财务关键指标">
+        <KpiCard
+          label="总信用额度"
+          value={credit ? `$${fmtInt(credit.total_credit)}` : "-"}
+          badge="Credit"
+          tone="info"
+        />
+        <KpiCard
+          label="可用额度"
+          value={credit ? `$${fmtInt(credit.avail_credit)}` : "-"}
+          badge={creditRatio >= 0.85 ? "紧张" : "健康"}
+          tone={creditRatio >= 0.85 ? "danger" : "success"}
+        />
+        <KpiCard
+          label="已用额度"
+          value={credit ? `$${fmtInt(credit.consumed_credit)}` : "-"}
+          badge={`${(creditRatio * 100).toFixed(1)}%`}
+          tone={tone}
+        />
+        <KpiCard
+          label="额度到期"
+          value={credit ? fmtDate(credit.due_date) : "-"}
+          badge={creditDueDays !== null && creditDueDays >= 0 ? `${creditDueDays} 天` : "待确认"}
+          tone={creditDueDays !== null && creditDueDays < 7 ? "warning" : "info"}
+        />
+        <KpiCard
+          label="逾期账单"
+          value={String(overdueBills.length)}
+          badge={overdueBills.length > 0 ? "需处理" : "正常"}
+          tone={overdueBills.length > 0 ? "danger" : "success"}
+          risk={overdueBills.length > 0}
+        />
+      </section>
+
+      <section className="finance-progress-grid">
+        <article className="finance-panel">
+          <div className="finance-panel-header">
+            <div className="finance-panel-title">
+              <span className="finance-icon-tile"><CreditCard className="icon" /></span>
+            </div>
+            <span className={`status ${tone}`}>{(creditRatio * 100).toFixed(1)}%</span>
+          </div>
+          <ProgressBar ratio={creditRatio} tone={tone} showThresholds />
+          {credit ? (
+            <div className="finance-stat-list">
+              <StatRow label="总信用额度" value={`$${fmtMoney(credit.total_credit)}`} />
+              <StatRow label="可用信用" value={`$${fmtMoney(credit.avail_credit)}`} />
+              <StatRow label="已用信用" value={`$${fmtMoney(credit.consumed_credit)}`} tone="primary" />
+            </div>
+          ) : null}
+        </article>
+
+        <article className="finance-panel">
+          <div className="finance-panel-header">
+            <div className="finance-panel-title">
+              <span className="finance-icon-tile"><WalletCards className="icon" /></span>
+            </div>
+            <span className="status info">{(paymentRatio * 100).toFixed(1)}%</span>
+          </div>
+          <ProgressBar ratio={paymentRatio} tone="info" />
+          {payment ? (
+            <div className="finance-stat-list">
+              <StatRow label="总账单金额" value={`$${fmtMoney(payment.total_bill_amount)}`} />
+              <StatRow label="已结金额" value={`$${fmtMoney(payment.settled_amount)}`} tone="success" />
+              <StatRow label="待结金额" value={`$${fmtMoney(payment.pending_amount)}`} />
+            </div>
+          ) : null}
+        </article>
+      </section>
+
+      <section className="finance-ledger-card">
+        <div className="finance-ledger-header">
+          <div className="finance-filter-group">
+            <span className="finance-filter-pill">状态：全部</span>
+            <span className="finance-filter-pill">Client：{clientLabel}</span>
+            <span className="finance-filter-pill">账期：近 30 天</span>
+          </div>
         </div>
 
-        <div className="table-wrap" style={{ maxHeight: "calc(100vh - 480px)", overflowY: "auto" }}>
-          <table style={{ width: "100%", minWidth: 1080, tableLayout: "fixed", borderCollapse: "collapse", fontSize: 13 }}>
-            <colgroup>
-              <col style={{ width: 170 }} /><col style={{ width: 110 }} />
-              <col style={{ width: 110 }} /><col style={{ width: 140 }} />
-              <col style={{ width: 100 }} /><col style={{ width: 130 }} />
-              <col style={{ width: 70 }} /> <col style={{ width: 80 }} />
-              <col style={{ width: 120 }} /><col style={{ width: 80 }} />
-            </colgroup>
+        <div className="finance-ledger-table">
+          <table>
             <thead>
               <tr>
-                {["账单编号","Client ID","计费周期","最晚回款时间","状态","结账日期","联系人","订单数","金额（USD）","操作"].map(h => (
-                  <th key={h} style={{
-                    position: "sticky", top: 0, zIndex: 2,
-                    background: "#f8fafd", color: "var(--muted-strong)",
-                    fontSize: 12, fontWeight: 800,
-                    padding: "11px 13px",
-                    borderBottom: "2px solid var(--line)",
-                    whiteSpace: "nowrap", verticalAlign: "middle",
-                    textAlign: h === "金额（USD）" || h === "订单数" ? "right" : "left",
-                  }}>
-                    {h}
-                  </th>
-                ))}
+                <th>账单编号</th>
+                <th>Client ID</th>
+                <th>计费周期</th>
+                <th>最晚回款</th>
+                <th>状态</th>
+                <th className="num">订单数</th>
+                <th className="num">金额 (USD)</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={10} style={{ padding: "32px", textAlign: "center", color: "var(--muted)" }}>加载中…</td></tr>
-              ) : bills.length === 0 ? (
-                <tr><td colSpan={10} style={{ padding: "32px", textAlign: "center", color: "var(--muted)" }}>暂无账单数据</td></tr>
-              ) : bills.map(bill => (
-                <tr key={bill.bill_no} style={{ background: bill.status === "已逾期" ? C.redLight : undefined }}>
-                  <td style={{ ...TD, fontFamily: "var(--font-mono)", fontSize: 12 }}>{bill.bill_no}</td>
-                  <td style={TD}>{bill.client_id}</td>
-                  <td style={TD}>{fmtPeriod(bill.billing_period)}</td>
-                  <td style={TD}>{fmtDate(bill.latest_collection_date)}</td>
-                  <td style={TD}>
-                    <span className={STATUS_CLASS_MAP[bill.status] ?? "status neutral"}>
-                      {bill.status}
-                    </span>
-                  </td>
-                  <td style={TD}>{fmtDate(bill.settlement_date)}</td>
-                  <td style={TD}>{bill.contact}</td>
-                  <td style={{ ...TD, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
-                    {bill.order_count.toLocaleString()}
-                  </td>
-                  <td style={{ ...TD, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
-                    ${fmtMoney(bill.amount)}
-                  </td>
-                  <td style={TD}>
-                    <button
-                      type="button"
-                      className="button"
-                      style={{ padding: "2px 10px", minHeight: 28, fontSize: 12 }}
-                      onClick={() => openDetail(bill)}
-                    >
-                      查看
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                <tr><td colSpan={8} className="finance-table-state">加载中</td></tr>
+              ) : sortedBills.length === 0 ? (
+                <tr><td colSpan={8} className="finance-table-state">暂无账单数据</td></tr>
+              ) : (
+                sortedBills.map((bill) => (
+                  <tr
+                    className={isOverdue(bill.status) ? "finance-ledger-row finance-risk-row" : "finance-ledger-row"}
+                    key={bill.bill_no}
+                  >
+                    <td className="finance-mono">{bill.bill_no}</td>
+                    <td><span className="finance-client-token">{bill.client_id}</span></td>
+                    <td>{fmtPeriod(bill.billing_period)}</td>
+                    <td>{fmtDate(bill.latest_collection_date)}</td>
+                    <td><span className={statusClass(bill.status)}>{bill.status}</span></td>
+                    <td className="num">{bill.order_count.toLocaleString()}</td>
+                    <td className="num finance-money">${fmtMoney(bill.amount)}</td>
+                    <td>
+                      <Button className="finance-small-button" onClick={() => openDetail(bill)}>
+                        查看
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
 
-      {/* ── Bill detail drawer ──────────────────────────────────────────────── */}
       <Drawer
         open={drawerBill !== null}
         title="账单详情"
         subtitle={drawerBill?.bill_no}
         onClose={() => setDrawerBill(null)}
       >
-        {drawerBill && (
-          <div style={{ display: "grid", gap: 0 }}>
-            {([
-              ["账单编号",    drawerBill.bill_no],
-              ["Client ID",  drawerBill.client_id],
-              ["计费周期",    fmtPeriod(drawerBill.billing_period)],
-              ["最晚回款时间", fmtDate(drawerBill.latest_collection_date)],
-              ["状态",        drawerBill.status],
-              ["结账日期",    fmtDate(drawerBill.settlement_date)],
-              ["联系人",      drawerBill.contact],
-              ["订单数",      drawerBill.order_count.toLocaleString()],
-              ["金额（USD）", `$${fmtMoney(drawerBill.amount)}`],
-            ] as [string, string][]).map(([label, value]) => (
-              <div key={label} style={{
-                display: "flex", justifyContent: "space-between", gap: 12,
-                padding: "11px 0", borderBottom: "1px solid var(--line-soft)", fontSize: 14,
-              }}>
-                <span style={{ color: "var(--muted)", flexShrink: 0 }}>{label}</span>
-                <span style={{ fontWeight: 600, textAlign: "right" }}>
-                  {label === "状态" ? (
-                    <span className={STATUS_CLASS_MAP[value] ?? "status neutral"}>
-                      {value}
-                    </span>
-                  ) : label === "Client ID" ? (
-                    <span style={{
-                      display: "inline-block", padding: "2px 8px",
-                      borderRadius: 4, background: C.purpleLight,
-                      color: C.purple, fontSize: 12, fontWeight: 600,
-                    }}>
-                      {value}
-                    </span>
-                  ) : value}
-                </span>
-              </div>
-            ))}
+        {drawerBill ? (
+          <div className="finance-drawer-summary">
+            <div className="finance-drawer-hero">
+              <span className={statusClass(drawerBill.status)}>{drawerBill.status}</span>
+              <h3 className="finance-mono">{drawerBill.bill_no}</h3>
+              <strong>${fmtMoney(drawerBill.amount)}</strong>
+            </div>
 
-            <div style={{ marginTop: 20 }}>
-              <p style={{ fontWeight: 700, fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>
-                财务联系人
-              </p>
-              <div style={{ display: "grid", gap: 8 }}>
-                {drawerBill.finance_contacts.map(email => (
-                  <div key={email} style={{
-                    padding: "8px 12px", borderRadius: 8,
-                    background: C.purpleLight, border: `1px solid var(--line-soft)`,
-                    fontSize: 13, color: C.navy,
-                  }}>
-                    {email}
-                  </div>
-                ))}
-              </div>
+            <div className="finance-stat-list">
+              <StatRow label="最晚回款时间" value={fmtDate(drawerBill.latest_collection_date)} />
+              <StatRow label="结算日期" value={fmtDate(drawerBill.settlement_date)} />
+              <StatRow label="订单数" value={drawerBill.order_count.toLocaleString()} />
+              <StatRow label="财务负责人" value={drawerBill.contact} />
+              <StatRow label="Client ID" value={drawerBill.client_id} />
+            </div>
+
+            <div className="finance-contact-list">
+              {drawerBill.finance_contacts.map((email) => (
+                <span className="finance-contact-pill" key={email}>{email}</span>
+              ))}
             </div>
           </div>
-        )}
+        ) : null}
       </Drawer>
-    </>
+    </div>
   );
 }
-
-// ─── shared td style ──────────────────────────────────────────────────────────
-const TD: React.CSSProperties = {
-  padding: "11px 13px",
-  borderBottom: "1px solid var(--line-soft)",
-  verticalAlign: "middle",
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-};

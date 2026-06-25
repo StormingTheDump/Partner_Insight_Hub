@@ -48,6 +48,29 @@ function params(url: URL): Record<string, string> {
   return out;
 }
 
+function splitFilterValues(value?: string): string[] {
+  return (value ?? "")
+    .split(/[\s,，]+/)
+    .map(item => item.trim())
+    .filter(Boolean);
+}
+
+function matchesAnyContains(value: unknown, filters: string[]): boolean {
+  const text = String(value ?? "");
+  return filters.length === 0 || filters.some(filter => text.includes(filter));
+}
+
+function filterByDateRange(data: Array<Record<string, unknown>>, p: Record<string, string>, dateKey: string) {
+  let next = data;
+  if (p["start_date"]) {
+    next = next.filter(row => String(row[dateKey] ?? "").substring(0, 10) >= p["start_date"]);
+  }
+  if (p["end_date"]) {
+    next = next.filter(row => String(row[dateKey] ?? "").substring(0, 10) <= p["end_date"]);
+  }
+  return next;
+}
+
 const MONTH_MAP: Record<string, string> = {
   Jan:"01", Feb:"02", Mar:"03", Apr:"04", May:"05", Jun:"06",
   Jul:"07", Aug:"08", Sep:"09", Oct:"10", Nov:"11", Dec:"12",
@@ -387,9 +410,12 @@ function handlePrebookErrors(p: Record<string, string>): Response {
     rows: unknown[]; _all_rows: Array<Record<string, unknown>>;
   };
   let data = [...src._all_rows];
+  const errorTypes = splitFilterValues(p["error_types"] || p["error_type"]);
+  const ratePlanIds = splitFilterValues(p["rate_plan_ids"] || p["rate_plan_id"]);
   if (p["client_id"])    data = data.filter(r => r["client_id"] === p["client_id"]);
-  if (p["error_type"])   data = data.filter(r => r["error_type"] === p["error_type"]);
-  if (p["rate_plan_id"]) data = data.filter(r => String(r["dida_rate_plan_id"]).includes(p["rate_plan_id"]));
+  if (errorTypes.length > 0) data = data.filter(r => errorTypes.includes(String(r["error_type"])));
+  if (ratePlanIds.length > 0) data = data.filter(r => matchesAnyContains(r["dida_rate_plan_id"], ratePlanIds));
+  data = filterByDateRange(data, p, "log_time");
 
   const chart: Record<string, number> = {};
   data.forEach(r => { const et = String(r["error_type"]); chart[et] = (chart[et] ?? 0) + 1; });
@@ -408,9 +434,12 @@ function handleBookErrors(p: Record<string, string>): Response {
     rows: unknown[]; _all_rows: Array<Record<string, unknown>>;
   };
   let data = [...src._all_rows];
+  const errorTypes = splitFilterValues(p["error_types"] || p["error_type"]);
+  const bookingNumbers = splitFilterValues(p["booking_numbers"] || p["booking_number"]);
   if (p["client_id"])      data = data.filter(r => r["client_id"] === p["client_id"]);
-  if (p["error_type"])     data = data.filter(r => r["error_type"] === p["error_type"]);
-  if (p["booking_number"]) data = data.filter(r => String(r["channel_bookingnumber"]).includes(p["booking_number"]));
+  if (errorTypes.length > 0) data = data.filter(r => errorTypes.includes(String(r["error_type"])));
+  if (bookingNumbers.length > 0) data = data.filter(r => matchesAnyContains(r["channel_bookingnumber"], bookingNumbers));
+  data = filterByDateRange(data, p, "channel_createtime");
 
   const chart: Record<string, number> = {};
   data.forEach(r => { const et = String(r["error_type"]); chart[et] = (chart[et] ?? 0) + 1; });

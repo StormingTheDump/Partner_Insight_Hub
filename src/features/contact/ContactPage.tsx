@@ -65,7 +65,7 @@ function ContactRow({ contact, onSave, onDelete }: {
           <button type="button" onClick={cancel} disabled={busy} style={{ ...actionBtn, background: "var(--surface-soft)", color: "var(--muted-strong)" }}>
             <X size={13} /> 取消
           </button>
-          <button type="button" onClick={save} disabled={busy} style={{ ...actionBtn, background: "var(--dida-navy)", color: "#fff" }}>
+          <button type="button" onClick={save} disabled={busy} style={{ ...actionBtn, background: "var(--pih-primary)", color: "#fff" }}>
             <Check size={13} /> {busy ? "保存中…" : "保存"}
           </button>
         </div>
@@ -86,7 +86,7 @@ function ContactRow({ contact, onSave, onDelete }: {
           <button type="button" onClick={() => { setDraft({ ...contact }); setEditing(true); }} style={iconBtn} title="编辑">
             <Pencil size={13} />
           </button>
-          <button type="button" onClick={onDelete} style={{ ...iconBtn, color: "var(--dida-red)" }} title="删除">
+          <button type="button" onClick={onDelete} style={{ ...iconBtn, color: "var(--status-danger)" }} title="删除">
             <Trash2 size={13} />
           </button>
         </div>
@@ -163,7 +163,7 @@ export function ContactPage(_: PageProps) {
   const biz = myList.filter(c => c.type === "biz");
 
   if (loading) return <div style={{ padding: 40, color: "var(--muted)" }}>加载中…</div>;
-  if (loadError) return <div style={{ padding: 40, color: "var(--dida-red)" }}>联系方式加载失败：{loadError}</div>;
+  if (loadError) return <div style={{ padding: 40, color: "var(--status-danger)" }}>联系方式加载失败：{loadError}</div>;
 
   return (
     <>
@@ -207,9 +207,9 @@ export function ContactPage(_: PageProps) {
       {/* 我方对接人（可编辑） */}
       <section style={{ marginTop: 32 }}>
         <div style={sectionHeader}>
-          <div style={{ ...sectionDot, background: "#16a34a" }} />
+          <div style={{ ...sectionDot, background: "#10B981" }} />
           <h2 style={sectionTitle}>我方对接人</h2>
-          <span style={{ ...lockBadge, background: "#f0fff4", color: "#16a34a", border: "1px solid #bbf7d0" }}>可编辑</span>
+          <span style={{ ...lockBadge, background: "#DEF7E7", color: "#10B981", border: "1px solid #A7F3D0" }}>可编辑</span>
         </div>
 
         <div className="grid two-col" style={{ marginTop: 12 }}>
@@ -217,8 +217,8 @@ export function ContactPage(_: PageProps) {
           <Card>
             <div className="card-header">
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div className="icon-tile" style={{ background: "#eef1ff", flexShrink: 0 }}>
-                  <Settings2 size={16} style={{ color: "#4f5fb8" }} />
+                <div className="icon-tile" style={{ background: "var(--pih-primary-soft)", flexShrink: 0 }}>
+                  <Settings2 size={16} style={{ color: "#505AAC" }} />
                 </div>
                 <div>
                   <h3>运营对接人</h3>
@@ -250,8 +250,8 @@ export function ContactPage(_: PageProps) {
           <Card>
             <div className="card-header">
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div className="icon-tile" style={{ background: "#fff0f5", flexShrink: 0 }}>
-                  <Briefcase size={16} style={{ color: "#ea0345" }} />
+                <div className="icon-tile" style={{ background: "#FDE3E3", flexShrink: 0 }}>
+                  <Briefcase size={16} style={{ color: "#EF4444" }} />
                 </div>
                 <div>
                   <h3>商务对接人</h3>
@@ -286,7 +286,7 @@ export function ContactPage(_: PageProps) {
 
 // ── styles ────────────────────────────────────────────────────
 const sectionHeader: CSSProperties = { display: "flex", alignItems: "center", gap: 10 };
-const sectionDot: CSSProperties = { width: 4, height: 18, borderRadius: 2, background: "var(--dida-navy)", flexShrink: 0 };
+const sectionDot: CSSProperties = { width: 4, height: 18, borderRadius: 2, background: "var(--pih-primary)", flexShrink: 0 };
 const sectionTitle: CSSProperties = { margin: 0, fontSize: 15, fontWeight: 700, color: "var(--text-strong)" };
 const lockBadge: CSSProperties = { fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 99, background: "#f4f4f5", color: "var(--muted-strong)", border: "1px solid var(--line)" };
 const rowCard: CSSProperties = { background: "var(--surface-soft)", border: "1px solid var(--line)", borderRadius: 8, padding: "12px 14px" };
@@ -306,6 +306,6 @@ const iconBtn: CSSProperties = {
 };
 const addBtn: CSSProperties = {
   display: "flex", alignItems: "center", gap: 4, padding: "4px 10px", borderRadius: 6,
-  border: "1px solid var(--dida-navy)", background: "transparent",
-  color: "var(--dida-navy)", fontSize: 12, fontWeight: 600, cursor: "pointer",
+  border: "1px solid var(--pih-primary)", background: "transparent",
+  color: "var(--pih-primary)", fontSize: 12, fontWeight: 600, cursor: "pointer",
 };

@@ -251,7 +251,7 @@ const closeBtn: CSSProperties = {
 };
 const thStyle: CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",
@@ -270,8 +270,8 @@ const addFormWrap: CSSProperties = {
 };
 const errorBox: CSSProperties = {
   display: "flex", alignItems: "center", gap: 7,
-  background: "#fff5f5", border: "1px solid #ffc5c5", borderRadius: 6,
-  padding: "8px 12px", fontSize: 12, color: "#c0392b", marginBottom: 10,
+  background: "#FDE3E3", border: "1px solid #FCA5A5", borderRadius: 6,
+  padding: "8px 12px", fontSize: 12, color: "#EF4444", marginBottom: 10,
 };
 const formGrid: CSSProperties = {
   display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 16px",
@@ -293,7 +293,7 @@ const cancelMdBtn: CSSProperties = {
 };
 const submitBtn: CSSProperties = {
   height: 32, padding: "0 16px", borderRadius: 6,
-  border: "none", background: "var(--dida-navy)", color: "#fff",
+  border: "none", background: "var(--pih-primary)", color: "#fff",
   cursor: "pointer", fontSize: 13, fontWeight: 600,
 };
 const modalFooter: CSSProperties = {

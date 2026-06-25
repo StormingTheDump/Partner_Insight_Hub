@@ -1,23 +1,26 @@
 import * as echarts from "echarts";
 import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { EChartsOption } from "echarts";
 import type { PageProps } from "@/dashboard/routes";
-import { withChartDefaults } from "@/shared/charts/chart-theme";
+import { withChartDefaults, withChartEntryInitialState } from "@/shared/charts/chart-theme";
 import { ChartCard } from "@/shared/components/ChartCard";
 import { PageHeader } from "@/shared/components/PageHeader";
+import "./ErrorsPage.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 const PAGE_SIZE = 15;
+const SET_OPTION_OPTIONS = { notMerge: true, lazyUpdate: false };
 
 // ── 类型 ────────────────────────────────────────────────────────
 type ChartItem  = { error_type: string; count: number };
 type PreRow     = { log_time: string; client_id: string; dida_rate_plan_id: string; dida_hotel_id: number; error_type: string; rate_record_channel: string };
 type BookRow    = { channel_createtime: string; client_id: string; channel_bookingnumber: string; dida_hotel_id: number; error_type: string };
 type Meta       = { channels: string[]; error_types: string[] };
+type DateRange  = [string, string] | null;
 
 // ── 图表（水平柱状图，复用原有样式）────────────────────────────
-const axisText = { color: "#526078", fontSize: 11 };
+const axisText = { color: "#475569", fontSize: 11 };
 
 function horizBarOption(data: ChartItem[]): EChartsOption {
   const names  = data.map((d) => d.error_type);
@@ -29,7 +32,7 @@ function horizBarOption(data: ChartItem[]): EChartsOption {
       type: "value",
       max,
       axisLabel: axisText,
-      splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } },
+      splitLine: { lineStyle: { color: "#E5E7EB", type: "dashed" } },
     },
     yAxis: {
       type: "category",
@@ -42,8 +45,8 @@ function horizBarOption(data: ChartItem[]): EChartsOption {
       type: "bar",
       data: values,
       barWidth: 28,
-      itemStyle: { color: "#4c4597", borderRadius: 4 },
-      label: { show: true, position: "right", color: "#526078", fontSize: 11, formatter: "{c}" },
+      itemStyle: { color: "#4F5AAB", borderRadius: 4 },
+      label: { show: true, position: "right", color: "#475569", fontSize: 11, formatter: "{c}" },
     }],
   };
 }
@@ -55,7 +58,28 @@ const CHART_PADDING = 44;  // grid top(12) + bottom(20) + 12 extra
 function DynChart({ data }: { data: ChartItem[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<echarts.ECharts | null>(null);
+  const entryFrameRef = useRef<number[]>([]);
   const height = data.length > 0 ? Math.max(220, data.length * PER_BAR + CHART_PADDING) : 220;
+
+  const cancelEntryFrames = useCallback(() => {
+    entryFrameRef.current.forEach((id) => window.cancelAnimationFrame(id));
+    entryFrameRef.current.length = 0;
+  }, []);
+
+  const playEntryAnimation = useCallback((nextOption: EChartsOption) => {
+    if (!chartRef.current) return;
+    cancelEntryFrames();
+    chartRef.current.setOption(withChartEntryInitialState(nextOption), SET_OPTION_OPTIONS);
+
+    const firstFrame = window.requestAnimationFrame(() => {
+      const secondFrame = window.requestAnimationFrame(() => {
+        chartRef.current?.setOption(nextOption, SET_OPTION_OPTIONS);
+        entryFrameRef.current.length = 0;
+      });
+      entryFrameRef.current.push(secondFrame);
+    });
+    entryFrameRef.current.push(firstFrame);
+  }, [cancelEntryFrames]);
 
   // 初始化一次，生命周期与 DOM 节点绑定
   useEffect(() => {
@@ -64,17 +88,18 @@ function DynChart({ data }: { data: ChartItem[] }) {
     chartRef.current = chart;
     const ro = new ResizeObserver(() => chart.resize());
     ro.observe(ref.current);
-    return () => { ro.disconnect(); chart.dispose(); chartRef.current = null; };
-  }, []);
+    return () => { cancelEntryFrames(); ro.disconnect(); chart.dispose(); chartRef.current = null; };
+  }, [cancelEntryFrames]);
 
   // 数据变化时更新 option 和容器高度
   useEffect(() => {
     if (!chartRef.current) return;
-    if (data.length === 0) { chartRef.current.clear(); return; }
-    chartRef.current.setOption(withChartDefaults(horizBarOption(data)), true);
+    if (data.length === 0) { cancelEntryFrames(); chartRef.current.clear(); return; }
+    const nextOption = withChartDefaults(horizBarOption(data));
+    playEntryAnimation(nextOption);
     // DOM 高度已由 React 更新，通知 ECharts 重新适配
     requestAnimationFrame(() => chartRef.current?.resize());
-  }, [data]);
+  }, [data, cancelEntryFrames, playEntryAnimation]);
 
   return (
     <div style={{ width: "100%", height, position: "relative" }}>
@@ -116,7 +141,7 @@ function JsonBlock({ data }: { data: unknown }) {
 const toggleBtn: React.CSSProperties = {
   display: "inline-flex", alignItems: "center", gap: 4,
   background: "none", border: "none", cursor: "pointer",
-  padding: "0 0 6px", color: "#526078",
+  padding: "0 0 6px", color: "#475569",
 };
 
 function LogPanel({ log }: { log: LogObj }) {
@@ -139,11 +164,11 @@ function LogPanel({ log }: { log: LogObj }) {
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{
             padding: "2px 9px", borderRadius: 99, fontSize: 11, fontWeight: 800,
-            background: "#dc262620", color: "#dc2626",
+            background: "#EF444420", color: "#EF4444",
           }}>
             验价报错
           </span>
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#dc2626" }}>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#EF4444" }}>
             {log.log_type === "price_check" ? "HotelPriceCheck" : log.log_type}
           </span>
         </div>
@@ -155,7 +180,7 @@ function LogPanel({ log }: { log: LogObj }) {
         <div>
           <button type="button" onClick={() => setReqOpen(o => !o)} style={toggleBtn}>
             {reqOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#526078", textTransform: "uppercase", letterSpacing: "0.5px" }}>REQUEST</span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.5px" }}>REQUEST</span>
           </button>
           {reqOpen && <JsonBlock data={log.log_detail.request} />}
         </div>
@@ -165,7 +190,7 @@ function LogPanel({ log }: { log: LogObj }) {
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
             <button type="button" onClick={() => setResOpen(o => !o)} style={toggleBtn}>
               {resOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#526078", textTransform: "uppercase", letterSpacing: "0.5px" }}>RESPONSE</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.5px" }}>RESPONSE</span>
             </button>
             {status === "Error" && (
               <span className="status danger" style={{ fontSize: 11 }}>{errCode || "Error"}</span>
@@ -211,7 +236,7 @@ function JsonModal({ raw, onClose }: { raw: string; onClose: () => void }) {
       }}>
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "14px 20px", borderBottom: "1px solid #e8edf4",
+          padding: "14px 20px", borderBottom: "1px solid #E5E7EB",
         }}>
           <span style={{ fontWeight: 600, fontSize: 14, color: "#2c3e50" }}>验价错误日志明细</span>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", display: "flex" }}>
@@ -260,11 +285,97 @@ function Pagination({ page, total, pageSize, onChange }: { page: number; total: 
   );
 }
 
+function parseMultiValueInput(value: string) {
+  const seen = new Set<string>();
+  return value
+    .split(/[\s,，]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .filter((item) => {
+      if (seen.has(item)) return false;
+      seen.add(item);
+      return true;
+    });
+}
+
+function applyDateRange(params: URLSearchParams, dateRange: DateRange) {
+  if (!dateRange) return;
+  params.set("start_date", dateRange[0]);
+  params.set("end_date", dateRange[1]);
+}
+
+function MultiSelectFilter({
+  options,
+  selectedErrorTypes,
+  onChange,
+}: {
+  options: string[];
+  selectedErrorTypes: string[];
+  onChange: (next: string[]) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const label =
+    selectedErrorTypes.length === 0
+      ? "全部类型"
+      : selectedErrorTypes.length === 1
+        ? selectedErrorTypes[0]
+        : `已选 ${selectedErrorTypes.length} 类`;
+
+  useEffect(() => {
+    const onPointerDown = (event: PointerEvent) => {
+      if (!boxRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, []);
+
+  const toggle = (option: string) => {
+    onChange(
+      selectedErrorTypes.includes(option)
+        ? selectedErrorTypes.filter((item) => item !== option)
+        : [...selectedErrorTypes, option]
+    );
+  };
+
+  return (
+    <div className="errors-multi-select" ref={boxRef}>
+      <button
+        aria-expanded={open}
+        className="filter-control errors-multi-select-trigger"
+        onClick={() => setOpen((value) => !value)}
+        type="button"
+      >
+        <span>{label}</span>
+        <ChevronDown size={14} />
+      </button>
+
+      {open ? (
+        <div className="errors-multi-select-menu">
+          {options.map((option) => (
+            <label className="errors-multi-select-option" key={option}>
+              <input
+                checked={selectedErrorTypes.includes(option)}
+                onChange={() => toggle(option)}
+                type="checkbox"
+              />
+              <span>{option}</span>
+            </label>
+          ))}
+          <button className="errors-multi-select-clear" onClick={() => onChange([])} type="button">
+            清空选择
+          </button>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 // ── 验价报错 Tab ─────────────────────────────────────────────────
-function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
-  const [errorType,   setErrorType]   = useState("");
+function PrebookTab({ meta, selectedFeed, dateRange }: { meta: Meta; selectedFeed: string; dateRange?: DateRange }) {
+  const [selectedErrorTypes, setSelectedErrorTypes] = useState<string[]>([]);
   const [ratePlanId,  setRatePlanId]  = useState("");
-  const [applied,     setApplied]     = useState({ errorType: "", ratePlanId: "" });
+  const [applied,     setApplied]     = useState({ errorTypes: [] as string[], ratePlanIds: [] as string[] });
   const [chart,       setChart]       = useState<ChartItem[]>([]);
   const [rows,        setRows]        = useState<PreRow[]>([]);
   const [total,       setTotal]       = useState(0);
@@ -276,14 +387,11 @@ function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }
 
   const fetch_ = (p: number, filters = applied) => {
     setLoading(true);
-    const q = new URLSearchParams({
-      client_id:    clientId,
-      error_type:   filters.errorType,
-      rate_plan_id: filters.ratePlanId,
-      page:         String(p),
-      page_size:    String(PAGE_SIZE),
-    });
-    fetch(`${API_BASE}/api/errors/prebook?${q}`)
+    const params = new URLSearchParams({ client_id: clientId, page: String(p), page_size: String(PAGE_SIZE) });
+    if (filters.errorTypes.length > 0) params.set("error_types", filters.errorTypes.join(","));
+    if (filters.ratePlanIds.length > 0) params.set("rate_plan_ids", filters.ratePlanIds.join(","));
+    applyDateRange(params, dateRange ?? null);
+    fetch(`${API_BASE}/api/errors/prebook?${params}`)
       .then((r) => r.json())
       .then((d) => { setChart(d.chart); setRows(d.rows); setTotal(d.total); setPage(p); })
       .catch(() => {})
@@ -293,36 +401,38 @@ function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch_(1);
-  }, [clientId]);
+  }, [clientId, dateRange?.[0], dateRange?.[1]]);
 
-  const search = () => {
-    const f = { errorType, ratePlanId };
-    setApplied(f);
-    fetch_(1, f);
+  const applyPrebookFilters = (nextErrorTypes: string[], nextRatePlanId: string) => {
+    const filters = { errorTypes: nextErrorTypes, ratePlanIds: parseMultiValueInput(nextRatePlanId) };
+    setApplied(filters);
+    fetch_(1, filters);
   };
 
   return (
     <>
       {/* 筛选器 */}
       <div className="filter-row">
-        <label className="filter-control">
-          <select value={errorType} onChange={(e) => setErrorType(e.target.value)}>
-            <option value="">全部类型</option>
-            {meta.error_types.map((e) => <option key={e} value={e}>{e}</option>)}
-          </select>
-        </label>
-        <label className="filter-control">
-          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
-          <input
+        <MultiSelectFilter
+          onChange={(next) => {
+            setSelectedErrorTypes(next);
+            applyPrebookFilters(next, ratePlanId);
+          }}
+          options={meta.error_types}
+          selectedErrorTypes={selectedErrorTypes}
+        />
+        <label className="errors-multi-value-control">
+          <Search className="errors-multi-value-icon" size={14} />
+          <textarea
+            className="errors-multi-value-input"
             value={ratePlanId}
-            onChange={(e) => setRatePlanId(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && search()}
+            onChange={(e) => {
+              setRatePlanId(e.target.value);
+              applyPrebookFilters(selectedErrorTypes, e.target.value);
+            }}
             placeholder="Rate Plan ID"
           />
         </label>
-        <button onClick={search} className="button primary">
-          <Search size={14} /> 搜索
-        </button>
       </div>
 
       {/* 图表 */}
@@ -374,10 +484,10 @@ function PrebookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }
 }
 
 // ── 下单报错 Tab ─────────────────────────────────────────────────
-function BookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
-  const [errorType,     setErrorType]     = useState("");
+function BookTab({ meta, selectedFeed, dateRange }: { meta: Meta; selectedFeed: string; dateRange?: DateRange }) {
+  const [selectedErrorTypes, setSelectedErrorTypes] = useState<string[]>([]);
   const [bookingNumber, setBookingNumber] = useState("");
-  const [applied,       setApplied]       = useState({ errorType: "", bookingNumber: "" });
+  const [applied,       setApplied]       = useState({ errorTypes: [] as string[], bookingNumbers: [] as string[] });
   const [chart,         setChart]         = useState<ChartItem[]>([]);
   const [rows,          setRows]          = useState<BookRow[]>([]);
   const [total,         setTotal]         = useState(0);
@@ -388,14 +498,11 @@ function BookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
 
   const fetch_ = (p: number, filters = applied) => {
     setLoading(true);
-    const q = new URLSearchParams({
-      client_id:      clientId,
-      error_type:     filters.errorType,
-      booking_number: filters.bookingNumber,
-      page:           String(p),
-      page_size:      String(PAGE_SIZE),
-    });
-    fetch(`${API_BASE}/api/errors/book?${q}`)
+    const params = new URLSearchParams({ client_id: clientId, page: String(p), page_size: String(PAGE_SIZE) });
+    if (filters.errorTypes.length > 0) params.set("error_types", filters.errorTypes.join(","));
+    if (filters.bookingNumbers.length > 0) params.set("booking_numbers", filters.bookingNumbers.join(","));
+    applyDateRange(params, dateRange ?? null);
+    fetch(`${API_BASE}/api/errors/book?${params}`)
       .then((r) => r.json())
       .then((d) => { setChart(d.chart); setRows(d.rows); setTotal(d.total); setPage(p); })
       .catch(() => {})
@@ -405,36 +512,38 @@ function BookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch_(1);
-  }, [clientId]);
+  }, [clientId, dateRange?.[0], dateRange?.[1]]);
 
-  const search = () => {
-    const f = { errorType, bookingNumber };
-    setApplied(f);
-    fetch_(1, f);
+  const applyBookFilters = (nextErrorTypes: string[], nextBookingNumber: string) => {
+    const filters = { errorTypes: nextErrorTypes, bookingNumbers: parseMultiValueInput(nextBookingNumber) };
+    setApplied(filters);
+    fetch_(1, filters);
   };
 
   return (
     <>
       {/* 筛选器 */}
       <div className="filter-row">
-        <label className="filter-control">
-          <select value={errorType} onChange={(e) => setErrorType(e.target.value)}>
-            <option value="">全部类型</option>
-            {meta.error_types.map((e) => <option key={e} value={e}>{e}</option>)}
-          </select>
-        </label>
-        <label className="filter-control">
-          <Search size={14} style={{ color: "var(--muted)", flexShrink: 0 }} />
-          <input
+        <MultiSelectFilter
+          onChange={(next) => {
+            setSelectedErrorTypes(next);
+            applyBookFilters(next, bookingNumber);
+          }}
+          options={meta.error_types}
+          selectedErrorTypes={selectedErrorTypes}
+        />
+        <label className="errors-multi-value-control">
+          <Search className="errors-multi-value-icon" size={14} />
+          <textarea
+            className="errors-multi-value-input"
             value={bookingNumber}
-            onChange={(e) => setBookingNumber(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && search()}
+            onChange={(e) => {
+              setBookingNumber(e.target.value);
+              applyBookFilters(selectedErrorTypes, e.target.value);
+            }}
             placeholder="Dida Booking Number"
           />
         </label>
-        <button onClick={search} className="button primary">
-          <Search size={14} /> 搜索
-        </button>
       </div>
 
       {/* 图表 */}
@@ -477,7 +586,7 @@ function BookTab({ meta, selectedFeed }: { meta: Meta; selectedFeed: string }) {
 }
 
 // ── 主页面 ────────────────────────────────────────────────────────
-export function ErrorsPage({ selectedFeed }: PageProps) {
+export function ErrorsPage({ selectedFeed, dateRange }: PageProps) {
   const [tab,  setTab]  = useState<"prebook" | "book">("prebook");
   const [meta, setMeta] = useState<{ prebook: Meta; book: Meta } | null>(null);
 
@@ -489,7 +598,7 @@ export function ErrorsPage({ selectedFeed }: PageProps) {
   }, []);
 
   return (
-    <>
+    <div className="errors-page">
       <PageHeader
         title="错误日志"
         description="过去 48 小时内验价及下单报错记录，支持错误类型筛选。"
@@ -504,10 +613,10 @@ export function ErrorsPage({ selectedFeed }: PageProps) {
             style={{
               padding: "8px 24px",
               border: "none",
-              borderBottom: tab === t ? "2px solid var(--dida-purple)" : "2px solid transparent",
+              borderBottom: tab === t ? "2px solid var(--pih-primary)" : "2px solid transparent",
               marginBottom: -2,
               background: "none",
-              color: tab === t ? "var(--dida-purple)" : "var(--muted)",
+              color: tab === t ? "var(--pih-primary)" : "var(--muted)",
               fontWeight: tab === t ? 600 : 400,
               fontSize: 14,
               cursor: "pointer",
@@ -522,19 +631,19 @@ export function ErrorsPage({ selectedFeed }: PageProps) {
         {!meta ? (
           <div style={{ textAlign: "center", padding: 48, color: "#b0bac8" }}>加载中…</div>
         ) : tab === "prebook" ? (
-          <PrebookTab meta={meta.prebook} selectedFeed={selectedFeed} />
+          <PrebookTab dateRange={dateRange} meta={meta.prebook} selectedFeed={selectedFeed} />
         ) : (
-          <BookTab meta={meta.book} selectedFeed={selectedFeed} />
+          <BookTab dateRange={dateRange} meta={meta.book} selectedFeed={selectedFeed} />
         )}
       </div>
-    </>
+    </div>
   );
 }
 
 // ── 样式常量 ──────────────────────────────────────────────────────
 const thStyle: React.CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",

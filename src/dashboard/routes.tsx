@@ -20,6 +20,7 @@ import { DirectHotelsPage } from "@/features/direct-hotels/DirectHotelsPage";
 export type PageProps = {
   selectedFeed: string;
   showPreviousPeriod: boolean;
+  dateRange: [string, string] | null;
 };
 
 export const routes: Record<PageId, ComponentType<PageProps>> = {
