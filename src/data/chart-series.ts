@@ -47,10 +47,10 @@ export const series = {
 
 export const feeds = [
   { name: "Agoda",     color: "#3b82f6" },
-  { name: "AgodaUK",  color: "#12b981" },
+  { name: "AgodaUK",  color: "#10B981" },
   { name: "AgodaEBK", color: "#f59e0b" },
   { name: "Lvzan",    color: "#ef4444" },
   { name: "Barli2b",  color: "#8b5cf6" },
-  { name: "DidaOpaq", color: "#e54897" },
+  { name: "DidaOpaq", color: "#EC4899" },
 ];
 

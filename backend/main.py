@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from database import init_tables, get_connection
 from auth import login, verify_token, hash_password
 import os
+import re
 from typing import Optional
 
 app = FastAPI(title="Partner Insight Hub API")
@@ -1251,11 +1252,43 @@ def conversion_metrics(
 
 # ── 错误日志 ──────────────────────────────────────────────────────
 
+def splitFilterValues(value: str) -> list[str]:
+    return [item.strip() for item in re.split(r"[\s,，]+", value or "") if item.strip()]
+
+
+def _append_in_filter(where: list[str], params: list, column: str, values: list[str]):
+    if not values:
+        return
+    placeholders = ",".join("?" for _ in values)
+    where.append(f"{column} IN ({placeholders})")
+    params.extend(values)
+
+
+def _append_like_any_filter(where: list[str], params: list, column: str, values: list[str]):
+    if not values:
+        return
+    where.append("(" + " OR ".join(f"{column} LIKE ?" for _ in values) + ")")
+    params.extend(f"%{value}%" for value in values)
+
+
+def _append_date_range_filter(where: list[str], params: list, column: str, start_date: str, end_date: str):
+    if start_date:
+        where.append(f"substr({column}, 1, 10) >= ?")
+        params.append(start_date)
+    if end_date:
+        where.append(f"substr({column}, 1, 10) <= ?")
+        params.append(end_date)
+
+
 @app.get("/api/errors/prebook")
 def errors_prebook(
     client_id:    str = Query(""),
     error_type:   str = Query(""),
+    error_types:  str = Query(""),
     rate_plan_id: str = Query(""),
+    rate_plan_ids: str = Query(""),
+    start_date:   str = Query(""),
+    end_date:     str = Query(""),
     page:         int = Query(1, ge=1),
     page_size:    int = Query(15, ge=1, le=100),
 ):
@@ -1265,10 +1298,9 @@ def errors_prebook(
     where, params = ["1=1"], []
     if client_id:
         where.append("client_id = ?");    params.append(client_id)
-    if error_type:
-        where.append("error_type = ?");   params.append(error_type)
-    if rate_plan_id:
-        where.append("dida_rate_plan_id LIKE ?"); params.append(f"%{rate_plan_id}%")
+    _append_in_filter(where, params, "error_type", splitFilterValues(error_types or error_type))
+    _append_like_any_filter(where, params, "dida_rate_plan_id", splitFilterValues(rate_plan_ids or rate_plan_id))
+    _append_date_range_filter(where, params, "log_time", start_date, end_date)
 
     w = " AND ".join(where)
 
@@ -1304,7 +1336,11 @@ def errors_prebook(
 def errors_book(
     client_id:      str = Query(""),
     error_type:     str = Query(""),
+    error_types:    str = Query(""),
     booking_number: str = Query(""),
+    booking_numbers: str = Query(""),
+    start_date:     str = Query(""),
+    end_date:       str = Query(""),
     page:           int = Query(1, ge=1),
     page_size:      int = Query(15, ge=1, le=100),
 ):
@@ -1313,10 +1349,9 @@ def errors_book(
     where, params = ["1=1"], []
     if client_id:
         where.append("client_id = ?");        params.append(client_id)
-    if error_type:
-        where.append("error_type = ?");       params.append(error_type)
-    if booking_number:
-        where.append("channel_bookingnumber LIKE ?"); params.append(f"%{booking_number}%")
+    _append_in_filter(where, params, "error_type", splitFilterValues(error_types or error_type))
+    _append_like_any_filter(where, params, "channel_bookingnumber", splitFilterValues(booking_numbers or booking_number))
+    _append_date_range_filter(where, params, "channel_createtime", start_date, end_date)
 
     w = " AND ".join(where)
 

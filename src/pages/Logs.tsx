@@ -30,7 +30,7 @@ const MOCK_LOGS: LogEntry[] = [
 
 const TH: React.CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",
@@ -143,9 +143,9 @@ export default function LogsPage() {
       {/* Estimated TTV loss */}
       <div className="card">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-          <AlertTriangle size={18} style={{ color: "var(--dida-red)" }} />
+          <AlertTriangle size={18} style={{ color: "var(--status-danger)" }} />
           <h3 style={{ margin: 0, fontSize: 15, color: "var(--text)" }}>
-            预计损失 TTV：<span style={{ color: '#ea0345' }}>${totalLoss.toLocaleString()}</span>
+            预计损失 TTV：<span style={{ color: '#EF4444' }}>${totalLoss.toLocaleString()}</span>
           </h3>
         </div>
         {/* Horizontal bar chart */}
@@ -156,9 +156,9 @@ export default function LogsPage() {
             const barW = (val / totalLoss) * 760;
             return (
               <g key={name}>
-                <text x="140" y={22 + i * 38} textAnchor="end" fill="#526078" fontSize="12">{name}</text>
-                <rect x="150" y={8 + i * 38} width={Math.max(4, barW)} height={22} rx="3" fill="#4c4597" />
-                <text x={155 + Math.max(4, barW)} y={22 + i * 38} fill="#526078" fontSize="12">
+                <text x="140" y={22 + i * 38} textAnchor="end" fill="#475569" fontSize="12">{name}</text>
+                <rect x="150" y={8 + i * 38} width={Math.max(4, barW)} height={22} rx="3" fill="#4F5AAB" />
+                <text x={155 + Math.max(4, barW)} y={22 + i * 38} fill="#475569" fontSize="12">
                   ${val.toLocaleString()}
                 </text>
               </g>
@@ -211,7 +211,7 @@ export default function LogsPage() {
                   <td style={{ ...TD, textAlign: "right" }}>{r.leadTime}</td>
                   <td style={TD}>{r.hotelId}</td>
                   <td style={TD}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#526078" }}>{r.rateCode}</span>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#475569" }}>{r.rateCode}</span>
                   </td>
                   <td style={TD}>
                     <button className="button" style={{ minHeight: 28, padding: "0 10px", fontSize: 12 }}>查看</button>

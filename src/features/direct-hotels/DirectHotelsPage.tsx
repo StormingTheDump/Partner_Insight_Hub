@@ -154,9 +154,9 @@ export function DirectHotelsPage(_: PageProps) {
               onClick={() => { set(!state); setPage(1); }}
               style={{
                 ...togglePill,
-                background: state ? "var(--dida-navy)" : "var(--surface-soft)",
+                background: state ? "var(--pih-primary)" : "var(--surface-soft)",
                 color:      state ? "#fff"    : "var(--muted-strong)",
-                border:     state ? "1px solid var(--dida-navy)" : "1px solid var(--line)",
+                border:     state ? "1px solid var(--pih-primary)" : "1px solid var(--line)",
               }}
             >
               {label}
@@ -205,9 +205,9 @@ export function DirectHotelsPage(_: PageProps) {
                 </td>
                 <td style={td}><Stars n={h.star_rating} /></td>
                 <td style={td}>
-                  <Tag active={h.is_direct}    label="直采"    color="#16a34a" bg="#f0fff4" border="#bbf7d0" />
-                  <Tag active={h.is_prebuy}    label="Prebuy"  color="#7c3aed" bg="#f5f3ff" border="#ddd6fe" />
-                  <Tag active={h.is_exclusive} label="独家合作" color="#dc2626" bg="#fef2f2" border="#fecaca" />
+                  <Tag active={h.is_direct}    label="直采"    color="#10B981" bg="#DEF7E7" border="#A7F3D0" />
+                  <Tag active={h.is_prebuy}    label="Prebuy"  color="#8B5CF6" bg="#F0F1FA" border="#D4D7ED" />
+                  <Tag active={h.is_exclusive} label="独家合作" color="#EF4444" bg="#FDE3E3" border="#FCA5A5" />
                 </td>
               </tr>
             ))}
@@ -240,7 +240,7 @@ const togglePill: CSSProperties = {
 };
 const th: CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",

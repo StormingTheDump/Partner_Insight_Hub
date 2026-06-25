@@ -8,8 +8,8 @@ import { HOT_HOTELS } from "@/data/hot-hotels";
 const PAGE_SIZE = 10;
 
 const HOT_META: Record<number, { label: string; color: string; bg: string; border: string }> = {
-  3: { label: "★★★", color: "#dc2626", bg: "#fef2f2", border: "#fecaca" },
-  2: { label: "★★",  color: "#d97706", bg: "#fffbeb", border: "#fde68a" },
+  3: { label: "★★★", color: "#EF4444", bg: "#FDE3E3", border: "#FCA5A5" },
+  2: { label: "★★",  color: "#F59E0B", bg: "#FCF4DA", border: "#FDE68A" },
   1: { label: "★",   color: "#6b7280", bg: "#f4f4f5", border: "#d1d5db" },
 };
 
@@ -208,7 +208,7 @@ export function HotHotelsPage(_: PageProps) {
 // ── Styles ────────────────────────────────────────────────────────────
 const th: CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",

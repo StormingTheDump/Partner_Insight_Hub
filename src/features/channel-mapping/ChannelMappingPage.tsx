@@ -167,7 +167,7 @@ export function ChannelMappingPage(_: PageProps) {
 
       {/* 上传结果提示 */}
       {result && (
-        <div style={{ ...resultBanner, background: result.added > 0 ? "#e6f4ea" : "#f1f3f4", borderColor: result.added > 0 ? "#c3e6cb" : "var(--line)" }}>
+        <div style={{ ...resultBanner, background: result.added > 0 ? "#DEF7E7" : "#F1F5F9", borderColor: result.added > 0 ? "#A7F3D0" : "var(--line)" }}>
           <span style={{ color: result.added > 0 ? "var(--google-green)" : "var(--muted-strong)", fontWeight: 600 }}>
             ✓ 已新增 {result.added} 条匹配关系，数据库已更新
           </span>
@@ -181,7 +181,7 @@ export function ChannelMappingPage(_: PageProps) {
         </div>
       )}
       {error && (
-        <div style={{ ...resultBanner, background: "#fce8e6", borderColor: "#f5c6c3" }}>
+        <div style={{ ...resultBanner, background: "#FDE3E3", borderColor: "#FCA5A5" }}>
           <span style={{ color: "var(--google-red)", fontWeight: 600 }}>✕ {error}</span>
           <button type="button" onClick={() => setError("")} style={{ position: "absolute", top: 10, right: 12, background: "none", border: "none", cursor: "pointer", color: "var(--muted)" }}><X size={14} /></button>
         </div>
@@ -261,8 +261,8 @@ function pagerPages(current: number, total: number): (number | "…")[] {
 import type { } from "react";
 
 const resultBanner: CSSProperties = { position: "relative", padding: "10px 40px 10px 14px", borderRadius: 8, border: "1px solid", marginBottom: 12 };
-const hintBar: CSSProperties = { marginBottom: 12, padding: "8px 14px", background: "#f8fafd", borderRadius: 6, border: "1px solid var(--line)" };
-const code: CSSProperties = { background: "#edf1f7", borderRadius: 3, padding: "1px 5px", fontFamily: "var(--font-mono)", fontSize: 11 };
-const th: CSSProperties = { position: "sticky", top: 0, zIndex: 2, background: "#f8fafd", color: "#526078", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
+const hintBar: CSSProperties = { marginBottom: 12, padding: "8px 14px", background: "#F8FAFC", borderRadius: 6, border: "1px solid var(--line)" };
+const code: CSSProperties = { background: "#E2E8F0", borderRadius: 3, padding: "1px 5px", fontFamily: "var(--font-mono)", fontSize: 11 };
+const th: CSSProperties = { position: "sticky", top: 0, zIndex: 2, background: "#F8FAFC", color: "#475569", fontSize: 12, fontWeight: 800, padding: "11px 13px", borderBottom: "2px solid var(--line)", whiteSpace: "nowrap", verticalAlign: "middle", textAlign: "left" };
 const td: CSSProperties = { padding: "11px 13px", borderBottom: "1px solid var(--line-soft)", verticalAlign: "middle", textAlign: "left", whiteSpace: "nowrap" };
 const emptyCell: CSSProperties = { textAlign: "center", padding: "40px 0", color: "var(--muted)", fontSize: 13 };

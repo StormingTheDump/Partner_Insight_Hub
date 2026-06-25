@@ -24,9 +24,9 @@ type LogEntry = {
 };
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string; border: string }> = {
-  confirmed: { label: "已确认", color: "#188038", bg: "#e6f4ea", border: "#c3e6cb" },
-  cancelled: { label: "已取消", color: "#935100", bg: "#fff4db", border: "#fde08a" },
-  failed:    { label: "失败",   color: "#d93025", bg: "#fce8e6", border: "#f5c6c3" },
+  confirmed: { label: "已确认", color: "#10B981", bg: "#DEF7E7", border: "#A7F3D0" },
+  cancelled: { label: "已取消", color: "#935100", bg: "#FCF4DA", border: "#fde08a" },
+  failed:    { label: "失败",   color: "#EF4444", bg: "#FDE3E3", border: "#FCA5A5" },
 };
 
 const STATUS_CLASS: Record<string, string> = {
@@ -36,9 +36,9 @@ const STATUS_CLASS: Record<string, string> = {
 };
 
 const LOG_META: Record<string, { label: string; apiName: string; color: string; bg: string; border: string }> = {
-  price_confirm:   { label: "验价", apiName: "HotelPriceConfirm",   color: "#1a73e8", bg: "#e8f0fe", border: "#bfdbfe" },
-  booking_confirm: { label: "下单", apiName: "HotelBookingConfirm",  color: "#188038", bg: "#e6f4ea", border: "#c3e6cb" },
-  cancel:          { label: "取消", apiName: "HotelBookingCancel",   color: "#935100", bg: "#fff4db", border: "#fde08a" },
+  price_confirm:   { label: "验价", apiName: "HotelPriceConfirm",   color: "#505AAC", bg: "#F0F1FA", border: "#D4D7ED" },
+  booking_confirm: { label: "下单", apiName: "HotelBookingConfirm",  color: "#10B981", bg: "#DEF7E7", border: "#A7F3D0" },
+  cancel:          { label: "取消", apiName: "HotelBookingCancel",   color: "#935100", bg: "#FCF4DA", border: "#fde08a" },
 };
 
 const LOG_ORDER: Array<"price_confirm" | "booking_confirm" | "cancel"> =
@@ -304,7 +304,7 @@ function LogSection({ entry }: { entry: LogEntry }) {
         <div>
           <button type="button" onClick={() => setReqOpen(o => !o)} style={toggleBtn}>
             {reqOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#526078",
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#475569",
               textTransform: "uppercase", letterSpacing: "0.5px" }}>REQUEST</span>
           </button>
           {reqOpen && <JsonBlock data={entry.log_detail.request} />}
@@ -315,7 +315,7 @@ function LogSection({ entry }: { entry: LogEntry }) {
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
             <button type="button" onClick={() => setResOpen(o => !o)} style={toggleBtn}>
               {resOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#526078",
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#475569",
                 textTransform: "uppercase", letterSpacing: "0.5px" }}>RESPONSE</span>
             </button>
             {statusBadge && (
@@ -354,7 +354,7 @@ function JsonBlock({ data }: { data: unknown }) {
 
 const th: CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",

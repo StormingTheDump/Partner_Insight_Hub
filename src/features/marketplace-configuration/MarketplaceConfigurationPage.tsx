@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import { Shield, BarChart2, Zap, Info, ArrowRight } from "lucide-react";
-import type { CSSProperties, ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { ArrowRight, BarChart2, Info, Shield, Zap } from "lucide-react";
 import type { PageProps } from "@/dashboard/routes";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { useAppState } from "@/dashboard/app-state";
+import "./MarketplaceConfigurationPage.css";
 
 const API = import.meta.env.VITE_API_BASE ?? "";
 
@@ -27,18 +27,18 @@ type ChannelConfig = {
 
 export function MarketplaceConfigurationPage(_: PageProps) {
   const { setActivePage, selectedFeed } = useAppState();
-  const [configs, setConfigs]   = useState<ChannelConfig[]>([]);
-  const [loading, setLoading]   = useState(true);
+  const [configs, setConfigs] = useState<ChannelConfig[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const clientId = selectedFeed !== "全部渠道" ? selectedFeed : "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const p = new URLSearchParams();
-      if (clientId) p.set("client_id", clientId);
-      const r = await fetch(`${API}/api/channel-config?${p}`);
-      const data = r.ok ? await r.json() : [];
+      const params = new URLSearchParams();
+      if (clientId) params.set("client_id", clientId);
+      const response = await fetch(`${API}/api/channel-config?${params}`);
+      const data = response.ok ? await response.json() : [];
       setConfigs(Array.isArray(data) ? data : []);
     } catch {
       setConfigs([]);
@@ -53,64 +53,66 @@ export function MarketplaceConfigurationPage(_: PageProps) {
   }, [fetchData]);
 
   return (
-    <>
+    <div className="channel-config-page">
       <PageHeader
         title="渠道配置"
         description="查看 Dida 为各渠道账号配置的系统参数，包括访问控制、ARI 策略及技术限速。"
+        actions={<span className="channel-config-count">共 {configs.length} 个渠道账号</span>}
       />
 
-      {/* Notice */}
-      <div style={noticeBanner}>
-        <Info size={15} style={{ color: "var(--google-blue)", flexShrink: 0, marginTop: 1 }} />
-        <span style={{ color: "var(--google-blue)", fontSize: 13, lineHeight: 1.5 }}>
+      <div className="channel-config-notice" role="note">
+        <Info className="icon" />
+        <span>
           以上配置均由 Dida 技术团队统一管理。如对任何配置参数有疑问或需要调整，请参阅{" "}
-          <button type="button" onClick={() => setActivePage("contact")} style={linkBtn}>
-            联系方式 <ArrowRight size={11} style={{ verticalAlign: "middle", marginLeft: 1 }} />
-          </button>
-          {" "}联系您的专属 Dida 负责人。
+          <button type="button" className="channel-config-link" onClick={() => setActivePage("contact")}>
+            联系方式 <ArrowRight className="icon" />
+          </button>{" "}
+          联系您的专属 Dida 负责人。
         </span>
       </div>
 
-      {/* Search */}
-      <div className="filter-row">
-        <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--muted)" }}>
-          共 <strong>{configs.length}</strong> 个渠道账号
-        </span>
-      </div>
-
-      {/* Cards */}
       {loading ? (
-        <div style={{ textAlign: "center", padding: "60px 0", color: "var(--muted)" }}>加载中…</div>
+        <div className="channel-config-state">加载中…</div>
       ) : configs.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "60px 0", color: "var(--muted)" }}>未找到配置信息</div>
+        <div className="channel-config-state">未找到配置信息</div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {configs.map(cfg => <ConfigCard key={cfg.id} cfg={cfg} />)}
+        <div className="channel-config-list">
+          {configs.map((cfg) => (
+            <ConfigCard cfg={cfg} key={cfg.id} />
+          ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
 
-// ── Sub-components ───────────────────────────────────────────────────
+function ReadOnlySwitch({ value }: { value: number }) {
+  const enabled = Boolean(value);
 
-function Bool({ value }: { value: number }) {
-  return value
-    ? <span className="status">✓ 是</span>
-    : <span className="status neutral">✗ 否</span>;
+  return (
+    <button
+      aria-label={`${enabled ? "是" : "否"}，只读不可修改`}
+      className={`channel-config-readonly-switch${enabled ? " is-on" : ""}`}
+      disabled
+      title="只读不可修改"
+      type="button"
+    >
+      <span aria-hidden="true" className="channel-config-switch-track">
+        <span className="channel-config-switch-thumb" />
+      </span>
+    </button>
+  );
 }
 
-const CURRENCY_COLORS = ["#4f5fb8", "#ea0345", "#16a34a", "#d97706", "#7c3aed", "#0891b2"];
-
 function CurrencyTags({ value }: { value: string }) {
+  const currencies = value.split("|").filter(Boolean);
+
   return (
-    <span style={{ display: "flex", flexWrap: "wrap", gap: 4, justifyContent: "flex-end" }}>
-      {value.split("|").filter(Boolean).map((cur, i) => (
-        <span key={cur} style={{
-          padding: "2px 7px", borderRadius: 4, fontSize: 11, fontWeight: 700,
-          background: CURRENCY_COLORS[i % CURRENCY_COLORS.length] + "18",
-          color: CURRENCY_COLORS[i % CURRENCY_COLORS.length],
-        }}>{cur}</span>
+    <span className="channel-config-token-list">
+      {currencies.map((currency) => (
+        <span className="channel-config-token" key={currency}>
+          {currency}
+        </span>
       ))}
     </span>
   );
@@ -118,154 +120,122 @@ function CurrencyTags({ value }: { value: string }) {
 
 function IpList({ value }: { value: string }) {
   const ips = value.split("|").filter(Boolean);
-  if (ips.length === 0) return <span style={{ fontSize: 12, color: "var(--muted)" }}>未配置</span>;
+  if (ips.length === 0) {
+    return <span className="channel-config-muted">未配置</span>;
+  }
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 3, alignItems: "flex-end" }}>
-      {ips.map((ip, i) => (
-        <code key={i} style={{
-          fontSize: 11, fontFamily: "var(--font-mono)",
-          background: "#f1f5f9", padding: "2px 7px", borderRadius: 4,
-        }}>{ip}</code>
+    <span className="channel-config-token-list">
+      {ips.map((ip) => (
+        <code className="channel-config-token channel-config-token-code" key={ip}>
+          {ip}
+        </code>
       ))}
-    </div>
+    </span>
   );
 }
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div style={{
-      display: "flex", alignItems: "flex-start", justifyContent: "space-between",
-      gap: 12, padding: "6px 0", borderBottom: "1px solid var(--line)",
-    }}>
-      <span style={{ fontSize: 12, color: "var(--muted)", whiteSpace: "nowrap", paddingTop: 2 }}>{label}</span>
-      <div>{children}</div>
+    <div className="channel-config-row">
+      <span>{label}</span>
+      {children}
     </div>
   );
 }
 
-function SecHead({ icon, title, color }: { icon: ReactNode; title: string; color: string }) {
+function SectionHeading({ icon, title }: { icon: ReactNode; title: string }) {
   return (
-    <div style={{
-      display: "flex", alignItems: "center", gap: 6,
-      marginBottom: 10, paddingBottom: 8,
-      borderBottom: `2px solid ${color}28`,
-    }}>
-      <span style={{ color }}>{icon}</span>
-      <span style={{ fontWeight: 700, fontSize: 12, color, letterSpacing: 0.4 }}>{title}</span>
-    </div>
+    <h3>
+      {icon}
+      {title}
+    </h3>
   );
 }
 
 function Num({ val, unit }: { val: number; unit?: string }) {
   return (
-    <span style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>
+    <span className="channel-config-value">
       {val}
-      {unit && <span style={{ fontSize: 11, color: "var(--muted)", marginLeft: 2 }}>{unit}</span>}
+      {unit ? <small>{unit}</small> : null}
     </span>
   );
 }
 
-function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
-  return (
-    <div style={cardWrap}>
-      {/* Header */}
-      <div style={cardHead}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{
-            width: 40, height: 40, borderRadius: 10,
-            background: "rgba(255,255,255,0.12)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 20, flexShrink: 0,
-          }}>🏪</div>
-          <div>
-            <div style={{ fontWeight: 800, fontSize: 17, color: "#fff", letterSpacing: 0.3 }}>
-              {cfg.client_id}
-            </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", marginTop: 2 }}>
-              渠道账号参数配置
-            </div>
-          </div>
-        </div>
-        <div style={{ textAlign: "right", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>
-          <div>最后更新</div>
-          <div style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600, marginTop: 3 }}>
-            {cfg.updated_at?.split(" ")[0] ?? "—"}
-          </div>
-        </div>
-      </div>
-
-      {/* Body — 3 sections */}
-      <div style={cardBody}>
-
-        {/* 基础信息 */}
-        <div style={sec}>
-          <SecHead icon={<Shield size={13} />} title="基础信息" color="#4f5fb8" />
-          <Row label="IP 过滤"><Bool value={cfg.ip_filter_enable} /></Row>
-          <div style={{ paddingTop: 8 }}>
-            <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 5 }}>IP 白名单</div>
-            <IpList value={cfg.ip_filter} />
-          </div>
-        </div>
-
-        <div style={vline} />
-
-        {/* ARI 配置 */}
-        <div style={sec}>
-          <SecHead icon={<BarChart2 size={13} />} title="ARI 配置" color="#604696" />
-          <Row label="允许币种"><CurrencyTags value={cfg.allowed_currencies} /></Row>
-          <Row label="忽略中文报价"><Bool value={cfg.ignore_cn_price} /></Row>
-          <Row label="最大房间数"><Num val={cfg.max_rooms} unit="间" /></Row>
-        </div>
-
-        <div style={vline} />
-
-        {/* 技术配置 */}
-        <div style={sec}>
-          <SecHead icon={<Zap size={13} />} title="技术配置" color="var(--google-blue)" />
-          <Row label="QPS（查价）"><Num val={cfg.qps} unit="/s" /></Row>
-          <Row label="PPS（酒店）"><Num val={cfg.pps} unit="/s" /></Row>
-          <Row label="查价超时"><Num val={cfg.search_timeout} unit="秒" /></Row>
-          <Row label="验价超时"><Num val={cfg.verify_timeout} unit="秒" /></Row>
-          <Row label="下单超时"><Num val={cfg.book_timeout} unit="秒" /></Row>
-          <Row label="最大酒店 / 请求"><Num val={cfg.max_hotels_per_request} /></Row>
-          <Row label="返回 AuditData"><Bool value={cfg.return_audit_data} /></Row>
-        </div>
-
-      </div>
-    </div>
-  );
+function dateOnly(value: string) {
+  return value?.split(" ")[0] || "—";
 }
 
-// ── Styles ───────────────────────────────────────────────────────────
+function ConfigCard({ cfg }: { cfg: ChannelConfig }) {
+  const updatedAt = dateOnly(cfg.updated_at);
 
-const noticeBanner: CSSProperties = {
-  display: "flex", alignItems: "flex-start", gap: 10,
-  background: "#e8f0fe", border: "1px solid #bfdbfe",
-  borderRadius: 8, padding: "11px 16px", marginBottom: 16,
-};
-const linkBtn: CSSProperties = {
-  background: "none", border: "none", cursor: "pointer",
-  color: "var(--google-blue)", fontWeight: 700, fontSize: 13, padding: "0 1px",
-  textDecoration: "underline", display: "inline",
-};
-const cardWrap: CSSProperties = {
-  background: "#fff", border: "1px solid var(--line)",
-  borderRadius: 8, overflow: "hidden",
-  boxShadow: "0 1px 2px rgba(0,9,71,0.06)",
-};
-const cardHead: CSSProperties = {
-  display: "flex", alignItems: "center", justifyContent: "space-between",
-  padding: "16px 22px",
-  background: "linear-gradient(135deg, #4f5fb8 0%, #818cf8 100%)",
-};
-const cardBody: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "1fr auto 1fr auto 1fr",
-  padding: "20px 24px",
-  gap: 0,
-  alignItems: "start",
-};
-const sec: CSSProperties = { minWidth: 0 };
-const vline: CSSProperties = {
-  width: 1, background: "var(--line)", margin: "0 22px",
-};
+  return (
+    <article className="channel-config-card">
+      <header className="channel-config-card-header">
+        <div className="channel-config-identity">
+          <h2>{cfg.client_id}</h2>
+        </div>
+
+        <div className="channel-config-summary" aria-label={`${cfg.client_id} 配置摘要`}>
+          <span className="channel-config-summary-item">
+            <span>QPS 查价</span>
+            <strong>{cfg.qps}/s</strong>
+          </span>
+          <span className="channel-config-summary-item">
+            <span>PPS 酒店</span>
+            <strong>{cfg.pps}/s</strong>
+          </span>
+          <span className="channel-config-summary-item">
+            <span>最大酒店 / 请求</span>
+            <strong>{cfg.max_hotels_per_request}</strong>
+          </span>
+          <span className="channel-config-summary-item">
+            <span>最后更新</span>
+            <strong>{updatedAt}</strong>
+          </span>
+        </div>
+      </header>
+
+      <div className="channel-config-grid">
+        <section className="channel-config-section">
+          <SectionHeading icon={<Shield className="icon" />} title="基础信息" />
+          <Row label="IP 过滤">
+            <ReadOnlySwitch value={cfg.ip_filter_enable} />
+          </Row>
+          <Row label="IP 白名单">
+            <IpList value={cfg.ip_filter} />
+          </Row>
+        </section>
+
+        <section className="channel-config-section">
+          <SectionHeading icon={<BarChart2 className="icon" />} title="ARI 配置" />
+          <Row label="允许币种">
+            <CurrencyTags value={cfg.allowed_currencies} />
+          </Row>
+          <Row label="忽略中文报价">
+            <ReadOnlySwitch value={cfg.ignore_cn_price} />
+          </Row>
+          <Row label="最大房间数">
+            <Num val={cfg.max_rooms} unit="间" />
+          </Row>
+        </section>
+
+        <section className="channel-config-section">
+          <SectionHeading icon={<Zap className="icon" />} title="技术配置" />
+          <Row label="查价超时">
+            <Num val={cfg.search_timeout} unit="秒" />
+          </Row>
+          <Row label="验价超时">
+            <Num val={cfg.verify_timeout} unit="秒" />
+          </Row>
+          <Row label="下单超时">
+            <Num val={cfg.book_timeout} unit="秒" />
+          </Row>
+          <Row label="返回 AuditData">
+            <ReadOnlySwitch value={cfg.return_audit_data} />
+          </Row>
+        </section>
+      </div>
+    </article>
+  );
+}

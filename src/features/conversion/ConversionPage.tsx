@@ -11,8 +11,7 @@ const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CHANNELS = ["Agoda", "AgodaEBK", "AgodaUK", "Lvzan", "DidaOpaq", "Barli2b"];
 
-// 柔和色系：去饱和度的蓝/绿/金/青/紫/橙
-const COLORS = ["#3b82f6", "#12b981", "#f59e0b", "#06b6d4", "#8b5cf6", "#f97316"];
+const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899", "#06B6D4"];
 
 const THRESHOLDS = { l2b: 300_000, p2b: 1_500_000, l2c: 500, c2b: 500 };
 
@@ -56,7 +55,7 @@ type ConvData = {
   agg_trend: Record<MetricKey, (number | null)[]>;
 };
 
-const axisText = { color: "#6b7f96", fontSize: 11 };
+const axisText = { color: "#475569", fontSize: 11 };
 
 function fmtVal(v: number | null): string {
   if (v === null) return "—";
@@ -77,12 +76,12 @@ function singleTrendOption(
       type: "category",
       data: dates,
       axisLabel: { ...axisText, interval: 4, hideOverlap: true },
-      axisLine: { lineStyle: { color: "#d4dbe6" } },
+      axisLine: { lineStyle: { color: "#B4B8BF" } },
     },
     yAxis: {
       type: "value",
       axisLabel: { ...axisText, formatter: (v: number) => fmtVal(v) },
-      splitLine: { lineStyle: { color: "#edf1f7", type: "dashed" } },
+      splitLine: { lineStyle: { color: "#E2E8F0", type: "dashed" } },
     },
     series: [
       {
@@ -90,8 +89,8 @@ function singleTrendOption(
         type: "line",
         data: dates.map(() => threshold),
         showSymbol: false,
-        lineStyle: { color: "#d9a0a0", type: "dashed", width: 1.5 },
-        itemStyle: { color: "#d9a0a0" },
+        lineStyle: { color: "#EF4444", type: "dashed", width: 1.5 },
+        itemStyle: { color: "#EF4444" },
       },
       {
         name: label,
@@ -99,9 +98,9 @@ function singleTrendOption(
         data: values,
         smooth: true,
         showSymbol: false,
-        lineStyle: { color: "#7aa8d8", width: 2.5 },
-        itemStyle: { color: "#7aa8d8" },
-        areaStyle: { color: "rgba(122,168,216,0.07)" },
+        lineStyle: { color: "#4F5AAB", width: 2.5 },
+        itemStyle: { color: "#4F5AAB" },
+        areaStyle: { color: "rgba(79, 90, 171, 0.08)" },
       },
     ],
   };
@@ -119,12 +118,12 @@ function multiChannelTrendOption(
       type: "category",
       data: dates,
       axisLabel: { ...axisText, interval: 4, hideOverlap: true },
-      axisLine: { lineStyle: { color: "#d4dbe6" } },
+      axisLine: { lineStyle: { color: "#B4B8BF" } },
     },
     yAxis: {
       type: "value",
       axisLabel: { ...axisText, formatter: (v: number) => fmtVal(v) },
-      splitLine: { lineStyle: { color: "#edf1f7", type: "dashed" } },
+      splitLine: { lineStyle: { color: "#E2E8F0", type: "dashed" } },
     },
     series: [
       {
@@ -132,8 +131,8 @@ function multiChannelTrendOption(
         type: "line",
         data: dates.map(() => threshold),
         showSymbol: false,
-        lineStyle: { color: "#d9a0a0", type: "dashed", width: 1.5 },
-        itemStyle: { color: "#d9a0a0" },
+        lineStyle: { color: "#EF4444", type: "dashed", width: 1.5 },
+        itemStyle: { color: "#EF4444" },
       },
       ...CHANNELS.map((ch, idx) => ({
         name: ch,
@@ -205,7 +204,7 @@ export function ConversionPage(_: PageProps) {
           gap: 12,
           marginTop: 16,
           background: "#f8fafc",
-          border: "1px solid #e8edf4",
+          border: "1px solid #E5E7EB",
           borderRadius: 10,
           padding: "16px 20px",
         }}
@@ -221,8 +220,8 @@ export function ConversionPage(_: PageProps) {
             <span
               style={{
                 fontSize: 11,
-                color: "#94a3b8",
-                background: "#edf2f7",
+                color: "#475569",
+                background: "#F1F5F9",
                 borderRadius: 4,
                 padding: "1px 6px",
                 marginLeft: 8,
@@ -231,7 +230,7 @@ export function ConversionPage(_: PageProps) {
             >
               {m.formula}
             </span>
-            <p style={{ margin: "4px 0 0", fontSize: 12, color: "#526078", lineHeight: 1.5 }}>
+            <p style={{ margin: "4px 0 0", fontSize: 12, color: "#475569", lineHeight: 1.5 }}>
               {m.meaning}
             </p>
           </div>
@@ -274,7 +273,7 @@ export function ConversionPage(_: PageProps) {
               ) : (
                 <div
                   className="small"
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#b0bac8" }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#94A3B8" }}
                 >
                   加载中…
                 </div>

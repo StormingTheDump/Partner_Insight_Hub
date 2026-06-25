@@ -117,7 +117,7 @@ function NotifBell({ onGoFinance }: { onGoFinance: () => void }) {
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted-strong)" }}>
                       {b.bill_no}
                     </span>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: "#ea0345" }}>已逾期</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "#EF4444" }}>已逾期</span>
                   </div>
                   <div style={{ fontSize: 12, color: "var(--muted)", display: "flex", gap: 12 }}>
                     <span>{b.client_id}</span>
@@ -136,7 +136,7 @@ function NotifBell({ onGoFinance }: { onGoFinance: () => void }) {
               type="button"
               onClick={() => { onGoFinance(); setOpen(false); }}
               style={{
-                width: "100%", fontSize: 12, color: "#604696", fontWeight: 700,
+                width: "100%", fontSize: 12, color: "var(--pih-primary)", fontWeight: 700,
                 background: "none", border: "none", cursor: "pointer", textAlign: "center",
               }}
             >
@@ -180,9 +180,9 @@ function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) 
           onClick={() => setOpen((o) => !o)}
           style={{
             gap: 8, cursor: "pointer",
-            background: "rgba(234,3,69,0.06)",
-            border: "1px solid rgba(234,3,69,0.22)",
-            color: "#000947",
+            background: "rgba(80, 90, 172, 0.06)",
+            border: "1px solid rgba(80, 90, 172, 0.22)",
+            color: "var(--text)",
           }}
         >
           <User className="icon" />
@@ -197,7 +197,7 @@ function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) 
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{
                   width: 40, height: 40, borderRadius: "50%",
-                  background: "#eef1ff", color: "#604696",
+                  background: "var(--pih-primary-soft)", color: "var(--pih-primary)",
                   display: "grid", placeItems: "center",
                   fontWeight: 800, fontSize: 16, flexShrink: 0,
                 }}>
@@ -221,7 +221,7 @@ function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) 
                     border: "none", cursor: "pointer", marginBottom: 4,
                     display: "flex", alignItems: "center", gap: 8,
                     fontSize: 13, fontWeight: 600,
-                    color: "#4f5fb8", background: "#eef1ff",
+                    color: "var(--pih-primary)", background: "var(--pih-primary-soft)",
                   }}
                 >
                   <Settings style={{ width: 15, height: 15 }} />
@@ -236,7 +236,7 @@ function UserMenu({ user, onLogout }: { user: AuthUser; onLogout: () => void }) 
                   border: "none", cursor: "pointer",
                   display: "flex", alignItems: "center", gap: 8,
                   fontSize: 13, fontWeight: 600,
-                  color: "#ea0345", background: "#fce8e6",
+                  color: "#EF4444", background: "#FDE3E3",
                 }}
               >
                 <LogOut style={{ width: 15, height: 15 }} />
@@ -393,7 +393,7 @@ function AppShellInner({ user, onLogout }: AppShellInnerProps) {
         </header>
 
         <section className="page">
-          <ActivePage selectedFeed={selectedFeed} showPreviousPeriod={showPreviousPeriod} />
+          <ActivePage selectedFeed={selectedFeed} showPreviousPeriod={showPreviousPeriod} dateRange={dateRange} />
         </section>
       </main>
     </div>

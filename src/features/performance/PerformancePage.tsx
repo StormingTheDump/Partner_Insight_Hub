@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import type { PageProps } from "@/dashboard/routes";
 import { BaseChart } from "@/shared/charts/BaseChart";
+import { googlePaletteSwatch } from "@/shared/charts/chart-theme";
 import { Card } from "@/shared/components/Card";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { metricsApi, type DimensionsData } from "@/lib/metricsApi";
 import { useAppState } from "@/dashboard/app-state";
 import type { EChartsOption } from "echarts";
 
-const LT_COLORS    = ["#bfdbfe", "#93c5fd", "#60a5fa", "#3b82f6", "#1d4ed8"];
-const CHAIN_COLORS  = ["#4f5fb8", "#12b981"];
-const STAR_COLORS   = ["#94a3b8", "#cbd5e1", "#fbbf24", "#f59e0b", "#3b82f6", "#2563eb"];
-const COUNTRY_COLORS = ["#f87171","#fb923c","#fbbf24","#a3e635","#34d399","#22d3ee","#60a5fa","#a78bfa","#f472b6"];
+const LT_COLORS = ["#C3C6E2", "#B5BADC", "#A6ACD5", "#8B92C8", "#7C84C1"];
+const CHAIN_COLORS = ["#4F5AAB", "#94A3B8"];
+const STAR_COLORS = ["#C3C6E2", "#B5BADC", "#A6ACD5", "#999FCE", "#8B92C8", "#7C84C1"];
+const COUNTRY_COLORS = googlePaletteSwatch;
 
 function hbarOpt(labels: string[], values: number[], colors: string[], unit = "è®¢å•"): EChartsOption {
   return {
     grid: { left: 72, right: 48, top: 8, bottom: 8, containLabel: false },
-    xAxis: { type: "value", axisLabel: { color: "#526078", fontSize: 11 }, splitLine: { lineStyle: { color: "#e8edf4", type: "dashed" } } },
-    yAxis: { type: "category", data: labels, inverse: true, axisLabel: { color: "#17213f", fontSize: 12 } },
+    xAxis: { type: "value", axisLabel: { color: "#475569", fontSize: 11 }, splitLine: { lineStyle: { color: "#E5E7EB", type: "dashed" } } },
+    yAxis: { type: "category", data: labels, inverse: true, axisLabel: { color: "#475569", fontSize: 12 } },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     tooltip: { formatter: (p: any) => `${p.name}ï¼š${p.value.toLocaleString()} ${unit}` },
     series: [{
@@ -24,7 +25,7 @@ function hbarOpt(labels: string[], values: number[], colors: string[], unit = "è
       data: values.map((v, i) => ({ value: v, itemStyle: { color: colors[i % colors.length] } })),
       barMaxWidth: 28,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      label: { show: true, position: "right" as const, formatter: (p: any) => p.value.toLocaleString(), color: "#526078", fontSize: 11 },
+      label: { show: true, position: "right" as const, formatter: (p: any) => p.value.toLocaleString(), color: "#475569", fontSize: 11 },
     }],
   };
 }
@@ -32,7 +33,7 @@ function hbarOpt(labels: string[], values: number[], colors: string[], unit = "è
 function donutOpt(data: { name: string; value: number; color: string }[]): EChartsOption {
   return {
     tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
-    legend: { orient: "vertical" as const, right: 0, top: "center", textStyle: { color: "#17213f", fontSize: 12 } },
+    legend: { orient: "vertical" as const, right: 0, top: "center", textStyle: { color: "#475569", fontSize: 12 } },
     series: [{
       type: "pie",
       radius: ["48%", "72%"],
@@ -55,7 +56,7 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }
 
 const TH: React.CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",
@@ -84,7 +85,7 @@ function DimTable({ rows, dimKey, dimLabel }: { rows: (Record<string, unknown>)[
             <tr key={i}>
               <td style={TD}>{r[dimKey] as string}</td>
               <td style={{ ...TD, textAlign: "right" }}>{(r.bookings as number).toLocaleString()}</td>
-              <td style={{ ...TD, textAlign: "right", color: "#4f5fb8" }}>{r.pct as number}%</td>
+              <td style={{ ...TD, textAlign: "right", color: "#4F5AAB" }}>{r.pct as number}%</td>
               <td style={{ ...TD, textAlign: "right" }}>{(r.ttv as number).toLocaleString()}</td>
               <td style={{ ...TD, textAlign: "right" }}>{(r.room_nights as number).toLocaleString()}</td>
             </tr>

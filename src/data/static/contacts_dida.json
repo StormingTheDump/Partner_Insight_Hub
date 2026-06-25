@@ -5,8 +5,8 @@
     "title": "客户经理",
     "subtitle": "专属合作伙伴支持",
     "icon_key": "MessageCircle",
-    "color": "#4f5fb8",
-    "bg_color": "#eef1ff",
+    "color": "#505AAC",
+    "bg_color": "var(--pih-primary-soft)",
     "sort_order": 1,
     "fields": [
       {
@@ -29,8 +29,8 @@
     "title": "技术支持",
     "subtitle": "API 集成与技术问题",
     "icon_key": "Phone",
-    "color": "#ea0345",
-    "bg_color": "#fff0f5",
+    "color": "#EF4444",
+    "bg_color": "#FDE3E3",
     "sort_order": 2,
     "fields": [
       {
@@ -53,8 +53,8 @@
     "title": "商务合作",
     "subtitle": "渠道拓展与合作意向",
     "icon_key": "Mail",
-    "color": "#16a34a",
-    "bg_color": "#f0fff4",
+    "color": "#10B981",
+    "bg_color": "#DEF7E7",
     "sort_order": 3,
     "fields": [
       {
@@ -73,8 +73,8 @@
     "title": "财务结算",
     "subtitle": "账单与信用额度",
     "icon_key": "Users",
-    "color": "#d97706",
-    "bg_color": "#fffbeb",
+    "color": "#F59E0B",
+    "bg_color": "#FCF4DA",
     "sort_order": 4,
     "fields": [
       {
@@ -93,8 +93,8 @@
     "title": "客户服务热线",
     "subtitle": "日常咨询与服务支持",
     "icon_key": "Headphones",
-    "color": "#0891b2",
-    "bg_color": "#ecfeff",
+    "color": "#06B6D4",
+    "bg_color": "#F8FAFC",
     "sort_order": 5,
     "fields": [
       {
@@ -113,8 +113,8 @@
     "title": "紧急联系",
     "subtitle": "7×24 小时紧急响应",
     "icon_key": "Siren",
-    "color": "#dc2626",
-    "bg_color": "#fef2f2",
+    "color": "#EF4444",
+    "bg_color": "#FDE3E3",
     "sort_order": 6,
     "fields": [
       {

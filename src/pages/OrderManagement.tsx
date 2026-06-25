@@ -38,16 +38,16 @@ const MOCK_ORDERS: Order[] = [
 ];
 
 const KPI_CARDS = [
-  { label: '总订单数', value: MOCK_ORDERS.length.toString(), color: '#4f5fb8' },
-  { label: '已确认', value: MOCK_ORDERS.filter(o => o.status === 'confirmed').length.toString(), color: '#00924c' },
-  { label: '待确认', value: MOCK_ORDERS.filter(o => o.status === 'pending').length.toString(), color: '#f97316' },
-  { label: '已取消', value: MOCK_ORDERS.filter(o => o.status === 'cancelled').length.toString(), color: '#ea0345' },
-  { label: '总收入 (TTV)', value: '$' + MOCK_ORDERS.reduce((s, o) => s + o.price, 0).toFixed(0), color: '#8b35ff' },
+  { label: '总订单数', value: MOCK_ORDERS.length.toString(), color: '#505AAC' },
+  { label: '已确认', value: MOCK_ORDERS.filter(o => o.status === 'confirmed').length.toString(), color: '#10B981' },
+  { label: '待确认', value: MOCK_ORDERS.filter(o => o.status === 'pending').length.toString(), color: '#F59E0B' },
+  { label: '已取消', value: MOCK_ORDERS.filter(o => o.status === 'cancelled').length.toString(), color: '#EF4444' },
+  { label: '总收入 (TTV)', value: '$' + MOCK_ORDERS.reduce((s, o) => s + o.price, 0).toFixed(0), color: '#8B5CF6' },
 ];
 
 const TH: React.CSSProperties = {
   position: "sticky", top: 0, zIndex: 2,
-  background: "#f8fafd", color: "#526078",
+  background: "#F8FAFC", color: "#475569",
   fontSize: 12, fontWeight: 800,
   padding: "11px 13px",
   borderBottom: "2px solid var(--line)",

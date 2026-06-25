@@ -1,14 +1,14 @@
 
 const COLORS = {
-  navy: '#000947',
-  blue: '#4f5fb8',
-  red: '#ea0345',
-  green: '#00924c',
-  orange: '#f97316',
-  muted: '#66728a',
-  line: '#dfe5ef',
-  lineSoft: '#edf1f7',
-  bg: '#f8f9fc',
+  navy: 'var(--text)',
+  blue: '#505AAC',
+  red: '#EF4444',
+  green: '#10B981',
+  orange: '#F59E0B',
+  muted: '#64748B',
+  line: '#E5E7EB',
+  lineSoft: '#E2E8F0',
+  bg: '#F8FAFC',
   surface: '#fff',
 };
 
@@ -30,8 +30,8 @@ const KPI_DATA: KpiCard[] = [
     delta: '+1.5%',
     deltaGood: true,
     sub: '与上月相比',
-    iconBg: '#eef5ff',
-    iconColor: '#1769ff',
+    iconBg: '#F0F1FA',
+    iconColor: '#505AAC',
     icon: '📈',
   },
   {
@@ -40,8 +40,8 @@ const KPI_DATA: KpiCard[] = [
     delta: '-0.3%',
     deltaGood: false,
     sub: '与上月相比',
-    iconBg: '#eefaf1',
-    iconColor: '#0ca34f',
+    iconBg: '#DEF7E7',
+    iconColor: '#10B981',
     icon: '✓',
   },
   {
@@ -51,7 +51,7 @@ const KPI_DATA: KpiCard[] = [
     deltaGood: false,
     sub: 'Pre-book 请求失败占比',
     iconBg: '#fff0f1',
-    iconColor: '#ea0345',
+    iconColor: '#EF4444',
     icon: '⚠',
   },
   {
@@ -60,8 +60,8 @@ const KPI_DATA: KpiCard[] = [
     delta: '+12',
     deltaGood: true,
     sub: '较昨日',
-    iconBg: '#fff5e8',
-    iconColor: '#f97316',
+    iconBg: '#FCF4DA',
+    iconColor: '#F59E0B',
     icon: '📋',
   },
   {
@@ -70,8 +70,8 @@ const KPI_DATA: KpiCard[] = [
     delta: '+1.53%',
     deltaGood: true,
     sub: '与上月相比',
-    iconBg: '#f5edff',
-    iconColor: '#8b35ff',
+    iconBg: '#F0F1FA',
+    iconColor: '#8B5CF6',
     icon: '$',
   },
 ];
@@ -183,10 +183,10 @@ export default function MetricsPage() {
               {/* Grid lines */}
               {[0, 1, 2, 3, 4].map((i) => (
                 <line key={i} x1="50" y1={20 + i * 60} x2="880" y2={20 + i * 60}
-                  stroke="#e8edf4" strokeDasharray="3 4" />
+                  stroke="#E5E7EB" strokeDasharray="3 4" />
               ))}
               {/* Axis */}
-              <line x1="50" y1="260" x2="880" y2="260" stroke="#8b95a6" />
+              <line x1="50" y1="260" x2="880" y2="260" stroke="#B4B8BF" />
               {/* Line chart */}
               <polyline
                 points={[128,124,104,125,126,91,93,92,127,127,117,122,70,89,86,134,106,162,104,96,127,128,145,165,154,105,87,104,162,145,6]
@@ -204,7 +204,7 @@ export default function MetricsPage() {
               {/* X-axis labels */}
               {['5月11日', '5月18日', '5月25日', '6月1日', '6月8日', '6月10日'].map((label, i) => (
                 <text key={label} x={50 + [0, 7, 14, 21, 27, 30][i] / 30 * 830} y="280"
-                  textAnchor="middle" fill="#526078" fontSize="11">{label}</text>
+                  textAnchor="middle" fill="#475569" fontSize="11">{label}</text>
               ))}
             </svg>
             <p style={{ color: COLORS.muted, fontSize: 12, marginTop: 4 }}>所选时间段内的总交易价值（TTV）。</p>
@@ -219,7 +219,7 @@ export default function MetricsPage() {
               </div>
               <svg viewBox="0 0 400 140" preserveAspectRatio="none"
                 style={{ width: '100%', height: 100, display: 'block', overflow: 'visible', marginTop: 8 }}>
-                <line x1="40" y1="120" x2="380" y2="120" stroke="#8b95a6" />
+                <line x1="40" y1="120" x2="380" y2="120" stroke="#B4B8BF" />
                 <polyline
                   points="40,80 80,75 120,90 160,65 200,70 240,60 280,55 320,58 360,52 380,50"
                   fill="none" stroke={COLORS.green} strokeWidth="2.3"
@@ -234,7 +234,7 @@ export default function MetricsPage() {
               </div>
               <svg viewBox="0 0 400 140" preserveAspectRatio="none"
                 style={{ width: '100%', height: 100, display: 'block', overflow: 'visible', marginTop: 8 }}>
-                <line x1="40" y1="120" x2="380" y2="120" stroke="#8b95a6" />
+                <line x1="40" y1="120" x2="380" y2="120" stroke="#B4B8BF" />
                 <polyline
                   points="40,60 80,65 120,55 160,70 200,75 240,80 280,72 320,65 360,68 380,70"
                   fill="none" stroke={COLORS.red} strokeWidth="2.3"
@@ -277,7 +277,7 @@ export default function MetricsPage() {
             <div style={styles.progressTrack}>
               <div style={{ ...styles.progressBar, width: '77%' }} />
             </div>
-            <div style={{ ...styles.card, background: '#f4f6fa', boxShadow: 'none', padding: '12px 16px', marginTop: 12 }}>
+            <div style={{ ...styles.card, background: '#F1F5F9', boxShadow: 'none', padding: '12px 16px', marginTop: 12 }}>
               <p style={{ color: COLORS.muted, fontSize: 12 }}>本季度累计 TTV</p>
               <div style={{ ...styles.metricValue, fontSize: 20 }}>$7,883,741</div>
             </div>
@@ -300,22 +300,22 @@ const styles: Record<string, React.CSSProperties> = {
     margin: '0 0 6px',
     fontSize: 28,
     fontWeight: 800,
-    color: '#000947',
+    color: 'var(--text)',
     lineHeight: 1.2,
   },
   h3: {
     margin: 0,
     fontSize: 15,
     fontWeight: 600,
-    color: '#000947',
+    color: 'var(--text)',
   },
-  subText: { margin: 0, color: '#66728a', fontSize: 14 },
+  subText: { margin: 0, color: '#64748B', fontSize: 14 },
   btnOutline: {
     height: 36,
     borderRadius: 7,
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     background: '#fff',
-    color: '#17213f',
+    color: 'var(--text)',
     padding: '0 14px',
     display: 'inline-flex',
     alignItems: 'center',
@@ -350,7 +350,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   card: {
     background: '#fff',
-    border: '1px solid #dfe5ef',
+    border: '1px solid #E5E7EB',
     borderRadius: 8,
     boxShadow: '0 1px 2px rgba(0,9,71,0.06)',
     padding: 20,
@@ -373,7 +373,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   cardLabel: {
     margin: 0,
-    color: '#66728a',
+    color: '#64748B',
     fontSize: 13,
   },
   kpiHeader: {
@@ -383,7 +383,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   metricValue: {
     marginTop: 4,
-    color: '#000',
+    color: 'var(--text)',
     fontSize: 22,
     lineHeight: 1.1,
     fontWeight: 800,
@@ -423,7 +423,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   progressBar: {
     height: 8,
-    background: '#4f5fb8',
+    background: '#505AAC',
     borderRadius: 999,
   },
 };

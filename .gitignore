@@ -8,6 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.runtime/
+.venv/
+.frontend-*.pid
+bun.lock
+backend/bun.lock
 
 # Database — committed to repo so judges get pre-seeded data on clone
 # backend/pih.db
